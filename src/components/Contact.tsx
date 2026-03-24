@@ -1,121 +1,87 @@
-export default function Contact() {
+import type { Lang } from '../i18n/translations';
+import { t } from '../i18n/translations';
+
+const links = [
+  { label: 'Email', href: 'mailto:elliebinn@gmail.com' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/hyebin-woo-62a261291/' },
+  { label: 'GitHub', href: 'https://github.com/Elliebinn' },
+];
+
+const formLabels = {
+  en: { name: 'Full Name', namePh: 'Your name', email: 'Email Address', emailPh: 'name@company.com', message: 'Message', messagePh: 'Tell me about your project...', send: 'Send Message' },
+  ko: { name: '이름', namePh: '이름을 입력하세요', email: '이메일', emailPh: 'name@company.com', message: '메시지', messagePh: '프로젝트에 대해 알려주세요...', send: '메시지 보내기' },
+};
+
+export default function Contact({ lang = 'en' as Lang }: { lang?: Lang }) {
+  const tr = t(lang).contact;
+  const fl = formLabels[lang];
+
   return (
-    <section id="contact" className="px-6 py-32">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid gap-12 lg:grid-cols-2">
-          {/* Left */}
-          <div>
-            <p className="mb-4 font-mono text-xs tracking-widest text-[var(--color-accent-light)] uppercase">
-              Let's Build Something
-            </p>
-            <h2 className="mb-6 text-4xl font-bold sm:text-5xl" style={{ fontFamily: 'var(--font-display)' }}>
-              Ready to deploy?
-            </h2>
-            <p className="mb-8 max-w-md leading-relaxed text-[var(--color-text-muted)]">
-              I am currently open to collaborations on AI&#8209;native products
-              or consulting roles for fintech startups.
-            </p>
-
-            <a
-              href="mailto:elliebinn@gmail.com"
-              className="mb-8 inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
-            >
-              <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              elliebinn@gmail.com
-            </a>
-
-            {/* Social links */}
-            <div className="flex gap-4">
-              <a
-                href="https://github.com/Elliebinn"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-bg-card)] hover:text-[var(--color-text)]"
-                aria-label="GitHub"
-              >
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                </svg>
+    <section id="contact" className="border-t border-[var(--color-border)] px-6 py-16 pb-28 sm:py-32 sm:pb-32">
+      <div className="mx-auto max-w-7xl">
+        {/* Desktop: centered heading + links */}
+        <div className="hidden md:block text-center">
+          <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+            {tr.section}
+          </p>
+          <h2 className="mb-16 text-6xl font-black tracking-tight sm:text-8xl lg:text-9xl" style={{ fontFamily: 'var(--font-display)' }}>
+            {tr.heading}
+          </h2>
+          <div className="flex items-center justify-center gap-10">
+            {links.map((link) => (
+              <a key={link.label} href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="text-sm font-medium uppercase tracking-[0.15em] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]">
+                {link.label}
               </a>
-              <a
-                href="https://www.linkedin.com/in/%ED%98%9C%EB%B9%88-%EC%9A%B0-62a261291/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--color-border)] text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-bg-card)] hover:text-[var(--color-text)]"
-                aria-label="LinkedIn"
-              >
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                </svg>
-              </a>
-            </div>
+            ))}
           </div>
+        </div>
 
-          {/* Right — contact form */}
-          <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-8">
-            <form
-              action="https://formspree.io/f/placeholder"
-              method="POST"
-              className="space-y-5"
-            >
-              <div className="grid gap-5 sm:grid-cols-2">
-                <div>
-                  <label className="mb-1.5 block text-xs font-medium text-[var(--color-text-muted)]">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="John Doe"
-                    className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none focus:border-[var(--color-accent)]"
-                  />
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-xs font-medium text-[var(--color-text-muted)]">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="john@company.com"
-                    className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none focus:border-[var(--color-accent)]"
-                  />
-                </div>
-              </div>
+        {/* Mobile: heading + form */}
+        <div className="md:hidden">
+          <h2 className="mb-2 text-2xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>
+            {tr.heading}
+          </h2>
+          <p className="mb-8 text-sm text-[var(--color-text-muted)]">
+            {lang === 'ko'
+              ? 'AI 기반 프로덕트나 핀테크 협업에 열려 있습니다.'
+              : 'Open for collaborations on AI-driven products and high-end digital experiences.'}
+          </p>
 
-              <div>
-                <label className="mb-1.5 block text-xs font-medium text-[var(--color-text-muted)]">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  name="subject"
-                  placeholder="Project Collaboration"
-                  className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none focus:border-[var(--color-accent)]"
-                />
-              </div>
+          <form action="https://formspree.io/f/placeholder" method="POST" className="space-y-4">
+            <div>
+              <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">{fl.name}</label>
+              <input type="text" name="name" placeholder={fl.namePh}
+                className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-card)] px-4 py-3 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 outline-none focus:border-[var(--color-accent)]" />
+            </div>
+            <div>
+              <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">{fl.email}</label>
+              <input type="email" name="email" placeholder={fl.emailPh}
+                className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-card)] px-4 py-3 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 outline-none focus:border-[var(--color-accent)]" />
+            </div>
+            <div>
+              <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">{fl.message}</label>
+              <textarea name="message" rows={4} placeholder={fl.messagePh}
+                className="w-full resize-none rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-card)] px-4 py-3 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/40 outline-none focus:border-[var(--color-accent)]" />
+            </div>
+            <button type="submit"
+              className="w-full rounded-full bg-[var(--color-accent)] py-3.5 text-sm font-semibold uppercase tracking-wider text-white transition-opacity hover:opacity-90">
+              {fl.send}
+            </button>
+          </form>
 
-              <div>
-                <label className="mb-1.5 block text-xs font-medium text-[var(--color-text-muted)]">
-                  Message
-                </label>
-                <textarea
-                  name="message"
-                  rows={4}
-                  placeholder="Briefly describe your vision..."
-                  className="w-full resize-none rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none focus:border-[var(--color-accent)]"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full rounded-lg bg-[var(--color-accent)] py-3 text-sm font-semibold tracking-wider text-white uppercase transition-opacity hover:opacity-90"
-              >
-                Send Transmission
-              </button>
-            </form>
+          {/* Social links below form */}
+          <div className="mt-6 flex items-center justify-center gap-8">
+            {links.map((link) => (
+              <a key={link.label} href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>

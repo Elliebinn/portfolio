@@ -1,18 +1,20 @@
+const BASE = '/portfolio';
+
 export default function Footer() {
   return (
-    <footer className="border-t border-[var(--color-border)] px-6 py-8">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
-        <p className="font-mono text-xs text-[var(--color-text-muted)]">
-          HYEBIN.DEV &copy; {new Date().getFullYear()}
+    <footer className="border-t border-[var(--color-border)] px-6 py-6">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row">
+        <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+          &copy; {new Date().getFullYear()} Hyebin Woo. Designed for precision.
         </p>
-        <div className="flex gap-6">
-          <a href="#home" className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-            Home
-          </a>
-          <a href="#projects" className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
+        <div className="flex gap-8">
+          <a href={`${BASE}/#projects`} className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
             Projects
           </a>
-          <a href="#contact" className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
+          <a href={`${BASE}/blog/`} className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
+            Blog
+          </a>
+          <a href={`${BASE}/#contact`} className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
             Contact
           </a>
         </div>

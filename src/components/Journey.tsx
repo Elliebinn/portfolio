@@ -1,64 +1,77 @@
-const timeline = [
-  {
-    title: 'AI Service Planner',
-    org: 'Current Focus',
-    period: 'Present',
-    description:
-      'Leading knowledge into development of AI-driven fintech. Orchestrate automated agent pipelines for production clients.',
-    accent: true,
-  },
-  {
-    title: 'ETF Planning Specialist',
-    org: 'Asset Management',
-    period: '2022 — 2024',
-    description:
-      'Managed mutual fund structures and ETF listing strategies. Pioneered robo-advisor integration.',
-  },
-  {
-    title: 'Finance & Self-Teaching',
-    org: 'Academic & Personal Growth',
-    period: '2019 — 2022',
-    description:
-      'Studied economics at a national university. Self-taught Python/JavaScript/React/FastAPI/LLM/Docker/Git and began engineering.',
-  },
-];
+import type { Lang } from '../i18n/translations';
+import { t } from '../i18n/translations';
 
-export default function Journey() {
+export default function Journey({ lang = 'en' as Lang }: { lang?: Lang }) {
+  const tr = t(lang).timeline;
+
   return (
-    <section className="px-6 py-32">
-      <div className="mx-auto max-w-3xl text-center">
-        <p className="mb-4 font-mono text-xs tracking-widest text-[var(--color-accent-light)] uppercase">
-          Professional Timeline
+    <section id="timeline" className="border-t border-[var(--color-border)] px-6 py-16 sm:py-28">
+      <div className="mx-auto max-w-7xl">
+        <p className="mb-12 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+          {tr.section}
         </p>
-        <h2 className="mb-16 text-4xl font-bold italic sm:text-5xl" style={{ fontFamily: 'var(--font-display)' }}>The Journey</h2>
-      </div>
 
-      <div className="mx-auto max-w-2xl">
-        <div className="relative border-l-2 border-[var(--color-border)] pl-8">
-          {timeline.map((item, i) => (
-            <div key={item.title} className={`relative pb-12 ${i === timeline.length - 1 ? 'pb-0' : ''}`}>
-              {/* Dot */}
-              <div
-                className={`absolute -left-[calc(2rem+5px)] top-1 h-3 w-3 rounded-full border-2 ${
-                  item.accent
-                    ? 'border-[var(--color-accent)] bg-[var(--color-accent)]'
-                    : 'border-[var(--color-text-muted)] bg-[var(--color-bg)]'
-                }`}
-              />
-
-              <div className="flex items-center gap-3 mb-1">
-                <h3 className="text-lg font-bold">{item.title}</h3>
-                {item.accent && (
-                  <span className="rounded-full bg-[var(--color-accent)] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
-                    Present
-                  </span>
-                )}
+        {/* Desktop: horizontal divider style */}
+        <div className="hidden lg:block">
+          {tr.items.map((item, i) => (
+            <div
+              key={i}
+              className="border-t border-[var(--color-border)] py-12"
+            >
+              <div className="grid items-start gap-8 lg:grid-cols-[180px_280px_1fr]">
+                <p className="font-mono text-xs text-[var(--color-text-muted)]">{item.period}</p>
+                <div>
+                  <h3
+                    className="text-xl font-bold tracking-tight sm:text-2xl"
+                    style={{ fontFamily: 'var(--font-display)' }}
+                  >
+                    {item.title}
+                  </h3>
+                  {'org' in item && item.org && (
+                    <p className="mt-1.5 text-xs text-[var(--color-text-muted)]">{item.org}</p>
+                  )}
+                </div>
+                <p className="text-sm leading-[1.8] text-[var(--color-text-muted)]">{item.description}</p>
               </div>
-              <p className="mb-2 text-sm text-[var(--color-text-muted)]">
-                {item.org}
-                <span className="ml-3 font-mono text-xs">{item.period}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile/Tablet: vertical timeline with circle dots */}
+        <div className="lg:hidden relative pl-12">
+          {/* Vertical line */}
+          <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-[var(--color-border)]" />
+
+          {tr.items.map((item, i) => (
+            <div key={i} className={`relative ${i !== tr.items.length - 1 ? 'pb-14' : ''}`}>
+              {/* Circle dot */}
+              <div
+                className={`absolute -left-12 top-0.5 flex h-6 w-6 items-center justify-center rounded-full border-[2.5px] ${
+                  i === 0
+                    ? 'border-[var(--color-accent)] bg-[var(--color-bg)]'
+                    : 'border-[var(--color-text-muted)]/30 bg-[var(--color-bg)]'
+                }`}
+              >
+                <div
+                  className={`h-2.5 w-2.5 rounded-full ${
+                    i === 0 ? 'bg-[var(--color-accent)]' : 'bg-transparent'
+                  }`}
+                />
+              </div>
+
+              <p className="mb-1.5 font-mono text-[11px] font-medium text-[var(--color-accent-light)]">
+                {item.period}
               </p>
-              <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">
+              <h3
+                className="text-lg font-bold tracking-tight"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                {item.title}
+              </h3>
+              {'org' in item && item.org && (
+                <p className="mt-1 text-xs text-[var(--color-text-muted)]">{item.org}</p>
+              )}
+              <p className="mt-3 text-sm leading-[1.8] text-[var(--color-text-muted)]">
                 {item.description}
               </p>
             </div>

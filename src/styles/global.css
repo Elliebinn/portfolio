@@ -1,17 +1,25 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Geist Sans';
+  src: url('/portfolio/fonts/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
 @theme {
-  /* Dark (default) */
   --color-bg: #0A0A0B;
   --color-bg-card: #141418;
   --color-bg-card-hover: #1C1C22;
-  --color-border: rgba(255, 255, 255, 0.08);
+  --color-bg-elevated: #1A1A20;
+  --color-border: rgba(255, 255, 255, 0.06);
   --color-text: #FAFAFA;
-  --color-text-muted: #8B8B9E;
+  --color-text-muted: #7A7A8E;
   --color-accent: #7C3AED;
   --color-accent-light: #A78BFA;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Geist Sans', 'Noto Sans KR', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Geist Sans', 'Noto Sans KR', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
@@ -26,11 +34,11 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Light theme overrides */
 html.light {
   --color-bg: #FFFFFF;
   --color-bg-card: #F5F5F7;
   --color-bg-card-hover: #ECECF0;
+  --color-bg-elevated: #F0F0F4;
   --color-border: rgba(0, 0, 0, 0.08);
   --color-text: #0A0A0B;
   --color-text-muted: #6B6B80;

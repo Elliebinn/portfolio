@@ -1,71 +1,53 @@
-const planning = [
-  { name: 'Service Design', level: 90 },
-  { name: 'Agent Architecture', level: 85 },
-  { name: 'Prompt Engineering', level: 95 },
+import type { Lang } from '../i18n/translations';
+import { t } from '../i18n/translations';
+
+const stack = [
+  { icon: '🧠', name: 'Service Planning', sub: 'UX, Prototyping' },
+  { icon: '🤖', name: 'AI / LLM', sub: 'Claude API, Prompt Eng.' },
+  { icon: '🐍', name: 'Python', sub: 'FastAPI, SQLAlchemy' },
+  { icon: '⚛️', name: 'React / TS', sub: 'Vite, shadcn/ui' },
+  { icon: '🗄️', name: 'ClickHouse', sub: 'MySQL, Pandas' },
+  { icon: '📊', name: 'Visualization', sub: 'Plotly, ECharts, recharts' },
+  { icon: '⚙️', name: 'n8n / Automation', sub: 'Slack, News Pipeline' },
+  { icon: '🐳', name: 'Docker', sub: 'Compose, Deploy' },
 ];
 
-const engineering = [
-  { name: 'Full-stack Web', level: 80 },
-  { name: 'Backend & DB', level: 85 },
-  { name: 'Deployment & AI Ops', level: 75 },
-];
+export default function Skills({ lang = 'en' as Lang }: { lang?: Lang }) {
+  const tr = t(lang).stack;
 
-function SkillBar({ name, level }: { name: string; level: number }) {
   return (
-    <div>
-      <div className="mb-1.5 flex items-center justify-between">
-        <span className="text-sm font-medium">{name}</span>
-        <span className="font-mono text-xs text-[var(--color-text-muted)]">{level}%</span>
-      </div>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--color-border)]">
-        <div
-          className="h-full rounded-full bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-light)]"
-          style={{ width: `${level}%` }}
-        />
-      </div>
-    </div>
-  );
-}
-
-export default function Skills() {
-  return (
-    <section id="skills" className="px-6 py-32">
-      <div className="mx-auto max-w-6xl">
-        <p className="mb-4 font-mono text-xs tracking-widest text-[var(--color-accent-light)] uppercase">
-          The Toolkit
+    <section id="stack" className="border-t border-[var(--color-border)] px-6 py-16 sm:py-28">
+      <div className="mx-auto max-w-7xl">
+        <p className="mb-6 sm:mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+          {tr.section}
         </p>
-        <h2 className="mb-16 text-4xl font-bold italic sm:text-5xl" style={{ fontFamily: 'var(--font-display)' }}>Dual Proficiency</h2>
 
-        <div className="grid gap-12 lg:grid-cols-2">
-          {/* AI Planning */}
-          <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-8">
-            <div className="mb-6 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-accent)]/10 text-lg">
-                🧠
-              </span>
-              <h3 className="text-xl font-bold">AI Planning</h3>
+        {/* Desktop: 2x4 grid */}
+        <div className="hidden sm:grid grid-cols-2 gap-[1px] overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-border)] sm:grid-cols-4">
+          {stack.map((s) => (
+            <div key={s.name}
+              className="flex flex-col items-center gap-3 bg-[var(--color-bg)] px-4 py-10 transition-colors hover:bg-[var(--color-bg-card)]">
+              <span className="text-2xl">{s.icon}</span>
+              <p className="text-sm font-semibold">{s.name}</p>
+              <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">{s.sub}</p>
             </div>
-            <div className="space-y-5">
-              {planning.map((s) => (
-                <SkillBar key={s.name} {...s} />
-              ))}
-            </div>
-          </div>
+          ))}
+        </div>
 
-          {/* Product Engineering */}
-          <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-8">
-            <div className="mb-6 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-accent)]/10 text-lg">
-                ⚡
-              </span>
-              <h3 className="text-xl font-bold">Product Engineering</h3>
+        {/* Mobile: list with icons */}
+        <div className="space-y-0 sm:hidden">
+          {stack.map((s, i) => (
+            <div key={s.name}
+              className={`flex items-center justify-between py-4 ${
+                i !== stack.length - 1 ? 'border-b border-[var(--color-border)]' : ''
+              }`}>
+              <div>
+                <p className="text-sm font-semibold">{s.name}</p>
+                <p className="mt-0.5 font-mono text-[10px] text-[var(--color-text-muted)]">{s.sub}</p>
+              </div>
+              <span className="text-xl">{s.icon}</span>
             </div>
-            <div className="space-y-5">
-              {engineering.map((s) => (
-                <SkillBar key={s.name} {...s} />
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

@@ -1,0 +1,170 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout title={`${post.data.title} — Hyebin Woo`}>
+  <Navbar client:load />
+
+  <main class="px-6 pt-32 pb-20">
+    <article class="mx-auto max-w-3xl">
+      {/* Back link */}
+      <a
+        href={`${base}blog/`}
+        class="mb-8 inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
+      >
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back to Blog
+      </a>
+
+      {/* Header */}
+      <div class="mb-12">
+        <div class="mb-4 flex items-center gap-3">
+          <span class="rounded-full bg-[var(--color-accent)]/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-accent-light)]">
+            {post.data.category}
+          </span>
+          <span class="font-mono text-xs text-[var(--color-text-muted)]">
+            {post.data.date.toISOString().slice(0, 10)}
+          </span>
+        </div>
+        <h1 class="mb-4 text-3xl font-bold leading-snug sm:text-4xl" style="font-family: var(--font-display);">
+          {post.data.title}
+        </h1>
+        <p class="text-[var(--color-text-muted)]">
+          {post.data.description}
+        </p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          {post.data.tags.map((tag: string) => (
+            <span class="rounded-full border border-[var(--color-border)] px-2.5 py-0.5 font-mono text-[10px] text-[var(--color-text-muted)]">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Content */}
+      <div class="prose-custom">
+        <Content />
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style is:global>
+  .prose-custom {
+    line-height: 1.8;
+    color: var(--color-text-muted);
+  }
+
+  .prose-custom h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    font-family: var(--font-display);
+  }
+
+  .prose-custom h3 {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .prose-custom p {
+    margin-bottom: 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  .prose-custom ul,
+  .prose-custom ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+
+  .prose-custom li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9375rem;
+  }
+
+  .prose-custom ul li {
+    list-style-type: disc;
+  }
+
+  .prose-custom ol li {
+    list-style-type: decimal;
+  }
+
+  .prose-custom strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .prose-custom a {
+    color: var(--color-accent-light);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose-custom a:hover {
+    color: var(--color-text);
+  }
+
+  .prose-custom pre {
+    margin-bottom: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-card) !important;
+    padding: 1.25rem;
+    overflow-x: auto;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+  }
+
+  .prose-custom code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+
+  .prose-custom :not(pre) > code {
+    padding: 0.15em 0.4em;
+    border-radius: 0.25rem;
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    color: var(--color-accent-light);
+  }
+
+  .prose-custom blockquote {
+    margin-bottom: 1.25rem;
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .prose-custom hr {
+    margin: 2rem 0;
+    border-color: var(--color-border);
+  }
+</style>
