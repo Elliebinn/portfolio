@@ -20,7 +20,6 @@ const flowIcons = [Search, Shuffle, MessageSquare, Lightbulb];
 
 type Agent = { id: string; key: string; name: string; description: string; tags: string[] };
 type FlowStep = { title: string; subtitle: string };
-type Screenshot = { src: string; alt: string; caption: string };
 
 export interface ProjectData {
   slug: string;
@@ -29,20 +28,33 @@ export interface ProjectData {
   titleAccent: string;
   status: string;
   deployId: string;
+  heroSubtitle?: string;
 
-  // Act 1: Problem
   problem: {
     heading: string;
     paragraphs: string[];
   };
 
-  // Act 2: Solution walkthrough
-  walkthrough: {
+  challenge?: {
+    label: string;
     heading: string;
-    steps: { label: string; title: string; description: string; screenshot?: string }[];
+    description: string;
+    metricValue: string;
+    metricLabel: string;
   };
 
-  // Act 3: Technical depth
+  solution?: {
+    label: string;
+    heading: string;
+    description: string;
+    badges: { title: string; subtitle: string }[];
+  };
+
+  walkthrough: {
+    heading: string;
+    steps: { label: string; title: string; description: string; screenshot?: string; video?: string }[];
+  };
+
   overview: string;
   highlights: { icon: 'brain' | 'cog'; title: string; description: string }[];
   agents: Agent[];
@@ -56,11 +68,8 @@ export interface ProjectData {
   };
   stack: { category: string; name: string }[];
   flow: FlowStep[];
-
-  // Act 4: Metrics
   metrics: { value: string; label: string }[];
 
-  // CTA
   cta: {
     heading: string;
     subtext: string;
@@ -79,52 +88,136 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
   return (
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
 
-      {/* ═══ Hero ═══ */}
-      <section className="relative border-b border-[var(--color-border)] px-6 pt-28 pb-20 overflow-hidden">
-        <div className="mx-auto max-w-7xl relative z-10">
-          <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
-            {project.label}
-          </p>
-          <h1
-            className="mb-6 text-4xl font-bold leading-[1.05] sm:text-6xl lg:text-7xl"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            {project.title}
-            <span className="text-[var(--color-accent-light)]">{project.titleAccent}</span>
-          </h1>
-          <div className="flex flex-wrap items-center gap-6 text-xs text-[var(--color-text-muted)]">
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+      {/* ═══ Hero — gradient inspired by Pencil mockup ═══ */}
+      <section className="relative overflow-hidden border-b border-[var(--color-border)]">
+        {/* Gradient backdrop */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-accent)]/8 via-transparent to-transparent" />
+          <div className="absolute -top-40 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-[var(--color-accent)]/6 blur-[120px]" />
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pt-28 pb-20">
+          <div className="flex items-center gap-2 mb-6">
+            <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
               {project.status}
             </span>
-            <span className="font-mono opacity-50">{project.deployId}</span>
           </div>
-        </div>
-      </section>
-
-      {/* ═══ Act 1: The Problem ═══ */}
-      <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl">
-          <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
-            01 The Problem
+          <h1
+            className="mb-5 text-5xl font-bold leading-[1.0] sm:text-7xl lg:text-8xl tracking-tight"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
+            {project.title.replace(' — ', '')}
+            {project.title.includes('—') && <br className="hidden sm:block" />}
+            <span className="text-[var(--color-accent-light)]">{project.titleAccent}</span>
+          </h1>
+          <p className="mb-8 max-w-lg text-sm leading-relaxed text-[var(--color-text-muted)]">
+            {project.heroSubtitle || project.overview.replace(/<[^>]*>/g, '').slice(0, 140) + '…'}
           </p>
-          <div className="max-w-3xl">
-            <h2
-              className="mb-8 text-2xl font-bold leading-snug sm:text-3xl"
-              style={{ fontFamily: 'var(--font-display)' }}
+          <div className="flex flex-wrap gap-3">
+            <a
+              href={project.cta.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-accent-light)]"
             >
-              {project.problem.heading}
-            </h2>
-            {project.problem.paragraphs.map((p, i) => (
-              <p key={i} className="mb-4 text-sm leading-[1.9] text-[var(--color-text-muted)]">
-                {p}
-              </p>
-            ))}
+              <Github size={16} />
+              {project.cta.githubLabel}
+            </a>
+            <a
+              href="#architecture"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-[var(--color-border)] px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-[var(--color-bg-card)]"
+            >
+              Documentation
+            </a>
           </div>
         </div>
       </section>
 
-      {/* ═══ Act 2: Solution Walkthrough ═══ */}
+      {/* ═══ Challenge + Solution — 2-column from Pencil ═══ */}
+      {project.challenge && project.solution ? (
+        <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+              {/* Challenge */}
+              <div>
+                <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+                  {project.challenge.label}
+                </p>
+                <h2
+                  className="mb-6 text-2xl font-bold leading-snug sm:text-3xl"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  {project.challenge.heading}
+                </h2>
+                <p className="mb-8 text-sm leading-[1.9] text-[var(--color-text-muted)]">
+                  {project.challenge.description}
+                </p>
+                <div>
+                  <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+                    Core Metric
+                  </p>
+                  <p className="text-4xl font-bold text-[var(--color-accent-light)]" style={{ fontFamily: 'var(--font-display)' }}>
+                    {project.challenge.metricValue}
+                  </p>
+                  <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+                    {project.challenge.metricLabel}
+                  </p>
+                </div>
+              </div>
+              {/* Solution */}
+              <div>
+                <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+                  {project.solution.label}
+                </p>
+                <h2
+                  className="mb-6 text-2xl font-bold leading-snug sm:text-3xl"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  {project.solution.heading}
+                </h2>
+                <p className="mb-8 text-sm leading-[1.9] text-[var(--color-text-muted)]">
+                  {project.solution.description}
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  {project.solution.badges.map((b) => (
+                    <div
+                      key={b.title}
+                      className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-card)] px-4 py-3"
+                    >
+                      <p className="text-sm font-bold">{b.title}</p>
+                      <p className="text-[11px] text-[var(--color-text-muted)]">{b.subtitle}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : (
+        /* Fallback: original Problem section */
+        <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl">
+            <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+              01 The Problem
+            </p>
+            <div className="max-w-3xl">
+              <h2
+                className="mb-8 text-2xl font-bold leading-snug sm:text-3xl"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                {project.problem.heading}
+              </h2>
+              {project.problem.paragraphs.map((p, i) => (
+                <p key={i} className="mb-4 text-sm leading-[1.9] text-[var(--color-text-muted)]">
+                  {p}
+                </p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ═══ How It Works — walkthrough with screenshots (kept) ═══ */}
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
@@ -137,16 +230,26 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
             {project.walkthrough.heading}
           </h2>
 
-          <div className="space-y-20">
+          <div className="space-y-24">
             {project.walkthrough.steps.map((step, i) => (
               <div key={i} className={`grid items-center gap-10 lg:grid-cols-2 ${i % 2 !== 0 ? 'lg:[direction:rtl]' : ''}`}>
                 {/* Screenshot */}
-                <div className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] [direction:ltr]">
-                  {step.screenshot ? (
+                <div className="group overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition-all duration-300 hover:border-[var(--color-accent)]/20 [direction:ltr]">
+                  {step.video ? (
+                    <video
+                      src={`${BASE}${step.video}`}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full object-cover"
+                    />
+                  ) : step.screenshot ? (
                     <img
                       src={`${BASE}${step.screenshot}`}
                       alt={step.title}
-                      className="w-full object-cover"
+                      className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      loading="lazy"
                     />
                   ) : (
                     <div className="flex aspect-video items-center justify-center">
@@ -180,10 +283,8 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
         </div>
       </section>
 
-      {/* ═══ Act 3: Technical Depth ═══ */}
-
-      {/* Overview + Highlights */}
-      <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+      {/* ═══ Architecture — overview + highlights ═══ */}
+      <section id="architecture" className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
             03 Architecture
@@ -197,7 +298,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
               return (
                 <div
                   key={h.title}
-                  className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6"
+                  className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition-colors hover:bg-[var(--color-bg-card-hover)]"
                 >
                   <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-accent)]/10">
                     <Icon size={20} className="text-[var(--color-accent-light)]" />
@@ -211,23 +312,29 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
         </div>
       </section>
 
-      {/* Agent Architecture */}
+      {/* ═══ Agent Architecture — "The Intelligence Ensemble" ═══ */}
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-12 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+          <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
             04 Agent Architecture
           </p>
+          <h2
+            className="mb-12 text-3xl font-bold sm:text-4xl"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
+            The Intelligence Ensemble
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {project.agents.map((agent) => {
               const Icon = agentIcons[agent.key] || Sparkles;
               return (
                 <div
                   key={agent.id}
-                  className="group rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition-colors hover:bg-[var(--color-bg-card-hover)]"
+                  className="group cursor-pointer rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition-all duration-200 hover:bg-[var(--color-bg-card-hover)] hover:border-[var(--color-accent)]/20"
                 >
                   <div className="mb-4 flex items-center justify-between">
                     <span className="font-mono text-[10px] text-[var(--color-text-muted)]">{agent.id}</span>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-accent)]/10">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-accent)]/10 transition-colors group-hover:bg-[var(--color-accent)]/20">
                       <Icon size={16} className="text-[var(--color-accent-light)]" />
                     </div>
                   </div>
@@ -250,120 +357,147 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
         </div>
       </section>
 
-      {/* Debate System */}
-      <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <div className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]">
-              {project.debate.screenshot ? (
-                <img
-                  src={`${BASE}${project.debate.screenshot}`}
-                  alt="Debate System"
-                  className="w-full object-cover"
-                />
-              ) : (
-                <div className="flex aspect-[4/3] items-center justify-center">
-                  <MessageSquare size={48} className="text-[var(--color-text-muted)]/20" />
-                </div>
-              )}
-              <div className="flex flex-wrap gap-2 border-t border-[var(--color-border)] p-4">
-                {project.debate.personas.map((p) => (
-                  <span
-                    key={p}
-                    className="rounded-md bg-[var(--color-accent)]/10 px-3 py-1.5 text-[10px] font-medium text-[var(--color-accent-light)]"
-                  >
-                    {p}
-                  </span>
-                ))}
+      {/* ═══ Debate System — dark bg treatment from Pencil ═══ */}
+      <section className="relative overflow-hidden border-b border-[var(--color-border)]">
+        {/* Subtle dark overlay for contrast */}
+        <div className="pointer-events-none absolute inset-0 bg-[var(--color-bg-card)]" />
+        <div className="relative z-10 px-6 py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              {/* Text side */}
+              <div>
+                <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+                  05 The Debate System
+                </p>
+                <h2
+                  className="mb-6 text-3xl font-bold italic sm:text-4xl"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  {project.debate.title}
+                  <span className="text-[var(--color-accent-light)]">{project.debate.titleAccent}</span>
+                </h2>
+                <p className="mb-8 text-sm leading-[1.8] text-[var(--color-text-muted)]">
+                  {project.debate.description}
+                </p>
+                <ul className="space-y-5">
+                  {project.debate.features.map((f) => (
+                    <li key={f.title} className="flex gap-3">
+                      <ChevronRight size={16} className="mt-0.5 flex-shrink-0 text-[var(--color-accent-light)]" />
+                      <div>
+                        <p className="mb-1 text-sm font-bold">{f.title}</p>
+                        <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">{f.description}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
-            <div>
-              <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
-                05 The Debate System
-              </p>
-              <h2
-                className="mb-6 text-3xl font-bold italic sm:text-4xl"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                {project.debate.title}
-                <span className="text-[var(--color-accent-light)]">{project.debate.titleAccent}</span>
-              </h2>
-              <p className="mb-8 text-sm leading-[1.8] text-[var(--color-text-muted)]">
-                {project.debate.description}
-              </p>
-              <ul className="space-y-5">
-                {project.debate.features.map((f) => (
-                  <li key={f.title} className="flex gap-3">
-                    <ChevronRight size={16} className="mt-0.5 flex-shrink-0 text-[var(--color-accent-light)]" />
-                    <div>
-                      <p className="mb-1 text-sm font-bold">{f.title}</p>
-                      <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">{f.description}</p>
+              {/* Visual side — debate arena */}
+              <div className="relative">
+                <div className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)]">
+                  {project.debate.screenshot ? (
+                    <img
+                      src={`${BASE}${project.debate.screenshot}`}
+                      alt="Debate System"
+                      className="w-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    /* Fallback: VS arena visualization */
+                    <div className="flex aspect-[4/3] flex-col items-center justify-between p-8">
+                      <div className="flex w-full justify-between">
+                        <span className="rounded-md bg-green-500/20 px-3 py-1.5 text-[10px] font-bold text-green-400">BULL</span>
+                        <span className="rounded-md bg-red-500/20 px-3 py-1.5 text-[10px] font-bold text-red-400">BEAR</span>
+                      </div>
+                      <span className="text-6xl font-bold text-[var(--color-text-muted)]/20">VS</span>
+                      <div className="flex w-full justify-between">
+                        <span className="rounded-md bg-blue-500/20 px-3 py-1.5 text-[10px] font-bold text-blue-400">QUANT</span>
+                        <span className="rounded-md bg-purple-500/20 px-3 py-1.5 text-[10px] font-bold text-purple-400">MACRO</span>
+                      </div>
                     </div>
-                  </li>
-                ))}
-              </ul>
+                  )}
+                </div>
+                {/* Persona badges under the screenshot */}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {project.debate.personas.map((p, i) => {
+                    const colors = [
+                      'bg-green-500/10 text-green-400',
+                      'bg-red-500/10 text-red-400',
+                      'bg-blue-500/10 text-blue-400',
+                      'bg-purple-500/10 text-purple-400',
+                    ];
+                    return (
+                      <span
+                        key={p}
+                        className={`rounded-md px-3 py-1.5 text-[10px] font-medium ${colors[i] || 'bg-[var(--color-accent)]/10 text-[var(--color-accent-light)]'}`}
+                      >
+                        {p}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Technical Stack */}
+      {/* ═══ Technical Stack ═══ */}
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-12 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
-            06 Technical Stack
-          </p>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {/* Label with horizontal lines */}
+          <div className="mb-14 flex items-center gap-4">
+            <div className="h-px flex-1 bg-[var(--color-border)]" />
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--color-text-muted)]">
+              Built with Modern Standards
+            </p>
+            <div className="h-px flex-1 bg-[var(--color-border)]" />
+          </div>
+          <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
             {project.stack.map((s) => (
-              <div
-                key={s.name}
-                className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 text-center transition-colors hover:bg-[var(--color-bg-card-hover)]"
-              >
-                <p className="mb-2 font-mono text-[9px] uppercase tracking-wider text-[var(--color-accent-light)]">
+              <div key={s.name} className="text-center">
+                <p className="text-sm font-bold">{s.name}</p>
+                <p className="mt-1 font-mono text-[10px] tracking-wider text-[var(--color-text-muted)]">
                   {s.category}
                 </p>
-                <p className="text-sm font-bold">{s.name}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Data Flow */}
+      {/* ═══ Data Flow ═══ */}
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <p className="mb-12 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
-            07 Data Flow
+            The Data Journey
           </p>
-          <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-8 sm:p-12">
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {project.flow.map((step, i) => {
-                const Icon = flowIcons[i] || Lightbulb;
-                return (
-                  <div key={i} className="text-center">
-                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-[var(--color-accent)]/10">
-                      <Icon size={24} className="text-[var(--color-accent-light)]" />
-                    </div>
-                    <h4 className="mb-1 text-sm font-bold">{step.title}</h4>
-                    <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-                      {step.subtitle}
-                    </p>
-                    {i < project.flow.length - 1 && (
-                      <ArrowRight size={14} className="mx-auto mt-4 text-[var(--color-text-muted)]/30 hidden lg:block" />
-                    )}
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {project.flow.map((step, i) => {
+              const Icon = flowIcons[i] || Lightbulb;
+              return (
+                <div key={i} className="relative text-center">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-card)]">
+                    <Icon size={22} className="text-[var(--color-accent-light)]" />
                   </div>
-                );
-              })}
-            </div>
+                  <h4 className="mb-1 text-sm font-bold">{step.title}</h4>
+                  <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
+                    {step.subtitle}
+                  </p>
+                  {i < project.flow.length - 1 && (
+                    <ArrowRight size={14} className="absolute -right-4 top-5 hidden text-[var(--color-text-muted)]/30 lg:block" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ═══ Act 4: Metrics ═══ */}
+      {/* ═══ Metrics ═══ */}
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <p className="mb-12 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
-            08 By The Numbers
+            By The Numbers
           </p>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             {project.metrics.map((m) => (
@@ -385,19 +519,17 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
 
       {/* ═══ CTA ═══ */}
       <section className="px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-8 sm:flex sm:items-center sm:justify-between sm:p-12">
-            <div className="mb-6 sm:mb-0">
-              <h2 className="mb-2 text-2xl font-bold sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
-                {project.cta.heading}
-              </h2>
-              <p className="text-sm text-[var(--color-text-muted)]">{project.cta.subtext}</p>
-            </div>
+        <div className="mx-auto max-w-7xl text-center">
+          <h2 className="mb-3 text-2xl font-bold sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
+            {project.cta.heading}
+          </h2>
+          <p className="mb-8 text-sm text-[var(--color-text-muted)]">{project.cta.subtext}</p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <a
               href={project.cta.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-[var(--color-bg-card-hover)]"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-[var(--color-border)] px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-[var(--color-bg-card)]"
             >
               <Github size={16} />
               {project.cta.githubLabel}

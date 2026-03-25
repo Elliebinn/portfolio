@@ -65,6 +65,10 @@ export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
               {tr.section}
             </p>
 
+            <p className="mb-6 text-lg sm:text-xl font-medium italic text-[var(--color-text-muted)]">
+              "I grow ideas into products."
+            </p>
+
             <h2
               className="mb-6 sm:mb-8 text-2xl font-bold leading-normal sm:text-3xl lg:text-4xl"
               style={{ fontFamily: 'var(--font-display)' }}

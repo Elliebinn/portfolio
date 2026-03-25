@@ -15,41 +15,46 @@ const formLabels = {
 export default function Contact({ lang = 'en' as Lang }: { lang?: Lang }) {
   const tr = t(lang).contact;
   const fl = formLabels[lang];
+  const words = tr.sloganWords;
 
   return (
-    <section id="contact" className="border-t border-[var(--color-border)] px-6 py-16 pb-28 sm:py-32 sm:pb-32">
+    <section id="contact" className="border-t border-[var(--color-border)] px-6 py-16 sm:py-32">
       <div className="mx-auto max-w-7xl">
-        {/* Desktop: centered heading + links */}
-        <div className="hidden md:block text-center">
-          <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
-            {tr.section}
-          </p>
-          <h2 className="mb-16 text-6xl font-black tracking-tight sm:text-8xl lg:text-9xl" style={{ fontFamily: 'var(--font-display)' }}>
-            {tr.heading}
+        {/* Section label */}
+        <p className="mb-8 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+          {tr.section}
+        </p>
+
+        {/* Slogan — single line, centered */}
+        <div className="mb-16 text-center">
+          <h2
+            className="text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight text-[var(--color-text)]"
+            style={{ fontFamily: "'Inter', var(--font-display)", fontWeight: 900 }}
+          >
+            {words[0]} {words[1]}{' '}
+            <span className="bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-light)] bg-clip-text text-transparent">
+              {words[2]}
+            </span>
           </h2>
-          <div className="flex items-center justify-center gap-10">
-            {links.map((link) => (
-              <a key={link.label} href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="text-sm font-medium uppercase tracking-[0.15em] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]">
-                {link.label}
-              </a>
-            ))}
-          </div>
         </div>
 
-        {/* Mobile: heading + form */}
-        <div className="md:hidden">
-          <h2 className="mb-2 text-2xl font-bold" style={{ fontFamily: 'var(--font-display)' }}>
-            {tr.heading}
-          </h2>
-          <p className="mb-8 text-sm text-[var(--color-text-muted)]">
-            {lang === 'ko'
-              ? 'AI 기반 프로덕트나 핀테크 협업에 열려 있습니다.'
-              : 'Open for collaborations on AI-driven products and high-end digital experiences.'}
-          </p>
+        {/* Contact links — prominent, centered, same style as original */}
+        <div className="flex items-center justify-center gap-10">
+          {links.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className="text-sm font-medium uppercase tracking-[0.15em] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
 
+        {/* Mobile contact form */}
+        <div className="mt-16 md:hidden">
           <form action="https://formspree.io/f/placeholder" method="POST" className="space-y-4">
             <div>
               <label className="mb-1.5 block font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">{fl.name}</label>
@@ -71,18 +76,6 @@ export default function Contact({ lang = 'en' as Lang }: { lang?: Lang }) {
               {fl.send}
             </button>
           </form>
-
-          {/* Social links below form */}
-          <div className="mt-6 flex items-center justify-center gap-8">
-            {links.map((link) => (
-              <a key={link.label} href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                {link.label}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </section>

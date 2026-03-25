@@ -52,6 +52,9 @@ const translations = {
       section: 'Writings',
       heading: 'From the Blog',
       viewAll: 'View all',
+      pageTitle: 'Blog',
+      pageDescription: 'Project retrospectives, technical decisions, and planning insights.',
+      backToBlog: 'Back to Blog',
     },
     stack: {
       section: '03 / Technical Stack',
@@ -102,6 +105,8 @@ const translations = {
     contact: {
       section: '06 / Connect',
       heading: "Let's Build.",
+      sloganWords: ['Plan.', 'Build.', 'Prove.'] as readonly string[],
+      tagline: 'Structure meets execution — from strategy to shipping.',
     },
     footer: {
       copy: 'Hyebin Woo. Designed for precision.',
@@ -159,6 +164,9 @@ const translations = {
       section: '글',
       heading: '최근 블로그',
       viewAll: '전체 보기',
+      pageTitle: '블로그',
+      pageDescription: '프로젝트 회고, 기술적 의사결정, 기획 인사이트를 기록합니다.',
+      backToBlog: '블로그로 돌아가기',
     },
     stack: {
       section: '03 / 기술 스택',
@@ -209,6 +217,8 @@ const translations = {
     contact: {
       section: '06 / 연락',
       heading: '함께 만들어요.',
+      sloganWords: ['Plan.', 'Build.', 'Prove.'] as readonly string[],
+      tagline: '구조를 세우고, 직접 만들고, 숫자로 증명합니다.',
     },
     footer: {
       copy: '우혜빈. 정밀함을 위해 설계됨.',
