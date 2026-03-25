@@ -5,6 +5,16 @@ date: 2026-03-23
 tags: ["Portfolio", "AI", "서비스기획"]
 category: "project"
 featured: true
+relatedLinks:
+  - label: "진짜 문제를 찾는 법 — 기획 사례"
+    url: "/portfolio/ko/blog/aed-02-feature-planning/"
+    type: "blog"
+  - label: "디자이너 없이 20페이지를 리디자인한 방법"
+    url: "/portfolio/ko/blog/aed-03-ai-redesign/"
+    type: "blog"
+  - label: "체크포인트 스킬을 만든 이유"
+    url: "/portfolio/ko/blog/aed-04-frontend-checkpoint/"
+    type: "blog"
 ---
 
 ## 우리 팀 상황

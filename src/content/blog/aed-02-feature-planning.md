@@ -3,8 +3,15 @@ title: "사용자가 \"불편하다\"고 했을 때, 진짜 문제를 찾는 법
 description: "태그 시스템과 Holdings 네비게이션 — 요청 너머의 니즈를 찾은 기획 사례"
 date: 2026-03-23
 tags: ["Portfolio", "서비스기획", "UX"]
-category: "project"
+category: "planning"
 featured: false
+relatedLinks:
+  - label: "이 프로젝트의 시작 — 사내 도구를 직접 만들게 된 이야기"
+    url: "/portfolio/ko/blog/aed-01-project-intro/"
+    type: "blog"
+  - label: "디자이너 없이 20페이지를 리디자인한 방법"
+    url: "/portfolio/ko/blog/aed-03-ai-redesign/"
+    type: "blog"
 ---
 
 ## 시작하면서

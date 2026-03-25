@@ -8,8 +8,13 @@ const blog = defineCollection({
     description: z.string(),
     date: z.coerce.date(),
     tags: z.array(z.string()).default([]),
-    category: z.enum(['project', 'tech', 'planning', 'retrospective']).default('tech'),
+    category: z.enum(['project', 'planning', 'deep-dive', 'skill']).default('project'),
     featured: z.boolean().default(false),
+    relatedLinks: z.array(z.object({
+      label: z.string(),
+      url: z.string(),
+      type: z.enum(['project', 'blog', 'github', 'linkedin']),
+    })).default([]),
   }),
 });
 

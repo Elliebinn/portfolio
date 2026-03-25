@@ -1,8 +1,12 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from '../../../components/Navbar';
+import Footer from '../../../components/Footer';
 import { getCollection } from 'astro:content';
+import { t } from '../../../i18n/translations';
+
+const lang = 'en';
+const tr = t(lang);
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -18,19 +22,19 @@ const categoryLabels: Record<string, string> = {
 const base = import.meta.env.BASE_URL;
 ---
 
-<Layout title="Blog — Hyebin Woo">
-  <Navbar client:load />
+<Layout title={`${tr.blog.pageTitle} — Hyebin Woo`}>
+  <Navbar lang={lang} client:load />
 
   <main class="px-6 pt-32 pb-20">
     <div class="mx-auto max-w-7xl">
       <p class="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
-        Writings
+        {tr.blog.section}
       </p>
       <h1 class="mb-4 text-4xl font-bold sm:text-5xl" style="font-family: var(--font-display);">
-        Blog
+        {tr.blog.pageTitle}
       </h1>
       <p class="mb-10 max-w-xl text-sm leading-relaxed text-[var(--color-text-muted)]">
-        프로젝트 회고, 기술적 의사결정, 기획 인사이트를 기록합니다.
+        {tr.blog.pageDescription}
       </p>
 
       <div class="mb-12 flex flex-wrap gap-2" id="category-filters">
@@ -38,7 +42,7 @@ const base = import.meta.env.BASE_URL;
           data-category="all"
           class="category-btn active rounded-full border border-[var(--color-accent-light)] bg-[var(--color-accent-light)] px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-bg)] transition-all"
         >
-          전체
+          All
         </button>
         {Object.entries(categoryLabels).map(([key, label]) => (
           <button
@@ -53,7 +57,7 @@ const base = import.meta.env.BASE_URL;
       <div class="space-y-0">
         {posts.map((post, i) => (
           <a
-            href={`${base}blog/${post.id}/`}
+            href={`${base}${lang}/blog/${post.id}/`}
             data-category={post.data.category}
             class={`blog-post group grid items-start gap-6 py-10 lg:grid-cols-[120px_1fr_1fr] ${
               i !== posts.length - 1 ? 'border-b border-[var(--color-border)]' : ''
@@ -61,7 +65,7 @@ const base = import.meta.env.BASE_URL;
           >
             <div class="flex items-center gap-3">
               <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
-                {categoryLabels[post.data.category]}
+                {categoryLabels[post.data.category] || post.data.category}
               </span>
             </div>
             <div>

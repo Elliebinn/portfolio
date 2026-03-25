@@ -10,6 +10,12 @@ export default defineConfig({
   base: '/portfolio',
   integrations: [react()],
 
+  markdown: {
+    shikiConfig: {
+      theme: 'github-dark',
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()]
   }
