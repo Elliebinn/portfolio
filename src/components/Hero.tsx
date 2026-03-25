@@ -2,85 +2,53 @@ import type { Lang } from '../i18n/translations';
 import { t } from '../i18n/translations';
 
 export default function Hero({ lang = 'en' as Lang }: { lang?: Lang }) {
-  const tr = t(lang).hero;
+  const title = lang === 'ko' ? '포트폴리오' : 'Portfolio';
+  const presented = 'Presented By: Hyebin Woo';
 
-  const currentStatus = lang === 'ko'
-    ? 'AI 투자 리서치 플랫폼을 만들고 있습니다'
-    : 'Currently building an AI investment research platform';
+  const roles = lang === 'ko'
+    ? 'AI 서비스 기획  /  풀스택 빌더  /  금융 도메인'
+    : 'AI Service Planning  /  Full-Stack Builder  /  Finance Domain';
+
+  const location = 'Seoul, South Korea';
 
   return (
-    <section id="home" className="relative flex min-h-[70vh] flex-col px-6 pt-24 pb-12 md:pt-28">
-      {/* Background watermark — hidden on small mobile */}
-      <div className="pointer-events-none absolute top-16 left-6 select-none hidden sm:block">
-        <span className="text-[12rem] font-black leading-none text-[var(--color-text)] opacity-[0.03] sm:text-[18rem]" style={{ fontFamily: 'var(--font-display)' }}>
-          혜빈
-        </span>
+    <section
+      id="home"
+      className="relative h-screen overflow-hidden px-6 sm:px-10"
+      style={{ backgroundColor: '#ffffff' }}
+    >
+      {/* Top left info */}
+      <div className="pt-24 sm:pt-28">
+        <p className="text-[11px] text-gray-400 tracking-wide">2026</p>
+        <p className="mt-1 text-[15px] font-bold text-black">{title}</p>
+        <p className="mt-0.5 text-[12px] text-gray-400">{presented}</p>
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl flex-1">
-        <p className="mb-4 sm:mb-6 inline-block rounded-full bg-[var(--color-accent)]/10 px-3 py-1 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] text-[var(--color-accent-light)] uppercase sm:bg-transparent sm:px-0 sm:py-0">
-          {tr.available}
+      {/* Info bar — just above the giant name */}
+      <div className="absolute left-6 right-6 sm:left-10 sm:right-10 bottom-[42vw] sm:bottom-[12vw] flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-[11px] sm:text-[13px] tracking-wide text-gray-500">
+          {roles}
         </p>
-
-        <h1 className="mb-4 sm:mb-8 text-5xl sm:text-8xl lg:text-9xl font-black leading-[0.95] tracking-tight" style={{ fontFamily: 'var(--font-display)' }}>
-          Hyebin Woo
-        </h1>
-
-        {/* Description */}
-        <p className="max-w-lg text-sm sm:text-[15px] leading-relaxed text-[var(--color-text-muted)]"
-          dangerouslySetInnerHTML={{ __html: tr.description }} />
-
-        {/* CTA buttons — visible on mobile */}
-        <div className="mt-6 flex items-center gap-3 sm:mt-8 md:hidden">
-          <a href="#projects" className="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-white">
-            View Projects
-            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
-          </a>
-          <a href="#contact" className="rounded-full border border-[var(--color-border)] px-5 py-2.5 text-sm font-semibold text-[var(--color-text)]">
-            Contact
-          </a>
-        </div>
-
-        {/* Desktop: location + expertise tags */}
-        <div className="mt-12 hidden gap-8 md:grid lg:grid-cols-2">
-          <div />
-          <div className="flex flex-col items-start gap-4 lg:items-end">
-            <div>
-              <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">{tr.location}</p>
-              <p className="text-sm font-semibold">{tr.locationValue}</p>
-            </div>
-            <div>
-              <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">{tr.expertise}</p>
-              <a href="#projects" className="border-b border-[var(--color-text)] text-sm font-semibold transition-colors hover:text-[var(--color-accent-light)]">
-                {tr.expertiseValue}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Current status + scroll hint — anchored to bottom */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl mt-auto flex flex-col items-center gap-4 pt-8">
-        <p className="font-mono text-[11px] tracking-[0.15em] text-[var(--color-text-muted)]">
-          {currentStatus}
+        <p className="text-[11px] sm:text-[13px] tracking-wide text-gray-500">
+          {location}
         </p>
-        <a href="#about" className="group flex flex-col items-center gap-1" aria-label="Scroll down">
-          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-text-muted)] opacity-50 transition-opacity group-hover:opacity-100">
-            Scroll
-          </span>
-          <svg
-            width="20"
-            height="20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            viewBox="0 0 24 24"
-            className="animate-bounce text-[var(--color-text-muted)] opacity-50 transition-opacity group-hover:opacity-100"
-          >
-            <path d="M12 5v14M5 12l7 7 7-7" />
-          </svg>
-        </a>
       </div>
+
+      {/* Giant name — anchored to absolute bottom */}
+      {/* Mobile */}
+      <h1
+        className="absolute bottom-16 left-4 right-4 sm:hidden text-black font-black leading-[0.82] tracking-[-0.05em] text-[18vw]"
+        style={{ fontFamily: "'Inter', 'Geist Sans', sans-serif", fontWeight: 900 }}
+      >
+        Hyebin<br />Woo
+      </h1>
+      {/* Desktop */}
+      <h1
+        className="absolute bottom-0 left-0 right-0 hidden sm:block px-4 text-black font-black leading-[0.82] tracking-[-0.05em] text-[14vw]"
+        style={{ fontFamily: "'Inter', 'Geist Sans', sans-serif", fontWeight: 900 }}
+      >
+        Hyebin Woo
+      </h1>
     </section>
   );
 }

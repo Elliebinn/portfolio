@@ -48,9 +48,11 @@ export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
           {/* Photo — hidden on mobile per design, shows on lg */}
           <div className="hidden lg:block">
             <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]">
-              <div className="flex h-full items-center justify-center text-sm text-[var(--color-text-muted)]">
-                Photo
-              </div>
+              <img
+                src="/portfolio/assets/about-profile.png"
+                alt="Hyebin Woo illustration"
+                className="h-full w-full object-cover"
+              />
             </div>
             <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
               {txt.location}
