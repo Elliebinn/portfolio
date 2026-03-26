@@ -34,10 +34,20 @@ export default function Navbar({ lang = 'en' as Lang }: { lang?: Lang }) {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
         <a
           href={`${BASE}/${lang}/`}
-          className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--color-text)]"
-          style={{ fontFamily: 'var(--font-display)' }}
+          className="flex items-center gap-2"
         >
-          HYEBIN<span className="text-[var(--color-accent)]">.DEV</span>
+          <img
+            src="/portfolio/assets/logo-v2-character-circle.png"
+            alt="HB."
+            className="nav-logo"
+            style={{ height: '28px', width: '28px', borderRadius: '50%' }}
+          />
+          <span
+            className="text-base font-semibold tracking-[0.15em] text-[var(--color-text)]"
+            style={{ fontFamily: 'var(--font-mono)' }}
+          >
+            HB.
+          </span>
         </a>
 
         {/* Desktop nav */}

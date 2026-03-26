@@ -22,12 +22,12 @@ const categoryLabels: Record<string, string> = {
 const base = import.meta.env.BASE_URL;
 ---
 
-<Layout title={`${tr.blog.pageTitle} — Hyebin Woo`}>
+<Layout title={`${tr.blog.pageTitle} — HYEBIN.DEV`}>
   <Navbar lang={lang} client:load />
 
   <main class="px-6 pt-32 pb-20">
     <div class="mx-auto max-w-7xl">
-      <p class="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+      <p class="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
         {tr.blog.section}
       </p>
       <h1 class="mb-4 text-4xl font-bold sm:text-5xl" style="font-family: var(--font-display);">
@@ -64,7 +64,7 @@ const base = import.meta.env.BASE_URL;
             }`}
           >
             <div class="flex items-center gap-3">
-              <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+              <span class="text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
                 {categoryLabels[post.data.category] || post.data.category}
               </span>
             </div>

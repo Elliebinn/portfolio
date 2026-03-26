@@ -98,7 +98,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
         <div className="relative z-10 mx-auto max-w-7xl px-6 pt-28 pb-20">
           <div className="flex items-center gap-2 mb-6">
             <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+            <span className="text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
               {project.status}
             </span>
           </div>
@@ -140,7 +140,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
               {/* Challenge */}
               <div>
-                <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+                <p className="mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
                   {project.challenge.label}
                 </p>
                 <h2
@@ -166,7 +166,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
               </div>
               {/* Solution */}
               <div>
-                <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+                <p className="mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
                   {project.solution.label}
                 </p>
                 <h2
@@ -197,7 +197,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
         /* Fallback: original Problem section */
         <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
           <div className="mx-auto max-w-7xl">
-            <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+            <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
               01 The Problem
             </p>
             <div className="max-w-3xl">
@@ -220,7 +220,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       {/* ═══ How It Works — walkthrough with screenshots (kept) ═══ */}
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+          <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
             02 How It Works
           </p>
           <h2
@@ -286,7 +286,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       {/* ═══ Architecture — overview + highlights ═══ */}
       <section id="architecture" className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+          <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
             03 Architecture
           </p>
           <p className="mb-12 max-w-3xl text-lg leading-relaxed text-[var(--color-text-muted)]">
@@ -315,7 +315,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       {/* ═══ Agent Architecture — "The Intelligence Ensemble" ═══ */}
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+          <p className="mb-4 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
             04 Agent Architecture
           </p>
           <h2
@@ -366,7 +366,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
             <div className="grid items-center gap-12 lg:grid-cols-2">
               {/* Text side */}
               <div>
-                <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+                <p className="mb-4 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
                   05 The Debate System
                 </p>
                 <h2
@@ -468,7 +468,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       {/* ═══ Data Flow ═══ */}
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-12 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+          <p className="mb-12 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
             The Data Journey
           </p>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -496,7 +496,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       {/* ═══ Metrics ═══ */}
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-12 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent-light)]">
+          <p className="mb-12 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
             By The Numbers
           </p>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">

@@ -5,7 +5,7 @@ const BASE = '/portfolio';
 
 const projectLinks = [
   '/en/projects/jujutok/',
-  '/blog/debate-system-design/',
+  '/blog/2026-03-15-jujutok-debate-bias-system/',
 ];
 
 const projectImages = [
@@ -19,7 +19,7 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
   return (
     <section id="projects" className="border-t border-[var(--color-border)] px-6 py-16 sm:py-28">
       <div className="mx-auto max-w-7xl">
-        <p className="mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+        <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
           {tr.section}
         </p>
 
@@ -56,7 +56,7 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
               </div>
 
               <div style={{ direction: 'ltr' }}>
-                <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
                   {p.label}
                 </p>
                 <h3 className="mb-4 text-2xl font-bold sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>

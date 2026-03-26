@@ -18,7 +18,7 @@ const { Content } = await render(post);
 const base = import.meta.env.BASE_URL;
 ---
 
-<Layout title={`${post.data.title} — Hyebin Woo`}>
+<Layout title={`${post.data.title} — HYEBIN.DEV`}>
   <Navbar client:load />
 
   <main class="px-6 pt-32 pb-20">
@@ -204,4 +204,12 @@ const base = import.meta.env.BASE_URL;
     margin: 2rem 0;
     border-color: var(--color-border);
   }
+
+  .prose-custom img { border-radius: 0.75rem; margin-bottom: 0.5rem; }
+  .prose-custom img + em { display: block; font-size: 0.75rem; color: var(--color-text-muted); font-style: normal; margin-bottom: 1.5rem; opacity: 0.7; }
+  .prose-custom table { width: 100%; margin-bottom: 1.5rem; border-collapse: collapse; font-size: 0.875rem; }
+  .prose-custom th { text-align: left; padding: 0.75rem 1rem; border-bottom: 2px solid var(--color-border); color: var(--color-text); font-weight: 600; font-size: 0.8125rem; }
+  .prose-custom td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); }
+  .prose-custom tr:last-child td { border-bottom: none; }
+  .prose-custom tbody tr:hover { background-color: var(--color-bg-card); }
 </style>

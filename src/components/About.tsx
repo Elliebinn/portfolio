@@ -54,14 +54,14 @@ export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
                 className="h-full w-full object-cover"
               />
             </div>
-            <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+            <p className="mt-4 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
               {txt.location}
             </p>
           </div>
 
           {/* Text + Stats */}
           <div className="flex flex-col justify-center">
-            <p className="mb-4 sm:mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+            <p className="mb-4 sm:mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
               {tr.section}
             </p>
 
@@ -88,15 +88,15 @@ export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
               {txt.body}
             </p>
 
-            {/* Stats: mobile = vertical stack, sm = 2 col, lg = 3 col */}
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Stats strip */}
+            <div className="grid grid-cols-3 gap-6 lg:gap-10">
               {st.map((s) => (
                 <div
                   key={s.label}
-                  className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] px-5 py-5"
+                  className="border-t-2 border-[var(--color-accent)] pt-4"
                 >
                   <p
-                    className="text-3xl font-bold sm:text-2xl lg:text-3xl"
+                    className="text-3xl font-black tracking-tight sm:text-4xl lg:text-[2.75rem]"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
                     {s.value}

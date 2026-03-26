@@ -21,7 +21,7 @@ export default function Contact({ lang = 'en' as Lang }: { lang?: Lang }) {
     <section id="contact" className="border-t border-[var(--color-border)] px-6 py-16 sm:py-32">
       <div className="mx-auto max-w-7xl">
         {/* Section label */}
-        <p className="mb-8 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+        <p className="mb-8 text-center text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
           {tr.section}
         </p>
 

@@ -7,7 +7,7 @@ export default function Journey({ lang = 'en' as Lang }: { lang?: Lang }) {
   return (
     <section id="timeline" className="border-t border-[var(--color-border)] px-6 py-16 sm:py-28">
       <div className="mx-auto max-w-7xl">
-        <p className="mb-12 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+        <p className="mb-12 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
           {tr.section}
         </p>
 
