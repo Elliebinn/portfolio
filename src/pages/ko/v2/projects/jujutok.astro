@@ -1,0 +1,18 @@
+---
+import EditorialLayout from '../../../../layouts/EditorialLayout.astro';
+import Navbar from '../../../../components/editorial/Navbar';
+import ProjectDetail from '../../../../components/editorial/ProjectDetail';
+import Footer from '../../../../components/editorial/Footer';
+import { jujutok } from '../../../../data/projects';
+
+const lang = 'ko';
+const project = jujutok[lang];
+---
+
+<EditorialLayout title={`${project.title}${project.titleAccent} — HYEBIN.DEV`}>
+  <Navbar lang={lang} client:load />
+  <main>
+    <ProjectDetail project={project} lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</EditorialLayout>

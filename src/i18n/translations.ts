@@ -40,7 +40,7 @@ const translations = {
         },
         {
           label: 'Quant Strategy Platform',
-          title: 'AED — Quant Analysis Platform',
+          title: 'Quant Strategy Platform',
           description:
             'Internal quant strategy analysis platform for asset management. Designed tag-based strategy taxonomy for 200+ strategies, portfolio holdings navigation, and migrated 20+ pages to v2 design using Claude Code workflow.',
           tags: ['Service Planning', 'UX Design', 'ClickHouse', 'Claude Code'],
@@ -67,7 +67,7 @@ const translations = {
           title: 'AI Service Planner — Alphabridge',
           org: 'Subsidiary of AssetPlus Asset Management',
           description:
-            'Leading service planning & UX for AED quant platform. Planning Voyager AI Research product. Launched RATB 22nd\u201125th robo-advisor algorithms (38 total). Built n8n + Slack news monitoring automation.',
+            'Leading service planning & UX for internal quant platform. Planning Voyager AI Research product. Launched RATB 22nd\u201125th robo-advisor algorithms (38 total). Built n8n + Slack news monitoring automation.',
         },
         {
           period: '2023.09 — 2025.03',
@@ -152,7 +152,7 @@ const translations = {
         },
         {
           label: '퀀트 전략 플랫폼',
-          title: 'AED — 퀀트 분석 플랫폼',
+          title: '퀀트 전략 플랫폼',
           description:
             '자산운용사 사내 퀀트 전략 분석 플랫폼. 200개+ 전략의 태그 기반 분류 체계 설계, 포트폴리오 Holdings 네비게이션 재설계, Claude Code 활용 워크플로우로 20개+ 분석 페이지 v2 디자인 전환.',
           tags: ['서비스 기획', 'UX 설계', 'ClickHouse', 'Claude Code'],
@@ -179,7 +179,7 @@ const translations = {
           title: 'AI서비스기획본부 — 알파브릿지',
           org: '에셋플러스자산운용 자회사',
           description:
-            'AED 퀀트 플랫폼 서비스 기획·UX 개선 주도. Voyager AI Research 기획. RATB 22~25차 로보어드바이저 알고리즘 38개 기획·출시. n8n + Slack 뉴스 모니터링 자동화 구축.',
+            '사내 퀀트 플랫폼 서비스 기획·UX 개선 주도. Voyager AI Research 기획. RATB 22~25차 로보어드바이저 알고리즘 38개 기획·출시. n8n + Slack 뉴스 모니터링 자동화 구축.',
         },
         {
           period: '2023.09 — 2025.03',

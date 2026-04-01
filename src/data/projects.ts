@@ -265,3 +265,223 @@ export const jujutok: Record<'en' | 'ko', ProjectData> = {
     },
   },
 };
+
+export const quantPlatform: Record<'en' | 'ko', ProjectData> = {
+  en: {
+    slug: 'quant-platform',
+    label: 'Case Study / Service Planning',
+    title: 'AED — ',
+    titleAccent: 'Quant Research Platform',
+    status: 'In Production',
+    deployId: 'INTERNAL_TOOL',
+
+    heroSubtitle: 'A quant strategy analysis tool used daily by 4 researchers. 0 frontend devs. 0 designers. 1 planner who built it all.',
+
+    problem: {
+      heading: '4 researchers used this tool every day — but nobody was improving it.',
+      paragraphs: [
+        'AlphaBridge Quant Research team. They were using an internal dashboard every day to backtest hundreds of strategies and analyze performance.',
+        'The problem? There was nobody to improve the tool. No frontend dev, no designer, no planner. Pain points kept getting pushed to "later."',
+        '200+ strategies listed without tags, 3 clicks to see Holdings, and the UI was stuck at prototype level.',
+      ],
+    },
+
+    challenge: {
+      label: '01 The Challenge',
+      heading: 'Used every day, painful every time.',
+      description: '200+ strategies listed without any classification. Accessing core data required 3+ clicks. The V1 UI was prototype-level, making strategy comparison impossible at a glance.',
+      metricValue: '83%',
+      metricLabel: 'Workflow time reduced',
+    },
+
+    solution: {
+      label: '02 The Solution',
+      heading: 'Claude Code was my frontend team.',
+      description: 'I drew HTML mockups myself, documented design tokens, then handed them to Claude Code. Not "build something like this" — but "match this mockup exactly." That was the key.',
+      badges: [
+        { title: 'Design System', subtitle: 'Token-based consistency' },
+        { title: 'Auto Migration', subtitle: '20+ page conversion' },
+      ],
+    },
+
+    walkthrough: {
+      heading: 'The visible transformation.',
+      steps: [
+        {
+          label: 'Before',
+          title: 'V1 — A prototype-level dashboard',
+          description: '1 KPI, untagged list, minimal styling. The UI developers built and never touched again.',
+          screenshot: '/images/aed/overview-v1.png',
+        },
+        {
+          label: 'After',
+          title: 'V2 — Information density completely transformed',
+          description: '5 KPIs, tag-based classification, color coding, multilingual, dark mode. Same data, entirely different experience.',
+          screenshot: '/images/aed/overview-v2.png',
+        },
+        {
+          label: 'Compare',
+          title: 'Same data, completely different screen',
+          description: 'Before/After of the backtest detail page. KPIs that were just numbers now have benchmark comparisons, rankings, and date context.',
+          screenshot: '/images/aed/v1-v2-compare.png',
+        },
+        {
+          label: 'Vision',
+          title: 'Dark mode — the next design direction',
+          description: 'Simplified sidebar, cumulative return charts, strategy ranking widgets. The v3 direction currently in progress.',
+          screenshot: '/assets/projects/aed/dashboard-overview.png',
+        },
+      ],
+    },
+
+    overview:
+      'AED wasn\'t just a redesign. It was rebuilding the <em>information architecture</em> of a tool researchers use every day. I designed a tag taxonomy, reorganized navigation around workflows, and built a design system to consistently transform 20 pages.',
+    highlights: [
+      { icon: 'brain', title: 'Information Architecture Redesign', description: '200+ strategies classified by benchmark, universe, and type. Changed how exploration works entirely.' },
+      { icon: 'cog', title: 'AI-Powered Implementation', description: 'Used Claude Code to convert 20+ pages following a unified design system.' },
+    ],
+
+    stack: [
+      { category: 'Planning', name: 'Service Planning' },
+      { category: 'AI Dev', name: 'Claude Code' },
+      { category: 'OLAP', name: 'ClickHouse' },
+      { category: 'RDBMS', name: 'MySQL' },
+      { category: 'UI', name: 'Design System' },
+      { category: 'Theme', name: 'Dark Mode' },
+    ],
+
+    flow: [
+      { title: 'Collect Pain Points', subtitle: 'User friction mapping' },
+      { title: 'Root Cause Analysis', subtitle: 'Structural diagnosis' },
+      { title: 'Feature Planning', subtitle: 'IA & interaction design' },
+      { title: 'AI Implementation', subtitle: 'Claude Code execution' },
+    ],
+
+    metrics: [
+      { value: '20+', label: 'Pages Redesigned' },
+      { value: '200+', label: 'Strategies Classified' },
+      { value: '3→1', label: 'Clicks to Holdings' },
+      { value: '0', label: 'Frontend Developers' },
+    ],
+
+    cta: {
+      heading: 'Want to read the full story?',
+      subtext: 'Deep-dive blog posts covering the planning process, user research, and AI implementation.',
+      githubUrl: '/en/blog/2026-03-23-aed-quant-tool-overview/',
+      githubLabel: 'Read the Blog',
+    },
+
+    screenshots: {
+      hero: '/assets/projects/aed/dashboard-overview.png',
+    },
+  },
+
+  ko: {
+    slug: 'quant-platform',
+    label: '케이스 스터디 / 서비스 기획',
+    title: 'AED — ',
+    titleAccent: '퀀트 리서치 플랫폼',
+    status: '운영 중',
+    deployId: 'INTERNAL_TOOL',
+
+    heroSubtitle: '리서처 4명이 매일 쓰는 퀀트 전략 분석 도구. 프론트엔드 개발자 0명. 디자이너 0명. 기획자 1명이 직접 만들었어요.',
+
+    problem: {
+      heading: '리서처 4명이 매일 쓰는 도구인데, 개선할 사람이 없었어요.',
+      paragraphs: [
+        '알파브릿지 퀀트 리서치팀. 수백 개 전략을 백테스트하고 성과를 분석하는 내부 대시보드를 매일 쓰고 있었어요.',
+        '문제는 이 도구를 개선할 사람이 없었다는 거예요. 프론트엔드도 디자이너도 기획자도 없었고, 불편사항은 계속 "나중에"로 밀리는 상황.',
+        '전략 200개가 태그 없이 나열되어 있고, Holdings 보려면 3번 클릭해야 하고, UI는 프로토타입 수준에 멈춰 있었어요.',
+      ],
+    },
+
+    challenge: {
+      label: '01 문제',
+      heading: '매일 쓰는 도구인데, 쓸 때마다 불편했어요.',
+      description: '200개 넘는 전략이 분류 없이 나열되어 있고, 핵심 데이터에 접근하려면 클릭을 3번 이상 해야 했어요. V1 UI는 프로토타입 수준이라 전략 비교가 한눈에 안 됐죠.',
+      metricValue: '83%',
+      metricLabel: '운용시간 단축',
+    },
+
+    solution: {
+      label: '02 해결',
+      heading: 'Claude Code가 제 프론트엔드 팀이었어요.',
+      description: 'HTML 목업을 직접 그리고, 디자인 토큰을 문서화한 다음 Claude Code에 넘겼어요. "이렇게 만들어줘"가 아니라 "이 목업이랑 똑같이" — 그게 핵심이었어요.',
+      badges: [
+        { title: '디자인 시스템', subtitle: '토큰 기반 일관성' },
+        { title: '자동 전환', subtitle: '20+ 페이지 마이그레이션' },
+      ],
+    },
+
+    walkthrough: {
+      heading: '눈에 보이는 변화.',
+      steps: [
+        {
+          label: 'Before',
+          title: 'V1 — 프로토타입 수준의 대시보드',
+          description: 'KPI 1개, 분류 없는 목록, 최소한의 스타일링. 개발자가 만든 그대로의 UI였어요.',
+          screenshot: '/images/aed/overview-v1.png',
+        },
+        {
+          label: 'After',
+          title: 'V2 — 정보 밀도가 완전히 달라졌어요',
+          description: 'KPI 5개, 태그 기반 분류, 컬러 코딩, 다국어, 다크모드. 같은 데이터인데 전혀 다른 경험.',
+          screenshot: '/images/aed/overview-v2.png',
+        },
+        {
+          label: '비교',
+          title: '같은 데이터, 완전히 다른 화면',
+          description: '백테스트 상세 페이지의 Before/After. 숫자만 있던 KPI에 벤치마크 대비, 순위, 날짜 맥락이 추가됐어요.',
+          screenshot: '/images/aed/v1-v2-compare.png',
+        },
+        {
+          label: '비전',
+          title: '다크모드 — 다음 단계 디자인',
+          description: '사이드바 단순화, 누적 수익률 차트, 전략 랭킹 위젯. 현재 진행 중인 v3 방향성이에요.',
+          screenshot: '/assets/projects/aed/dashboard-overview.png',
+        },
+      ],
+    },
+
+    overview:
+      'AED는 단순한 리디자인이 아니었어요. 리서처가 매일 쓰는 도구의 <em>정보 구조 자체</em>를 바꾼 프로젝트예요. 태그 분류 체계를 설계하고, 네비게이션을 워크플로우 기준으로 재편하고, 디자인 시스템을 구축해서 20페이지를 일관되게 전환했어요.',
+    highlights: [
+      { icon: 'brain', title: '정보 구조 재설계', description: '200+ 전략을 벤치마크/유니버스/유형으로 분류. 탐색 방식 자체가 바뀌었어요.' },
+      { icon: 'cog', title: 'AI 기반 구현', description: 'Claude Code로 20+ 페이지를 디자인 시스템 기준으로 일괄 전환했어요.' },
+    ],
+
+    stack: [
+      { category: '기획', name: 'Service Planning' },
+      { category: 'AI 개발', name: 'Claude Code' },
+      { category: 'OLAP', name: 'ClickHouse' },
+      { category: 'RDBMS', name: 'MySQL' },
+      { category: 'UI', name: 'Design System' },
+      { category: '테마', name: 'Dark Mode' },
+    ],
+
+    flow: [
+      { title: '사용자 불편 수집', subtitle: '마찰 포인트 매핑' },
+      { title: '근본 원인 분석', subtitle: '구조적 진단' },
+      { title: '기능 기획', subtitle: 'IA & 인터랙션 설계' },
+      { title: 'AI 구현', subtitle: 'Claude Code 실행' },
+    ],
+
+    metrics: [
+      { value: '20+', label: '페이지 리디자인' },
+      { value: '200+', label: '전략 분류 체계화' },
+      { value: '3→1', label: 'Holdings 접근 클릭' },
+      { value: '0명', label: '프론트엔드 개발자' },
+    ],
+
+    cta: {
+      heading: '전체 스토리가 궁금하세요?',
+      subtext: '기획 과정, 사용자 리서치, AI 구현까지 담은 블로그 글이에요.',
+      githubUrl: '/ko/blog/2026-03-23-aed-quant-tool-overview/',
+      githubLabel: '블로그 읽기',
+    },
+
+    screenshots: {
+      hero: '/assets/projects/aed/dashboard-overview.png',
+    },
+  },
+};

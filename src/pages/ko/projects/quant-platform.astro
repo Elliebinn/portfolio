@@ -1,0 +1,20 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from '../../../components/Navbar';
+import ProjectDetail from '../../../components/ProjectDetail';
+import Footer from '../../../components/Footer';
+import BottomNav from '../../../components/BottomNav';
+import { quantPlatform } from '../../../data/projects';
+
+const lang = 'ko';
+const project = quantPlatform[lang];
+---
+
+<Layout title={`${project.title}${project.titleAccent} — HYEBIN.DEV`}>
+  <Navbar lang={lang} client:load />
+  <main>
+    <ProjectDetail project={project} lang={lang} client:load />
+  </main>
+  <Footer />
+  <BottomNav lang={lang} client:load />
+</Layout>

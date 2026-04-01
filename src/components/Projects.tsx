@@ -5,7 +5,7 @@ const BASE = '/portfolio';
 
 const projectLinks = [
   '/en/projects/jujutok/',
-  '/blog/2026-03-15-jujutok-debate-bias-system/',
+  '/en/projects/quant-platform/',
 ];
 
 const projectImages = [
@@ -72,7 +72,7 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
                     </span>
                   ))}
                 </div>
-                <a href={`${BASE}${lang === 'ko' && i === 0 ? '/ko/projects/jujutok/' : projectLinks[i]}`}
+                <a href={`${BASE}${lang === 'ko' ? projectLinks[i].replace('/en/', '/ko/') : projectLinks[i]}`}
                   className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-accent-light)] transition-colors hover:text-[var(--color-text)]">
                   + {p.linkLabel}
                 </a>

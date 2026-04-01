@@ -133,8 +133,16 @@ relatedLinks:
 
 ---
 
-## 현재 v1. 다음은 자동 회귀 테스트
+## 스킬로 독립시켰어요
 
-지금은 페이지 단위로 체크리스트를 뽑고, 승인 받고, 구현하고, 검증하는 흐름이에요. [frontend-checkpoint](/portfolio/ko/blog/2026-03-23-aed-frontend-checkpoint/)가 "변경 후 기록"을 자동화한 도구라면, mockup-apply는 **"변경 자체"를 체계화한 도구**예요.
+20페이지를 거치면서 패턴이 충분히 검증됐다고 판단해서, 프로젝트에 묶여 있던 워크플로우를 **독립된 Claude Code 스킬**로 분리했어요. 다른 프로젝트에서도 `/mockup-apply` 한 줄이면 같은 파이프라인이 돌아가요.
+
+```bash
+git clone https://github.com/Elliebinn/mockup-apply.git ~/.claude/skills/mockup-apply
+```
+
+가이드 문서도 만들었어요. 예시 3개 — 대시보드 리디자인, 분석만 수행(`--analyze-only`), AI 목업 생성 후 바로 적용하는 파이프라인 — 를 넣어서 처음 쓰는 사람도 흐름을 잡을 수 있게요.
+
+[frontend-checkpoint](/portfolio/ko/blog/2026-03-23-aed-frontend-checkpoint/)가 "변경 후 기록"을 자동화한 도구라면, mockup-apply는 **"변경 자체"를 체계화한 도구**예요. 둘을 같이 쓰면 목업 적용 → 체크포인트 촬영까지 한 흐름으로 이어져요.
 
 다음에는 KEEP 항목들에 대한 자동 회귀 테스트를 붙일 생각이에요. 지금은 Phase 4에서 한 번 검증하는데, 이후 다른 페이지 작업하면서 이전 KEEP 항목이 다시 깨질 수도 있거든요. 전체 KEEP 목록을 모아서 PR 단위로 한 번에 검증하는 걸 만들려고요.

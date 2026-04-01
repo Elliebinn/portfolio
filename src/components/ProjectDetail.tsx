@@ -57,8 +57,8 @@ export interface ProjectData {
 
   overview: string;
   highlights: { icon: 'brain' | 'cog'; title: string; description: string }[];
-  agents: Agent[];
-  debate: {
+  agents?: Agent[];
+  debate?: {
     title: string;
     titleAccent: string;
     description: string;
@@ -313,6 +313,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       </section>
 
       {/* ═══ Agent Architecture — "The Intelligence Ensemble" ═══ */}
+      {project.agents && project.agents.length > 0 && (
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <p className="mb-4 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
@@ -356,8 +357,10 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
           </div>
         </div>
       </section>
+      )}
 
       {/* ═══ Debate System — dark bg treatment from Pencil ═══ */}
+      {project.debate && (
       <section className="relative overflow-hidden border-b border-[var(--color-border)]">
         {/* Subtle dark overlay for contrast */}
         <div className="pointer-events-none absolute inset-0 bg-[var(--color-bg-card)]" />
@@ -440,6 +443,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
           </div>
         </div>
       </section>
+      )}
 
       {/* ═══ Technical Stack ═══ */}
       <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">

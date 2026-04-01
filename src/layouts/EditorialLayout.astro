@@ -1,0 +1,26 @@
+---
+import '../styles/editorial.css';
+
+interface Props {
+  title?: string;
+}
+
+const { title = "HYEBIN.DEV" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AI Service Planner & Product Engineer — Plan. Build. Prove." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/portfolio/assets/favicon.png" />
+    <title>{title}</title>
+  </head>
+  <body class="ed-page antialiased" style={`background-color: var(--ed-surface); color: var(--ed-on-surface); font-family: var(--ed-font-body);`}>
+    <slot />
+  </body>
+</html>
