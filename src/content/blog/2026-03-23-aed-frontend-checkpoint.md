@@ -5,6 +5,8 @@ date: 2026-03-23
 tags: ["Portfolio", "AI", "Claude Code", "자동화"]
 category: "skill"
 featured: false
+series: "quant-platform"
+seriesOrder: 4
 relatedLinks:
   - label: "개발자 없는 팀에서 사내 분석 도구를 직접 만든 후기"
     url: "/portfolio/ko/blog/2026-03-23-aed-quant-tool-overview/"

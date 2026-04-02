@@ -5,6 +5,8 @@ date: 2026-03-20
 tags: ["AI", "아키텍처", "FastAPI", "서비스기획"]
 category: "deep-dive"
 featured: true
+series: "jujutok"
+seriesOrder: 2
 relatedLinks:
   - label: "AI끼리 싸우게 하면 편향이 줄어들까?"
     url: "/portfolio/ko/blog/2026-03-15-jujutok-debate-bias-system/"

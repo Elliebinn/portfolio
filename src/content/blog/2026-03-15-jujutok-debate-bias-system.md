@@ -5,6 +5,8 @@ date: 2026-03-15
 tags: ["AI", "서비스기획", "행동재무학", "UX"]
 category: "planning"
 featured: true
+series: "jujutok"
+seriesOrder: 1
 relatedLinks:
   - label: "AI 에이전트 1개로는 왜 안 됐을까"
     url: "/portfolio/ko/blog/2026-03-20-jujutok-multi-agent-architecture/"

@@ -52,7 +52,15 @@ export interface ProjectData {
 
   walkthrough: {
     heading: string;
-    steps: { label: string; title: string; description: string; screenshot?: string; video?: string }[];
+    steps: { label: string; title: string; description: string; screenshot?: string; screenshotAfter?: string; video?: string }[];
+  };
+
+  designerFeedback?: {
+    heading: string;
+    description: string;
+    feedbacks: { reviewer: string; score: string; comment: string }[];
+    process: string;
+    result: string;
   };
 
   overview: string;
@@ -234,6 +242,32 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
             {project.walkthrough.steps.map((step, i) => (
               <div key={i} className={`grid items-center gap-10 lg:grid-cols-2 ${i % 2 !== 0 ? 'lg:[direction:rtl]' : ''}`}>
                 {/* Screenshot */}
+                {step.screenshotAfter ? (
+                  <div className="[direction:ltr] grid grid-cols-2 gap-3">
+                    <div className="group overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]">
+                      <div className="px-3 py-1.5 border-b border-[var(--color-border)] bg-[var(--color-bg-card)]">
+                        <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)]">Before</span>
+                      </div>
+                      <img
+                        src={`${BASE}${step.screenshot}`}
+                        alt={`${step.title} - Before`}
+                        className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="group overflow-hidden rounded-2xl border border-[var(--color-accent)]/30 bg-[var(--color-bg-card)]">
+                      <div className="px-3 py-1.5 border-b border-[var(--color-accent)]/30 bg-[var(--color-accent)]/5">
+                        <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-accent-light)]">After</span>
+                      </div>
+                      <img
+                        src={`${BASE}${step.screenshotAfter}`}
+                        alt={`${step.title} - After`}
+                        className="w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                ) : (
                 <div className="group overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition-all duration-300 hover:border-[var(--color-accent)]/20 [direction:ltr]">
                   {step.video ? (
                     <video
@@ -257,6 +291,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                     </div>
                   )}
                 </div>
+                )}
                 {/* Text */}
                 <div className="[direction:ltr]">
                   <div className="mb-4 flex items-center gap-3">
@@ -282,6 +317,41 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
           </div>
         </div>
       </section>
+
+      {/* ═══ Designer Feedback ═══ */}
+      {project.designerFeedback && (
+        <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl">
+            <p className="mb-4 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+              03 외부 피드백
+            </p>
+            <h2 className="mb-4 text-2xl font-bold sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
+              {project.designerFeedback.heading}
+            </h2>
+            <p className="mb-12 text-sm leading-[1.9] text-[var(--color-text-muted)] max-w-2xl">
+              {project.designerFeedback.description}
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2 mb-10">
+              {project.designerFeedback.feedbacks.map((f) => (
+                <div key={f.reviewer} className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6">
+                  <div className="flex items-start justify-between mb-3">
+                    <span className="text-sm font-bold">{f.reviewer}</span>
+                    <span className="text-2xl font-bold text-[var(--color-accent-light)]" style={{ fontFamily: 'var(--font-display)' }}>{f.score}</span>
+                  </div>
+                  <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">"{f.comment}"</p>
+                </div>
+              ))}
+            </div>
+            <div className="rounded-xl border border-[var(--color-accent)]/20 bg-[var(--color-accent)]/5 p-6">
+              <p className="text-sm leading-[1.9] text-[var(--color-text-muted)] mb-4">{project.designerFeedback.process}</p>
+              <div className="flex items-center gap-3">
+                <ArrowRight size={14} className="text-[var(--color-accent-light)]" />
+                <span className="text-sm font-bold text-[var(--color-accent-light)]">{project.designerFeedback.result}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ═══ Architecture — overview + highlights ═══ */}
       <section id="architecture" className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">

@@ -201,10 +201,10 @@ export const jujutok: Record<'en' | 'ko', ProjectData> = {
     },
 
     overview:
-      '\uC8FC\uC8FC\uD1A1\uC740 \uB370\uC774\uD130\uB97C \uBAA8\uC73C\uB294 \uAC8C \uC544\uB2C8\uB77C, AI\uAC00 <em>\uAC19\uC774 \uC0DD\uAC01\uD558\uAC8C</em> \uB9CC\uB4ED\uB2C8\uB2E4. 6\uAC1C \uC804\uBB38\uAC00\uAC00 \uAC01\uAC01 \uB2E4\uB978 \uAC01\uB3C4\uC5D0\uC11C \uBD84\uC11D\uD558\uACE0, 4\uBA85\uC774 \uD1A0\uB860\uD55C \uB4A4\uC5D0 \uCD5C\uC885 \uACB0\uB860\uC744 \uB0C5\uB2C8\uB2E4.',
+      'AI 하나가 하나의 결론을 내면 편향이 생겨요. 주주톡은 그 문제를 <em>시스템 구조</em>로 해결합니다. 6개 전문 에이전트가 독립적으로 분석하고, 4명이 서로 반박한 뒤에야 최종 결론이 나옵니다. AI가 어떻게 작동하는지 알았기 때문에 설계할 수 있었던 구조예요.',
     highlights: [
-      { icon: 'brain', title: '\uAD50\uCC28 \uBD84\uC11D', description: '\uACFC\uAC70 \uD328\uD134\uACFC \uC2E4\uC2DC\uAC04 \uB274\uC2A4\uB97C \uD568\uAED8 \uBD10\uC57C \uC804\uCCB4 \uADF8\uB9BC\uC774 \uBCF4\uC785\uB2C8\uB2E4.' },
-      { icon: 'cog', title: '\uBCD1\uB82C \uC5D0\uC774\uC804\uD2B8', description: '6\uAC1C AI \uC5D0\uC774\uC804\uD2B8\uAC00 \uAC01\uC790\uC758 \uC601\uC5ED\uC5D0\uC11C \uB3D9\uC2DC\uC5D0 \uBD84\uC11D\uD569\uB2C8\uB2E4.' },
+      { icon: 'brain', title: '왜 에이전트 6개인가', description: '단일 AI는 학습 편향을 그대로 출력해요. 기술·펀더멘털·매크로·뉴스·원자재·경쟁사 6개 시각을 분리해서 편향을 구조적으로 상쇄했어요.' },
+      { icon: 'cog', title: '왜 토론 구조인가', description: 'AI가 동의하는 건 쉬워요. 반박하게 만드는 게 어렵죠. 의견→반박→종합 3라운드 구조는 약한 근거를 드러내기 위해 설계됐어요.' },
     ],
 
     agents: [
@@ -270,7 +270,7 @@ export const quantPlatform: Record<'en' | 'ko', ProjectData> = {
   en: {
     slug: 'quant-platform',
     label: 'Case Study / Service Planning',
-    title: 'AED — ',
+    title: '',
     titleAccent: 'Quant Research Platform',
     status: 'In Production',
     deployId: 'INTERNAL_TOOL',
@@ -311,31 +311,31 @@ export const quantPlatform: Record<'en' | 'ko', ProjectData> = {
           label: 'Before',
           title: 'V1 — A prototype-level dashboard',
           description: '1 KPI, untagged list, minimal styling. The UI developers built and never touched again.',
-          screenshot: '/images/aed/overview-v1.png',
+          screenshot: '/images/quant-platform/overview-v1.png',
         },
         {
           label: 'After',
           title: 'V2 — Information density completely transformed',
           description: '5 KPIs, tag-based classification, color coding, multilingual, dark mode. Same data, entirely different experience.',
-          screenshot: '/images/aed/overview-v2.png',
+          screenshot: '/images/quant-platform/overview-v2.png',
         },
         {
           label: 'Compare',
           title: 'Same data, completely different screen',
           description: 'Before/After of the backtest detail page. KPIs that were just numbers now have benchmark comparisons, rankings, and date context.',
-          screenshot: '/images/aed/v1-v2-compare.png',
+          screenshot: '/images/quant-platform/v1-v2-compare.png',
         },
         {
           label: 'Vision',
           title: 'Dark mode — the next design direction',
           description: 'Simplified sidebar, cumulative return charts, strategy ranking widgets. The v3 direction currently in progress.',
-          screenshot: '/assets/projects/aed/dashboard-overview.png',
+          screenshot: '/assets/projects/quant-platform/dashboard-overview.png',
         },
       ],
     },
 
     overview:
-      'AED wasn\'t just a redesign. It was rebuilding the <em>information architecture</em> of a tool researchers use every day. I designed a tag taxonomy, reorganized navigation around workflows, and built a design system to consistently transform 20 pages.',
+      'This wasn\'t just a redesign. It was rebuilding the <em>information architecture</em> of a tool researchers use every day. I designed a tag taxonomy, reorganized navigation around workflows, and built a design system to consistently transform 20 pages.',
     highlights: [
       { icon: 'brain', title: 'Information Architecture Redesign', description: '200+ strategies classified by benchmark, universe, and type. Changed how exploration works entirely.' },
       { icon: 'cog', title: 'AI-Powered Implementation', description: 'Used Claude Code to convert 20+ pages following a unified design system.' },
@@ -372,44 +372,44 @@ export const quantPlatform: Record<'en' | 'ko', ProjectData> = {
     },
 
     screenshots: {
-      hero: '/assets/projects/aed/dashboard-overview.png',
+      hero: '/assets/projects/quant-platform/dashboard-overview.png',
     },
   },
 
   ko: {
     slug: 'quant-platform',
     label: '케이스 스터디 / 서비스 기획',
-    title: 'AED — ',
-    titleAccent: '퀀트 리서치 플랫폼',
+    title: '퀀트 리서처의 ',
+    titleAccent: '불편을 직접 고친 이야기',
     status: '운영 중',
     deployId: 'INTERNAL_TOOL',
 
-    heroSubtitle: '리서처 4명이 매일 쓰는 퀀트 전략 분석 도구. 프론트엔드 개발자 0명. 디자이너 0명. 기획자 1명이 직접 만들었어요.',
+    heroSubtitle: '리서처 4명 · 백엔드 1명 · 프론트 0명 · 디자이너 0명 → 기획자 1명이 20페이지를 다시 만들었어요.',
 
     problem: {
-      heading: '리서처 4명이 매일 쓰는 도구인데, 개선할 사람이 없었어요.',
+      heading: '매일 쓰는 도구인데, 개선할 사람이 없었어요.',
       paragraphs: [
         '알파브릿지 퀀트 리서치팀. 수백 개 전략을 백테스트하고 성과를 분석하는 내부 대시보드를 매일 쓰고 있었어요.',
-        '문제는 이 도구를 개선할 사람이 없었다는 거예요. 프론트엔드도 디자이너도 기획자도 없었고, 불편사항은 계속 "나중에"로 밀리는 상황.',
-        '전략 200개가 태그 없이 나열되어 있고, Holdings 보려면 3번 클릭해야 하고, UI는 프로토타입 수준에 멈춰 있었어요.',
+        '프론트엔드도 디자이너도 없었어요. 불편사항은 계속 나중에로 밀렸고. 저는 이전 직장에서 실제로 펀드를 운용해봤기 때문에 리서처들 옆에서 일하면서 그들이 말하지 못한 것들이 보였어요.',
+        '요청이 올라오기 전에 보이는 것들이 있었어요. 그래서 직접 하기로 했어요.',
       ],
     },
 
     challenge: {
       label: '01 문제',
-      heading: '매일 쓰는 도구인데, 쓸 때마다 불편했어요.',
-      description: '200개 넘는 전략이 분류 없이 나열되어 있고, 핵심 데이터에 접근하려면 클릭을 3번 이상 해야 했어요. V1 UI는 프로토타입 수준이라 전략 비교가 한눈에 안 됐죠.',
-      metricValue: '83%',
-      metricLabel: '운용시간 단축',
+      heading: '말 뒤에 숨어있는 진짜 문제',
+      description: '200개 전략이 분류 없이 나열되고, Holdings 보려면 3번 클릭. UI는 프로토타입 수준에 멈춰 있었어요. 하지만 진짜 문제는 리서처가 하는 말과 실제로 필요한 것이 달랐다는 거예요.',
+      metricValue: '3가지',
+      metricLabel: '기획 의사결정',
     },
 
     solution: {
-      label: '02 해결',
-      heading: 'Claude Code가 제 프론트엔드 팀이었어요.',
-      description: 'HTML 목업을 직접 그리고, 디자인 토큰을 문서화한 다음 Claude Code에 넘겼어요. "이렇게 만들어줘"가 아니라 "이 목업이랑 똑같이" — 그게 핵심이었어요.',
+      label: '02 어떻게 만들었나',
+      heading: 'HTML 목업 25개 + 디자인 토큰 + AI 구현',
+      description: '"이렇게 만들어줘"가 아니라 "이 목업이랑 똑같이" — 그게 핵심이었어요. 기획과 판단이 먼저고, AI는 그걸 빠르게 실현해주는 도구였어요.',
       badges: [
+        { title: 'HTML 목업 25개', subtitle: '직접 그린 화면 설계' },
         { title: '디자인 시스템', subtitle: '토큰 기반 일관성' },
-        { title: '자동 전환', subtitle: '20+ 페이지 마이그레이션' },
       ],
     },
 
@@ -417,71 +417,86 @@ export const quantPlatform: Record<'en' | 'ko', ProjectData> = {
       heading: '눈에 보이는 변화.',
       steps: [
         {
-          label: 'Before',
-          title: 'V1 — 프로토타입 수준의 대시보드',
-          description: 'KPI 1개, 분류 없는 목록, 최소한의 스타일링. 개발자가 만든 그대로의 UI였어요.',
-          screenshot: '/images/aed/overview-v1.png',
+          label: 'Overview',
+          title: 'KPI 1개 → 5개, 탐색 구조 재설계',
+          description: '숫자만 나열되어 있던 개요 화면. 벤치마크 대비 성과, 순위, 트렌드 배지가 추가됐어요.',
+          screenshot: '/assets/projects/quant-platform/before-after/overview-before.png',
+          screenshotAfter: '/assets/projects/quant-platform/before-after/overview-after.png',
         },
         {
-          label: 'After',
-          title: 'V2 — 정보 밀도가 완전히 달라졌어요',
-          description: 'KPI 5개, 태그 기반 분류, 컬러 코딩, 다국어, 다크모드. 같은 데이터인데 전혀 다른 경험.',
-          screenshot: '/images/aed/overview-v2.png',
+          label: '전략 목록',
+          title: '200개 나열 → 태그 기반 분류 + 프리뷰',
+          description: '분류 없이 스크롤만 하던 목록. 태그 필터 + 행 클릭 프리뷰 패널로 탐색 방식이 완전히 바뀌었어요.',
+          screenshot: '/assets/projects/quant-platform/before-after/result-list-before.png',
+          screenshotAfter: '/assets/projects/quant-platform/before-after/result-list-after.png',
         },
         {
-          label: '비교',
-          title: '같은 데이터, 완전히 다른 화면',
-          description: '백테스트 상세 페이지의 Before/After. 숫자만 있던 KPI에 벤치마크 대비, 순위, 날짜 맥락이 추가됐어요.',
-          screenshot: '/images/aed/v1-v2-compare.png',
+          label: '전략 비교',
+          title: '어수선한 비교 화면 → 정돈된 수직 흐름',
+          description: '여러 전략을 동시에 비교할 때 화면이 어수선했어요. IS/OS 토글 + 리베이스 차트로 퀀트 리서처 전용 뷰를 만들었어요.',
+          screenshot: '/assets/projects/quant-platform/before-after/comparison-before.png',
+          screenshotAfter: '/assets/projects/quant-platform/before-after/comparison-after.png',
         },
         {
-          label: '비전',
-          title: '다크모드 — 다음 단계 디자인',
-          description: '사이드바 단순화, 누적 수익률 차트, 전략 랭킹 위젯. 현재 진행 중인 v3 방향성이에요.',
-          screenshot: '/assets/projects/aed/dashboard-overview.png',
+          label: '사이드바',
+          title: 'flat 네비 → collapsible 그룹 네비',
+          description: '모든 메뉴가 평면으로 나열되어 있었어요. 그룹화 + 접기/펼치기로 워크플로우 기반 네비게이션으로 바꿨어요.',
+          screenshot: '/assets/projects/quant-platform/before-after/sidebar-before.png',
+          screenshotAfter: '/assets/projects/quant-platform/before-after/sidebar-after.png',
         },
       ],
     },
 
+    designerFeedback: {
+      heading: '외부 디자이너 피드백을 구조적으로 수용한 과정',
+      description: '외부 UI/UX 디자이너 2명한테 피드백을 받았어요. 감정적으로 받아들이는 대신, 구조적으로 접근했어요.',
+      feedbacks: [
+        { reviewer: 'UX 디자이너 A', score: '2.5/5', comment: '기능에 충실하나 UX 불편, 정보 밀도 조절 필요' },
+        { reviewer: 'UI 디자이너 B', score: '3.9/5', comment: '디자인은 깔끔, UX적 개선 많음' },
+      ],
+      process: '피드백을 7개 요구사항으로 분해하고, Bloomberg·Morningstar 등 14개 업계 레퍼런스를 리서치해서 "왜 이렇게 해야 하는지" 근거를 만들었어요. 점수 낮은 화면부터 우선순위를 정해 순차적으로 개선했어요.',
+      result: '건강도 점수 91 → 99',
+    },
+
     overview:
-      'AED는 단순한 리디자인이 아니었어요. 리서처가 매일 쓰는 도구의 <em>정보 구조 자체</em>를 바꾼 프로젝트예요. 태그 분류 체계를 설계하고, 네비게이션을 워크플로우 기준으로 재편하고, 디자인 시스템을 구축해서 20페이지를 일관되게 전환했어요.',
+      '단순한 리디자인이 아니었어요. 리서처가 매일 쓰는 도구의 <em>정보 구조 자체</em>를 바꾼 프로젝트예요. 현업 경험에서 나온 기획 판단이 요청에 없던 기능을 만들어냈어요.',
+
     highlights: [
-      { icon: 'brain', title: '정보 구조 재설계', description: '200+ 전략을 벤치마크/유니버스/유형으로 분류. 탐색 방식 자체가 바뀌었어요.' },
-      { icon: 'cog', title: 'AI 기반 구현', description: 'Claude Code로 20+ 페이지를 디자인 시스템 기준으로 일괄 전환했어요.' },
+      { icon: 'brain', title: '"못 찾겠다" → 태그 시스템', description: '처음 떠오른 건 검색 기능이었어요. 근데 진짜 문제는 분류 체계가 없다는 것. 폴더 대신 태그를 고른 이유는 하나의 전략이 여러 카테고리에 동시에 속할 수 있어서예요.' },
+      { icon: 'cog', title: '"날짜 선택 불편" → 리밸런싱 포인트 점프', description: '드래그 슬라이더를 예쁘게 바꾸는 게 답이 아니었어요. 퀀트 리서처한테 중요한 건 리밸런싱 시점마다 포지션이 어떻게 바뀌었는지거든요. 요청에 없던 기능이었지만 현업에서 당연히 필요한 것이었어요.' },
     ],
 
     stack: [
       { category: '기획', name: 'Service Planning' },
-      { category: 'AI 개발', name: 'Claude Code' },
-      { category: 'OLAP', name: 'ClickHouse' },
-      { category: 'RDBMS', name: 'MySQL' },
-      { category: 'UI', name: 'Design System' },
-      { category: '테마', name: 'Dark Mode' },
+      { category: 'AI 구현', name: 'AI Coding Agent' },
+      { category: '데이터', name: '시계열 DB + RDBMS' },
+      { category: 'UI', name: '디자인 시스템' },
     ],
 
     flow: [
-      { title: '사용자 불편 수집', subtitle: '마찰 포인트 매핑' },
-      { title: '근본 원인 분석', subtitle: '구조적 진단' },
-      { title: '기능 기획', subtitle: 'IA & 인터랙션 설계' },
-      { title: 'AI 구현', subtitle: 'Claude Code 실행' },
+      { title: '현장 관찰', subtitle: '리서처 불편 수집' },
+      { title: '니즈 번역', subtitle: '요청 뒤 진짜 문제' },
+      { title: 'HTML 목업', subtitle: '직접 화면 설계 25개' },
+      { title: '디자인 시스템', subtitle: '토큰 기반 일관성' },
+      { title: 'AI 구현 + 검증', subtitle: 'AI 코딩 + 체크포인트' },
     ],
 
     metrics: [
       { value: '20+', label: '페이지 리디자인' },
+      { value: '25개', label: 'HTML 목업 직접 제작' },
+      { value: '11개', label: '체크포인트 검증' },
       { value: '200+', label: '전략 분류 체계화' },
-      { value: '3→1', label: 'Holdings 접근 클릭' },
-      { value: '0명', label: '프론트엔드 개발자' },
     ],
 
     cta: {
       heading: '전체 스토리가 궁금하세요?',
       subtext: '기획 과정, 사용자 리서치, AI 구현까지 담은 블로그 글이에요.',
-      githubUrl: '/ko/blog/2026-03-23-aed-quant-tool-overview/',
+      githubUrl: '/portfolio/ko/blog/2026-03-23-aed-quant-tool-overview/',
       githubLabel: '블로그 읽기',
     },
 
     screenshots: {
-      hero: '/assets/projects/aed/dashboard-overview.png',
+      hero: '/assets/projects/quant-platform/before-after/overview-after.png',
     },
   },
 };

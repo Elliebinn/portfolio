@@ -10,6 +10,8 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     category: z.enum(['project', 'planning', 'deep-dive', 'skill']).default('project'),
     featured: z.boolean().default(false),
+    series: z.string().optional(),
+    seriesOrder: z.number().optional(),
     relatedLinks: z.array(z.object({
       label: z.string(),
       url: z.string(),

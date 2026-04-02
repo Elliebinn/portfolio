@@ -21,6 +21,19 @@ const { Content } = await render(post);
 
 const base = import.meta.env.BASE_URL;
 
+// Series navigation
+const allPosts = await getCollection('blog');
+const seriesPosts = post.data.series
+  ? allPosts
+      .filter((p) => p.data.series === post.data.series)
+      .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0))
+  : [];
+
+const seriesLabels: Record<string, string> = {
+  'quant-platform': '퀀트 리서치 플랫폼',
+  'jujutok': '주주톡',
+};
+
 const categoryLabels: Record<string, string> = {
   project: '프로젝트',
   tech: '기술',
@@ -71,6 +84,43 @@ const categoryLabels: Record<string, string> = {
       <div class="prose-custom">
         <Content />
       </div>
+
+      {seriesPosts.length > 1 && (
+        <div class="mt-16 border-t border-[var(--color-border)] pt-10">
+          <h3 class="mb-1 text-sm font-semibold uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+            시리즈
+          </h3>
+          <p class="mb-6 text-xs text-[var(--color-text-muted)]">
+            {seriesLabels[post.data.series!] || post.data.series} ({seriesPosts.length}편)
+          </p>
+          <div class="flex flex-col gap-1.5">
+            {seriesPosts.map((sp, i) => {
+              const isCurrent = sp.id === post.id;
+              return (
+                <a
+                  href={isCurrent ? undefined : `${base}${lang}/blog/${sp.id}/`}
+                  class:list={[
+                    'group flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition-all',
+                    isCurrent
+                      ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent-light)] font-medium'
+                      : 'text-[var(--color-text-muted)] hover:bg-[var(--color-bg-card)] hover:text-[var(--color-text)]',
+                  ]}
+                >
+                  <span class:list={[
+                    'flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full font-mono text-[10px] font-bold',
+                    isCurrent
+                      ? 'bg-[var(--color-accent)] text-white'
+                      : 'border border-[var(--color-border)] text-[var(--color-text-muted)]',
+                  ]}>
+                    {i + 1}
+                  </span>
+                  <span class="leading-snug">{sp.data.title}</span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {post.data.relatedLinks.length > 0 && (
         <div class="mt-16 border-t border-[var(--color-border)] pt-10">

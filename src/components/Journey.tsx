@@ -16,13 +16,13 @@ export default function Journey({ lang = 'en' as Lang }: { lang?: Lang }) {
           {tr.items.map((item, i) => (
             <div
               key={i}
-              className="border-t border-[var(--color-border)] py-12"
+              className={`border-t border-[var(--color-border)] ${i === tr.items.length - 1 ? 'pt-12 pb-0' : 'py-12'}`}
             >
-              <div className="grid items-start gap-8 lg:grid-cols-[180px_280px_1fr]">
+              <div className="grid items-baseline gap-x-8 lg:grid-cols-[160px_280px_1fr]">
                 <p className="font-mono text-xs text-[var(--color-text-muted)]">{item.period}</p>
                 <div>
                   <h3
-                    className="text-xl font-bold tracking-tight sm:text-2xl"
+                    className="text-lg font-bold tracking-tight sm:text-xl"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
                     {item.title}
@@ -31,7 +31,7 @@ export default function Journey({ lang = 'en' as Lang }: { lang?: Lang }) {
                     <p className="mt-1.5 text-xs text-[var(--color-text-muted)]">{item.org}</p>
                   )}
                 </div>
-                <p className="text-sm leading-[1.8] text-[var(--color-text-muted)]">{item.description}</p>
+                <p className="ml-auto text-right text-sm leading-[1.8] text-[var(--color-text-muted)]" dangerouslySetInnerHTML={{ __html: item.description }} />
               </div>
             </div>
           ))}
@@ -71,9 +71,7 @@ export default function Journey({ lang = 'en' as Lang }: { lang?: Lang }) {
               {'org' in item && item.org && (
                 <p className="mt-1 text-xs text-[var(--color-text-muted)]">{item.org}</p>
               )}
-              <p className="mt-3 text-sm leading-[1.8] text-[var(--color-text-muted)]">
-                {item.description}
-              </p>
+              <p className="mt-3 text-sm leading-[1.8] text-[var(--color-text-muted)]" dangerouslySetInnerHTML={{ __html: item.description }} />
             </div>
           ))}
         </div>

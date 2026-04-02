@@ -5,6 +5,8 @@ date: 2026-03-26
 tags: ["Portfolio", "AI", "Claude Code", "자동화"]
 category: "skill"
 featured: false
+series: "quant-platform"
+seriesOrder: 6
 relatedLinks:
   - label: "AI에게 디자인을 맡겼더니 페이지마다 CSS가 달랐다"
     url: "/portfolio/ko/blog/2026-03-23-aed-ai-redesign-chaos/"

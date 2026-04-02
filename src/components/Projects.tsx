@@ -10,7 +10,7 @@ const projectLinks = [
 
 const projectImages = [
   '/assets/projects/jujutok/stock-analysis-dark.png',
-  null,
+  '/assets/projects/quant-platform/dashboard-fullview.png',
 ];
 
 export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
@@ -37,14 +37,14 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
               style={i % 2 !== 0 ? { direction: 'rtl' as const } : {}}
             >
               <div
-                className="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]"
+                className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]"
                 style={{ direction: 'ltr' }}
               >
                 {projectImages[i] ? (
                   <img
                     src={`${BASE}${projectImages[i]}`}
                     alt={p.title}
-                    className="h-full w-full object-cover"
+                    className="w-full h-auto"
                   />
                 ) : (
                   <div className="text-center">

@@ -5,6 +5,8 @@ date: 2026-03-26
 tags: ["Portfolio", "AI", "Claude Code", "자동화", "UX"]
 category: "skill"
 featured: false
+series: "quant-platform"
+seriesOrder: 5
 relatedLinks:
   - label: "프론트엔드 변경 공유, 자동화해봤다"
     url: "/portfolio/ko/blog/2026-03-23-aed-frontend-checkpoint/"
