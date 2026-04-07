@@ -293,6 +293,59 @@ const base = import.meta.env.BASE_URL;
       </div>
     </section>
 
+    <!-- 05.5 Designer Feedback Loop -->
+    <section class="py-32 px-6 md:px-8 max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-32">
+          <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase">05.5 Feedback Loop</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold leading-tight text-[var(--color-text)]" style="font-family: var(--font-display);">
+            디자이너가 2.5점을 줬을 때
+          </h2>
+          <div class="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
+            <p>외부 UX/UI 디자이너 2명에게 종합 평가를 요청했어요. 결과는 <span class="text-[var(--color-text)] font-semibold">해나 2.5/5, 제나 3.9/5</span>. "기능에 충실하나 UX 불편"이 핵심 메시지였어요.</p>
+            <p>방어하지 않고, 피드백을 <span class="text-[var(--color-text)] font-semibold">7개 REQ</span>로 분해했어요. 각 REQ는 Bloomberg, Koyfin, Morningstar 등 <span class="text-[var(--color-text)] font-semibold">14개 업계 레퍼런스</span>를 출처로 명시한 SPEC이 됐고, 그대로 구현으로 옮겼어요.</p>
+          </div>
+          <div class="flex gap-8 pt-4">
+            <div>
+              <p class="text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">7</p>
+              <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)] mt-1">REQ 분해</p>
+            </div>
+            <div>
+              <p class="text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">14</p>
+              <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)] mt-1">레퍼런스 출처</p>
+            </div>
+            <div>
+              <p class="text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">8/8</p>
+              <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)] mt-1">REQ 구현 완료</p>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 space-y-3">
+          {[
+            { req: 'REQ-01', feedback: '"좌측 네비게이션바 정리 필요"', solution: 'Collapsible 그룹핑, Data Sources 9개 기본 접힘', status: '구현 완료' },
+            { req: 'REQ-02-A', feedback: '"홈화면 \'개요\' 명칭 변경"', solution: '"대시보드"로 명명 변경', status: '구현 완료' },
+            { req: 'REQ-02-D', feedback: '"수익률 랭킹 전략 필요"', solution: '리더보드 + 기간 필터 탭 신규', status: '구현 완료' },
+            { req: 'REQ-03', feedback: '"어려운 금융 용어 주석 부재"', solution: 'glossary.py + hover tooltip 시스템', status: '구현 완료' },
+            { req: 'REQ-04-A', feedback: '"필터링 기능 섹션 없음"', solution: '필터 바 신규 (Universe/Sharpe/Return/태그)', status: '구현 완료' },
+            { req: 'REQ-04-D', feedback: '"중요 지표 강조 부족"', solution: '조건부 셀 색상 (수익률/MDD/Sharpe)', status: '구현 완료' },
+            { req: 'REQ-05-A', feedback: '"비교 UI 어수선함"', solution: '수직 흐름 재구조 (검색→칩→차트→테이블)', status: '구현 완료' },
+          ].map((item) => (
+            <div class="grid grid-cols-12 gap-4 p-5 rounded-xl items-start" style="background-color: var(--color-bg-secondary);">
+              <div class="col-span-12 md:col-span-2">
+                <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)]">{item.req}</p>
+              </div>
+              <div class="col-span-12 md:col-span-5">
+                <p class="text-sm font-semibold text-[var(--color-text)] leading-snug">{item.feedback}</p>
+              </div>
+              <div class="col-span-12 md:col-span-5">
+                <p class="text-sm text-[var(--color-text-muted)] leading-snug">{item.solution}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <!-- 06. Currently Building -->
     <section class="py-32" style="background-color: var(--color-bg-secondary);">
       <div class="max-w-7xl mx-auto px-6 md:px-8">
