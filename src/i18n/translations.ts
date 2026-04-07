@@ -3,6 +3,7 @@ export type Lang = 'en' | 'ko';
 const translations = {
   en: {
     nav: {
+      home: 'Home',
       projects: 'Projects',
       stack: 'Expertise',
       blog: 'Blog',
@@ -116,6 +117,7 @@ const translations = {
 
   ko: {
     nav: {
+      home: '홈',
       projects: '프로젝트',
       stack: '역량',
       blog: '블로그',

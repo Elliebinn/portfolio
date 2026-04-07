@@ -9,6 +9,7 @@ export default function Navbar({ lang = 'en' as Lang }: { lang?: Lang }) {
   const [open, setOpen] = useState(false);
 
   const navLinks = [
+    { label: tr.nav.home, href: `${BASE}/${lang}/` },
     { label: tr.nav.projects, href: `${BASE}/${lang}/#projects` },
     { label: tr.nav.blog, href: `${BASE}/${lang}/blog/` },
     { label: tr.nav.resume, href: `${BASE}/${lang}/resume/` },
