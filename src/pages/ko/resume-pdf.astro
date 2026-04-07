@@ -330,42 +330,44 @@
       width: 210mm;
       min-height: 297mm;
     }
-    .download-hint {
+    .pdf-button {
       position: fixed;
-      top: 10pt;
-      left: 10pt;
+      top: 16pt;
+      right: 16pt;
       background: var(--accent);
       color: white;
-      padding: 8pt 14pt;
-      border-radius: 6pt;
-      font-size: 9pt;
+      padding: 10pt 18pt;
+      border-radius: 999pt;
+      font-size: 10pt;
       font-weight: 700;
       font-family: 'Manrope', sans-serif;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
       z-index: 1000;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6pt;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .pdf-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+    }
+    .pdf-button:active {
+      transform: translateY(0);
     }
   }
   @media print {
-    .download-hint { display: none !important; }
+    .pdf-button { display: none !important; }
   }
 </style>
 </head>
 <body>
-  <div class="download-hint">PDF 저장 창이 자동으로 열립니다. 용지: A4 · 여백: 기본 · 배경 그래픽 체크</div>
-
-  <script>
-    // 폰트 로드 후 자동으로 인쇄 창 열기
-    if (typeof window !== 'undefined') {
-      const triggerPrint = () => {
-        setTimeout(() => window.print(), 400);
-      };
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(triggerPrint);
-      } else {
-        window.addEventListener('load', triggerPrint);
-      }
-    }
-  </script>
+  <button class="pdf-button" onclick="window.print()" aria-label="PDF 저장">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+    PDF로 저장
+  </button>
 
   <div class="page">
 
