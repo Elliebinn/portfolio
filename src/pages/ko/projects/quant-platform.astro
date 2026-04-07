@@ -8,17 +8,17 @@ const lang = 'ko';
 const base = import.meta.env.BASE_URL;
 ---
 
-<Layout title="퀀트 전략 분석 플랫폼 — 우혜빈 포트폴리오">
+<Layout title="퀀트 전략 분석 플랫폼 · 우혜빈 포트폴리오">
   <Navbar lang={lang} client:load />
 
-  <main class="pt-24">
+  <main class="pt-24 break-keep">
     <!-- Hero -->
     <section class="relative min-h-[870px] flex items-center px-6 md:px-8 max-w-7xl mx-auto overflow-hidden">
       <div class="grid lg:grid-cols-2 gap-12 items-center z-10">
         <div class="space-y-8 opacity-0 animate-fade-up" style="animation-delay: 0.1s;">
-          <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-[var(--color-text)] leading-[1.1] tracking-tight" style="font-family: var(--font-display);">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[var(--color-text)] leading-[1.2] tracking-tight" style="font-family: var(--font-display);">
             퀀트 리서처의 불편을<br/>
-            <span class="text-[var(--color-accent)] italic">직접 고친</span> 이야기
+            <span class="text-[var(--color-accent)] italic">직접 고친 이야기</span>
           </h1>
           <p class="text-lg text-[var(--color-text-muted)] max-w-lg leading-relaxed">
             프론트 0명, 디자이너 0명인 6인 팀에서 리서처 4명이 매일 쓰는 200+ 전략 분석 도구를 직접 기획·설계·구현했어요. "요청된 기능"이 아니라 "실제로 필요한 구조"를 만드는 케이스 스터디.
@@ -54,7 +54,7 @@ const base = import.meta.env.BASE_URL;
           <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
           In Progress
         </span>
-        <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)]">Build Timeline · 2026.02 — Now</p>
+        <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)]">Build Timeline · 2026.02 - Now</p>
       </div>
       <div class="relative pl-8 md:pl-12">
         <div class="absolute left-0 top-2 bottom-2 w-[2px] bg-[var(--color-bg-emphasis)]"></div>
@@ -63,31 +63,31 @@ const base = import.meta.env.BASE_URL;
             phase: 'Phase 1',
             period: '2026.02',
             title: '초기 SPEC 작성',
-            desc: '4개 핵심 페이지 목업 → 10 Phase 분할 설계. SPEC v1/v1.1로 실행 경험 반영.',
+            desc: '4개 핵심 페이지 목업을 10 Phase로 분할 설계. SPEC v1·v1.1로 실행 경험 반영.',
           },
           {
             phase: 'Phase 2',
             period: '2026.03 중순',
             title: '핵심 기능 개발',
-            desc: '포트폴리오 비중 오버레이(최대 5종목), S&P500 하드코딩 → 전략별 동적 벤치마크 마이그레이션, Hit Ratio 3M/6M/1Y/2Y 토글.',
+            desc: '포트폴리오 비중 오버레이(최대 5종목), S&P500 하드코딩을 전략별 동적 벤치마크로 마이그레이션, Hit Ratio 3M·6M·1Y·2Y 토글.',
           },
           {
             phase: 'Phase 3',
-            period: '2026.03.23 — 03.24',
+            period: '2026.03.23 - 03.24',
             title: '디자인 리뉴얼 v1',
             desc: '7개 페이지 제목 22px/700 통일, layout.py 단일화, 55장 체크포인트 스크린샷 기록.',
           },
           {
             phase: 'Phase 4',
-            period: '2026.03.25 — 03.27',
+            period: '2026.03.25 - 03.27',
             title: '디자이너 피드백 기반 리디자인',
-            desc: '디자이너 2명 평가 → 7 REQ 도출 → 14개 업계 리서치 → 대시보드/결과목록/비교/상세 페이지 전면 리디자인.',
+            desc: '디자이너 2명 평가에서 7 REQ를 도출한 뒤, 14개 업계 리서치를 참조해 대시보드·결과목록·비교·상세 페이지를 전면 리디자인.',
           },
           {
             phase: 'Now',
             period: '진행 중',
             title: '기여수익률 + 툴팁 시스템',
-            desc: 'Brinson Attribution 산식 구현, 금융 용어 한/영 툴팁 시스템 8개 페이지 적용.',
+            desc: 'Brinson Attribution 산식 구현, 금융 용어 한·영 툴팁 시스템 8개 페이지 적용.',
             current: true,
           },
         ].map((item) => (
@@ -132,8 +132,8 @@ const base = import.meta.env.BASE_URL;
             "검색 추가해주세요" 뒤에<br/>숨은 진짜 문제
           </h2>
           <div class="space-y-4 text-[var(--color-text-muted)] text-lg leading-relaxed">
-            <p>리서처 4명이 매일 200+ 전략을 분석하는데, 계속 같은 요청이 반복됐어요 — <span class="text-[var(--color-text)] font-semibold">"검색 추가해주세요", "필터 더 만들어주세요", "날짜 선택이 불편해요".</span></p>
-            <p>기능을 하나씩 추가하면 해결될 줄 알았는데, 요청이 멈추지 않았어요. 옆에 앉아서 직접 리서처의 분석 워크플로우를 관찰한 다음에야 알았어요 — <span class="text-[var(--color-text)] font-semibold">진짜 문제는 "분류 체계 부재"</span>였다는 걸요. 검색은 증상이었고, 원인은 구조였어요.</p>
+            <p>리서처 4명이 매일 200+ 전략을 분석하는데, 계속 같은 요청이 반복됐어요. <span class="text-[var(--color-text)] font-semibold">"검색 추가해주세요", "필터 더 만들어주세요", "날짜 선택이 불편해요".</span></p>
+            <p>기능을 하나씩 추가하면 해결될 줄 알았는데, 요청이 멈추지 않았어요. 옆에 앉아서 직접 리서처의 분석 워크플로우를 관찰한 다음에야 알았어요. <span class="text-[var(--color-text)] font-semibold">진짜 문제는 "분류 체계 부재"</span>였다는 걸요. 검색은 증상이었고, 원인은 구조였어요.</p>
           </div>
         </div>
         <div class="p-12 rounded-xl relative group" style="background-color: var(--color-bg-secondary);">
@@ -156,7 +156,7 @@ const base = import.meta.env.BASE_URL;
       <div class="max-w-7xl mx-auto px-6 md:px-8">
         <div class="mb-16">
           <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">02. Research Insight</p>
-          <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">요청 → 진짜 니즈 매핑</h2>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">요청 뒤의 진짜 니즈</h2>
           <p class="text-[var(--color-text-muted)] mt-4 max-w-2xl">이전 직장에서 직접 펀드 운용을 지원한 경험을 바탕으로, 리서처가 요청한 기능이 아니라 실제로 필요한 기능을 판별했어요.</p>
         </div>
         <div class="grid md:grid-cols-3 gap-6">
@@ -225,23 +225,23 @@ const base = import.meta.env.BASE_URL;
           },
           {
             n: '04',
-            decision: 'AI에게 "알아서 해줘" 금지 → DESIGN.md 명시 문서화',
+            decision: 'AI에게 "알아서 해줘" 금지, DESIGN.md 명시 문서화',
             why: '디자이너 없이 20+ 페이지 일관성을 확보하려면 명시적 규칙 문서가 필수. 색상·폰트·간격·컴포넌트 토큰을 모두 코드화해 AI 결과물의 변동성 제거.',
           },
           {
             n: '05',
-            decision: 'S&P500 하드코딩 → 전략별 동적 벤치마크',
+            decision: 'S&P500 하드코딩에서 전략별 동적 벤치마크로 전환',
             why: '한국 주식 전략을 S&P500과 비교하는 건 무의미. universe별 자동 매칭(KOSPI200/KOSDAQ150/S&P500) + 수동 드롭다운으로 전환. 도메인 지식이 기술 결정을 바꾼 사례.',
           },
           {
             n: '06',
-            decision: 'Hit Ratio 1Y 고정 → 3M/6M/1Y/2Y 다중 토글',
+            decision: 'Hit Ratio 1Y 고정에서 3M·6M·1Y·2Y 다중 토글로 전환',
             why: '짧은 보유 전략과 긴 보유 전략은 1Y 단일 지표로는 비교 불가. 비동기 재로드로 UX를 끊지 않으면서 4개 보유기간 동시 분석 가능하게 설계.',
           },
           {
             n: '07',
-            decision: 'flat 13개 메뉴 → 워크플로우 기반 collapsible 그룹',
-            why: '"주요 vs 보조 구분이 없다"는 디자이너 피드백(REQ-01) → Data Sources 9개를 기본 접힘으로 처리하고, 핵심 분석 기능을 상단으로 끌어올림.',
+            decision: 'flat 13개 메뉴에서 워크플로우 기반 collapsible 그룹으로 재구조화',
+            why: '"주요 vs 보조 구분이 없다"는 디자이너 피드백(REQ-01)을 받아, Data Sources 9개를 기본 접힘으로 처리하고 핵심 분석 기능을 상단으로 끌어올림.',
           },
         ].map((item) => (
           <div class="space-y-3">
@@ -265,7 +265,7 @@ const base = import.meta.env.BASE_URL;
           </h2>
           <div class="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
             <p>화면 설계만 하고 넘기지 않아요. 데이터 쿼리부터 차트 옵션까지 직접 만져야 디자이너 없는 6인 팀에서 빠르게 반복할 수 있어요.</p>
-            <p>스택은 화려하지 않지만 의도적이에요 — <span class="text-[var(--color-text)] font-semibold">ClickHouse</span>로 200+ 전략의 시계열 쿼리를 빠르게 돌리고, <span class="text-[var(--color-text)] font-semibold">NiceGUI(Python)</span>로 백엔드 데이터에 가까운 곳에서 UI를 짜고, <span class="text-[var(--color-text)] font-semibold">Plotly</span>로 금융 차트의 디테일(unified hover, tabular nums)을 통제해요.</p>
+            <p>스택은 화려하지 않지만 의도적이에요. <span class="text-[var(--color-text)] font-semibold">ClickHouse</span>로 200+ 전략의 시계열 쿼리를 빠르게 돌리고, <span class="text-[var(--color-text)] font-semibold">NiceGUI(Python)</span>로 백엔드 데이터에 가까운 곳에서 UI를 짜고, <span class="text-[var(--color-text)] font-semibold">Plotly</span>로 금융 차트의 디테일(unified hover, tabular nums)을 통제해요.</p>
           </div>
         </div>
         <div class="lg:col-span-7 grid grid-cols-2 gap-3">
@@ -427,7 +427,7 @@ const base = import.meta.env.BASE_URL;
             { req: 'REQ-03', feedback: '"어려운 금융 용어 주석 부재"', solution: 'glossary.py + hover tooltip 시스템', status: '구현 완료' },
             { req: 'REQ-04-A', feedback: '"필터링 기능 섹션 없음"', solution: '필터 바 신규 (Universe/Sharpe/Return/태그)', status: '구현 완료' },
             { req: 'REQ-04-D', feedback: '"중요 지표 강조 부족"', solution: '조건부 셀 색상 (수익률/MDD/Sharpe)', status: '구현 완료' },
-            { req: 'REQ-05-A', feedback: '"비교 UI 어수선함"', solution: '수직 흐름 재구조 (검색→칩→차트→테이블)', status: '구현 완료' },
+            { req: 'REQ-05-A', feedback: '"비교 UI 어수선함"', solution: '검색·칩·차트·테이블을 수직 흐름으로 재구조', status: '구현 완료' },
           ].map((item) => (
             <div class="grid grid-cols-12 gap-4 p-5 rounded-xl items-start" style="background-color: var(--color-bg-secondary);">
               <div class="col-span-12 md:col-span-2">
@@ -471,9 +471,9 @@ const base = import.meta.env.BASE_URL;
             <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)] mb-4">In Progress</p>
             <h3 class="text-2xl font-bold mb-4 text-[var(--color-text)]" style="font-family: var(--font-display);">금융 용어 툴팁 시스템</h3>
             <p class="text-[var(--color-text-muted)] leading-relaxed mb-4">
-              "어려운 금융 용어 주석이 없어 어렵다"는 디자이너 피드백에서 출발. glossary.py로 한/영 용어를 관리하고, 모든 금융 지표 라벨에 hover tooltip을 일관 적용하는 중이에요.
+              "어려운 금융 용어 주석이 없어 어렵다"는 디자이너 피드백에서 출발. glossary.py로 한·영 용어를 관리하고, 모든 금융 지표 라벨에 hover tooltip을 일관 적용하는 중이에요.
             </p>
-            <p class="text-xs text-[var(--color-text-faint)]">12+ 용어 사전 · 한/영 다국어 · 8개 페이지 적용 진행 중</p>
+            <p class="text-xs text-[var(--color-text-faint)]">12+ 용어 사전 · 한·영 다국어 · 8개 페이지 적용 진행 중</p>
           </div>
         </div>
       </div>
