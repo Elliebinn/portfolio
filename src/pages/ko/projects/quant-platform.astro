@@ -47,6 +47,63 @@ const base = import.meta.env.BASE_URL;
       </div>
     </section>
 
+    <!-- Build Timeline -->
+    <section class="py-24 px-6 md:px-8 max-w-7xl mx-auto">
+      <div class="flex items-center gap-4 mb-12">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest" style="background-color: var(--color-bg-detail); color: var(--color-accent);">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
+          In Progress
+        </span>
+        <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)]">Build Timeline · 2026.02 — Now</p>
+      </div>
+      <div class="relative pl-8 md:pl-12">
+        <div class="absolute left-0 top-2 bottom-2 w-[2px] bg-[var(--color-bg-emphasis)]"></div>
+        {[
+          {
+            phase: 'Phase 1',
+            period: '2026.02',
+            title: '초기 SPEC 작성',
+            desc: '4개 핵심 페이지 목업 → 10 Phase 분할 설계. SPEC v1/v1.1로 실행 경험 반영.',
+          },
+          {
+            phase: 'Phase 2',
+            period: '2026.03 중순',
+            title: '핵심 기능 개발',
+            desc: '포트폴리오 비중 오버레이(최대 5종목), S&P500 하드코딩 → 전략별 동적 벤치마크 마이그레이션, Hit Ratio 3M/6M/1Y/2Y 토글.',
+          },
+          {
+            phase: 'Phase 3',
+            period: '2026.03.23 — 03.24',
+            title: '디자인 리뉴얼 v1',
+            desc: '7개 페이지 제목 22px/700 통일, layout.py 단일화, 55장 체크포인트 스크린샷 기록.',
+          },
+          {
+            phase: 'Phase 4',
+            period: '2026.03.25 — 03.27',
+            title: '디자이너 피드백 기반 리디자인',
+            desc: '디자이너 2명 평가 → 7 REQ 도출 → 14개 업계 리서치 → 대시보드/결과목록/비교/상세 페이지 전면 리디자인.',
+          },
+          {
+            phase: 'Now',
+            period: '진행 중',
+            title: '기여수익률 + 툴팁 시스템',
+            desc: 'Brinson Attribution 산식 구현, 금융 용어 한/영 툴팁 시스템 8개 페이지 적용.',
+            current: true,
+          },
+        ].map((item) => (
+          <div class="relative mb-10 last:mb-0">
+            <div class={`absolute -left-[33px] md:-left-[49px] top-1.5 w-3.5 h-3.5 rounded-full border-4 border-[var(--color-bg)] ${item.current ? 'bg-[var(--color-accent)] animate-pulse' : 'bg-[var(--color-text-faint)]'}`}></div>
+            <div class="flex flex-col md:flex-row md:items-baseline md:gap-4 mb-2">
+              <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)]">{item.phase}</p>
+              <p class="text-xs text-[var(--color-text-faint)] font-medium">{item.period}</p>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold text-[var(--color-text)] mb-2" style="font-family: var(--font-display);">{item.title}</h3>
+            <p class="text-[var(--color-text-muted)] leading-relaxed max-w-3xl">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
     <!-- Impact Metrics -->
     <section class="py-24" style="background-color: var(--color-bg-secondary);">
       <div class="max-w-7xl mx-auto px-6 md:px-8">
