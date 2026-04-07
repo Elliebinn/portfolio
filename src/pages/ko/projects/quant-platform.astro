@@ -264,50 +264,64 @@ const base = import.meta.env.BASE_URL;
           </div>
         </div>
       </div>
-      <div class="p-10 md:p-12 rounded-2xl relative" style="background-color: var(--color-bg-detail);">
-        <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24" class="absolute top-8 left-8 opacity-20 text-[var(--color-accent)]">
-          <path d="M14.017 21v-7.391C14.017 9.488 16.97 6 21 6v2c-2.968 0-5.5 2.6-5.5 5.5h5.5V21h-6.983zm-12 0v-7.391C2.017 9.488 4.97 6 9 6v2c-2.968 0-5.5 2.6-5.5 5.5H9V21H2.017z"/>
-        </svg>
-        <div class="relative z-10 max-w-3xl mx-auto text-center">
-          <p class="text-xl md:text-2xl font-semibold italic text-[var(--color-text)] leading-relaxed mb-8">
-            "이제 데이터 시각화의 흐름이 끊기지 않아요. 필요한 지표를 찾는 데 들던 에너지를 전략 최적화에만 집중할 수 있게 되었습니다."
+      <!-- 페이지별 건강도 점수 변화 (체크포인트 정량 추적) -->
+      <div class="p-10 md:p-12 rounded-2xl" style="background-color: var(--color-bg-detail);">
+        <div class="max-w-3xl mx-auto">
+          <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)] mb-2">Checkpoint Health Score</p>
+          <h3 class="text-2xl md:text-3xl font-extrabold text-[var(--color-text)] mb-2" style="font-family: var(--font-display);">변경을 정량으로 추적합니다</h3>
+          <p class="text-[var(--color-text-muted)] mb-10 leading-relaxed">
+            모든 UI 변경을 frontend-checkpoint 스킬로 Before/After 스냅샷 + 건강도 점수로 기록해요. "느낌으로 좋아졌다"가 아니라 숫자로 검증합니다.
           </p>
-          <div class="space-y-1">
-            <p class="font-bold text-[var(--color-text)]">Senior Quant Researcher</p>
-            <p class="text-sm text-[var(--color-text-muted)] uppercase tracking-widest">Global Asset Management Firm</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { page: '비교 페이지', before: 91, after: 95, delta: '+4' },
+              { page: '결과 목록', before: 95, after: 99, delta: '+4' },
+              { page: '상세 페이지', before: 96, after: 98, delta: '+2' },
+              { page: '대시보드', before: 100, after: 96, delta: '−4', note: '기능 대폭 추가' },
+            ].map((item) => (
+              <div class="space-y-2">
+                <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">{item.page}</p>
+                <div class="flex items-baseline gap-2">
+                  <span class="text-3xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">{item.after}</span>
+                  <span class="text-sm font-semibold text-[var(--color-text-faint)]">/ {item.before}</span>
+                </div>
+                <p class="text-xs font-bold text-[var(--color-accent)]">{item.delta}{item.note ? ` · ${item.note}` : ''}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 06. Next Steps -->
+    <!-- 06. Currently Building -->
     <section class="py-32" style="background-color: var(--color-bg-secondary);">
       <div class="max-w-7xl mx-auto px-6 md:px-8">
         <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
           <div class="max-w-xl">
-            <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">06. Next Steps</p>
-            <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Forward-Looking Roadmap</h2>
+            <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">06. Currently Building</p>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)] leading-tight" style="font-family: var(--font-display);">아직 만들고 있는 것들</h2>
+            <p class="text-[var(--color-text-muted)] mt-4 leading-relaxed">
+              완성된 케이스 스터디가 아니라 진행 중인 빌드 로그예요. 새 결정이 나오면 이 페이지가 자라요.
+            </p>
           </div>
           <div class="h-[2px] flex-grow mb-4 hidden md:block" style="background-color: var(--color-bg-detail);"></div>
         </div>
         <div class="grid md:grid-cols-2 gap-8">
-          <div class="bg-[var(--color-bg-card)] p-10 md:p-12 rounded-xl group transition-colors duration-500 hover:bg-[var(--color-accent)]">
-            <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-accent)] mb-6 group-hover:text-[var(--color-on-accent)] transition-colors">
-              <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-            </svg>
-            <h3 class="text-2xl font-bold mb-4 text-[var(--color-text)] group-hover:text-[var(--color-on-accent)] transition-colors">Structural UX Feedback</h3>
-            <p class="text-[var(--color-text-muted)] group-hover:text-[var(--color-on-accent)]/80 leading-relaxed transition-colors">
-              사용자의 시선 흐름 데이터를 기반으로 내비게이션 뎁스를 최적화하고, 가장 빈번하게 사용되는 'Quick-Action' 기능을 고도화할 예정이에요.
+          <div class="bg-[var(--color-bg-card)] p-10 md:p-12 rounded-xl">
+            <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)] mb-4">In Progress</p>
+            <h3 class="text-2xl font-bold mb-4 text-[var(--color-text)]" style="font-family: var(--font-display);">기여수익률 산식 구현</h3>
+            <p class="text-[var(--color-text-muted)] leading-relaxed mb-4">
+              Brinson Attribution 기반으로 Holding Return과 Trading Return을 분리해 계산하는 모듈. 펀드 운용에서 "어느 종목이, 어느 시점의 매매가 수익에 얼마나 기여했는지" 추적하기 위한 핵심 지표예요.
             </p>
+            <p class="text-xs text-[var(--color-text-faint)]">10+ 수식 · 7개 DB 컬럼 · rolling_metrics 신규 테이블</p>
           </div>
-          <div class="bg-[var(--color-bg-card)] p-10 md:p-12 rounded-xl group transition-colors duration-500 hover:bg-[var(--color-accent)]">
-            <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-accent)] mb-6 group-hover:text-[var(--color-on-accent)] transition-colors">
-              <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-            </svg>
-            <h3 class="text-2xl font-bold mb-4 text-[var(--color-text)] group-hover:text-[var(--color-on-accent)] transition-colors">AI Implementation QC</h3>
-            <p class="text-[var(--color-text-muted)] group-hover:text-[var(--color-on-accent)]/80 leading-relaxed transition-colors">
-              Claude Code와 연동하여 분석 코드의 품질을 실시간으로 검증하고, 전략의 로직 오류를 배포 전 자동으로 감지하는 QC 엔진을 구축 중이에요.
+          <div class="bg-[var(--color-bg-card)] p-10 md:p-12 rounded-xl">
+            <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)] mb-4">In Progress</p>
+            <h3 class="text-2xl font-bold mb-4 text-[var(--color-text)]" style="font-family: var(--font-display);">금융 용어 툴팁 시스템</h3>
+            <p class="text-[var(--color-text-muted)] leading-relaxed mb-4">
+              "어려운 금융 용어 주석이 없어 어렵다"는 디자이너 피드백에서 출발. glossary.py로 한/영 용어를 관리하고, 모든 금융 지표 라벨에 hover tooltip을 일관 적용하는 중이에요.
             </p>
+            <p class="text-xs text-[var(--color-text-faint)]">12+ 용어 사전 · 한/영 다국어 · 8개 페이지 적용 진행 중</p>
           </div>
         </div>
       </div>
