@@ -351,7 +351,21 @@
 </style>
 </head>
 <body>
-  <div class="download-hint">⌘P → PDF로 저장 (A4 · 여백 기본 · 배경 그래픽 체크)</div>
+  <div class="download-hint">PDF 저장 창이 자동으로 열립니다. 용지: A4 · 여백: 기본 · 배경 그래픽 체크</div>
+
+  <script>
+    // 폰트 로드 후 자동으로 인쇄 창 열기
+    if (typeof window !== 'undefined') {
+      const triggerPrint = () => {
+        setTimeout(() => window.print(), 400);
+      };
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(triggerPrint);
+      } else {
+        window.addEventListener('load', triggerPrint);
+      }
+    }
+  </script>
 
   <div class="page">
 
