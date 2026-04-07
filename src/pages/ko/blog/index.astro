@@ -27,10 +27,10 @@ const base = import.meta.env.BASE_URL;
 
   <main class="px-6 pt-32 pb-20">
     <div class="mx-auto max-w-7xl">
-      <p class="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+      <p class="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
         {tr.blog.section}
       </p>
-      <h1 class="mb-4 text-4xl font-bold sm:text-5xl" style="font-family: var(--font-display);">
+      <h1 class="mb-4 text-4xl font-bold sm:text-5xl text-[var(--color-text)]" style="font-family: var(--font-display);">
         {tr.blog.pageTitle}
       </h1>
       <p class="mb-10 max-w-xl text-sm leading-relaxed text-[var(--color-text-muted)]">
@@ -40,14 +40,14 @@ const base = import.meta.env.BASE_URL;
       <div class="mb-12 flex flex-wrap gap-2" id="category-filters">
         <button
           data-category="all"
-          class="category-btn active rounded-full border border-[var(--color-accent-light)] bg-[var(--color-accent-light)] px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-bg)] transition-all"
+          class="category-btn active rounded-full bg-[var(--color-accent)] px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-on-accent)] transition-all"
         >
           전체
         </button>
         {Object.entries(categoryLabels).map(([key, label]) => (
           <button
             data-category={key}
-            class="category-btn rounded-full border border-[var(--color-border)] px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-text-muted)] transition-all hover:border-[var(--color-accent-light)] hover:text-[var(--color-accent-light)]"
+            class="category-btn rounded-full bg-[var(--color-bg-card)] px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-text-muted)] shadow-ambient-sm transition-all hover:bg-[var(--color-secondary-container)] hover:text-[var(--color-on-secondary-container)]"
           >
             {label}
           </button>
@@ -64,17 +64,17 @@ const base = import.meta.env.BASE_URL;
             }`}
           >
             <div class="flex items-center gap-3">
-              <span class="text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+              <span class="text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
                 {categoryLabels[post.data.category] || post.data.category}
               </span>
             </div>
             <div>
-              <h2 class="mb-2 text-xl font-bold transition-colors group-hover:text-[var(--color-accent-light)]" style="font-family: var(--font-display);">
+              <h2 class="mb-2 text-xl font-bold text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)]" style="font-family: var(--font-display);">
                 {post.data.title}
               </h2>
               <div class="flex flex-wrap gap-2">
                 {post.data.tags.map((tag: string) => (
-                  <span class="rounded-full border border-[var(--color-border)] px-2.5 py-0.5 font-mono text-[10px] text-[var(--color-text-muted)]">
+                  <span class="rounded-full bg-[var(--color-secondary-container)] px-2.5 py-0.5 text-[10px] font-medium text-[var(--color-on-secondary-container)]">
                     {tag}
                   </span>
                 ))}
@@ -84,7 +84,7 @@ const base = import.meta.env.BASE_URL;
               <p class="mb-3 text-sm leading-[1.8] text-[var(--color-text-muted)]">
                 {post.data.description}
               </p>
-              <p class="font-mono text-[10px] text-[var(--color-text-muted)]">
+              <p class="font-mono text-[10px] text-[var(--color-text-faint)]">
                 {post.data.date.toISOString().slice(0, 10)}
               </p>
             </div>
@@ -106,11 +106,11 @@ const base = import.meta.env.BASE_URL;
       const category = btn.dataset.category;
 
       buttons.forEach(b => {
-        b.classList.remove('active', 'border-[var(--color-accent-light)]', 'bg-[var(--color-accent-light)]', 'text-[var(--color-bg)]');
-        b.classList.add('border-[var(--color-border)]', 'text-[var(--color-text-muted)]');
+        b.classList.remove('active', 'bg-[var(--color-accent)]', 'text-[var(--color-on-accent)]');
+        b.classList.add('bg-[var(--color-bg-card)]', 'text-[var(--color-text-muted)]');
       });
-      btn.classList.remove('border-[var(--color-border)]', 'text-[var(--color-text-muted)]');
-      btn.classList.add('active', 'border-[var(--color-accent-light)]', 'bg-[var(--color-accent-light)]', 'text-[var(--color-bg)]');
+      btn.classList.remove('bg-[var(--color-bg-card)]', 'text-[var(--color-text-muted)]');
+      btn.classList.add('active', 'bg-[var(--color-accent)]', 'text-[var(--color-on-accent)]');
 
       posts.forEach(post => {
         if (category === 'all' || post.dataset.category === category) {

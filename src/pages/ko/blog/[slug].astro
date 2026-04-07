@@ -21,7 +21,6 @@ const { Content } = await render(post);
 
 const base = import.meta.env.BASE_URL;
 
-// Series navigation
 const allPosts = await getCollection('blog');
 const seriesPosts = post.data.series
   ? allPosts
@@ -32,12 +31,14 @@ const seriesPosts = post.data.series
 const seriesLabels: Record<string, string> = {
   'quant-platform': '퀀트 리서치 플랫폼',
   'jujutok': '주주톡',
+  'ratb': 'RATB 운용기',
 };
 
 const categoryLabels: Record<string, string> = {
   project: '프로젝트',
   tech: '기술',
   planning: '기획',
+  'deep-dive': '삽질기',
   retrospective: '회고',
 };
 ---
@@ -49,7 +50,7 @@ const categoryLabels: Record<string, string> = {
     <article class="mx-auto max-w-3xl">
       <a
         href={`${base}${lang}/blog/`}
-        class="mb-8 inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
+        class="mb-8 inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-accent)]"
       >
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -59,14 +60,14 @@ const categoryLabels: Record<string, string> = {
 
       <div class="mb-12">
         <div class="mb-4 flex items-center gap-3">
-          <span class="rounded-full bg-[var(--color-accent)]/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-accent-light)]">
+          <span class="rounded-full bg-[var(--color-secondary-container)] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-on-secondary-container)]">
             {categoryLabels[post.data.category] || post.data.category}
           </span>
-          <span class="font-mono text-xs text-[var(--color-text-muted)]">
+          <span class="font-mono text-xs text-[var(--color-text-faint)]">
             {post.data.date.toISOString().slice(0, 10)}
           </span>
         </div>
-        <h1 class="mb-4 text-3xl font-bold leading-snug sm:text-4xl" style="font-family: var(--font-display);">
+        <h1 class="mb-4 text-3xl font-bold leading-snug sm:text-4xl text-[var(--color-text)]" style="font-family: var(--font-display);">
           {post.data.title}
         </h1>
         <p class="text-[var(--color-text-muted)]">
@@ -74,7 +75,7 @@ const categoryLabels: Record<string, string> = {
         </p>
         <div class="mt-4 flex flex-wrap gap-2">
           {post.data.tags.map((tag: string) => (
-            <span class="rounded-full border border-[var(--color-border)] px-2.5 py-0.5 font-mono text-[10px] text-[var(--color-text-muted)]">
+            <span class="rounded-full bg-[var(--color-secondary-container)] px-2.5 py-0.5 text-[10px] font-medium text-[var(--color-on-secondary-container)]">
               {tag}
             </span>
           ))}
@@ -86,31 +87,31 @@ const categoryLabels: Record<string, string> = {
       </div>
 
       {seriesPosts.length > 1 && (
-        <div class="mt-16 border-t border-[var(--color-border)] pt-10">
-          <h3 class="mb-1 text-sm font-semibold uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+        <div class="mt-16 pt-10" style="border-top: 1px solid var(--color-border);">
+          <h3 class="mb-1 text-sm font-semibold uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
             시리즈
           </h3>
-          <p class="mb-6 text-xs text-[var(--color-text-muted)]">
+          <p class="mb-6 text-xs text-[var(--color-text-faint)]">
             {seriesLabels[post.data.series!] || post.data.series} ({seriesPosts.length}편)
           </p>
-          <div class="flex flex-col gap-1.5">
+          <div class="flex flex-col gap-2">
             {seriesPosts.map((sp, i) => {
               const isCurrent = sp.id === post.id;
               return (
                 <a
                   href={isCurrent ? undefined : `${base}${lang}/blog/${sp.id}/`}
                   class:list={[
-                    'group flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition-all',
+                    'group flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all',
                     isCurrent
-                      ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent-light)] font-medium'
+                      ? 'bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] font-medium'
                       : 'text-[var(--color-text-muted)] hover:bg-[var(--color-bg-card)] hover:text-[var(--color-text)]',
                   ]}
                 >
                   <span class:list={[
                     'flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full font-mono text-[10px] font-bold',
                     isCurrent
-                      ? 'bg-[var(--color-accent)] text-white'
-                      : 'border border-[var(--color-border)] text-[var(--color-text-muted)]',
+                      ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
+                      : 'bg-[var(--color-bg-detail)] text-[var(--color-text-faint)]',
                   ]}>
                     {i + 1}
                   </span>
@@ -123,8 +124,8 @@ const categoryLabels: Record<string, string> = {
       )}
 
       {post.data.relatedLinks.length > 0 && (
-        <div class="mt-16 border-t border-[var(--color-border)] pt-10">
-          <h3 class="mb-6 text-sm font-semibold uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+        <div class="mt-16 pt-10" style="border-top: 1px solid var(--color-border);">
+          <h3 class="mb-6 text-sm font-semibold uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
             함께 보면 좋은 글
           </h3>
           <div class="flex flex-col gap-3">
@@ -133,20 +134,20 @@ const categoryLabels: Record<string, string> = {
                 href={link.url}
                 target={link.type === 'github' || link.type === 'linkedin' ? '_blank' : undefined}
                 rel={link.type === 'github' || link.type === 'linkedin' ? 'noopener noreferrer' : undefined}
-                class="group flex items-center gap-3 rounded-lg border border-[var(--color-border)] px-5 py-4 transition-all hover:border-[var(--color-accent-light)] hover:bg-[var(--color-bg-card)]"
+                class="group flex items-center gap-3 rounded-xl bg-[var(--color-bg-card)] px-5 py-4 shadow-ambient-sm transition-all hover:shadow-ambient"
               >
-                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-accent)]/10 text-sm text-[var(--color-accent-light)]">
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-secondary-container)] text-sm text-[var(--color-on-secondary-container)]">
                   {link.type === 'project' ? '📂' : link.type === 'blog' ? '📝' : link.type === 'linkedin' ? '💼' : '💻'}
                 </span>
                 <div class="flex-1">
-                  <span class="text-sm font-medium text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent-light)]">
+                  <span class="text-sm font-medium text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)]">
                     {link.label}
                   </span>
-                  <span class="ml-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
+                  <span class="ml-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-faint)]">
                     {link.type}
                   </span>
                 </div>
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-muted)] transition-colors group-hover:text-[var(--color-accent-light)]">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-faint)] transition-colors group-hover:text-[var(--color-accent)]">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </a>
@@ -170,18 +171,18 @@ const categoryLabels: Record<string, string> = {
   .prose-custom ul li { list-style-type: disc; }
   .prose-custom ol li { list-style-type: decimal; }
   .prose-custom strong { color: var(--color-text); font-weight: 600; }
-  .prose-custom a { color: var(--color-accent-light); text-decoration: underline; text-underline-offset: 2px; }
-  .prose-custom a:hover { color: var(--color-text); }
-  .prose-custom pre { margin-bottom: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--color-border); background-color: var(--color-bg-card) !important; padding: 1.25rem; overflow-x: auto; font-size: 0.8125rem; line-height: 1.7; }
-  .prose-custom pre code { color: var(--color-text) !important; }
+  .prose-custom a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 2px; }
+  .prose-custom a:hover { color: var(--color-accent-light); }
+  .prose-custom pre { margin-bottom: 1.5rem; border-radius: 0.75rem; background-color: #1e293b !important; padding: 1.25rem; overflow-x: auto; font-size: 0.8125rem; line-height: 1.7; }
+  .prose-custom pre code { color: #e2e8f0 !important; }
   .prose-custom code { font-family: var(--font-mono); font-size: 0.85em; }
-  .prose-custom :not(pre) > code { padding: 0.15em 0.4em; border-radius: 0.25rem; background-color: var(--color-bg-card); border: 1px solid var(--color-border); color: var(--color-accent-light); }
+  .prose-custom :not(pre) > code { padding: 0.15em 0.4em; border-radius: 0.25rem; background-color: var(--color-bg-detail); color: var(--color-accent); }
   .prose-custom blockquote { margin-bottom: 1.25rem; border-left: 3px solid var(--color-accent); padding-left: 1rem; color: var(--color-text-muted); font-style: italic; }
   .prose-custom hr { margin: 2rem 0; border-color: var(--color-border); }
   .prose-custom img { border-radius: 0.75rem; margin-bottom: 0.5rem; }
-  .prose-custom img + em { display: block; font-size: 0.75rem; color: var(--color-text-muted); font-style: normal; margin-bottom: 1.5rem; opacity: 0.7; }
+  .prose-custom img + em { display: block; font-size: 0.75rem; color: var(--color-text-faint); font-style: normal; margin-bottom: 1.5rem; opacity: 0.7; }
   .prose-custom table { width: 100%; margin-bottom: 1.5rem; border-collapse: collapse; font-size: 0.875rem; }
-  .prose-custom th { text-align: left; padding: 0.75rem 1rem; border-bottom: 2px solid var(--color-border); color: var(--color-text); font-weight: 600; font-size: 0.8125rem; }
+  .prose-custom th { text-align: left; padding: 0.75rem 1rem; border-bottom: 2px solid var(--color-bg-detail); color: var(--color-text); font-weight: 600; font-size: 0.8125rem; }
   .prose-custom td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); }
   .prose-custom tr:last-child td { border-bottom: none; }
   .prose-custom tbody tr:hover { background-color: var(--color-bg-card); }

@@ -12,6 +12,7 @@ export default function Navbar({ lang = 'en' as Lang }: { lang?: Lang }) {
     { label: tr.nav.projects, href: `${BASE}/${lang}/#projects` },
     { label: tr.nav.stack, href: `${BASE}/${lang}/#stack` },
     { label: tr.nav.blog, href: `${BASE}/${lang}/blog/` },
+    { label: tr.nav.resume, href: `${BASE}/${lang}/resume/` },
     { label: tr.nav.archive, href: `${BASE}/${lang}/#timeline` },
   ];
 

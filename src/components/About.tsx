@@ -83,23 +83,15 @@ export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
               {txt.body}
             </p>
 
-            {/* Stats strip — tonal layering instead of border */}
-            <div className="grid grid-cols-3 gap-6 lg:gap-10">
-              {st.map((s) => (
-                <div
-                  key={s.label}
-                  className="rounded-xl bg-[var(--color-bg-card)] p-4 shadow-ambient-sm"
+            {/* Quick links */}
+            <div className="flex flex-wrap gap-3">
+              {['서비스 기획', '정보구조 설계', 'AI 에이전트', '금융 도메인', 'UX 설계', '프로토타이핑'].map((skill) => (
+                <span
+                  key={skill}
+                  className="rounded-full bg-[var(--color-secondary-container)] px-3 py-1.5 text-[11px] font-medium text-[var(--color-on-secondary-container)]"
                 >
-                  <p
-                    className="text-3xl font-black tracking-tight sm:text-4xl lg:text-[2.75rem] text-[var(--color-accent)]"
-                    style={{ fontFamily: 'var(--font-display)' }}
-                  >
-                    {s.value}
-                  </p>
-                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-                    {s.label}
-                  </p>
-                </div>
+                  {skill}
+                </span>
               ))}
             </div>
           </div>

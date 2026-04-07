@@ -97,7 +97,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
     <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
 
       {/* ═══ Hero — gradient inspired by Pencil mockup ═══ */}
-      <section className="relative overflow-hidden border-b border-[var(--color-border)]">
+      <section className="relative overflow-hidden border-b border-[var(--color-border)]/50">
         {/* Gradient backdrop */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-accent)]/8 via-transparent to-transparent" />
@@ -116,7 +116,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
           >
             {project.title.replace(' — ', '')}
             {project.title.includes('—') && <br className="hidden sm:block" />}
-            <span className="text-[var(--color-accent-light)]">{project.titleAccent}</span>
+            <span className="text-[var(--color-accent)]">{project.titleAccent}</span>
           </h1>
           <p className="mb-8 max-w-lg text-sm leading-relaxed text-[var(--color-text-muted)]">
             {project.heroSubtitle || project.overview.replace(/<[^>]*>/g, '').slice(0, 140) + '…'}
@@ -126,7 +126,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
               href={project.cta.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-accent-light)]"
+              className="inline-flex cursor-pointer items-center gap-2 rounded-lg bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-[var(--color-on-accent)] transition-colors hover:bg-[var(--color-accent)]"
             >
               <Github size={16} />
               {project.cta.githubLabel}
@@ -143,12 +143,12 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
 
       {/* ═══ Challenge + Solution — 2-column from Pencil ═══ */}
       {project.challenge && project.solution ? (
-        <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+        <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
               {/* Challenge */}
               <div>
-                <p className="mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+                <p className="mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
                   {project.challenge.label}
                 </p>
                 <h2
@@ -164,7 +164,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                   <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
                     Core Metric
                   </p>
-                  <p className="text-4xl font-bold text-[var(--color-accent-light)]" style={{ fontFamily: 'var(--font-display)' }}>
+                  <p className="text-4xl font-bold text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-display)' }}>
                     {project.challenge.metricValue}
                   </p>
                   <p className="mt-1 text-xs text-[var(--color-text-muted)]">
@@ -174,7 +174,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
               </div>
               {/* Solution */}
               <div>
-                <p className="mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+                <p className="mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
                   {project.solution.label}
                 </p>
                 <h2
@@ -203,9 +203,9 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
         </section>
       ) : (
         /* Fallback: original Problem section */
-        <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+        <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
           <div className="mx-auto max-w-7xl">
-            <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+            <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
               01 The Problem
             </p>
             <div className="max-w-3xl">
@@ -226,9 +226,9 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       )}
 
       {/* ═══ How It Works — walkthrough with screenshots (kept) ═══ */}
-      <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+      <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+          <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
             02 How It Works
           </p>
           <h2
@@ -245,7 +245,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                 {step.screenshotAfter ? (
                   <div className="[direction:ltr] grid grid-cols-2 gap-3">
                     <div className="group overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]">
-                      <div className="px-3 py-1.5 border-b border-[var(--color-border)] bg-[var(--color-bg-card)]">
+                      <div className="px-3 py-1.5 border-b border-[var(--color-border)]/50 bg-[var(--color-bg-card)]">
                         <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)]">Before</span>
                       </div>
                       <img
@@ -257,7 +257,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                     </div>
                     <div className="group overflow-hidden rounded-2xl border border-[var(--color-accent)]/30 bg-[var(--color-bg-card)]">
                       <div className="px-3 py-1.5 border-b border-[var(--color-accent)]/30 bg-[var(--color-accent)]/5">
-                        <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-accent-light)]">After</span>
+                        <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-accent)]">After</span>
                       </div>
                       <img
                         src={`${BASE}${step.screenshotAfter}`}
@@ -295,7 +295,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                 {/* Text */}
                 <div className="[direction:ltr]">
                   <div className="mb-4 flex items-center gap-3">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-accent)]/30 text-xs font-bold text-[var(--color-accent-light)]">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-accent)]/30 text-xs font-bold text-[var(--color-accent)]">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
@@ -320,9 +320,9 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
 
       {/* ═══ Designer Feedback ═══ */}
       {project.designerFeedback && (
-        <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+        <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
           <div className="mx-auto max-w-7xl">
-            <p className="mb-4 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+            <p className="mb-4 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
               03 외부 피드백
             </p>
             <h2 className="mb-4 text-2xl font-bold sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
@@ -336,7 +336,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                 <div key={f.reviewer} className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6">
                   <div className="flex items-start justify-between mb-3">
                     <span className="text-sm font-bold">{f.reviewer}</span>
-                    <span className="text-2xl font-bold text-[var(--color-accent-light)]" style={{ fontFamily: 'var(--font-display)' }}>{f.score}</span>
+                    <span className="text-2xl font-bold text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-display)' }}>{f.score}</span>
                   </div>
                   <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">"{f.comment}"</p>
                 </div>
@@ -345,8 +345,8 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
             <div className="rounded-xl border border-[var(--color-accent)]/20 bg-[var(--color-accent)]/5 p-6">
               <p className="text-sm leading-[1.9] text-[var(--color-text-muted)] mb-4">{project.designerFeedback.process}</p>
               <div className="flex items-center gap-3">
-                <ArrowRight size={14} className="text-[var(--color-accent-light)]" />
-                <span className="text-sm font-bold text-[var(--color-accent-light)]">{project.designerFeedback.result}</span>
+                <ArrowRight size={14} className="text-[var(--color-accent)]" />
+                <span className="text-sm font-bold text-[var(--color-accent)]">{project.designerFeedback.result}</span>
               </div>
             </div>
           </div>
@@ -354,9 +354,9 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       )}
 
       {/* ═══ Architecture — overview + highlights ═══ */}
-      <section id="architecture" className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+      <section id="architecture" className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+          <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
             03 Architecture
           </p>
           <p className="mb-12 max-w-3xl text-lg leading-relaxed text-[var(--color-text-muted)]">
@@ -368,10 +368,10 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
               return (
                 <div
                   key={h.title}
-                  className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition-colors hover:bg-[var(--color-bg-card-hover)]"
+                  className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition-colors hover:bg-[var(--color-bg-card)]"
                 >
                   <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-accent)]/10">
-                    <Icon size={20} className="text-[var(--color-accent-light)]" />
+                    <Icon size={20} className="text-[var(--color-accent)]" />
                   </div>
                   <h3 className="mb-2 text-sm font-bold">{h.title}</h3>
                   <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">{h.description}</p>
@@ -384,9 +384,9 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
 
       {/* ═══ Agent Architecture — "The Intelligence Ensemble" ═══ */}
       {project.agents && project.agents.length > 0 && (
-      <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+      <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-4 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+          <p className="mb-4 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
             04 Agent Architecture
           </p>
           <h2
@@ -401,12 +401,12 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
               return (
                 <div
                   key={agent.id}
-                  className="group cursor-pointer rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition-all duration-200 hover:bg-[var(--color-bg-card-hover)] hover:border-[var(--color-accent)]/20"
+                  className="group cursor-pointer rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition-all duration-200 hover:bg-[var(--color-bg-card)] hover:border-[var(--color-accent)]/20"
                 >
                   <div className="mb-4 flex items-center justify-between">
                     <span className="font-mono text-[10px] text-[var(--color-text-muted)]">{agent.id}</span>
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-accent)]/10 transition-colors group-hover:bg-[var(--color-accent)]/20">
-                      <Icon size={16} className="text-[var(--color-accent-light)]" />
+                      <Icon size={16} className="text-[var(--color-accent)]" />
                     </div>
                   </div>
                   <h3 className="mb-2 font-bold">{agent.name}</h3>
@@ -431,7 +431,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
 
       {/* ═══ Debate System — dark bg treatment from Pencil ═══ */}
       {project.debate && (
-      <section className="relative overflow-hidden border-b border-[var(--color-border)]">
+      <section className="relative overflow-hidden border-b border-[var(--color-border)]/50">
         {/* Subtle dark overlay for contrast */}
         <div className="pointer-events-none absolute inset-0 bg-[var(--color-bg-card)]" />
         <div className="relative z-10 px-6 py-20 sm:py-28">
@@ -439,7 +439,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
             <div className="grid items-center gap-12 lg:grid-cols-2">
               {/* Text side */}
               <div>
-                <p className="mb-4 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+                <p className="mb-4 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
                   05 The Debate System
                 </p>
                 <h2
@@ -447,7 +447,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {project.debate.title}
-                  <span className="text-[var(--color-accent-light)]">{project.debate.titleAccent}</span>
+                  <span className="text-[var(--color-accent)]">{project.debate.titleAccent}</span>
                 </h2>
                 <p className="mb-8 text-sm leading-[1.8] text-[var(--color-text-muted)]">
                   {project.debate.description}
@@ -455,7 +455,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                 <ul className="space-y-5">
                   {project.debate.features.map((f) => (
                     <li key={f.title} className="flex gap-3">
-                      <ChevronRight size={16} className="mt-0.5 flex-shrink-0 text-[var(--color-accent-light)]" />
+                      <ChevronRight size={16} className="mt-0.5 flex-shrink-0 text-[var(--color-accent)]" />
                       <div>
                         <p className="mb-1 text-sm font-bold">{f.title}</p>
                         <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">{f.description}</p>
@@ -501,7 +501,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                     return (
                       <span
                         key={p}
-                        className={`rounded-md px-3 py-1.5 text-[10px] font-medium ${colors[i] || 'bg-[var(--color-accent)]/10 text-[var(--color-accent-light)]'}`}
+                        className={`rounded-md px-3 py-1.5 text-[10px] font-medium ${colors[i] || 'bg-[var(--color-accent)]/10 text-[var(--color-accent)]'}`}
                       >
                         {p}
                       </span>
@@ -516,7 +516,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       )}
 
       {/* ═══ Technical Stack ═══ */}
-      <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+      <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           {/* Label with horizontal lines */}
           <div className="mb-14 flex items-center gap-4">
@@ -540,9 +540,9 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       </section>
 
       {/* ═══ Data Flow ═══ */}
-      <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+      <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-12 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+          <p className="mb-12 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
             The Data Journey
           </p>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -551,7 +551,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
               return (
                 <div key={i} className="relative text-center">
                   <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-card)]">
-                    <Icon size={22} className="text-[var(--color-accent-light)]" />
+                    <Icon size={22} className="text-[var(--color-accent)]" />
                   </div>
                   <h4 className="mb-1 text-sm font-bold">{step.title}</h4>
                   <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
@@ -568,9 +568,9 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       </section>
 
       {/* ═══ Metrics ═══ */}
-      <section className="border-b border-[var(--color-border)] px-6 py-20 sm:py-28">
+      <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-12 text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
+          <p className="mb-12 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
             By The Numbers
           </p>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -579,7 +579,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                 key={m.label}
                 className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 text-center"
               >
-                <p className="mb-2 text-3xl font-bold text-[var(--color-accent-light)]" style={{ fontFamily: 'var(--font-display)' }}>
+                <p className="mb-2 text-3xl font-bold text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-display)' }}>
                   {m.value}
                 </p>
                 <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
