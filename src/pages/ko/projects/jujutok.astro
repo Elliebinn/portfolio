@@ -16,20 +16,22 @@ const base = import.meta.env.BASE_URL;
     <!-- Section 1: Hero -->
     <section class="relative">
       <div class="max-w-4xl space-y-8">
+        <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">AI 서비스 설계 · 1인 기획 + 개발</p>
         <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-[1.1] tracking-tight text-[var(--color-text)]" style="font-family: var(--font-display);">
-          AI 하나의 의견은 <span class="italic font-extrabold text-[var(--color-accent)]">편향</span>일 수 있다는 가설에서 시작한 이야기
+          "AI 하나의 의견은 객관적으로 보이지만,<br/>
+          <span class="italic font-extrabold text-[var(--color-accent)]">편향</span>일 수 있다."
         </h1>
         <p class="text-lg sm:text-xl text-[var(--color-text-muted)] max-w-2xl leading-relaxed">
-          6명의 전문 AI 에이전트와 4가지 투자 페르소나가 상호작용하며 객관적인 투자 인사이트를 도출합니다. 데이터 뒤에 숨겨진 진실을 찾는 여정.
+          이 가설에서 시작한 주식 분석 플랫폼. 6개 AI 에이전트가 서로 다른 축에서 분석하고, 4명의 투자 페르소나가 토론을 거쳐 결론에 도달합니다. 편향을 프롬프트가 아니라 <strong class="text-[var(--color-text)]">구조</strong>로 해결하려는 시도입니다.
         </p>
         <div class="flex gap-6">
           <div class="jt-glass p-6 rounded-2xl flex flex-col gap-1 -rotate-2 hover:rotate-0 transition-transform duration-500">
-            <span class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Line of Code</span>
-            <span class="text-3xl font-extrabold text-[var(--color-accent)]" style="font-family: var(--font-display);">31K+</span>
+            <span class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">분석 에이전트</span>
+            <span class="text-3xl font-extrabold text-[var(--color-accent)]" style="font-family: var(--font-display);">6</span>
           </div>
           <div class="jt-glass p-6 rounded-2xl flex flex-col gap-1 rotate-3 hover:rotate-0 transition-transform duration-500">
-            <span class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Unit Tests</span>
-            <span class="text-3xl font-extrabold" style="font-family: var(--font-display); color: #4f6354;">147</span>
+            <span class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">투자 페르소나</span>
+            <span class="text-3xl font-extrabold" style="font-family: var(--font-display); color: #4f6354;">4</span>
           </div>
         </div>
       </div>
@@ -42,43 +44,51 @@ const base = import.meta.env.BASE_URL;
     <section class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
       <div class="space-y-2 p-6 md:p-8 jt-glass rounded-[2rem]">
         <div class="text-4xl md:text-5xl font-extrabold" style="font-family: var(--font-display); color: #4f6354;">6</div>
-        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Specialized Agents</div>
+        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">분석 축 분리</div>
+        <div class="text-[11px] text-[var(--color-text-muted)] leading-snug">거시 · 기술적 · 공시 · 뉴스 · 재무 · 온체인</div>
       </div>
       <div class="space-y-2 p-6 md:p-8 jt-glass rounded-[2rem] md:translate-y-4">
         <div class="text-4xl md:text-5xl font-extrabold" style="font-family: var(--font-display); color: #615a7d;">4</div>
-        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Unique Personas</div>
+        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">투자 관점</div>
+        <div class="text-[11px] text-[var(--color-text-muted)] leading-snug">가치 · 성장 · 거시 · 모멘텀</div>
       </div>
       <div class="space-y-2 p-6 md:p-8 jt-glass rounded-[2rem]">
         <div class="text-4xl md:text-5xl font-extrabold text-[var(--color-accent)]" style="font-family: var(--font-display); text-shadow: 0 0 20px rgba(69, 98, 114, 0.2);">3</div>
-        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Round Debates</div>
+        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">라운드 토론</div>
+        <div class="text-[11px] text-[var(--color-text-muted)] leading-snug">입장 · 반박 · 합의</div>
       </div>
       <div class="space-y-2 p-6 md:p-8 jt-glass rounded-[2rem] md:translate-y-4">
-        <div class="text-4xl md:text-5xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">147</div>
-        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Test Cases</div>
+        <div class="text-4xl md:text-5xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">1인</div>
+        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">기획 · 개발 · 배포</div>
+        <div class="text-[11px] text-[var(--color-text-muted)] leading-snug">E2E 직접 수행</div>
       </div>
     </section>
 
     <!-- Section 3: Problem Definition -->
     <section class="space-y-16">
       <div class="text-center max-w-2xl mx-auto space-y-4">
+        <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">문제 정의</p>
         <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">단일 AI 의견의 객관성 착시</h2>
-        <p class="text-[var(--color-text-muted)]">하나의 모델이 내놓는 확신은 때로 가장 위험한 신호가 됩니다.</p>
+        <p class="text-[var(--color-text-muted)]">하나의 모델이 내놓는 확신은, 때로 가장 위험한 신호가 됩니다. 근거가 매끄러울수록 검증이 생략되기 때문입니다.</p>
       </div>
       <div class="relative py-12 flex justify-center items-center overflow-hidden">
         <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 relative z-10">
-          <div class="jt-glass px-8 md:px-10 py-10 md:py-12 rounded-[2.5rem] text-center bg-white">
+          <div class="jt-glass px-8 md:px-10 py-10 md:py-12 rounded-[2.5rem] text-center bg-white max-w-[200px]">
             <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="mx-auto mb-4 text-[var(--color-accent)]/40"><path d="M12 4v1m6.364 1.636l-.707.707M21 12h-1m-1.636 6.364l-.707-.707M12 20v-1m-6.364-1.636l.707-.707M3 12h1m1.636-6.364l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
-            <p class="uppercase text-xs tracking-tighter text-[var(--color-text-muted)] font-bold">Single AI</p>
+            <p class="uppercase text-xs tracking-tighter text-[var(--color-text-muted)] font-bold mb-1">단일 AI</p>
+            <p class="text-[11px] text-[var(--color-text-muted)] leading-snug">하나의 모델 · 하나의 답</p>
           </div>
           <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-muted)]/30 rotate-90 md:rotate-0"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-          <div class="jt-glass px-8 md:px-10 py-10 md:py-12 rounded-[2.5rem] text-center" style="background-color: #f2f3f7;">
+          <div class="jt-glass px-8 md:px-10 py-10 md:py-12 rounded-[2.5rem] text-center max-w-[200px]" style="background-color: #f2f3f7;">
             <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="mx-auto mb-4 text-[var(--color-text-muted)]/40"><path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
-            <p class="uppercase text-xs tracking-tighter text-[var(--color-text-muted)] font-bold">Narrow View</p>
+            <p class="uppercase text-xs tracking-tighter text-[var(--color-text-muted)] font-bold mb-1">좁은 시야</p>
+            <p class="text-[11px] text-[var(--color-text-muted)] leading-snug">한 관점만 보이는 분석</p>
           </div>
           <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-muted)]/30 rotate-90 md:rotate-0"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-          <div class="px-8 md:px-10 py-10 md:py-12 rounded-[2.5rem] text-center" style="background-color: rgba(179, 38, 30, 0.05); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
+          <div class="px-8 md:px-10 py-10 md:py-12 rounded-[2.5rem] text-center max-w-[200px]" style="background-color: rgba(179, 38, 30, 0.05); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
             <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="mx-auto mb-4" style="color: #b3261e;"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-            <p class="uppercase text-xs tracking-tighter font-bold" style="color: #b3261e;">Hidden Bias</p>
+            <p class="uppercase text-xs tracking-tighter font-bold mb-1" style="color: #b3261e;">숨겨진 편향</p>
+            <p class="text-[11px] leading-snug" style="color: #b3261e;">검증 없이 그대로 수용</p>
           </div>
         </div>
         <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
@@ -87,25 +97,29 @@ const base = import.meta.env.BASE_URL;
       </div>
     </section>
 
-    <!-- Section 4: Research Insight -->
+    <!-- Section 4: Research Insight — 기획자가 본 진짜 문제 -->
     <section class="jt-asymmetric-grid items-center">
       <div class="space-y-12">
-        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">The Empathy Paradox</h2>
+        <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">기획 인사이트</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">사용자가 말한 것과<br/>진짜로 필요했던 것</h2>
         <div class="space-y-8">
           <div class="relative pl-8">
             <div class="absolute left-0 top-0 bottom-0 w-[4px] rounded-full" style="background-color: #e0e2ec;"></div>
-            <p class="text-sm uppercase tracking-widest text-[var(--color-text-muted)] mb-2 font-bold">What they said</p>
+            <p class="text-sm uppercase tracking-widest text-[var(--color-text-muted)] mb-2 font-bold">사용자가 말한 것</p>
             <p class="text-xl md:text-2xl text-[var(--color-text-muted)] italic">"빠르고 명확한 하나의 결론을 원해요."</p>
           </div>
           <div class="relative pl-8">
             <div class="absolute left-0 top-0 bottom-0 w-[4px] rounded-full bg-[var(--color-accent)]"></div>
-            <p class="text-sm uppercase tracking-widest text-[var(--color-accent)] mb-2 font-bold">What they needed</p>
-            <p class="text-2xl md:text-3xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">"내 판단을 확신할 수 있는 논리적 충돌의 과정이 필요합니다."</p>
+            <p class="text-sm uppercase tracking-widest text-[var(--color-accent)] mb-2 font-bold">진짜 필요한 것</p>
+            <p class="text-2xl md:text-3xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">"내 판단을 확신할 수 있는, 서로 충돌하는 관점의 토론 과정"</p>
           </div>
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed pl-8">
+            펀드 운용 경험에서 배운 것 — 가치/성장/거시/모멘텀 관점은 같은 종목을 두고 정반대 결론을 낼 수 있습니다. 투자자가 진짜 원하는 건 "정답"이 아니라 "내가 어느 축에 설지 판단할 수 있는 근거"였어요.
+          </p>
         </div>
       </div>
       <div class="relative h-96 rounded-[3rem] overflow-hidden" style="box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
-        <img alt="Abstract data visual" class="w-full h-full object-cover grayscale opacity-30" src={`${base}assets/landing/jujutok/paradox-visual.jpg`}/>
+        <img alt="편향을 드러내는 다층 분석 이미지" class="w-full h-full object-cover grayscale opacity-30" src={`${base}assets/landing/jujutok/paradox-visual.jpg`}/>
         <div class="absolute inset-0" style="background: linear-gradient(to top right, var(--color-bg), transparent, transparent);"></div>
       </div>
     </section>
@@ -114,14 +128,20 @@ const base = import.meta.env.BASE_URL;
     <section class="space-y-12 p-8 md:p-12 rounded-[3rem]" style="background-color: #f2f3f7; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
       <div class="flex flex-col md:flex-row gap-12">
         <div class="w-full md:w-1/2 space-y-6">
-          <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Parallel Multi-Agent Architecture</h2>
-          <p class="text-[var(--color-text-muted)] leading-relaxed">
-            하나의 명령어가 6개의 전문 도메인(거시경제, 기술적 분석, 공시, 뉴스, 재무, 온체인)으로 분산되어 동시에 분석을 시작합니다. 이후 4명의 가상 투자자들이 이 데이터를 바탕으로 실전 토론을 벌여 최종 인사이트를 정제합니다.
-          </p>
+          <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">기획 판단</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">왜 6개 축 × 4개 관점이었나</h2>
+          <div class="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
+            <p>
+              <strong class="text-[var(--color-text)]">분석 축 6개</strong> — 거시경제, 기술적 분석, 공시, 뉴스, 재무, 온체인. 운용사에서 실제로 쓰는 분석 프레임을 그대로 옮겼습니다. 하나의 에이전트가 모든 축을 다루면 "다 아는 것처럼 보이지만 아무것도 깊지 않은" 답이 나옵니다.
+            </p>
+            <p>
+              <strong class="text-[var(--color-text)]">투자 관점 4개</strong> — 가치, 성장, 거시, 모멘텀. 같은 데이터를 보고도 전혀 다른 결론을 내는 4개의 페르소나가 3라운드 토론을 벌입니다. 이 과정에서 <strong class="text-[var(--color-text)]">"왜 그 판단인가"</strong>가 드러납니다.
+            </p>
+          </div>
           <div class="flex flex-wrap gap-4">
-            <span class="px-4 py-2 jt-glass rounded-full text-xs font-bold text-[var(--color-accent)]">Parallel Processing</span>
-            <span class="px-4 py-2 jt-glass rounded-full text-xs font-bold" style="color: #4f6354;">3-Round Debate</span>
-            <span class="px-4 py-2 jt-glass rounded-full text-xs font-bold" style="color: #615a7d;">SSE Streaming</span>
+            <span class="px-4 py-2 jt-glass rounded-full text-xs font-bold text-[var(--color-accent)]">병렬 분석</span>
+            <span class="px-4 py-2 jt-glass rounded-full text-xs font-bold" style="color: #4f6354;">3라운드 토론</span>
+            <span class="px-4 py-2 jt-glass rounded-full text-xs font-bold" style="color: #615a7d;">SSE 스트리밍</span>
           </div>
         </div>
         <div class="w-full md:w-1/2 rounded-2xl overflow-hidden bg-white shadow-xl p-6 md:p-8 font-mono text-xs md:text-sm text-[var(--color-text-muted)] leading-relaxed">
@@ -131,12 +151,13 @@ const base = import.meta.env.BASE_URL;
             <div class="w-3 h-3 rounded-full" style="background-color: rgba(69, 98, 114, 0.2);"></div>
           </div>
           <pre><code><span class="text-[var(--color-accent)] font-bold">async function</span> <span style="color:#4f6354;">startDebate</span>(topic) &#123;
+  <span class="italic text-slate-400">// 1. 6개 분석 축 병렬 실행</span>
   <span style="color:#615a7d;">const</span> agents = <span class="text-[var(--color-accent)]">await</span> AgentPool.init(6);
   <span style="color:#615a7d;">const</span> rawData = <span class="text-[var(--color-accent)]">await</span> Promise.all(
     agents.map(a =&gt; a.analyze(topic))
   );
 
-  <span class="italic text-slate-400">// Start 3-round persona synthesis</span>
+  <span class="italic text-slate-400">// 2. 4개 페르소나가 3라운드 토론</span>
   <span style="color:#615a7d;">for</span> (let r = 0; r &lt; 3; r++) &#123;
     <span class="text-[var(--color-accent)]">await</span> supervisor.mediate(rawData);
   &#125;
@@ -148,14 +169,17 @@ const base = import.meta.env.BASE_URL;
 
     <!-- Section 6: System Workflow -->
     <section class="space-y-16">
-      <h2 class="text-3xl md:text-4xl font-extrabold text-center text-[var(--color-text)]" style="font-family: var(--font-display);">System Workflow</h2>
+      <div class="text-center max-w-2xl mx-auto space-y-4">
+        <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">시스템 흐름</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">분석 · 토론 · 전달</h2>
+      </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
         <div class="absolute top-1/2 left-0 right-0 h-[2px] -z-10 hidden md:block" style="background-color: rgba(224, 226, 236, 0.3);"></div>
         {[
-          { num: '6 Agents', label: 'Parallel Extraction', icon: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z', color: 'accent' },
-          { num: '4 Personas', label: 'Sequential Debate', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', color: 'sage' },
-          { num: 'SSE Stream', label: 'Real-time Delivery', icon: 'M13 10V3L4 14h7v7l9-11h-7z', color: 'tertiary' },
-          { num: 'Supervisor', label: 'Final Synthesis', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', color: 'accent' },
+          { num: '6 에이전트', label: '병렬 분석', desc: '동시 데이터 수집', icon: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z', color: 'accent' },
+          { num: '4 페르소나', label: '순차 토론', desc: '관점 충돌 · 반박', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', color: 'sage' },
+          { num: 'SSE 스트림', label: '실시간 전달', desc: '토론 과정 노출', icon: 'M13 10V3L4 14h7v7l9-11h-7z', color: 'tertiary' },
+          { num: '수퍼바이저', label: '최종 합의', desc: '근거 요약 생성', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', color: 'accent' },
         ].map((item) => (
           <div class="jt-glass p-6 md:p-8 rounded-[2rem] text-center space-y-4 hover:bg-white transition-all group">
             <div class="w-12 h-12 rounded-xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform"
@@ -165,49 +189,47 @@ const base = import.meta.env.BASE_URL;
               </svg>
             </div>
             <h3 class="font-extrabold text-base md:text-lg text-[var(--color-text)]" style="font-family: var(--font-display);">{item.num}</h3>
-            <p class="text-[10px] md:text-xs text-[var(--color-text-muted)] uppercase font-bold tracking-wider">{item.label}</p>
+            <p class="text-[11px] md:text-xs text-[var(--color-text-muted)] uppercase font-bold tracking-wider">{item.label}</p>
+            <p class="text-[10px] text-[var(--color-text-muted)] leading-snug">{item.desc}</p>
           </div>
         ))}
       </div>
     </section>
 
-    <!-- Section 7: Transformation + Testimonial -->
+    <!-- Section 7: Before / After + 기획 회고 -->
     <section class="grid grid-cols-1 md:grid-cols-2 gap-12">
       <div class="space-y-8">
-        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">The Transformation</h2>
+        <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">결과</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">정답에서 근거로</h2>
         <div class="space-y-4">
           <div class="p-6 rounded-2xl flex items-center justify-between opacity-60" style="background-color: #f2f3f7;">
             <div class="flex items-center gap-4">
               <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: rgba(179, 38, 30, 0.6);"><path d="M6 18L18 6M6 6l12 12"/></svg>
-              <span class="text-[var(--color-text-muted)]">Single Answer</span>
+              <span class="text-[var(--color-text-muted)]">단일 결론 — "이 종목 사세요"</span>
             </div>
-            <span class="text-xs text-[var(--color-text-muted)] uppercase tracking-widest">Static</span>
+            <span class="text-xs text-[var(--color-text-muted)] uppercase tracking-widest">Before</span>
           </div>
           <div class="p-8 rounded-[2.5rem] bg-white flex items-center justify-between" style="box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
             <div class="flex items-center gap-4">
               <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" class="text-[var(--color-accent)]"><path d="M12 0a12 12 0 100 24 12 12 0 000-24zm5.28 10.22l-6 6a1.5 1.5 0 01-2.12 0l-3-3a1.5 1.5 0 012.12-2.12L10.5 12.88l4.94-4.94a1.5 1.5 0 012.12 2.12l-.28.16z"/></svg>
-              <span class="font-extrabold text-lg text-[var(--color-accent)]" style="font-family: var(--font-display);">Debate &amp; Synthesis</span>
+              <span class="font-extrabold text-lg text-[var(--color-accent)]" style="font-family: var(--font-display);">토론 기반 합의</span>
             </div>
-            <span class="text-xs text-[var(--color-accent)] font-bold uppercase tracking-widest">Dynamic</span>
+            <span class="text-xs text-[var(--color-accent)] font-bold uppercase tracking-widest">After</span>
           </div>
         </div>
-      </div>
-      <div class="jt-glass p-10 md:p-12 rounded-[3rem] flex flex-col justify-center space-y-8" style="background-color: rgba(255, 255, 255, 0.4);">
-        <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24" class="text-[var(--color-accent)]/20">
-          <path d="M14.017 21v-7.391C14.017 9.488 16.97 6 21 6v2c-2.968 0-5.5 2.6-5.5 5.5h5.5V21h-6.983zm-12 0v-7.391C2.017 9.488 4.97 6 9 6v2c-2.968 0-5.5 2.6-5.5 5.5H9V21H2.017z"/>
-        </svg>
-        <p class="text-xl md:text-2xl leading-relaxed text-[var(--color-text)] italic">
-          "I don't just trust AI, <span class="text-[var(--color-accent)] font-bold not-italic">I understand it.</span> JujuTok provides the 'why' behind the 'what'."
+        <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">
+          사용자는 "결론"이 아니라 "4명이 왜 그렇게 생각했는가"를 보게 됩니다. 자신이 어느 관점에 동의하는지 스스로 판단할 수 있고, 그 판단의 근거도 함께 얻습니다.
         </p>
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-full overflow-hidden" style="background-color: rgba(69, 98, 114, 0.1);">
-            <img alt="User avatar" src={`${base}assets/landing/jujutok/user-avatar.jpg`} class="w-full h-full object-cover"/>
-          </div>
-          <div>
-            <p class="font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Dong-woo Kim</p>
-            <p class="text-xs text-[var(--color-text-muted)] uppercase tracking-widest">Lead Quant Researcher</p>
-          </div>
-        </div>
+      </div>
+      <div class="jt-glass p-10 md:p-12 rounded-[3rem] flex flex-col justify-center space-y-6" style="background-color: rgba(255, 255, 255, 0.4);">
+        <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">기획 회고</p>
+        <h3 class="text-2xl md:text-3xl font-extrabold text-[var(--color-text)] leading-tight" style="font-family: var(--font-display);">"프롬프트로 편향을 못 고치면,<br/>구조로 고쳐야 한다."</h3>
+        <p class="text-[var(--color-text-muted)] leading-relaxed">
+          처음에는 "더 좋은 프롬프트"로 편향을 줄이려 했습니다. 실패했어요. 단일 모델은 자기 답변에 확신을 가지도록 학습돼 있고, 반대 관점을 스스로 떠올리지 않습니다.
+        </p>
+        <p class="text-[var(--color-text-muted)] leading-relaxed">
+          해결은 구조에 있었습니다. 관점을 <strong class="text-[var(--color-text)]">역할로 분리</strong>하고, 그들끼리 토론시키는 것. 기획자가 펀드 운용 현장에서 봤던 "애널리스트 회의실"의 작동 방식을 그대로 시스템으로 옮겼습니다.
+        </p>
       </div>
     </section>
 
@@ -215,24 +237,25 @@ const base = import.meta.env.BASE_URL;
     <section class="jt-glass p-10 md:p-16 rounded-[4rem] text-center space-y-12 relative overflow-hidden" style="background-color: #f2f3f7;">
       <div class="absolute -bottom-24 -left-24 w-64 h-64 rounded-full" style="background-color: rgba(69, 98, 114, 0.05); filter: blur(100px);"></div>
       <div class="max-w-2xl mx-auto space-y-6 relative z-10">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Next Steps</h2>
-        <p class="text-[var(--color-text-muted)]">우리는 멈추지 않습니다. 더 정교한 분석을 위한 다음 목표.</p>
+        <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">다음 단계</p>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">더 정교한 구조로</h2>
+        <p class="text-[var(--color-text-muted)]">편향은 한 번에 풀리는 문제가 아닙니다. 계속 더 좋은 구조를 찾아가는 중이에요.</p>
       </div>
       <div class="flex flex-col md:flex-row justify-center gap-8 relative z-10">
         <div class="p-8 rounded-3xl space-y-4 flex-1 hover:-translate-y-1 transition-transform" style="background-color: rgba(255, 255, 255, 0.6); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
           <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color: #4f6354;"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-          <h4 class="font-extrabold text-xl text-[var(--color-text)]" style="font-family: var(--font-display);">Real-time Data</h4>
-          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">초단위 시장 데이터 연동을 통한 실시간 에이전트 브리핑</p>
+          <h4 class="font-extrabold text-xl text-[var(--color-text)]" style="font-family: var(--font-display);">실시간 데이터</h4>
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">분 단위 시장 데이터를 에이전트에 직결, 토론 기준점을 실시간 갱신</p>
         </div>
         <div class="p-8 rounded-3xl space-y-4 flex-1 hover:-translate-y-1 transition-transform" style="background-color: rgba(255, 255, 255, 0.6); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
           <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color: #615a7d;"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-          <h4 class="font-extrabold text-xl text-[var(--color-text)]" style="font-family: var(--font-display);">Persona Custom</h4>
-          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">사용자의 투자 성향을 학습한 맞춤형 페르소나 생성</p>
+          <h4 class="font-extrabold text-xl text-[var(--color-text)]" style="font-family: var(--font-display);">맞춤 페르소나</h4>
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">사용자의 투자 성향을 학습해 4개 관점의 가중치를 동적으로 조정</p>
         </div>
       </div>
       <div class="pt-8 relative z-10">
         <a href={`${base}${lang}/#contact`} class="inline-block bg-[var(--color-accent)] text-[var(--color-on-accent)] px-12 py-4 rounded-full font-extrabold text-lg shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300" style="font-family: var(--font-display);">
-          Launch Alpha Now
+          케이스 스터디 문의
         </a>
       </div>
     </section>
