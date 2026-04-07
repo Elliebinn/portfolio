@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px;
+    height: 675px;
+    background: #18181b;
+    font-family: 'Geist', -apple-system, sans-serif;
+    color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .container {
+    width: 1120px;
+    height: 595px;
+    padding: 48px 56px;
+    position: relative;
+  }
+
+  .header {
+    margin-bottom: 40px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+
+  .title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fafafa;
+    line-height: 1.3;
+  }
+
+  .title span {
+    color: #818cf8;
+  }
+
+  .chart-area {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    height: 300px;
+    padding: 0 20px;
+    position: relative;
+  }
+
+  .chart-bg {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .bar-value {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #fafafa;
+  }
+
+  .bar-value.highlight {
+    color: #818cf8;
+    font-size: 26px;
+  }
+
+  .bar {
+    width: 80px;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .bar-2011 {
+    height: 40px;
+    background: linear-gradient(180deg, #3f3f46, #27272a);
+  }
+
+  .bar-2017 {
+    height: 80px;
+    background: linear-gradient(180deg, #52525b, #3f3f46);
+  }
+
+  .bar-2020 {
+    height: 120px;
+    background: linear-gradient(180deg, #6366f1, #4f46e5);
+    opacity: 0.5;
+  }
+
+  .bar-2023 {
+    height: 200px;
+    background: linear-gradient(180deg, #6366f1, #4f46e5);
+    opacity: 0.75;
+  }
+
+  .bar-2026 {
+    height: 270px;
+    background: linear-gradient(180deg, #818cf8, #6366f1);
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+  }
+
+  .bar-label {
+    margin-top: 14px;
+    font-size: 14px;
+    color: #a1a1aa;
+    font-weight: 500;
+  }
+
+  .bar-label.highlight {
+    color: #fafafa;
+    font-weight: 600;
+  }
+
+  .growth-badge {
+    position: absolute;
+    top: -8px;
+    right: -24px;
+    background: rgba(234, 179, 8, 0.15);
+    color: #fbbf24;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+
+  .annotation {
+    position: absolute;
+    bottom: 48px;
+    right: 56px;
+    text-align: right;
+  }
+
+  .annotation .line1 {
+    font-size: 14px;
+    color: #71717a;
+  }
+
+  .annotation .line2 {
+    font-size: 16px;
+    color: #a1a1aa;
+    margin-top: 4px;
+  }
+
+  .annotation .line2 strong {
+    color: #fbbf24;
+    font-weight: 600;
+  }
+
+  .connector {
+    position: absolute;
+    bottom: 60px;
+    left: 180px;
+    right: 220px;
+    height: 1px;
+    border-top: 1px dashed rgba(255,255,255,0.15);
+  }
+
+  .connector-label {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #71717a;
+    white-space: nowrap;
+  }
+
+  .sub-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 8px;
+    padding-left: 20px;
+  }
+
+  .sub-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .sub-stat .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #818cf8;
+    flex-shrink: 0;
+    position: relative;
+    top: -1px;
+  }
+
+  .sub-stat .dot.gold {
+    background: #fbbf24;
+  }
+
+  .sub-stat .text {
+    font-size: 13px;
+    color: #71717a;
+  }
+
+  .sub-stat .text strong {
+    color: #a1a1aa;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">한국 퇴직연금 시장</div>
+      <div class="title">적립금 <span>49.9조</span>에서 <span>500조</span>로 — 12년간 <span>10배</span></div>
+    </div>
+
+    <div class="chart-area">
+      <div class="chart-bg"></div>
+
+      <div class="bar-group">
+        <div class="bar-value">49.9조</div>
+        <div class="bar bar-2011"></div>
+        <div class="bar-label">2011</div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-value">148조</div>
+        <div class="bar bar-2017"></div>
+        <div class="bar-label">2017</div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-value">256조</div>
+        <div class="bar bar-2020"></div>
+        <div class="bar-label">2020</div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-value">382조</div>
+        <div class="bar bar-2023" style="position:relative;">
+          <div class="growth-badge">7.7배</div>
+        </div>
+        <div class="bar-label highlight">2023</div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-value highlight">500조+</div>
+        <div class="bar bar-2026"></div>
+        <div class="bar-label highlight">2026 (전망)</div>
+      </div>
+    </div>
+
+    <div class="sub-stats">
+      <div class="sub-stat">
+        <div class="dot"></div>
+        <div class="text">디폴트옵션 적립금 <strong>53.3조</strong> / 가입자 <strong>734만명</strong></div>
+      </div>
+      <div class="sub-stat">
+        <div class="dot gold"></div>
+        <div class="text">2025.06 퇴직연금 RA 일임서비스 <strong>최초 허용</strong> — RATB 통과 필수</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -3,34 +3,34 @@ import { t } from '../i18n/translations';
 
 const stats = {
   en: [
-    { value: '38', label: 'Robo-Advisor Algorithms Shipped' },
-    { value: '83%', label: 'Ops Time Reduced' },
-    { value: 'Solo', label: '31K+ LOC Full-Stack' },
+    { value: '38', label: 'AI Investment Algorithms Planned' },
+    { value: '200+', label: 'Accounts Managed Simultaneously' },
+    { value: '20+', label: 'Pages Redesigned from Scratch' },
   ],
   ko: [
-    { value: '38개', label: '로보어드바이저 알고리즘 출시' },
-    { value: '83%', label: '운용시간 단축' },
-    { value: '1인', label: '31K+ LOC 풀스택 개발' },
+    { value: '38개', label: 'AI 투자 알고리즘 기획' },
+    { value: '200+', label: '동시 운용 계좌 관리' },
+    { value: '20+', label: '페이지 정보구조 재설계' },
   ],
 };
 
 const aboutText = {
   en: {
-    heading: 'A planner who reads data, an',
-    accent1: 'executor',
-    mid: 'who',
-    accent2: 'builds to the end.',
+    heading: 'A planner who understands',
+    accent1: 'finance,',
+    mid: 'an executor who proves with',
+    accent2: 'technology.',
     suffix: '',
-    body: "Started in finance — planned mutual funds and ETFs at AssetPlus Asset Management, designed 38 robo\u2011advisor algorithms, and shipped an S&P500 AI fund. Built a system that cut operations time by 83%. Now I lead service planning, UX, and frontend for a quant strategy platform at Alphabridge, while solo\u2011building JujuTok — an AI multi\u2011agent stock analysis platform.",
+    body: "Planned 38 AI investment algorithms and managed 200+ accounts simultaneously at AssetPlus Asset Management. I find problems users haven\u2019t articulated, redesign information architecture from scratch, and build when needed. Designed 20+ analysis pages without a designer, and solo\u2011built an AI multi\u2011agent stock analysis platform from planning to development.",
     location: 'Seoul, KR // Remote',
   },
   ko: {
-    heading: '데이터를 읽는',
+    heading: '금융을 이해하는',
     accent1: '기획자,',
-    mid: '끝까지 만드는',
+    mid: '기술로 검증하는',
     accent2: '실행자.',
     suffix: '',
-    body: '금융에서 시작했어요. 에셋플러스자산운용에서 공모펀드와 ETF를 기획하고, 38개 로보어드바이저 알고리즘을 직접 설계해서 출시했어요. 운용시간을 83% 줄이는 시스템도 만들었고요. 지금은 알파브릿지에서 퀀트 전략 플랫폼의 서비스 기획·UX·프론트를 맡고 있고, 사이드로 AI 멀티에이전트 주식 분석 플랫폼(주주톡)을 혼자 만들고 있어요.',
+    body: '에셋플러스자산운용에서 AI 투자 알고리즘 38개를 기획하고, 200개 이상의 운용 계좌를 동시에 관리했어요. 사용자가 말하지 않은 문제를 찾아 정보구조를 다시 설계하고, 필요하면 직접 만듭니다. 디자이너 없는 팀에서 20개 이상의 분석 페이지를 설계했고, AI 멀티에이전트 주식 분석 플랫폼을 혼자 기획부터 개발까지 해봤어요.',
     location: '서울 // 원격',
   },
 };

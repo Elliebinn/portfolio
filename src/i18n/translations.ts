@@ -4,46 +4,46 @@ const translations = {
   en: {
     nav: {
       projects: 'Projects',
-      stack: 'Stack',
+      stack: 'Expertise',
       blog: 'Blog',
       archive: 'Archive',
       hireMe: 'Hire Me',
     },
     hero: {
-      available: 'Open for AI service planning & consulting',
+      available: 'Open for AI Service Planning & PM roles',
       description:
-        'AI-powered financial service planner. 38 robo-advisor algorithms launched, S&P mutual fund shipped, internal ops efficiency improved by <strong>83%</strong>. Currently leading service planning & UX for a quant strategy platform while building an AI investment research product.',
+        'I turn complex financial structures into experiences users can understand. Planned 38 AI investment algorithms and passed national regulatory review. Designed an ops system that cut trade time by 83%. Currently redesigning the information architecture of a quant strategy platform used daily by researchers.',
       location: 'Location',
       locationValue: 'Seoul / Remote',
       expertise: 'Expertise',
-      expertiseValue: 'AI Service Planning & Full-Stack',
+      expertiseValue: 'AI Service Planning · Finance Domain',
     },
     about: {
       section: '01 / Narrative',
       heading:
-        "Precision is not just a goal; it's a prerequisite. I build AI systems that feel like",
-      headingAccent: 'financial co-pilots.',
-      col1: 'From mutual fund planning to robo\u2011advisor design, I leverage deep domain expertise in finance to architect AI agents that are production\u2011grade, reliable, and genuinely useful. 38 algorithms launched at KOSCOM Testbed, with a top annual return of 19.5%.',
-      col2: 'On the side, I solo\u2011built JujuTok — a multi\u2011agent AI stock analysis platform with 6 specialized agents, a 4\u2011persona debate system, and real\u2011time SSE streaming. 31,000+ LOC, 147 test cases, one engineer.',
+        'A planner who understands finance,',
+      headingAccent: 'an executor who proves with technology.',
+      col1: 'Planned 38 AI investment algorithms and managed 200+ accounts simultaneously at AssetPlus Asset Management. I find the problems users haven\u2019t articulated yet, redesign information architecture from scratch, and define requirements that developers can build without questions.',
+      col2: 'I don\u2019t just plan — I build when needed. Designed and implemented 20+ analysis pages without a designer, and solo\u2011built an AI multi\u2011agent stock analysis platform from planning to development.',
     },
     projects: {
-      section: '02 / Curated Works',
-      heading: 'The Gallery',
+      section: '02 / Projects',
+      heading: 'Projects',
       items: [
         {
-          label: 'AI Multi-Agent Platform',
-          title: 'JujuTok — AI Stock Research',
+          label: 'Service Planning · Information Architecture',
+          title: 'Redesigning How Quant Researchers Work',
           description:
-            'A multi-agent AI system featuring 6 specialized agents analyzing stocks in parallel, a 4-persona debate system, and real-time SSE streaming. FastAPI + React 19 + Claude API. 31,000+ LOC, 147 test cases, built solo.',
-          tags: ['React 19', 'TypeScript', 'FastAPI', 'Claude API', 'SSE', 'MySQL', 'Docker'],
+            'A tool used daily by 4 researchers. No frontend dev, no designer. Redesigned the taxonomy of 200+ strategies with a tag-based system, and built features users hadn\u2019t asked for \u2014 based on domain knowledge from fund operations.',
+          tags: ['Service Planning', 'Information Architecture', 'Design System', 'Internal Tool'],
           linkLabel: 'View Case Study',
         },
         {
-          label: 'Quant Strategy Platform',
-          title: 'Quant Strategy Platform',
+          label: 'AI Service Design · Solo Planning + Dev',
+          title: 'JujuTok — Solving AI Bias by Design',
           description:
-            'Internal quant strategy analysis platform for asset management. Designed tag-based strategy taxonomy for 200+ strategies, portfolio holdings navigation, and migrated 20+ pages to v2 design using Claude Code workflow.',
-          tags: ['Service Planning', 'UX Design', 'ClickHouse', 'Claude Code'],
+            '"A single AI opinion looks objective but may be biased." Designed a system where 6 AI agents analyze from different angles and 4 investment personas debate before reaching a conclusion. Planned and built end-to-end.',
+          tags: ['AI Agent Design', 'Bias Mitigation', 'Service Planning', 'Multi-Persona'],
           linkLabel: 'View Case Study',
         },
       ],
@@ -57,7 +57,7 @@ const translations = {
       backToBlog: 'Back to Blog',
     },
     stack: {
-      section: '03 / Technical Stack',
+      section: '03 / Expertise',
     },
     timeline: {
       section: '04 / Timeline',
@@ -116,45 +116,45 @@ const translations = {
   ko: {
     nav: {
       projects: '프로젝트',
-      stack: '기술 스택',
+      stack: '역량',
       blog: '블로그',
       archive: '연혁',
       hireMe: '채용 문의',
     },
     hero: {
-      available: 'AI 서비스 기획 · 컨설팅 가능',
+      available: 'AI 서비스 기획 · PM 포지션 오픈',
       description:
-        '금융을 알고, AI로 직접 만드는 서비스 기획자. 에셋플러스자산운용에서 AI 공모펀드 운용지원 시스템을 기획했고, 현재는 퀀트 리서치팀의 전략 모니터링·운용 관리 화면을 처음부터 다시 설계하고 있습니다. 사이드 프로젝트로 AI 멀티에이전트 주식 분석 플랫폼을 1인 기획·개발 중.',
+        '복잡한 금융 구조를 사용자가 이해할 수 있는 경험으로 바꿉니다. 에셋플러스자산운용에서 AI 투자 알고리즘 38개를 기획하고 운용심사를 통과시켰고, 운용지원 시스템을 설계해 매매·운용시간을 83% 단축했습니다. 지금은 퀀트 리서치팀이 매일 쓰는 전략 분석 플랫폼의 정보구조를 처음부터 다시 설계하고 있어요.',
       location: '위치',
       locationValue: '서울 / 원격',
       expertise: '전문 분야',
-      expertiseValue: 'AI 서비스 기획 & 풀스택',
+      expertiseValue: 'AI 서비스 기획 · 금융 도메인',
     },
     about: {
       section: '01 / 소개',
-      heading: '금융을 알면 기획이 달라집니다.',
-      headingAccent: '요청이 오기 전에 보이는 것들이 있어요.',
-      col1: '에셋플러스자산운용에서 AI 공모펀드 운용지원 시스템을 기획하며 금융 현업을 경험했습니다. 지금은 퀀트 리서처들이 매일 쓰는 전략 모니터링·성과 분석 대시보드를 처음부터 다시 설계하고 있어요. 프론트 0명인 팀에서, 화면 설계부터 AI 코딩 도구를 활용한 구현까지 직접 합니다.',
-      col2: '사이드 프로젝트로 주주톡(JujuTok)을 1인 풀스택 개발 중 — 6개 전문 AI 에이전트, 4인 투자 페르소나 토론 시스템, 실시간 SSE 스트리밍. 31,000줄 이상, 147개 테스트 케이스.',
+      heading: '금융을 이해하는 기획자,',
+      headingAccent: '기술로 검증하는 실행자.',
+      col1: '에셋플러스자산운용에서 AI 공모펀드와 로보어드바이저 알고리즘을 기획하며, "왜 이 구조인가"를 심사관 앞에서 설명하는 훈련을 했어요. 200개 이상의 운용 계좌를 관리하면서 프로세스를 설계했고, 사용자가 말하지 않은 문제를 찾아 정보구조를 다시 그리는 일을 하고 있어요.',
+      col2: '기획만 하는 사람은 아니에요. 필요하면 직접 만듭니다. 디자이너 없는 팀에서 20개 이상의 분석 페이지를 설계하고 구현했고, AI 멀티에이전트 주식 분석 플랫폼을 혼자 기획부터 개발까지 해봤어요.',
     },
     projects: {
-      section: '02 / 주요 작품',
-      heading: '갤러리',
+      section: '02 / 프로젝트',
+      heading: '프로젝트',
       items: [
         {
-          label: 'AI 멀티에이전트 플랫폼',
-          title: '주주톡 — AI 주식 분석',
+          label: '서비스 기획 · 정보구조 재설계',
+          title: '퀀트 리서처의 불편을 직접 고친 이야기',
           description:
-            '6개 전문 AI 에이전트가 종목을 병렬 분석하고, 4명의 투자 페르소나가 실시간 토론을 벌여 다각도 투자 판단을 제공하는 웹 플랫폼. FastAPI + React 19 + Claude API. 31,000줄 이상, 147개 테스트 케이스, 1인 풀스택 개발.',
-          tags: ['React 19', 'TypeScript', 'FastAPI', 'Claude API', 'SSE', 'MySQL', 'Docker'],
+            '리서처 4명이 매일 쓰는 도구. 프론트 0명, 디자이너 0명. 200개+ 전략의 탐색 구조를 태그 기반으로 재설계하고, 펀드 운용 경험에서 나온 기획 판단으로 요청에 없던 기능을 만들었어요.',
+          tags: ['서비스 기획', '정보구조 설계', '디자인 시스템', '사내 도구'],
           linkLabel: '케이스 스터디 보기',
         },
         {
-          label: '케이스 스터디 / 서비스 기획',
-          title: '퀀트 리서처의 불편을 직접 고친 이야기',
+          label: 'AI 서비스 설계 · 1인 기획+개발',
+          title: '주주톡 — AI 편향을 구조로 해결하기',
           description:
-            '리서처 4명이 매일 쓰는 도구. 프론트 0명, 디자이너 0명. 펀드 운용 경험에서 나온 기획 판단으로 요청에 없던 기능을 만들고, HTML 목업 25개로 20개 이상의 페이지를 직접 설계했어요.',
-          tags: ['서비스 기획', 'AI 구현', '디자인 시스템', '사내 도구'],
+            '"AI 하나의 의견은 객관적으로 보이지만 편향일 수 있다" — 이 문제를 시스템 구조로 풀었어요. 6개 AI 에이전트로 분석 축을 분리하고, 4명의 투자 페르소나가 토론하는 구조를 설계. 기획부터 개발까지 직접 수행.',
+          tags: ['AI 에이전트 설계', '편향 해소 구조', '서비스 기획', '멀티페르소나'],
           linkLabel: '케이스 스터디 보기',
         },
       ],
@@ -168,7 +168,7 @@ const translations = {
       backToBlog: '블로그로 돌아가기',
     },
     stack: {
-      section: '03 / 기술 스택',
+      section: '03 / 역량',
     },
     timeline: {
       section: '04 / 연혁',

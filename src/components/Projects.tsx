@@ -4,13 +4,13 @@ import { t } from '../i18n/translations';
 const BASE = '/portfolio';
 
 const projectLinks = [
-  '/en/projects/jujutok/',
   '/en/projects/quant-platform/',
+  '/en/projects/jujutok/',
 ];
 
 const projectImages = [
-  '/assets/projects/jujutok/stock-analysis-dark.png',
   '/assets/projects/quant-platform/dashboard-fullview.png',
+  '/assets/projects/jujutok/stock-analysis-dark.png',
 ];
 
 export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
