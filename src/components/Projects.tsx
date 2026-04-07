@@ -17,14 +17,14 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
   const tr = t(lang).projects;
 
   return (
-    <section id="projects" className="border-t border-[var(--color-border)] px-6 py-16 sm:py-28">
+    <section id="projects" className="px-6 py-16 sm:py-28" style={{ backgroundColor: 'var(--color-bg)' }}>
       <div className="mx-auto max-w-7xl">
-        <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+        <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
           {tr.section}
         </p>
 
         <div className="mb-16">
-          <h2 className="text-4xl font-bold sm:text-5xl" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2 className="text-4xl font-bold sm:text-5xl text-[var(--color-text)]" style={{ fontFamily: 'var(--font-display)' }}>
             {tr.heading}
           </h2>
         </div>
@@ -37,7 +37,7 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
               style={i % 2 !== 0 ? { direction: 'rtl' as const } : {}}
             >
               <div
-                className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]"
+                className="overflow-hidden rounded-xl bg-[var(--color-bg-card)] shadow-ambient"
                 style={{ direction: 'ltr' }}
               >
                 {projectImages[i] ? (
@@ -47,19 +47,17 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
                     className="w-full h-auto"
                   />
                 ) : (
-                  <div className="text-center">
-                    <p className="mb-2 text-5xl">{i === 0 ? '📈' : '💬'}</p>
-                    <p className="font-mono text-xs text-[var(--color-text-muted)]">PROJECT</p>
-                    <p className="font-mono text-xs text-[var(--color-text-muted)]">PREVIEW</p>
+                  <div className="text-center p-16">
+                    <p className="font-mono text-xs text-[var(--color-text-faint)]">PROJECT PREVIEW</p>
                   </div>
                 )}
               </div>
 
               <div style={{ direction: 'ltr' }}>
-                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+                <p className="mb-3 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
                   {p.label}
                 </p>
-                <h3 className="mb-4 text-2xl font-bold sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
+                <h3 className="mb-4 text-2xl font-bold sm:text-3xl text-[var(--color-text)]" style={{ fontFamily: 'var(--font-display)' }}>
                   {p.title}
                 </h3>
                 <p className="mb-6 text-sm leading-[1.8] text-[var(--color-text-muted)]">
@@ -67,13 +65,13 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
                 </p>
                 <div className="mb-6 flex flex-wrap gap-2">
                   {p.tags.map((tag) => (
-                    <span key={tag} className="rounded-full border border-[var(--color-border)] px-3 py-1 font-mono text-[10px] text-[var(--color-text-muted)]">
+                    <span key={tag} className="rounded-full bg-[var(--color-secondary-container)] px-3 py-1 text-[10px] font-medium text-[var(--color-on-secondary-container)]">
                       {tag}
                     </span>
                   ))}
                 </div>
                 <a href={`${BASE}${lang === 'ko' ? projectLinks[i].replace('/en/', '/ko/') : projectLinks[i]}`}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-accent-light)] transition-colors hover:text-[var(--color-text)]">
+                  className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-accent)] transition-colors hover:text-[var(--color-accent-light)]">
                   + {p.linkLabel}
                 </a>
               </div>

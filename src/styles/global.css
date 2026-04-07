@@ -17,15 +17,48 @@
 }
 
 @theme {
-  --color-bg: #0A0A0B;
-  --color-bg-card: #141418;
-  --color-bg-card-hover: #1C1C22;
-  --color-bg-elevated: #1A1A20;
-  --color-border: rgba(255, 255, 255, 0.06);
-  --color-text: #FAFAFA;
-  --color-text-muted: #7A7A8E;
-  --color-accent: #7C3AED;
-  --color-accent-light: #A78BFA;
+  /* === DESIGN.md Palette: "The Structured Cloud" === */
+
+  /* Surface System (No-Line Rule — use background shifts, not borders) */
+  --color-bg: #f7f9fb;
+  --color-bg-card: #ffffff;
+  --color-bg-card-hover: #f0f4f7;
+  --color-bg-elevated: #ffffff;
+  --color-bg-secondary: #f0f4f7;
+  --color-bg-detail: #e1e9ee;
+  --color-bg-emphasis: #d9e4ea;
+
+  /* Border — ghost style, never harsh 1px lines */
+  --color-border: rgba(113, 124, 130, 0.15);
+
+  /* Text — never pure black */
+  --color-text: #2a3439;
+  --color-text-muted: #566166;
+  --color-text-faint: #717c82;
+
+  /* Primary (Professional Navy-Blue) */
+  --color-accent: #456272;
+  --color-accent-light: #385666;
+  --color-on-accent: #f1f9ff;
+
+  /* Secondary */
+  --color-secondary: #506076;
+  --color-secondary-container: #d3e4fe;
+  --color-on-secondary-container: #435368;
+
+  /* Tertiary */
+  --color-tertiary: #5c5d78;
+  --color-tertiary-container: #ddddfe;
+
+  /* Error */
+  --color-error: #9f403d;
+  --color-error-container: #fe8983;
+
+  /* Outline */
+  --color-outline: #717c82;
+  --color-outline-variant: #a9b4b9;
+
+  /* Fonts — keep existing, don't change */
   --font-sans: 'Geist Sans', 'Noto Sans KR', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Geist Sans', 'Noto Sans KR', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Outfit', ui-sans-serif, system-ui, sans-serif;
@@ -42,23 +75,39 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-html.light {
-  --color-bg: #FFFFFF;
-  --color-bg-card: #F5F5F7;
-  --color-bg-card-hover: #ECECF0;
-  --color-bg-elevated: #F0F0F4;
-  --color-border: rgba(0, 0, 0, 0.08);
-  --color-text: #0A0A0B;
-  --color-text-muted: #6B6B80;
-  --color-accent: #7C3AED;
-  --color-accent-light: #6D28D9;
-}
-
 ::selection {
   background-color: var(--color-accent);
-  color: white;
+  color: var(--color-on-accent);
 }
 
 .nav-logo {
   filter: none;
+}
+
+/* === Tonal Layering Utilities === */
+
+/* Ambient shadow — for floating elements only */
+.shadow-ambient {
+  box-shadow: 0 12px 40px rgba(42, 52, 57, 0.06);
+}
+
+.shadow-ambient-sm {
+  box-shadow: 0 4px 16px rgba(42, 52, 57, 0.04);
+}
+
+/* Glassmorphism — for navbar */
+.glass {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(247, 249, 251, 0.7);
+}
+
+/* Ghost border — very subtle, use sparingly */
+.ghost-border {
+  border: 1px solid rgba(169, 180, 185, 0.15);
+}
+
+/* Gradient CTA */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
 }

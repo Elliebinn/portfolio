@@ -27,13 +27,13 @@ export default function BottomNav({ lang = 'en' as Lang }: { lang?: Lang }) {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur-md md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 glass ghost-border border-b-0 border-l-0 border-r-0 md:hidden">
       <div className="flex items-center justify-around px-2 py-2">
         {items.map((item) => (
           <a
             key={item.label}
             href={item.href}
-            className="flex flex-col items-center gap-1 px-3 py-1.5 text-[var(--color-text-muted)] transition-colors active:text-[var(--color-accent-light)]"
+            className="flex flex-col items-center gap-1 px-3 py-1.5 text-[var(--color-text-muted)] transition-colors active:text-[var(--color-accent)]"
           >
             {item.icon}
             <span className="text-[9px] font-medium uppercase tracking-wider">{item.label}</span>

@@ -5,20 +5,20 @@ export default function Certifications({ lang = 'en' as Lang }: { lang?: Lang })
   const tr = t(lang).certifications;
 
   return (
-    <section id="certifications" className="border-t border-[var(--color-border)] px-6 py-28">
+    <section id="certifications" className="px-6 py-28" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
       <div className="mx-auto max-w-7xl">
-        <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+        <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
           {tr.section}
         </p>
 
-        <div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {tr.items.map((cert, i) => (
             <div
               key={i}
-              className={`flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between border-b border-[var(--color-border)] py-3${i === 0 ? ' border-t' : ''}`}
+              className="rounded-xl bg-[var(--color-bg-card)] p-4 shadow-ambient-sm"
             >
-              <p className="text-sm font-semibold">{cert.name}</p>
-              <p className="font-mono text-[10px] text-[var(--color-text-muted)]">
+              <p className="text-sm font-semibold text-[var(--color-text)]">{cert.name}</p>
+              <p className="mt-1 font-mono text-[10px] text-[var(--color-text-faint)]">
                 {cert.date} · {cert.org}
               </p>
             </div>

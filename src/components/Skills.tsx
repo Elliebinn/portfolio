@@ -29,20 +29,20 @@ export default function Skills({ lang = 'en' as Lang }: { lang?: Lang }) {
   const items = stackByLang[lang];
 
   return (
-    <section id="stack" className="border-t border-[var(--color-border)] px-6 py-16 sm:py-28">
+    <section id="stack" className="px-6 py-16 sm:py-28" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
       <div className="mx-auto max-w-7xl">
-        <p className="mb-6 sm:mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+        <p className="mb-6 sm:mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
           {tr.section}
         </p>
 
-        <div className="grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4 sm:gap-x-12 sm:gap-y-8">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
           {items.map((s) => (
             <div
               key={s.name}
-              className="group border-t border-[var(--color-border)] pt-4 transition-colors hover:border-[var(--color-accent)]"
+              className="group rounded-xl bg-[var(--color-bg-card)] p-4 shadow-ambient-sm transition-all hover:shadow-ambient"
             >
               <p className="text-sm font-semibold text-[var(--color-text)]">{s.name}</p>
-              <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
+              <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-faint)]">
                 {s.sub}
               </p>
             </div>

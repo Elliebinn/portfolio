@@ -41,44 +41,39 @@ export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
   const st = stats[lang];
 
   return (
-    <section id="about" className="border-t border-[var(--color-border)] px-6 py-16 sm:py-28">
+    <section id="about" className="px-6 py-16 sm:py-28" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
       <div className="mx-auto max-w-7xl">
-        {/* Mobile: single column / Desktop: photo + text */}
         <div className="grid gap-10 sm:gap-12 lg:grid-cols-[340px_1fr]">
-          {/* Photo — hidden on mobile per design, shows on lg */}
+          {/* Photo */}
           <div className="hidden lg:block">
-            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]">
+            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-[var(--color-bg-card)] shadow-ambient">
               <img
                 src="/portfolio/assets/about-profile.png"
                 alt="Hyebin Woo illustration"
                 className="h-full w-full object-cover"
               />
             </div>
-            <p className="mt-4 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+            <p className="mt-4 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
               {txt.location}
             </p>
           </div>
 
           {/* Text + Stats */}
           <div className="flex flex-col justify-center">
-            <p className="mb-4 sm:mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+            <p className="mb-4 sm:mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
               {tr.section}
             </p>
 
-            <p className="mb-6 text-lg sm:text-xl font-medium italic text-[var(--color-text-muted)]">
-              "Serious about planning. Relentless about building."
-            </p>
-
             <h2
-              className="mb-6 sm:mb-8 text-2xl font-bold leading-normal sm:text-3xl lg:text-4xl"
+              className="mb-6 sm:mb-8 text-2xl font-bold leading-normal sm:text-3xl lg:text-4xl text-[var(--color-text)]"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               {txt.heading}{txt.heading ? ' ' : ''}
-              <span className="bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-light)] bg-clip-text text-transparent">
+              <span className="text-[var(--color-accent)]">
                 {txt.accent1}
               </span>{' '}
               {txt.mid}{' '}
-              <span className="bg-gradient-to-r from-[var(--color-accent-light)] to-purple-300 bg-clip-text text-transparent">
+              <span className="text-[var(--color-accent)]">
                 {txt.accent2}
               </span>
               {txt.suffix}
@@ -88,20 +83,20 @@ export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
               {txt.body}
             </p>
 
-            {/* Stats strip */}
+            {/* Stats strip — tonal layering instead of border */}
             <div className="grid grid-cols-3 gap-6 lg:gap-10">
               {st.map((s) => (
                 <div
                   key={s.label}
-                  className="border-t-2 border-[var(--color-accent)] pt-4"
+                  className="rounded-xl bg-[var(--color-bg-card)] p-4 shadow-ambient-sm"
                 >
                   <p
-                    className="text-3xl font-black tracking-tight sm:text-4xl lg:text-[2.75rem]"
+                    className="text-3xl font-black tracking-tight sm:text-4xl lg:text-[2.75rem] text-[var(--color-accent)]"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
                     {s.value}
                   </p>
-                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
                     {s.label}
                   </p>
                 </div>

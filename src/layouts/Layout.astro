@@ -22,12 +22,6 @@ const { title = "HYEBIN.DEV" } = Astro.props;
   </head>
   <body class="antialiased">
     <slot />
-    <script is:inline>
-      // Restore theme from localStorage
-      const theme = localStorage.getItem('theme');
-      if (theme === 'light') {
-        document.documentElement.classList.add('light');
-      }
-    </script>
+    <!-- Light theme only -->
   </body>
 </html>
