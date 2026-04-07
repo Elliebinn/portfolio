@@ -14,7 +14,11 @@ const lang = 'ko';
     <!-- Header: 2-column (소개 + 연락처) -->
     <header class="mb-20 flex flex-col md:flex-row justify-between items-end gap-8">
       <div class="max-w-2xl">
-        <span class="text-xs font-bold text-[var(--color-accent)] tracking-widest uppercase mb-4 block">Curriculum Vitae</span>
+        <div class="flex items-baseline gap-3 mb-4">
+          <span class="text-2xl md:text-3xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">우혜빈</span>
+          <span class="text-lg md:text-xl font-medium text-[var(--color-text-faint)]" style="font-family: var(--font-display);">Hye Bin Woo</span>
+        </div>
+        <p class="text-xs font-bold text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4 block">AI Product Planner · Finance Domain</p>
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-[1.15] text-[var(--color-text)]" style="font-family: var(--font-display);">
           금융 도메인을 알고,<br/>
           <span class="text-[var(--color-accent)]">AI로 직접 만드는 서비스 기획자.</span>
@@ -98,19 +102,23 @@ const lang = 'ko';
               </ul>
             </div>
 
-            <!-- Project 2: RATB -->
+            <!-- Project 2: AI 구현 품질 관리 워크플로우 -->
             <div>
               <p class="font-bold text-[var(--color-text)] mb-3 text-[15px]" style="font-family: var(--font-display);">
-                로보어드바이저 AI 알고리즘 기획 및 운용심사 수행 (RATB 22~25차)
+                AI 구현 품질 관리 워크플로우 구축
               </p>
               <ul class="space-y-3 text-[var(--color-text-muted)] leading-relaxed">
                 <li class="flex gap-3">
                   <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
-                  <span><strong class="text-[var(--color-text)]">38개 AI 투자 알고리즘</strong> 기획 및 KOSCOM 로보어드바이저 테스트베드 운용심사 전 과정 주도 (PM 역할)</span>
+                  <span><strong class="text-[var(--color-text)]">mockup-apply</strong>: HTML 목업 → 코드 적용 시 ADD/CHANGE/KEEP 판단 프레임워크로 변경 범위를 체계화, 기존 기능 100% 보존하면서 새 디자인만 반영</span>
                 </li>
                 <li class="flex gap-3">
                   <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
-                  <span>22~24차 운용심사 전원 통과 / 최고 수익률 <strong class="text-[var(--color-text)]">1년 기준 19.5%</strong> (2024.12 기준)</span>
+                  <span><strong class="text-[var(--color-text)]">frontend-checkpoint</strong>: git stash 기반 변경 전/후 스크린샷 자동 비교 + 11개 체크포인트로 모든 UI 변경을 정량적으로 추적</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
+                  <span>두 프로세스를 Claude Code 스킬로 체계화하여 반복 실행 가능한 워크플로우로 구축</span>
                 </li>
               </ul>
             </div>
@@ -122,28 +130,68 @@ const lang = 'ko';
             <div class="flex flex-col md:flex-row justify-between items-start mb-5 gap-2">
               <div>
                 <h3 class="text-2xl font-bold text-[var(--color-text)]">에셋플러스자산운용 — AI자산운용팀</h3>
-                <p class="text-sm text-[var(--color-text-muted)] mt-1">정규직</p>
+                <p class="text-sm text-[var(--color-text-muted)] mt-1">정규직 (2024.12 — 2025.03 알파브릿지 파견 겸직)</p>
               </div>
               <span class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] bg-[var(--color-bg-detail)] px-3 py-1 rounded-full">2023.09 — 2025.03</span>
             </div>
-            <ul class="space-y-3 text-[var(--color-text-muted)] leading-relaxed">
-              <li class="flex gap-3">
-                <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
-                <span><strong class="text-[var(--color-text)]">S&P500 AI 공모펀드 2건 출시</strong> (S&P 성장/배당 포커스 30) — 현재 고객 자금 운용 중</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
-                <span>AI 공모펀드 운용지원 시스템 기획 — 매매·운용시간 1시간+ → 10분 (<strong class="text-[var(--color-text)]">83% 단축</strong>). 운용역 실제 워크플로우 관찰 → 자동화/사람 판단 단계 분리 → 요건정의서 작성</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
-                <span>ETF 유니버스 분류 체계(4그룹) 설계, 투자자 성향별 배분 로직 기획</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
-                <span>ETF 기획: MartinGale 전략 AI 알고리즘화, NASDAQ/KOSPI ETF 상장 준비, 다올자산운용 MOU 체결</span>
-              </li>
-            </ul>
+
+            <!-- Project 1: RATB -->
+            <div class="mb-7">
+              <p class="font-bold text-[var(--color-text)] mb-3 text-[15px]" style="font-family: var(--font-display);">
+                로보어드바이저 AI 알고리즘 기획 및 운용심사 (RATB 22~24차)
+              </p>
+              <p class="text-sm text-[var(--color-text-muted)] mb-3 italic">
+                KOSCOM 로보어드바이저 테스트베드에서 AI 투자 알고리즘의 운용 능력을 심사받는 과정. 참여 신청 → 사전심사 → 본심사 → 사임신청 → 재운용심사까지 전 과정을 PM으로 주도.
+              </p>
+              <ul class="space-y-3 text-[var(--color-text-muted)] leading-relaxed">
+                <li class="flex gap-3">
+                  <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
+                  <span><strong class="text-[var(--color-text)]">38개 AI 투자 알고리즘</strong>의 사전심사~본심사~재운용심사 전 과정 관리 및 심사 발표 직접 수행</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
+                  <span>AI 전략 검증 과정에서 반복되는 작업의 병목을 파악하고 자동화 가능 영역을 식별하여 검증 프로세스 효율화에 기여</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
+                  <span>22~24차 운용심사 및 재운용심사 전 알고리즘 통과 / 최고 수익률 <strong class="text-[var(--color-text)]">1년 기준 19.5%</strong> (2024.12 기준)</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Project 2: 공모펀드 & ETF -->
+            <div class="mb-7">
+              <p class="font-bold text-[var(--color-text)] mb-3 text-[15px]" style="font-family: var(--font-display);">
+                AI 기반 금융 투자 상품 기획 (공모펀드 · 외부 컨설팅)
+              </p>
+              <ul class="space-y-3 text-[var(--color-text-muted)] leading-relaxed">
+                <li class="flex gap-3">
+                  <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
+                  <span><strong class="text-[var(--color-text)]">S&P500 AI 공모펀드 출시</strong>: 성장주/배당주 포커스를 분리한 구조 설계 — 같은 유니버스에서 투자 목적에 따라 AI 종목 선정 기준을 다르게 적용. 현재 실제 고객 자금 운용 중</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
+                  <span><strong class="text-[var(--color-text)]">외부 자산운용사·증권사 대상 AI 포트폴리오 컨설팅</strong>: 비정형 데이터(뉴스)를 LLM으로 분석하여 투자 유니버스 구성, AI 모델로 종목 선별. LLM 기반 XAI(종목 선정 근거 자연어 설명) 포함 기획서 작성 → <strong class="text-[var(--color-text)]">다올자산운용 MOU 체결</strong></span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Project 3: 운용지원 시스템 -->
+            <div>
+              <p class="font-bold text-[var(--color-text)] mb-3 text-[15px]" style="font-family: var(--font-display);">
+                AI 운용지원 시스템 기획
+              </p>
+              <ul class="space-y-3 text-[var(--color-text-muted)] leading-relaxed">
+                <li class="flex gap-3">
+                  <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
+                  <span>AI 공모펀드 4개의 일일 매매·운용·성과분석 업무를 위한 내부 시스템 기획. 운용역 실제 워크플로우 관찰 → 자동화/사람 판단 단계 분리 → 요건정의서 작성</span>
+                </li>
+                <li class="flex gap-3">
+                  <span class="text-[var(--color-accent)] mt-1.5 flex-shrink-0">●</span>
+                  <span>매매·운용시간 평균 1시간+ → 10분 내외로 단축 (<strong class="text-[var(--color-text)]">83% 감소</strong>)</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <!-- 사이드 프로젝트 -->
