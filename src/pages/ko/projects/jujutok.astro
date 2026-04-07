@@ -11,305 +11,229 @@ const base = import.meta.env.BASE_URL;
 <Layout title="주주톡 — 우혜빈 포트폴리오">
   <Navbar lang={lang} client:load />
 
-  <main class="pt-24">
-    <!-- Hero -->
-    <section class="relative min-h-[870px] flex items-center px-6 md:px-8 max-w-7xl mx-auto overflow-hidden">
-      <div class="grid lg:grid-cols-2 gap-12 items-center z-10">
-        <div class="space-y-8 opacity-0 animate-fade-up" style="animation-delay: 0.1s;">
-          <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-[var(--color-text)] leading-[1.1] tracking-tight" style="font-family: var(--font-display);">
-            AI 하나의 답은<br/>
-            <span class="text-[var(--color-accent)] italic">편향</span>일 수 있다
-          </h1>
-          <p class="text-lg text-[var(--color-text-muted)] max-w-lg leading-relaxed">
-            모든 AI 분석이 "객관적인 답"을 내놓지만, 그 뒤에는 학습 데이터의 편향이 숨어 있어요. 이 문제를 시스템 구조로 해결하기 위해, 6개 에이전트가 분석하고 4명 페르소나가 토론하는 플랫폼을 1인 기획·개발했어요.
+  <main class="pt-32 pb-24 px-6 max-w-7xl mx-auto space-y-32">
+
+    <!-- Section 1: Hero -->
+    <section class="relative">
+      <div class="max-w-4xl space-y-8">
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-[1.1] tracking-tight text-[var(--color-text)]" style="font-family: var(--font-display);">
+          AI 하나의 의견은 <span class="italic font-extrabold text-[var(--color-accent)]">편향</span>일 수 있다는 가설에서 시작한 이야기
+        </h1>
+        <p class="text-lg sm:text-xl text-[var(--color-text-muted)] max-w-2xl leading-relaxed">
+          6명의 전문 AI 에이전트와 4가지 투자 페르소나가 상호작용하며 객관적인 투자 인사이트를 도출합니다. 데이터 뒤에 숨겨진 진실을 찾는 여정.
+        </p>
+        <div class="flex gap-6">
+          <div class="jt-glass p-6 rounded-2xl flex flex-col gap-1 -rotate-2 hover:rotate-0 transition-transform duration-500">
+            <span class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Line of Code</span>
+            <span class="text-3xl font-extrabold text-[var(--color-accent)]" style="font-family: var(--font-display);">31K+</span>
+          </div>
+          <div class="jt-glass p-6 rounded-2xl flex flex-col gap-1 rotate-3 hover:rotate-0 transition-transform duration-500">
+            <span class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Unit Tests</span>
+            <span class="text-3xl font-extrabold" style="font-family: var(--font-display); color: #4f6354;">147</span>
+          </div>
+        </div>
+      </div>
+      <!-- Decorative background -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full -z-10" style="background-color: rgba(69, 98, 114, 0.05); filter: blur(120px);"></div>
+      <div class="absolute top-48 left-1/2 w-64 h-64 rounded-full -z-10" style="background-color: rgba(79, 99, 84, 0.05); filter: blur(100px);"></div>
+    </section>
+
+    <!-- Section 2: Impact Metrics -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+      <div class="space-y-2 p-6 md:p-8 jt-glass rounded-[2rem]">
+        <div class="text-4xl md:text-5xl font-extrabold" style="font-family: var(--font-display); color: #4f6354;">6</div>
+        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Specialized Agents</div>
+      </div>
+      <div class="space-y-2 p-6 md:p-8 jt-glass rounded-[2rem] md:translate-y-4">
+        <div class="text-4xl md:text-5xl font-extrabold" style="font-family: var(--font-display); color: #615a7d;">4</div>
+        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Unique Personas</div>
+      </div>
+      <div class="space-y-2 p-6 md:p-8 jt-glass rounded-[2rem]">
+        <div class="text-4xl md:text-5xl font-extrabold text-[var(--color-accent)]" style="font-family: var(--font-display); text-shadow: 0 0 20px rgba(69, 98, 114, 0.2);">3</div>
+        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Round Debates</div>
+      </div>
+      <div class="space-y-2 p-6 md:p-8 jt-glass rounded-[2rem] md:translate-y-4">
+        <div class="text-4xl md:text-5xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">147</div>
+        <div class="text-xs uppercase tracking-widest text-[var(--color-text-muted)]">Test Cases</div>
+      </div>
+    </section>
+
+    <!-- Section 3: Problem Definition -->
+    <section class="space-y-16">
+      <div class="text-center max-w-2xl mx-auto space-y-4">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">단일 AI 의견의 객관성 착시</h2>
+        <p class="text-[var(--color-text-muted)]">하나의 모델이 내놓는 확신은 때로 가장 위험한 신호가 됩니다.</p>
+      </div>
+      <div class="relative py-12 flex justify-center items-center overflow-hidden">
+        <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 relative z-10">
+          <div class="jt-glass px-8 md:px-10 py-10 md:py-12 rounded-[2.5rem] text-center bg-white">
+            <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="mx-auto mb-4 text-[var(--color-accent)]/40"><path d="M12 4v1m6.364 1.636l-.707.707M21 12h-1m-1.636 6.364l-.707-.707M12 20v-1m-6.364-1.636l.707-.707M3 12h1m1.636-6.364l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+            <p class="uppercase text-xs tracking-tighter text-[var(--color-text-muted)] font-bold">Single AI</p>
+          </div>
+          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-muted)]/30 rotate-90 md:rotate-0"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          <div class="jt-glass px-8 md:px-10 py-10 md:py-12 rounded-[2.5rem] text-center" style="background-color: #f2f3f7;">
+            <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="mx-auto mb-4 text-[var(--color-text-muted)]/40"><path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
+            <p class="uppercase text-xs tracking-tighter text-[var(--color-text-muted)] font-bold">Narrow View</p>
+          </div>
+          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-muted)]/30 rotate-90 md:rotate-0"><path d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          <div class="px-8 md:px-10 py-10 md:py-12 rounded-[2.5rem] text-center" style="background-color: rgba(179, 38, 30, 0.05); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
+            <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="mx-auto mb-4" style="color: #b3261e;"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <p class="uppercase text-xs tracking-tighter font-bold" style="color: #b3261e;">Hidden Bias</p>
+          </div>
+        </div>
+        <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+          <div class="w-full h-[2px]" style="background: linear-gradient(to right, transparent, #b3261e, transparent);"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Research Insight -->
+    <section class="jt-asymmetric-grid items-center">
+      <div class="space-y-12">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">The Empathy Paradox</h2>
+        <div class="space-y-8">
+          <div class="relative pl-8">
+            <div class="absolute left-0 top-0 bottom-0 w-[4px] rounded-full" style="background-color: #e0e2ec;"></div>
+            <p class="text-sm uppercase tracking-widest text-[var(--color-text-muted)] mb-2 font-bold">What they said</p>
+            <p class="text-xl md:text-2xl text-[var(--color-text-muted)] italic">"빠르고 명확한 하나의 결론을 원해요."</p>
+          </div>
+          <div class="relative pl-8">
+            <div class="absolute left-0 top-0 bottom-0 w-[4px] rounded-full bg-[var(--color-accent)]"></div>
+            <p class="text-sm uppercase tracking-widest text-[var(--color-accent)] mb-2 font-bold">What they needed</p>
+            <p class="text-2xl md:text-3xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">"내 판단을 확신할 수 있는 논리적 충돌의 과정이 필요합니다."</p>
+          </div>
+        </div>
+      </div>
+      <div class="relative h-96 rounded-[3rem] overflow-hidden" style="box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
+        <img alt="Abstract data visual" class="w-full h-full object-cover grayscale opacity-30" src={`${base}assets/landing/jujutok/paradox-visual.jpg`}/>
+        <div class="absolute inset-0" style="background: linear-gradient(to top right, var(--color-bg), transparent, transparent);"></div>
+      </div>
+    </section>
+
+    <!-- Section 5: Technical Decision -->
+    <section class="space-y-12 p-8 md:p-12 rounded-[3rem]" style="background-color: #f2f3f7; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
+      <div class="flex flex-col md:flex-row gap-12">
+        <div class="w-full md:w-1/2 space-y-6">
+          <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Parallel Multi-Agent Architecture</h2>
+          <p class="text-[var(--color-text-muted)] leading-relaxed">
+            하나의 명령어가 6개의 전문 도메인(거시경제, 기술적 분석, 공시, 뉴스, 재무, 온체인)으로 분산되어 동시에 분석을 시작합니다. 이후 4명의 가상 투자자들이 이 데이터를 바탕으로 실전 토론을 벌여 최종 인사이트를 정제합니다.
           </p>
-          <div class="flex gap-4 flex-wrap">
-            <span class="px-4 py-2 rounded-full text-sm font-semibold tracking-wide" style="background-color: #d3e4fe; color: #435368;">AI AGENT DESIGN</span>
-            <span class="px-4 py-2 rounded-full text-sm font-semibold tracking-wide" style="background-color: #d3e4fe; color: #435368;">BIAS MITIGATION</span>
+          <div class="flex flex-wrap gap-4">
+            <span class="px-4 py-2 jt-glass rounded-full text-xs font-bold text-[var(--color-accent)]">Parallel Processing</span>
+            <span class="px-4 py-2 jt-glass rounded-full text-xs font-bold" style="color: #4f6354;">3-Round Debate</span>
+            <span class="px-4 py-2 jt-glass rounded-full text-xs font-bold" style="color: #615a7d;">SSE Streaming</span>
           </div>
         </div>
-        <div class="relative opacity-0 animate-fade-up" style="animation-delay: 0.3s;">
-          <div class="bg-[var(--color-bg-card)] rounded-xl overflow-hidden shadow-ambient aspect-video relative">
-            <img class="w-full h-full object-cover" alt="주주톡 토론 UI" src={`${base}assets/landing/project-jujutok.jpg`}/>
-            <div class="absolute top-6 right-6 p-6 rounded-xl shadow-ambient glass">
-              <div class="flex items-center gap-3">
-                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="text-[var(--color-accent)]">
-                  <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                </svg>
-                <div>
-                  <p class="text-[10px] font-bold uppercase tracking-widest text-[var(--color-accent)]">System</p>
-                  <p class="text-lg font-extrabold text-[var(--color-text)]">6 Agents · 4 Personas</p>
-                </div>
-              </div>
-            </div>
+        <div class="w-full md:w-1/2 rounded-2xl overflow-hidden bg-white shadow-xl p-6 md:p-8 font-mono text-xs md:text-sm text-[var(--color-text-muted)] leading-relaxed">
+          <div class="flex gap-2 mb-6">
+            <div class="w-3 h-3 rounded-full" style="background-color: rgba(179, 38, 30, 0.2);"></div>
+            <div class="w-3 h-3 rounded-full" style="background-color: rgba(79, 99, 84, 0.2);"></div>
+            <div class="w-3 h-3 rounded-full" style="background-color: rgba(69, 98, 114, 0.2);"></div>
           </div>
+          <pre><code><span class="text-[var(--color-accent)] font-bold">async function</span> <span style="color:#4f6354;">startDebate</span>(topic) &#123;
+  <span style="color:#615a7d;">const</span> agents = <span class="text-[var(--color-accent)]">await</span> AgentPool.init(6);
+  <span style="color:#615a7d;">const</span> rawData = <span class="text-[var(--color-accent)]">await</span> Promise.all(
+    agents.map(a =&gt; a.analyze(topic))
+  );
+
+  <span class="italic text-slate-400">// Start 3-round persona synthesis</span>
+  <span style="color:#615a7d;">for</span> (let r = 0; r &lt; 3; r++) &#123;
+    <span class="text-[var(--color-accent)]">await</span> supervisor.mediate(rawData);
+  &#125;
+  <span class="text-[var(--color-accent)]">return</span> supervisor.getConsensus();
+&#125;</code></pre>
         </div>
       </div>
     </section>
 
-    <!-- Impact Metrics -->
-    <section class="py-24" style="background-color: var(--color-bg-secondary);">
-      <div class="max-w-7xl mx-auto px-6 md:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {[
-            { value: '6개', label: 'AI 에이전트', sub: '병렬 분석' },
-            { value: '4명', label: '투자 페르소나', sub: '3라운드 토론' },
-            { value: '9회', label: 'LLM 호출', sub: '토론당 평균' },
-            { value: '1개월', label: '1인 풀스택', sub: '기획 → 배포' },
-          ].map((metric) => (
-            <div class="bg-[var(--color-bg-card)] p-6 md:p-10 rounded-xl transition-shadow hover:shadow-ambient shadow-ambient-sm">
-              <p class="text-3xl md:text-4xl font-extrabold text-[var(--color-accent)] mb-2" style="font-family: var(--font-display);">{metric.value}</p>
-              <p class="text-[0.7rem] uppercase font-bold tracking-widest text-[var(--color-text-muted)]">{metric.label}</p>
-              <p class="text-[0.75rem] text-[var(--color-text-faint)] mt-2">{metric.sub}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- 01. Problem Definition -->
-    <section class="py-32 px-6 md:px-8 max-w-7xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-        <div class="space-y-6">
-          <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase">01. Problem Definition</p>
-          <h2 class="text-3xl md:text-4xl font-extrabold leading-tight text-[var(--color-text)]" style="font-family: var(--font-display);">
-            단일 AI 의견의<br/>객관성 착시
-          </h2>
-          <div class="space-y-4 text-[var(--color-text-muted)] text-lg leading-relaxed">
-            <p>모든 증권사와 AI 분석 서비스가 "단일 관점 분석"을 제공해요. 강세론자는 항상 사라 하고, 약세론자는 항상 팔라 하죠.</p>
-            <p>하나의 AI가 내놓는 "객관적인" 분석 뒤에는 <span class="text-[var(--color-text)] font-semibold">학습 데이터의 편향과 프롬프트 설계자의 관점</span>이 숨어 있어요. 투자자는 그 편향을 감지하지 못한 채 결정을 내립니다.</p>
-            <p>이건 단순한 UX 문제가 아니라, <span class="text-[var(--color-text)] font-semibold">금융 의사결정의 구조적 결함</span>이었어요.</p>
-          </div>
-        </div>
-        <div class="p-12 rounded-xl relative" style="background-color: var(--color-bg-secondary);">
-          <div class="relative z-10">
-            <h3 class="text-sm font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-8 text-center">Single AI Pipeline</h3>
-            <div class="space-y-4">
-              <div class="flex items-center justify-between gap-2">
-                <div class="px-3 py-3 rounded text-xs font-mono text-center flex-1" style="background-color: var(--color-bg-detail); color: var(--color-text);">Training Data</div>
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-faint)] flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                <div class="px-3 py-3 rounded text-xs font-mono text-center flex-1" style="background-color: rgba(159, 64, 61, 0.1); border: 1px solid rgba(159, 64, 61, 0.3); color: #752121;">Hidden Bias</div>
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-faint)] flex-shrink-0"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                <div class="px-3 py-3 rounded text-xs font-mono text-center flex-1" style="background-color: var(--color-bg-detail); color: var(--color-text);">One Answer</div>
-              </div>
-              <div class="h-16 w-[2px] mx-auto" style="background-color: rgba(113, 124, 130, 0.3);"></div>
-              <div class="text-center italic text-sm text-[var(--color-text-muted)]">검증 불가능한 "객관성"</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 02. Research Insight -->
-    <section class="py-32" style="background-color: var(--color-bg);">
-      <div class="max-w-7xl mx-auto px-6 md:px-8">
-        <div class="mb-16">
-          <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">02. Research Insight</p>
-          <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Cognitive Shift</h2>
-        </div>
-        <div class="grid md:grid-cols-2 gap-8">
-          <div class="p-10 md:p-12 rounded-xl flex flex-col justify-between" style="background-color: var(--color-bg-secondary);">
-            <div>
-              <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-outline)] mb-6">
-                <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+    <!-- Section 6: System Workflow -->
+    <section class="space-y-16">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-center text-[var(--color-text)]" style="font-family: var(--font-display);">System Workflow</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+        <div class="absolute top-1/2 left-0 right-0 h-[2px] -z-10 hidden md:block" style="background-color: rgba(224, 226, 236, 0.3);"></div>
+        {[
+          { num: '6 Agents', label: 'Parallel Extraction', icon: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z', color: 'accent' },
+          { num: '4 Personas', label: 'Sequential Debate', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z', color: 'sage' },
+          { num: 'SSE Stream', label: 'Real-time Delivery', icon: 'M13 10V3L4 14h7v7l9-11h-7z', color: 'tertiary' },
+          { num: 'Supervisor', label: 'Final Synthesis', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', color: 'accent' },
+        ].map((item) => (
+          <div class="jt-glass p-6 md:p-8 rounded-[2rem] text-center space-y-4 hover:bg-white transition-all group">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform"
+                 style={`background-color: ${item.color === 'accent' ? 'rgba(69, 98, 114, 0.1)' : item.color === 'sage' ? 'rgba(79, 99, 84, 0.1)' : 'rgba(97, 90, 125, 0.1)'}; color: ${item.color === 'accent' ? '#456272' : item.color === 'sage' ? '#4f6354' : '#615a7d'};`}>
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d={item.icon}/>
               </svg>
-              <p class="text-sm font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-4">What investors said</p>
-              <p class="text-xl md:text-2xl font-semibold leading-snug text-[var(--color-text)]">"AI 분석 리포트가 너무 많은데, 뭘 믿어야 할지 모르겠어요."</p>
             </div>
-            <div class="mt-12 pt-8">
-              <p class="text-sm text-[var(--color-text-muted)] font-medium">Focus: Information Overload</p>
-            </div>
+            <h3 class="font-extrabold text-base md:text-lg text-[var(--color-text)]" style="font-family: var(--font-display);">{item.num}</h3>
+            <p class="text-[10px] md:text-xs text-[var(--color-text-muted)] uppercase font-bold tracking-wider">{item.label}</p>
           </div>
-          <div class="p-10 md:p-12 rounded-xl flex flex-col justify-between shadow-ambient" style="background-color: var(--color-accent); color: var(--color-on-accent);">
-            <div>
-              <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="mb-6">
-                <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-              </svg>
-              <p class="text-sm font-bold uppercase tracking-widest opacity-70 mb-4">What they needed</p>
-              <p class="text-xl md:text-2xl font-semibold leading-snug">AI 하나의 답이 아니라, '왜 이 결론에 도달했는지'를 투명하게 보여주는 구조</p>
-            </div>
-            <div class="mt-12 pt-8">
-              <p class="text-sm font-medium opacity-70">Focus: Transparent Debate Structure</p>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
 
-    <!-- 03. Technical Decision -->
-    <section class="py-32 px-6 md:px-8 max-w-7xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-        <div class="order-2 lg:order-1 rounded-xl overflow-hidden shadow-ambient" style="background-color: #0f172a;">
-          <div class="px-6 py-3 flex items-center gap-2" style="background-color: #1e293b;">
-            <div class="flex gap-1.5">
-              <div class="w-3 h-3 rounded-full" style="background-color: #f43f5e;"></div>
-              <div class="w-3 h-3 rounded-full" style="background-color: #f59e0b;"></div>
-              <div class="w-3 h-3 rounded-full" style="background-color: #10b981;"></div>
+    <!-- Section 7: Transformation + Testimonial -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div class="space-y-8">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">The Transformation</h2>
+        <div class="space-y-4">
+          <div class="p-6 rounded-2xl flex items-center justify-between opacity-60" style="background-color: #f2f3f7;">
+            <div class="flex items-center gap-4">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: rgba(179, 38, 30, 0.6);"><path d="M6 18L18 6M6 6l12 12"/></svg>
+              <span class="text-[var(--color-text-muted)]">Single Answer</span>
             </div>
-            <span class="ml-4 text-xs font-mono" style="color: #94a3b8;">pipeline.ts</span>
+            <span class="text-xs text-[var(--color-text-muted)] uppercase tracking-widest">Static</span>
           </div>
-          <div class="p-6 md:p-8 font-mono text-sm leading-relaxed overflow-x-auto">
-            <pre style="color: #cbd5e1;"><code><span style="color:#c084fc;">interface</span> <span style="color:#93c5fd;">Agent</span> &#123;
-  name: <span style="color:#6ee7b7;">'Technical' | 'Fundamental'</span>
-      | <span style="color:#6ee7b7;">'Macro' | 'News'</span>
-      | <span style="color:#6ee7b7;">'Commodity' | 'Related'</span>;
-  analyze: (ticker: <span style="color:#fcd34d;">string</span>) =&gt; <span style="color:#fcd34d;">Analysis</span>;
-&#125;
-
-<span style="color:#c084fc;">interface</span> <span style="color:#93c5fd;">Persona</span> &#123;
-  role: <span style="color:#6ee7b7;">'Trader' | 'Value'</span>
-      | <span style="color:#6ee7b7;">'Growth' | 'Risk'</span>;
-  debate: (input: <span style="color:#fcd34d;">Analysis</span>[]) =&gt; <span style="color:#fcd34d;">Verdict</span>;
-&#125;
-
-<span style="color:#c084fc;">const</span> pipeline = agents.<span style="color:#93c5fd;">parallel</span>()
-  .<span style="color:#93c5fd;">then</span>(personas.<span style="color:#93c5fd;">debate</span>(&#123; rounds: <span style="color:#fcd34d;">3</span> &#125;))
-  .<span style="color:#93c5fd;">then</span>(supervisor.<span style="color:#93c5fd;">synthesize</span>);</code></pre>
-          </div>
-        </div>
-        <div class="order-1 lg:order-2 space-y-8">
-          <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase">03. Technical Decision</p>
-          <h2 class="text-3xl md:text-4xl font-extrabold leading-tight text-[var(--color-text)]" style="font-family: var(--font-display);">
-            편향을 구조로 상쇄하는<br/>3단 파이프라인
-          </h2>
-          <p class="text-[var(--color-text-muted)] text-lg leading-relaxed">
-            6개 에이전트가 서로 다른 축에서 병렬 분석하고(커버리지), 4명 페르소나가 3라운드 토론하며(편향 상쇄), 수퍼바이저가 최종 합의를 도출해요(일관성). 각 단계마다 근거를 기록해서 사용자가 "왜 이 결론인가"를 역추적할 수 있어요.
-          </p>
-          <div class="grid grid-cols-2 gap-6">
-            <div class="space-y-2">
-              <p class="text-[var(--color-accent)] font-bold">Parallel Coverage</p>
-              <p class="text-sm text-[var(--color-text-muted)]">6개 에이전트 동시 실행, SSE 스트리밍으로 실시간 반영</p>
+          <div class="p-8 rounded-[2.5rem] bg-white flex items-center justify-between" style="box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
+            <div class="flex items-center gap-4">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" class="text-[var(--color-accent)]"><path d="M12 0a12 12 0 100 24 12 12 0 000-24zm5.28 10.22l-6 6a1.5 1.5 0 01-2.12 0l-3-3a1.5 1.5 0 012.12-2.12L10.5 12.88l4.94-4.94a1.5 1.5 0 012.12 2.12l-.28.16z"/></svg>
+              <span class="font-extrabold text-lg text-[var(--color-accent)]" style="font-family: var(--font-display);">Debate &amp; Synthesis</span>
             </div>
-            <div class="space-y-2">
-              <p class="text-[var(--color-accent)] font-bold">Debate Rounds</p>
-              <p class="text-sm text-[var(--color-text-muted)]">의견 → 반박 → 종합, 각 라운드에서 페르소나 교차 검증</p>
-            </div>
+            <span class="text-xs text-[var(--color-accent)] font-bold uppercase tracking-widest">Dynamic</span>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- 04. Multi-Agent Architecture -->
-    <section class="py-32" style="background-color: var(--color-bg-secondary);">
-      <div class="max-w-7xl mx-auto px-6 md:px-8">
-        <div class="text-center max-w-2xl mx-auto mb-20">
-          <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">04. Architecture</p>
-          <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Multi-Agent Pipeline</h2>
-          <p class="mt-4 text-[var(--color-text-muted)]">각 레이어가 독립적이면서도 서로 검증하는 구조. 편향을 감지하고 상쇄하는 걸 시스템 설계로 해결했어요.</p>
-        </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-[var(--color-bg-card)] p-8 rounded-xl space-y-4">
-            <p class="text-xs font-bold uppercase tracking-widest opacity-50 text-[var(--color-text)]">Layer 1</p>
-            <p class="text-2xl font-extrabold text-[var(--color-accent)]" style="font-family: var(--font-display);">6 Agents</p>
-            <p class="text-sm text-[var(--color-text-muted)]">Technical, Fundamental, Macro, News, Commodity, Related — 병렬 분석</p>
-          </div>
-          <div class="bg-[var(--color-bg-card)] p-8 rounded-xl space-y-4">
-            <p class="text-xs font-bold uppercase tracking-widest opacity-50 text-[var(--color-text)]">Layer 2</p>
-            <p class="text-2xl font-extrabold text-[var(--color-accent)]" style="font-family: var(--font-display);">4 Personas</p>
-            <p class="text-sm text-[var(--color-text-muted)]">Trader, Value, Growth, Risk — 3라운드 토론 (의견→반박→종합)</p>
-          </div>
-          <div class="bg-[var(--color-bg-card)] p-8 rounded-xl space-y-4">
-            <p class="text-xs font-bold uppercase tracking-widest opacity-50 text-[var(--color-text)]">Layer 3</p>
-            <p class="text-2xl font-extrabold text-[var(--color-accent)]" style="font-family: var(--font-display);">Supervisor</p>
-            <p class="text-sm text-[var(--color-text-muted)]">전체 결과를 종합해서 최종 Verdict + Confidence Score 산출</p>
-          </div>
-          <div class="bg-[var(--color-bg-card)] p-8 rounded-xl space-y-4">
-            <p class="text-xs font-bold uppercase tracking-widest opacity-50 text-[var(--color-text)]">Streaming</p>
-            <p class="text-2xl font-extrabold text-[var(--color-accent)]" style="font-family: var(--font-display);">SSE Realtime</p>
-            <p class="text-sm text-[var(--color-text-muted)]">분석 진행을 실시간으로 스트리밍, 사용자가 과정을 관찰</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 05. Transformation -->
-    <section class="py-32 px-6 md:px-8 max-w-7xl mx-auto">
-      <div class="mb-16">
-        <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">05. Transformation</p>
-        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">From Opinion to Verdict</h2>
-      </div>
-      <div class="grid lg:grid-cols-2 gap-12 mb-20">
-        <div class="space-y-6">
-          <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">기존 AI 분석 서비스</p>
-          <div class="bg-[var(--color-bg-secondary)] rounded-xl p-8">
-            <div class="space-y-3">
-              <div class="flex items-center gap-3">
-                <span class="w-2 h-2 rounded-full" style="background-color: #9f403d;"></span>
-                <p class="text-sm text-[var(--color-text-muted)]">단일 AI 출력</p>
-              </div>
-              <p class="text-2xl font-semibold text-[var(--color-text)]" style="font-family: var(--font-display);">"매수 추천"</p>
-              <div class="pt-4 mt-4" style="border-top: 1px solid var(--color-bg-detail);">
-                <p class="text-xs text-[var(--color-text-faint)] italic mb-1">← 왜 매수인지 근거가 불투명</p>
-                <p class="text-xs text-[var(--color-text-faint)] italic mb-1">← 편향 감지 불가능</p>
-                <p class="text-xs text-[var(--color-text-faint)] italic">← 반대 의견 없음</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="space-y-6">
-          <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)]">주주톡 멀티에이전트</p>
-          <div class="rounded-xl p-8 shadow-ambient" style="background-color: var(--color-bg-card);">
-            <div class="space-y-3">
-              <div class="flex items-center gap-3">
-                <span class="w-2 h-2 rounded-full bg-[var(--color-accent)]"></span>
-                <p class="text-sm text-[var(--color-text-muted)]">6 에이전트 + 4 페르소나 토론</p>
-              </div>
-              <p class="text-2xl font-semibold text-[var(--color-text)]" style="font-family: var(--font-display);">"매수 (신뢰도 72%)"</p>
-              <div class="pt-4 mt-4" style="border-top: 1px solid var(--color-bg-detail);">
-                <p class="text-xs text-[var(--color-accent)] mb-1">→ 6개 에이전트가 각각 근거 제시</p>
-                <p class="text-xs text-[var(--color-accent)] mb-1">→ 4명 페르소나가 교차 검증</p>
-                <p class="text-xs text-[var(--color-accent)]">→ 반대 의견도 함께 표시</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-10 md:p-12 rounded-2xl relative" style="background-color: var(--color-bg-detail);">
-        <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24" class="absolute top-8 left-8 opacity-20 text-[var(--color-accent)]">
+      <div class="jt-glass p-10 md:p-12 rounded-[3rem] flex flex-col justify-center space-y-8" style="background-color: rgba(255, 255, 255, 0.4);">
+        <svg width="60" height="60" fill="currentColor" viewBox="0 0 24 24" class="text-[var(--color-accent)]/20">
           <path d="M14.017 21v-7.391C14.017 9.488 16.97 6 21 6v2c-2.968 0-5.5 2.6-5.5 5.5h5.5V21h-6.983zm-12 0v-7.391C2.017 9.488 4.97 6 9 6v2c-2.968 0-5.5 2.6-5.5 5.5H9V21H2.017z"/>
         </svg>
-        <div class="relative z-10 max-w-3xl mx-auto text-center">
-          <p class="text-xl md:text-2xl font-semibold italic text-[var(--color-text)] leading-relaxed mb-8">
-            "AI를 의심하지 않아도 되는 게 아니라,<br/>AI를 의심하는 AI를 만들어야 한다는 걸 배웠어요."
-          </p>
-          <div class="space-y-1">
-            <p class="font-bold text-[var(--color-text)]">프로젝트 회고</p>
-            <p class="text-sm text-[var(--color-text-muted)] uppercase tracking-widest">우혜빈, 2026</p>
+        <p class="text-xl md:text-2xl leading-relaxed text-[var(--color-text)] italic">
+          "I don't just trust AI, <span class="text-[var(--color-accent)] font-bold not-italic">I understand it.</span> JujuTok provides the 'why' behind the 'what'."
+        </p>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full overflow-hidden" style="background-color: rgba(69, 98, 114, 0.1);">
+            <img alt="User avatar" src={`${base}assets/landing/jujutok/user-avatar.jpg`} class="w-full h-full object-cover"/>
+          </div>
+          <div>
+            <p class="font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Dong-woo Kim</p>
+            <p class="text-xs text-[var(--color-text-muted)] uppercase tracking-widest">Lead Quant Researcher</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 06. Next Steps -->
-    <section class="py-32" style="background-color: var(--color-bg-secondary);">
-      <div class="max-w-7xl mx-auto px-6 md:px-8">
-        <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
-          <div class="max-w-xl">
-            <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">06. Next Steps</p>
-            <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Forward-Looking Roadmap</h2>
-          </div>
-          <div class="h-[2px] flex-grow mb-4 hidden md:block" style="background-color: var(--color-bg-detail);"></div>
+    <!-- Section 8: Next Steps -->
+    <section class="jt-glass p-10 md:p-16 rounded-[4rem] text-center space-y-12 relative overflow-hidden" style="background-color: #f2f3f7;">
+      <div class="absolute -bottom-24 -left-24 w-64 h-64 rounded-full" style="background-color: rgba(69, 98, 114, 0.05); filter: blur(100px);"></div>
+      <div class="max-w-2xl mx-auto space-y-6 relative z-10">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Next Steps</h2>
+        <p class="text-[var(--color-text-muted)]">우리는 멈추지 않습니다. 더 정교한 분석을 위한 다음 목표.</p>
+      </div>
+      <div class="flex flex-col md:flex-row justify-center gap-8 relative z-10">
+        <div class="p-8 rounded-3xl space-y-4 flex-1 hover:-translate-y-1 transition-transform" style="background-color: rgba(255, 255, 255, 0.6); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
+          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color: #4f6354;"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <h4 class="font-extrabold text-xl text-[var(--color-text)]" style="font-family: var(--font-display);">Real-time Data</h4>
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">초단위 시장 데이터 연동을 통한 실시간 에이전트 브리핑</p>
         </div>
-        <div class="grid md:grid-cols-2 gap-8">
-          <div class="bg-[var(--color-bg-card)] p-10 md:p-12 rounded-xl group transition-colors duration-500 hover:bg-[var(--color-accent)]">
-            <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-accent)] mb-6 group-hover:text-[var(--color-on-accent)] transition-colors">
-              <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-            </svg>
-            <h3 class="text-2xl font-bold mb-4 text-[var(--color-text)] group-hover:text-[var(--color-on-accent)] transition-colors">Real-time Market Feed</h3>
-            <p class="text-[var(--color-text-muted)] group-hover:text-[var(--color-on-accent)]/80 leading-relaxed transition-colors">
-              현재는 정적 데이터 기반. 실시간 주가 피드와 뉴스 API를 연동해서 분석 결과가 시장 움직임에 반응하는 라이브 시스템으로 확장할 예정이에요.
-            </p>
-          </div>
-          <div class="bg-[var(--color-bg-card)] p-10 md:p-12 rounded-xl group transition-colors duration-500 hover:bg-[var(--color-accent)]">
-            <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-accent)] mb-6 group-hover:text-[var(--color-on-accent)] transition-colors">
-              <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-            </svg>
-            <h3 class="text-2xl font-bold mb-4 text-[var(--color-text)] group-hover:text-[var(--color-on-accent)] transition-colors">Persona Customization</h3>
-            <p class="text-[var(--color-text-muted)] group-hover:text-[var(--color-on-accent)]/80 leading-relaxed transition-colors">
-              사용자가 자신의 투자 철학에 맞춰 페르소나 조합과 가중치를 직접 구성. "나만의 투자 위원회"를 만들어서 개인화된 의사결정 도구로 확장해요.
-            </p>
-          </div>
+        <div class="p-8 rounded-3xl space-y-4 flex-1 hover:-translate-y-1 transition-transform" style="background-color: rgba(255, 255, 255, 0.6); box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
+          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color: #615a7d;"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <h4 class="font-extrabold text-xl text-[var(--color-text)]" style="font-family: var(--font-display);">Persona Custom</h4>
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">사용자의 투자 성향을 학습한 맞춤형 페르소나 생성</p>
         </div>
+      </div>
+      <div class="pt-8 relative z-10">
+        <a href={`${base}${lang}/#contact`} class="inline-block bg-[var(--color-accent)] text-[var(--color-on-accent)] px-12 py-4 rounded-full font-extrabold text-lg shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300" style="font-family: var(--font-display);">
+          Launch Alpha Now
+        </a>
       </div>
     </section>
   </main>
@@ -319,9 +243,20 @@ const base = import.meta.env.BASE_URL;
 </Layout>
 
 <style is:global>
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  .jt-glass {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(69, 98, 114, 0.08);
   }
-  .animate-fade-up { animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .jt-asymmetric-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 2rem;
+  }
+  @media (max-width: 768px) {
+    .jt-asymmetric-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
