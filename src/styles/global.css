@@ -111,3 +111,8 @@ body {
 .gradient-primary {
   background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
 }
+
+/* Alternating section backgrounds */
+.section-alt:nth-child(even) {
+  background-color: var(--color-bg-secondary);
+}

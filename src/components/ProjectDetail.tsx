@@ -94,7 +94,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
   const highlightIcons = { brain: Brain, cog: Cog };
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
+    <div className="min-h-screen text-[var(--color-text)]" style={{ backgroundColor: 'var(--color-bg)' }}>
 
       {/* ═══ Hero — gradient inspired by Pencil mockup ═══ */}
       <section className="relative overflow-hidden border-b border-[var(--color-border)]/50">

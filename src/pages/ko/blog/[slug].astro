@@ -28,6 +28,11 @@ const seriesPosts = post.data.series
       .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0))
   : [];
 
+const recommendedPosts = allPosts
+  .filter(p => p.id !== post.id)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
 const seriesLabels: Record<string, string> = {
   'quant-platform': '퀀트 리서치 플랫폼',
   'jujutok': '주주톡',
@@ -46,116 +51,157 @@ const categoryLabels: Record<string, string> = {
 <Layout title={`${post.data.title} — HYEBIN.DEV`}>
   <Navbar lang={lang} client:load />
 
-  <main class="px-6 pt-32 pb-20">
-    <article class="mx-auto max-w-3xl">
-      <a
-        href={`${base}${lang}/blog/`}
-        class="mb-8 inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-accent)]"
-      >
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-        {tr.blog.backToBlog}
-      </a>
+  <main class="pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
+    <!-- Back link -->
+    <a
+      href={`${base}${lang}/blog/`}
+      class="mb-8 inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-accent)]"
+    >
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      {tr.blog.backToBlog}
+    </a>
 
-      <div class="mb-12">
-        <div class="mb-4 flex items-center gap-3">
-          <span class="rounded-full bg-[var(--color-secondary-container)] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-on-secondary-container)]">
-            {categoryLabels[post.data.category] || post.data.category}
-          </span>
-          <span class="font-mono text-xs text-[var(--color-text-faint)]">
-            {post.data.date.toISOString().slice(0, 10)}
-          </span>
-        </div>
-        <h1 class="mb-4 text-3xl font-bold leading-snug sm:text-4xl text-[var(--color-text)]" style="font-family: var(--font-display);">
-          {post.data.title}
-        </h1>
-        <p class="text-[var(--color-text-muted)]">
-          {post.data.description}
-        </p>
-        <div class="mt-4 flex flex-wrap gap-2">
-          {post.data.tags.map((tag: string) => (
-            <span class="rounded-full bg-[var(--color-secondary-container)] px-2.5 py-0.5 text-[10px] font-medium text-[var(--color-on-secondary-container)]">
-              {tag}
-            </span>
-          ))}
-        </div>
+    <!-- Article Header -->
+    <header class="mb-12">
+      <div class="mb-4 flex items-center gap-3">
+        <span class="rounded-full bg-[var(--color-secondary-container)] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--color-on-secondary-container)]">
+          {categoryLabels[post.data.category] || post.data.category}
+        </span>
+        <span class="font-mono text-xs text-[var(--color-text-faint)]">
+          {post.data.date.toISOString().slice(0, 10)}
+        </span>
       </div>
-
-      <div class="prose-custom">
-        <Content />
+      <h1 class="mb-4 text-3xl sm:text-4xl md:text-5xl font-extrabold leading-snug text-[var(--color-text)]" style="font-family: var(--font-display);">
+        {post.data.title}
+      </h1>
+      <p class="text-lg text-[var(--color-text-muted)] max-w-3xl">
+        {post.data.description}
+      </p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {post.data.tags.map((tag: string) => (
+          <span class="rounded-full bg-[var(--color-secondary-container)] px-2.5 py-0.5 text-[10px] font-medium text-[var(--color-on-secondary-container)]">
+            {tag}
+          </span>
+        ))}
       </div>
+    </header>
 
-      {seriesPosts.length > 1 && (
-        <div class="mt-16 pt-10" style="border-top: 1px solid var(--color-border);">
-          <h3 class="mb-1 text-sm font-semibold uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-            시리즈
-          </h3>
-          <p class="mb-6 text-xs text-[var(--color-text-faint)]">
-            {seriesLabels[post.data.series!] || post.data.series} ({seriesPosts.length}편)
-          </p>
-          <div class="flex flex-col gap-2">
-            {seriesPosts.map((sp, i) => {
-              const isCurrent = sp.id === post.id;
-              return (
+    <!-- 2-column: Article + Sidebar -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+      <!-- Article body -->
+      <article class="lg:col-span-8">
+        <div class="prose-custom">
+          <Content />
+        </div>
+
+        <!-- Related links (bottom of article) -->
+        {post.data.relatedLinks.length > 0 && (
+          <div class="mt-16 pt-10" style="border-top: 1px solid var(--color-border);">
+            <h3 class="mb-6 text-sm font-bold uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
+              함께 보면 좋은 글
+            </h3>
+            <div class="flex flex-col gap-3">
+              {post.data.relatedLinks.map((link: { label: string; url: string; type: string }) => (
                 <a
-                  href={isCurrent ? undefined : `${base}${lang}/blog/${sp.id}/`}
-                  class:list={[
-                    'group flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all',
-                    isCurrent
-                      ? 'bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] font-medium'
-                      : 'text-[var(--color-text-muted)] hover:bg-[var(--color-bg-card)] hover:text-[var(--color-text)]',
-                  ]}
+                  href={link.url}
+                  target={link.type === 'github' || link.type === 'linkedin' ? '_blank' : undefined}
+                  rel={link.type === 'github' || link.type === 'linkedin' ? 'noopener noreferrer' : undefined}
+                  class="group flex items-center gap-3 rounded-xl bg-[var(--color-bg-card)] px-5 py-4 shadow-ambient-sm transition-all hover:shadow-ambient"
                 >
-                  <span class:list={[
-                    'flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full font-mono text-[10px] font-bold',
-                    isCurrent
-                      ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
-                      : 'bg-[var(--color-bg-detail)] text-[var(--color-text-faint)]',
-                  ]}>
-                    {i + 1}
-                  </span>
-                  <span class="leading-snug">{sp.data.title}</span>
+                  <div class="flex-1">
+                    <span class="text-sm font-medium text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)]">
+                      {link.label}
+                    </span>
+                    <span class="ml-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-faint)]">
+                      {link.type}
+                    </span>
+                  </div>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-faint)] group-hover:text-[var(--color-accent)]">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
-              );
-            })}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </article>
 
-      {post.data.relatedLinks.length > 0 && (
-        <div class="mt-16 pt-10" style="border-top: 1px solid var(--color-border);">
-          <h3 class="mb-6 text-sm font-semibold uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-            함께 보면 좋은 글
-          </h3>
-          <div class="flex flex-col gap-3">
-            {post.data.relatedLinks.map((link: { label: string; url: string; type: string }) => (
-              <a
-                href={link.url}
-                target={link.type === 'github' || link.type === 'linkedin' ? '_blank' : undefined}
-                rel={link.type === 'github' || link.type === 'linkedin' ? 'noopener noreferrer' : undefined}
-                class="group flex items-center gap-3 rounded-xl bg-[var(--color-bg-card)] px-5 py-4 shadow-ambient-sm transition-all hover:shadow-ambient"
-              >
-                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-secondary-container)] text-sm text-[var(--color-on-secondary-container)]">
-                  {link.type === 'project' ? '📂' : link.type === 'blog' ? '📝' : link.type === 'linkedin' ? '💼' : '💻'}
+      <!-- Sidebar -->
+      <aside class="lg:col-span-4 space-y-8">
+
+        <!-- Author card -->
+        <div class="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <img src="/portfolio/assets/logo-v2-character-circle.png" alt="HB" class="w-10 h-10 rounded-full" />
+            <div>
+              <p class="text-sm font-bold text-[var(--color-text)]">우혜빈</p>
+              <p class="text-[10px] text-[var(--color-text-faint)]">AI 서비스 기획자</p>
+            </div>
+          </div>
+          <p class="text-xs text-[var(--color-text-muted)] leading-relaxed">
+            복잡한 금융 구조를 이해할 수 있는 경험으로 바꿉니다.
+          </p>
+        </div>
+
+        <!-- Series navigation -->
+        {seriesPosts.length > 1 && (
+          <div class="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm">
+            <h3 class="mb-1 text-sm font-bold uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
+              시리즈
+            </h3>
+            <p class="mb-4 text-xs text-[var(--color-text-faint)]">
+              {seriesLabels[post.data.series!] || post.data.series} ({seriesPosts.length}편)
+            </p>
+            <div class="flex flex-col gap-2">
+              {seriesPosts.map((sp, i) => {
+                const isCurrent = sp.id === post.id;
+                return (
+                  <a
+                    href={isCurrent ? undefined : `${base}${lang}/blog/${sp.id}/`}
+                    class:list={[
+                      'group flex items-center gap-2 rounded-lg px-3 py-2 text-xs transition-all',
+                      isCurrent
+                        ? 'bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] font-semibold'
+                        : 'text-[var(--color-text-muted)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text)]',
+                    ]}
+                  >
+                    <span class:list={[
+                      'flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full font-mono text-[9px] font-bold',
+                      isCurrent
+                        ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
+                        : 'bg-[var(--color-bg-detail)] text-[var(--color-text-faint)]',
+                    ]}>
+                      {i + 1}
+                    </span>
+                    <span class="leading-snug line-clamp-2">{sp.data.title}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        <!-- Recommended -->
+        <div class="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm">
+          <h3 class="mb-4 text-sm font-bold uppercase tracking-[0.15em] text-[var(--color-text-faint)]">추천 글</h3>
+          <div class="space-y-4">
+            {recommendedPosts.map((rp) => (
+              <a href={`${base}${lang}/blog/${rp.id}/`} class="group block">
+                <span class="text-[10px] font-bold text-[var(--color-accent)] uppercase tracking-wider">
+                  {categoryLabels[rp.data.category] || rp.data.category}
                 </span>
-                <div class="flex-1">
-                  <span class="text-sm font-medium text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)]">
-                    {link.label}
-                  </span>
-                  <span class="ml-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-faint)]">
-                    {link.type}
-                  </span>
-                </div>
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-faint)] transition-colors group-hover:text-[var(--color-accent)]">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                <h4 class="text-sm font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors leading-snug line-clamp-2">
+                  {rp.data.title}
+                </h4>
               </a>
             ))}
           </div>
         </div>
-      )}
-    </article>
+      </aside>
+    </div>
   </main>
 
   <Footer />
@@ -180,7 +226,6 @@ const categoryLabels: Record<string, string> = {
   .prose-custom blockquote { margin-bottom: 1.25rem; border-left: 3px solid var(--color-accent); padding-left: 1rem; color: var(--color-text-muted); font-style: italic; }
   .prose-custom hr { margin: 2rem 0; border-color: var(--color-border); }
   .prose-custom img { border-radius: 0.75rem; margin-bottom: 0.5rem; }
-  .prose-custom img + em { display: block; font-size: 0.75rem; color: var(--color-text-faint); font-style: normal; margin-bottom: 1.5rem; opacity: 0.7; }
   .prose-custom table { width: 100%; margin-bottom: 1.5rem; border-collapse: collapse; font-size: 0.875rem; }
   .prose-custom th { text-align: left; padding: 0.75rem 1rem; border-bottom: 2px solid var(--color-bg-detail); color: var(--color-text); font-weight: 600; font-size: 0.8125rem; }
   .prose-custom td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); }

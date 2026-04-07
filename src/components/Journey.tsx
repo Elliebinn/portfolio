@@ -1,19 +1,32 @@
 import type { Lang } from '../i18n/translations';
 import { t } from '../i18n/translations';
 
+const BASE = '/portfolio';
+
 export default function Journey({ lang = 'en' as Lang }: { lang?: Lang }) {
   const tr = t(lang).timeline;
+  // Only show work experience (first 2), not education
+  const workItems = tr.items.slice(0, 2);
+  const resumeLabel = lang === 'ko' ? '이력서에서 자세히 보기' : 'View Full Resume';
 
   return (
     <section id="timeline" className="px-6 py-16 sm:py-28" style={{ backgroundColor: 'var(--color-bg)' }}>
       <div className="mx-auto max-w-7xl">
-        <p className="mb-12 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-          {tr.section}
-        </p>
+        <div className="flex items-baseline justify-between mb-12">
+          <p className="text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
+            {tr.section}
+          </p>
+          <a
+            href={`${BASE}/${lang}/resume/`}
+            className="text-sm font-medium text-[var(--color-accent)] hover:underline"
+          >
+            {resumeLabel} →
+          </a>
+        </div>
 
         {/* Desktop: horizontal divider style */}
         <div className="hidden lg:block">
-          {tr.items.map((item, i) => (
+          {workItems.map((item, i) => (
             <div
               key={i}
               className={`${i === 0 ? '' : 'mt-8'} rounded-xl bg-[var(--color-bg-card)] p-8 shadow-ambient-sm`}
@@ -41,8 +54,8 @@ export default function Journey({ lang = 'en' as Lang }: { lang?: Lang }) {
         <div className="lg:hidden relative pl-12">
           <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-[var(--color-bg-emphasis)]" />
 
-          {tr.items.map((item, i) => (
-            <div key={i} className={`relative ${i !== tr.items.length - 1 ? 'pb-14' : ''}`}>
+          {workItems.map((item, i) => (
+            <div key={i} className={`relative ${i !== workItems.length - 1 ? 'pb-14' : ''}`}>
               <div
                 className={`absolute -left-12 top-0.5 flex h-6 w-6 items-center justify-center rounded-full border-[2.5px] ${
                   i === 0
