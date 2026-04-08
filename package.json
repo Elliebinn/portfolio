@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync:resume": "node --experimental-strip-types scripts/gen-resume-md.ts && node --experimental-strip-types scripts/gen-linkedin-about.ts",
+    "resume:audit": "bash scripts/resume-audit.sh",
+    "resume:sync-and-audit": "npm run sync:resume && npm run resume:audit"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.1",
