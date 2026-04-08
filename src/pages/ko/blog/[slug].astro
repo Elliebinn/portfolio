@@ -2,6 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
+import StickyTOC from '../../../components/blog/StickyTOC';
 import { getCollection, render } from 'astro:content';
 import { t } from '../../../i18n/translations';
 
@@ -95,7 +96,7 @@ const categoryLabels: Record<string, string> = {
 
       <!-- Article body -->
       <article class="lg:col-span-8">
-        <div class="prose-custom">
+        <div class="prose-custom" style="max-width: 66ch;">
           <Content />
         </div>
 
@@ -134,6 +135,9 @@ const categoryLabels: Record<string, string> = {
       <!-- Sidebar (sticky) -->
       <aside class="lg:col-span-4">
         <div class="sticky top-32 space-y-8">
+
+        <!-- Table of Contents -->
+        <StickyTOC client:visible className="hidden lg:block rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm" />
 
         <!-- Author card -->
         <div class="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm">

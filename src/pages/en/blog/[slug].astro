@@ -2,6 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
+import StickyTOC from '../../../components/blog/StickyTOC';
 import { getCollection, render } from 'astro:content';
 import { t } from '../../../i18n/translations';
 
@@ -46,7 +47,7 @@ const categoryLabels: Record<string, string> = {
   <Navbar lang={lang} client:load />
 
   <main class="px-6 pt-32 pb-20">
-    <article class="mx-auto max-w-3xl">
+    <div class="mx-auto max-w-7xl">
       <a
         href={`${base}${lang}/blog/`}
         class="mb-8 inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
@@ -57,7 +58,7 @@ const categoryLabels: Record<string, string> = {
         {tr.blog.backToBlog}
       </a>
 
-      <div class="mb-12">
+      <header class="mb-12">
         <div class="mb-4 flex items-center gap-3">
           <span class="rounded-full bg-[var(--color-accent)]/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-accent-light)]">
             {categoryLabels[post.data.category] || post.data.category}
@@ -79,9 +80,11 @@ const categoryLabels: Record<string, string> = {
             </span>
           ))}
         </div>
-      </div>
+      </header>
 
-      <div class="prose-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <article class="lg:col-span-8">
+      <div class="prose-custom" style="max-width: 66ch;">
         <Content />
       </div>
 
@@ -155,6 +158,52 @@ const categoryLabels: Record<string, string> = {
         </div>
       )}
     </article>
+
+      <!-- Sidebar with TOC -->
+      <aside class="lg:col-span-4 hidden lg:block">
+        <div class="sticky top-32 space-y-8">
+          <StickyTOC client:visible className="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm" />
+
+          {seriesPosts.length > 1 && (
+            <div class="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm">
+              <h3 class="mb-1 text-sm font-semibold uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+                Series
+              </h3>
+              <p class="mb-4 text-xs text-[var(--color-text-muted)]">
+                {seriesLabels[post.data.series!] || post.data.series} ({seriesPosts.length} posts)
+              </p>
+              <div class="flex flex-col gap-1.5">
+                {seriesPosts.map((sp, i) => {
+                  const isCurrent = sp.id === post.id;
+                  return (
+                    <a
+                      href={isCurrent ? undefined : `${base}${lang}/blog/${sp.id}/`}
+                      class:list={[
+                        'group flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition-all',
+                        isCurrent
+                          ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent-light)] font-medium'
+                          : 'text-[var(--color-text-muted)] hover:bg-[var(--color-bg-card)] hover:text-[var(--color-text)]',
+                      ]}
+                    >
+                      <span class:list={[
+                        'flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full font-mono text-[10px] font-bold',
+                        isCurrent
+                          ? 'bg-[var(--color-accent)] text-white'
+                          : 'border border-[var(--color-border)] text-[var(--color-text-muted)]',
+                      ]}>
+                        {i + 1}
+                      </span>
+                      <span class="leading-snug">{sp.data.title}</span>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </aside>
+      </div>
+    </div>
   </main>
 
   <Footer />
