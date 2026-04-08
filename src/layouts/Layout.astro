@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ScrollProgress from '../components/motion/ScrollProgress';
 
 interface Props {
   title?: string;
@@ -21,6 +22,7 @@ const { title = "HYEBIN.DEV" } = Astro.props;
     <title>{title}</title>
   </head>
   <body class="antialiased">
+    <ScrollProgress variant="bar" className="text-[var(--color-accent)]" client:load />
     <slot />
     <!-- Light theme only -->
   </body>

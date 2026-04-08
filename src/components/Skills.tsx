@@ -1,5 +1,6 @@
 import type { Lang } from '../i18n/translations';
 import { t } from '../i18n/translations';
+import ScrollReveal from './motion/ScrollReveal';
 
 const stackByLang = {
   en: [
@@ -29,25 +30,37 @@ export default function Skills({ lang = 'en' as Lang }: { lang?: Lang }) {
   const items = stackByLang[lang];
 
   return (
-    <section id="stack" className="px-6 py-16 sm:py-28" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
+    <section
+      id="stack"
+      className="px-6 py-16 sm:px-10 sm:py-28"
+      style={{ backgroundColor: 'var(--color-bg-secondary)' }}
+    >
       <div className="mx-auto max-w-7xl">
-        <p className="mb-6 sm:mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-          {tr.section}
-        </p>
+        <ScrollReveal>
+          <p className="mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)] sm:mb-8">
+            {tr.section}
+          </p>
+        </ScrollReveal>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
-          {items.map((s) => (
-            <div
-              key={s.name}
-              className="group rounded-xl bg-[var(--color-bg-card)] p-4 shadow-ambient-sm transition-all hover:shadow-ambient"
-            >
-              <p className="text-sm font-semibold text-[var(--color-text)]">{s.name}</p>
-              <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-faint)]">
-                {s.sub}
-              </p>
-            </div>
-          ))}
-        </div>
+        {/* Tag cloud */}
+        <ScrollReveal delay={100}>
+          <div className="flex flex-wrap gap-3">
+            {items.map((s) => (
+              <div
+                key={s.name}
+                className="group cursor-default rounded-full px-5 py-2.5 transition-colors"
+                style={{ backgroundColor: 'var(--color-bg-card)' }}
+              >
+                <span className="text-sm font-semibold text-[var(--color-text)]">
+                  {s.name}
+                </span>
+                <span className="ml-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-faint)]">
+                  {s.sub}
+                </span>
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

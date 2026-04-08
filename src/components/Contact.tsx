@@ -1,5 +1,7 @@
 import type { Lang } from '../i18n/translations';
 import { t } from '../i18n/translations';
+import MagneticButton from './motion/MagneticButton';
+import ScrollReveal from './motion/ScrollReveal';
 
 const links = [
   { label: 'Email', href: 'mailto:elliebinn@gmail.com' },
@@ -20,35 +22,41 @@ export default function Contact({ lang = 'en' as Lang }: { lang?: Lang }) {
   return (
     <section id="contact" className="px-6 py-16 sm:py-32" style={{ backgroundColor: 'var(--color-bg)' }}>
       <div className="mx-auto max-w-7xl">
-        <p className="mb-8 text-center text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-          {tr.section}
-        </p>
+        <ScrollReveal>
+          <p className="mb-8 text-center text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
+            {tr.section}
+          </p>
+        </ScrollReveal>
 
-        <div className="mb-16 text-center">
-          <h2
-            className="text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight text-[var(--color-text)]"
-            style={{ fontFamily: "var(--font-display)", fontWeight: 900 }}
-          >
-            {words[0]} {words[1]}{' '}
-            <span className="text-[var(--color-accent)]">
-              {words[2]}
-            </span>
-          </h2>
-        </div>
-
-        <div className="flex items-center justify-center gap-10">
-          {links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith('http') ? '_blank' : undefined}
-              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="text-sm font-medium uppercase tracking-[0.15em] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-accent)]"
+        <ScrollReveal delay={100}>
+          <div className="mb-16 text-center">
+            <h2
+              className="text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight text-[var(--color-text)]"
+              style={{ fontFamily: "var(--font-display)", fontWeight: 900 }}
             >
-              {link.label}
-            </a>
-          ))}
-        </div>
+              {words[0]} {words[1]}{' '}
+              <span className="text-[var(--color-accent)]">
+                {words[2]}
+              </span>
+            </h2>
+          </div>
+        </ScrollReveal>
+
+        {/* CTA links with MagneticButton */}
+        <ScrollReveal delay={200}>
+          <div className="flex items-center justify-center gap-10">
+            {links.map((link) => (
+              <MagneticButton
+                key={link.label}
+                strength={0.3}
+                className="text-sm font-medium uppercase tracking-[0.15em] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-accent)]"
+                onClick={() => window.open(link.href, link.href.startsWith('http') ? '_blank' : '_self')}
+              >
+                {link.label}
+              </MagneticButton>
+            ))}
+          </div>
+        </ScrollReveal>
 
         {/* Mobile contact form */}
         <div className="mt-16 md:hidden">
