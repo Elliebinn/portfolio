@@ -1,0 +1,41 @@
+session: portfolio-claude
+layout: tiled
+project: portfolio-redesign
+description: |
+  Astro 6 + React 19 + Tailwind 4 포트폴리오 리뉴얼 하네스.
+  PRD-redesign.md를 6명 에이전트 팀이 실행한다.
+  실제 세션 생성은 ./setup-harness.sh dev 로 수행.
+
+windows:
+  - name: pm-orchestrator
+    dir: .
+    cmd: claude --agent pm-orchestrator
+    role: leader
+  - name: design-architect
+    dir: .
+    cmd: claude --agent design-architect
+    role: member
+  - name: frontend-executor
+    dir: .
+    cmd: claude --agent frontend-executor
+    role: member
+  - name: motion-engineer
+    dir: .
+    cmd: claude --agent motion-engineer
+    role: member
+  - name: visual-qa
+    dir: .
+    cmd: claude --agent visual-qa
+    role: member
+  - name: deadcode-auditor
+    dir: .
+    cmd: claude --agent deadcode-auditor
+    role: member
+
+leader_pane: pm-orchestrator
+notes: |
+  - 모든 에이전트는 model: opus
+  - 오케스트레이터(pm-orchestrator)는 prd-phase-runner 스킬을 사용하여
+    TeamCreate로 나머지 5명을 실시간 조율한다.
+  - Agent 도구(서브에이전트)는 절대 사용 금지. TeamCreate만 사용해야
+    각 팀원이 독립 프로세스로 tmux pane에 표시된다.

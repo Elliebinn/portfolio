@@ -22,3 +22,9 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# OMC runtime state
+.omc/
+
+# Cloned external reference repos (do not vendor)
+_workspace/refs/
