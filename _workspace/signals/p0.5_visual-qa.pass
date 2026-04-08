@@ -1,0 +1,9 @@
+TASK: P0.5 이력서 회귀 검증 (verify-resume-untouched)
+WORKER: visual-qa
+STATUS: pass
+TIMESTAMP: 2026-04-08T02:29:54Z
+COMMIT: ce32351
+ARTIFACTS:
+  - _workspace/qa/phase_0_resume_verification.md
+EVIDENCE: resume.astro(ko/en)+resume-pdf.astro(ko)+resume.ts+Navbar.tsx+Footer.tsx+Layout.astro diff=0 lines; 전체 변경은 editorial 13파일/2045줄 삭제만, 비editorial src 파급 0 → 빌드 산출물 결정론적 동치
+NEXT_HINT: GATE 0-B 자동 통과 → Phase 1 진입 가능
