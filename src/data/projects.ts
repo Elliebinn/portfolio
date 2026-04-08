@@ -131,6 +131,18 @@ export const jujutok: Record<'en' | 'ko', ProjectData> = {
     screenshots: {
       hero: '/assets/projects/jujutok/home-dark.png',
     },
+
+    meta: {
+      period: '2024.11 — Present',
+      role: 'Solo Planning + Development',
+      impact: ['6 parallel analysis agents', '4 investment personas', '3-round debate system', 'Real-time SSE streaming'],
+      stack: ['React', 'FastAPI', 'Claude API', 'SSE', 'Multi-Agent'],
+    },
+    nextProject: {
+      slug: 'quant-platform',
+      title: 'Quant Research Platform',
+      label: 'Next Project',
+    },
   },
 
   ko: {
@@ -263,6 +275,18 @@ export const jujutok: Record<'en' | 'ko', ProjectData> = {
     screenshots: {
       hero: '/assets/projects/jujutok/home-dark.png',
     },
+
+    meta: {
+      period: '2024.11 — 현재',
+      role: '1인 기획 + 개발',
+      impact: ['6개 분석 축 병렬 실행', '4개 투자 페르소나 토론', '3라운드 구조화 합의', '실시간 SSE 스트리밍'],
+      stack: ['React', 'FastAPI', 'Claude API', 'SSE', '멀티에이전트'],
+    },
+    nextProject: {
+      slug: 'quant-platform',
+      title: '퀀트 전략 분석 플랫폼',
+      label: '다음 프로젝트',
+    },
   },
 };
 
@@ -373,6 +397,18 @@ export const quantPlatform: Record<'en' | 'ko', ProjectData> = {
 
     screenshots: {
       hero: '/assets/projects/quant-platform/dashboard-overview.png',
+    },
+
+    meta: {
+      period: '2025.03 — Present',
+      role: 'Service Planning · UX Design · Frontend',
+      impact: ['200+ strategy taxonomy redesigned', '20+ analysis pages designed', '83% trade time reduction', 'Tag-based navigation system'],
+      stack: ['React', 'Vite', 'ECharts', 'ClickHouse', 'FastAPI'],
+    },
+    nextProject: {
+      slug: 'jujutok',
+      title: 'JujuTok — AI Stock Research',
+      label: 'Next Project',
     },
   },
 
@@ -497,6 +533,18 @@ export const quantPlatform: Record<'en' | 'ko', ProjectData> = {
 
     screenshots: {
       hero: '/assets/projects/quant-platform/before-after/overview-after.png',
+    },
+
+    meta: {
+      period: '2025.03 — 현재',
+      role: '서비스 기획 · UX 설계 · 프론트엔드',
+      impact: ['200+ 전략 분류 체계 재설계', '20+ 분석 페이지 설계', '매매 시간 83% 단축', '태그 기반 탐색 시스템'],
+      stack: ['React', 'Vite', 'ECharts', 'ClickHouse', 'FastAPI'],
+    },
+    nextProject: {
+      slug: 'jujutok',
+      title: '주주톡 — AI 주식 분석',
+      label: '다음 프로젝트',
     },
   },
 };

@@ -4,6 +4,8 @@ import {
   Brain, Cog, Search, Shuffle, MessageSquare, Lightbulb,
   ArrowRight, ExternalLink, Github, ChevronRight,
 } from 'lucide-react';
+import ScrollReveal from './motion/ScrollReveal';
+import MetaSideRail, { type ProjectMeta } from './project/MetaSideRail';
 
 const BASE = '/portfolio';
 
@@ -88,6 +90,13 @@ export interface ProjectData {
   screenshots: {
     hero: string;
   };
+
+  meta?: ProjectMeta;
+  nextProject?: {
+    slug: string;
+    title: string;
+    label: string;
+  };
 }
 
 export default function ProjectDetail({ project, lang }: { project: ProjectData; lang: Lang }) {
@@ -140,6 +149,17 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
           </div>
         </div>
       </section>
+
+      {/* ═══ MetaSideRail — conditional ═══ */}
+      {project.meta && (
+        <section className="border-b border-[var(--color-border)]/50 px-6 py-10 lg:hidden">
+          <div className="mx-auto max-w-7xl">
+            <ScrollReveal>
+              <MetaSideRail meta={project.meta} />
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
 
       {/* ═══ Challenge + Solution — 2-column from Pencil ═══ */}
       {project.challenge && project.solution ? (
@@ -592,26 +612,57 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       </section>
 
       {/* ═══ CTA ═══ */}
-      <section className="px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl text-center">
-          <h2 className="mb-3 text-2xl font-bold sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
-            {project.cta.heading}
-          </h2>
-          <p className="mb-8 text-sm text-[var(--color-text-muted)]">{project.cta.subtext}</p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <a
-              href={project.cta.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-[var(--color-border)] px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-[var(--color-bg-card)]"
-            >
-              <Github size={16} />
-              {project.cta.githubLabel}
-              <ExternalLink size={12} className="opacity-50" />
-            </a>
+      <ScrollReveal>
+        <section className="px-6 py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl text-center">
+            <h2 className="mb-3 text-2xl font-bold sm:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
+              {project.cta.heading}
+            </h2>
+            <p className="mb-8 text-sm text-[var(--color-text-muted)]">{project.cta.subtext}</p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <a
+                href={project.cta.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-[var(--color-border)] px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-[var(--color-bg-card)]"
+              >
+                <Github size={16} />
+                {project.cta.githubLabel}
+                <ExternalLink size={12} className="opacity-50" />
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ScrollReveal>
+
+      {/* ═══ Next Project CTA — P4.5 ═══ */}
+      {project.nextProject && (
+        <ScrollReveal>
+          <a
+            href={`${BASE}/${lang}/projects/${project.nextProject.slug}/`}
+            className="group block border-t border-[var(--color-border)]/50"
+            style={{ backgroundColor: 'var(--color-bg-secondary)' }}
+          >
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-16 sm:py-20">
+              <div>
+                <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-faint)]">
+                  {project.nextProject.label}
+                </p>
+                <h3
+                  className="text-2xl font-bold tracking-tight text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)] sm:text-3xl lg:text-4xl"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  {project.nextProject.title}
+                </h3>
+              </div>
+              <ArrowRight
+                size={28}
+                className="shrink-0 text-[var(--color-text-faint)] transition-transform group-hover:translate-x-2 group-hover:text-[var(--color-accent)]"
+              />
+            </div>
+          </a>
+        </ScrollReveal>
+      )}
     </div>
   );
 }

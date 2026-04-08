@@ -3,6 +3,7 @@ import Layout from '../../../layouts/Layout.astro';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import BottomNav from '../../../components/BottomNav';
+import ColorPlaceholder from '../../../components/placeholders/ColorPlaceholder';
 
 const lang = 'ko';
 const base = import.meta.env.BASE_URL;
@@ -119,7 +120,7 @@ const base = import.meta.env.BASE_URL;
         </div>
       </div>
       <div class="relative h-96 rounded-[3rem] overflow-hidden" style="box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);">
-        <img alt="편향을 드러내는 다층 분석 이미지" class="w-full h-full object-cover grayscale opacity-30" src={`${base}assets/landing/jujutok/paradox-visual.jpg`}/>
+        <ColorPlaceholder variant="minimal" colors={["--color-bg-detail"]} className="w-full h-full" />
         <div class="absolute inset-0" style="background: linear-gradient(to top right, var(--color-bg), transparent, transparent);"></div>
       </div>
     </section>
@@ -259,6 +260,18 @@ const base = import.meta.env.BASE_URL;
         </a>
       </div>
     </section>
+    <!-- Next Project CTA — P4.5 -->
+    <a href={`${base}ko/projects/quant-platform/`} class="group block border-t border-[var(--color-border)]/50" style="background-color: var(--color-bg-secondary);">
+      <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-16 sm:py-20">
+        <div>
+          <p class="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-faint)]">다음 프로젝트</p>
+          <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors" style="font-family: var(--font-display);">
+            퀀트 전략 분석 플랫폼
+          </h3>
+        </div>
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="shrink-0 text-[var(--color-text-faint)] group-hover:translate-x-2 group-hover:text-[var(--color-accent)] transition-transform"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>
+      </div>
+    </a>
   </main>
 
   <Footer />
