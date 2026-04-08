@@ -360,7 +360,7 @@ export const quantPlatform: Record<'en' | 'ko', ProjectData> = {
     metrics: [
       { value: '20+', label: 'Pages Redesigned' },
       { value: '200+', label: 'Strategies Classified' },
-      { value: '3→1', label: 'Clicks to Holdings' },
+      { value: '3w→5d', label: 'Framework Migration' },
       { value: '0', label: 'Frontend Developers' },
     ],
 
@@ -484,7 +484,7 @@ export const quantPlatform: Record<'en' | 'ko', ProjectData> = {
     metrics: [
       { value: '20+', label: '페이지 리디자인' },
       { value: '25개', label: 'HTML 목업 직접 제작' },
-      { value: '11개', label: '체크포인트 검증' },
+      { value: '3주→5일', label: '프레임워크 이주 단축' },
       { value: '200+', label: '전략 분류 체계화' },
     ],
 
