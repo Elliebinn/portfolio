@@ -1,17 +1,11 @@
 import type { Lang } from '../i18n/translations';
 import { t } from '../i18n/translations';
+import ColorPlaceholder from './placeholders/ColorPlaceholder';
+import ScrollReveal from './motion/ScrollReveal';
 
-const stats = {
-  en: [
-    { value: '38', label: 'AI Investment Algorithms Planned' },
-    { value: '200+', label: 'Accounts Managed Simultaneously' },
-    { value: '20+', label: 'Pages Redesigned from Scratch' },
-  ],
-  ko: [
-    { value: '38개', label: 'AI 투자 알고리즘 기획' },
-    { value: '200+', label: '동시 운용 계좌 관리' },
-    { value: '20+', label: '페이지 정보구조 재설계' },
-  ],
+const quote = {
+  ko: '금융을 이해하는 기획자, 기술로 검증하는 실행자.',
+  en: 'A planner who understands finance, an executor who proves with technology.',
 };
 
 const aboutText = {
@@ -35,65 +29,89 @@ const aboutText = {
   },
 };
 
+const skills = {
+  ko: ['서비스 기획', '정보구조 설계', 'AI 에이전트', '금융 도메인', 'UX 설계', '프로토타이핑'],
+  en: ['Service Planning', 'Information Architecture', 'AI Agents', 'Finance Domain', 'UX Design', 'Prototyping'],
+};
+
 export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
   const tr = t(lang).about;
   const txt = aboutText[lang];
-  const st = stats[lang];
 
   return (
     <section id="about" className="px-6 py-16 sm:py-28" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-10 sm:gap-12 lg:grid-cols-[340px_1fr]">
-          {/* Photo */}
+        <div className="grid gap-10 sm:gap-12 lg:grid-cols-[280px_1fr]">
+          {/* Photo — 4-col equivalent */}
           <div className="hidden lg:block">
-            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-[var(--color-bg-card)] shadow-ambient">
-              <img
-                src="/portfolio/assets/about-profile.png"
-                alt="Hyebin Woo illustration"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <p className="mt-4 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-              {txt.location}
-            </p>
+            <ScrollReveal>
+              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-[var(--color-bg-card)] shadow-ambient">
+                <ColorPlaceholder
+                  variant="gradient"
+                  colors={["--color-accent", "--color-bg-secondary"]}
+                  className="h-full w-full"
+                />
+              </div>
+              <p className="mt-4 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
+                {txt.location}
+              </p>
+            </ScrollReveal>
           </div>
 
-          {/* Text + Stats */}
+          {/* Text — 7-col equivalent */}
           <div className="flex flex-col justify-center">
-            <p className="mb-4 sm:mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-              {tr.section}
-            </p>
+            <ScrollReveal>
+              <p className="mb-4 sm:mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
+                {tr.section}
+              </p>
+            </ScrollReveal>
 
-            <h2
-              className="mb-6 sm:mb-8 text-2xl font-bold leading-normal sm:text-3xl lg:text-4xl text-[var(--color-text)]"
-              style={{ fontFamily: 'var(--font-display)' }}
-            >
-              {txt.heading}{txt.heading ? ' ' : ''}
-              <span className="text-[var(--color-accent)]">
-                {txt.accent1}
-              </span>{' '}
-              {txt.mid}{' '}
-              <span className="text-[var(--color-accent)]">
-                {txt.accent2}
-              </span>
-              {txt.suffix}
-            </h2>
+            {/* Blockquote */}
+            <ScrollReveal delay={100}>
+              <blockquote
+                className="mb-8 sm:mb-10 border-l-[3px] pl-5 py-2 text-xl sm:text-2xl italic leading-relaxed text-[var(--color-text)]"
+                style={{ borderColor: 'var(--color-accent)', fontFamily: 'var(--font-display)' }}
+              >
+                {quote[lang]}
+              </blockquote>
+            </ScrollReveal>
 
-            <p className="mb-8 sm:mb-10 text-sm leading-[1.9] text-[var(--color-text-muted)]">
-              {txt.body}
-            </p>
-
-            {/* Quick links */}
-            <div className="flex flex-wrap gap-3">
-              {['서비스 기획', '정보구조 설계', 'AI 에이전트', '금융 도메인', 'UX 설계', '프로토타이핑'].map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full bg-[var(--color-secondary-container)] px-3 py-1.5 text-[11px] font-medium text-[var(--color-on-secondary-container)]"
-                >
-                  {skill}
+            <ScrollReveal delay={200}>
+              <h2
+                className="mb-6 sm:mb-8 text-2xl font-bold leading-normal sm:text-3xl lg:text-4xl text-[var(--color-text)]"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                {txt.heading}{txt.heading ? ' ' : ''}
+                <span className="text-[var(--color-accent)]">
+                  {txt.accent1}
+                </span>{' '}
+                {txt.mid}{' '}
+                <span className="text-[var(--color-accent)]">
+                  {txt.accent2}
                 </span>
-              ))}
-            </div>
+                {txt.suffix}
+              </h2>
+            </ScrollReveal>
+
+            <ScrollReveal delay={300}>
+              <p className="mb-8 sm:mb-10 text-sm leading-[1.9] text-[var(--color-text-muted)]">
+                {txt.body}
+              </p>
+            </ScrollReveal>
+
+            {/* Skill tags */}
+            <ScrollReveal delay={400}>
+              <div className="flex flex-wrap gap-3">
+                {skills[lang].map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-full bg-[var(--color-secondary-container)] px-3 py-1.5 text-[11px] font-medium text-[var(--color-on-secondary-container)]"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </div>

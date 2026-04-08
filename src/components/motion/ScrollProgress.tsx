@@ -21,8 +21,10 @@ export function ScrollProgress({ variant, target, className }: ScrollProgressPro
   );
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
+  // PRD §7.2: I7 완전 비활성 on reduce-motion
+  if (reduced) return null;
+
   if (variant === 'page') {
-    if (reduced) return null;
     return (
       <motion.div
         aria-hidden="true"
@@ -50,7 +52,7 @@ export function ScrollProgress({ variant, target, className }: ScrollProgressPro
         right: 0,
         height: '2px',
         transformOrigin: 'left',
-        scaleX: reduced ? 0 : scaleX,
+        scaleX,
         background: 'currentColor',
         zIndex: 50,
       }}
