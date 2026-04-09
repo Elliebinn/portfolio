@@ -56,9 +56,12 @@ const jobLabel = data.jobUrlLabel ?? '공고 보기 ↗';
           </h1>
           <p class="hero-sub">{data.subheadline}</p>
           <div class="hero-actions">
-            <a href={`${base}ko/resume/`} class="btn btn-primary">
-              전체 이력서 보기
+            <a href={`${base}ko/for/${company}/resume/`} class="btn btn-primary">
+              맞춤 이력서 보기
               <span class="btn-arrow">→</span>
+            </a>
+            <a href={`${base}ko/resume/`} class="btn btn-ghost">
+              일반 이력서
             </a>
             <a href="mailto:elliebinn@gmail.com" class="btn btn-ghost">
               elliebinn@gmail.com
