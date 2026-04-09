@@ -17,10 +17,10 @@ if (!data) {
 }
 
 const lang = 'ko';
-const base = import.meta.env.BASE_URL;
 const resume = data.tailoredResume;
 
-const pageTitle = `이력서 · ${data.company} ${data.role} · 우혜빈`;
+// 제목도 "맞춤 이력서" 티 안 나게 일반적으로
+const pageTitle = '우혜빈 · 이력서';
 
 /** `**text**` → `<strong>text</strong>` 간이 마크다운 렌더 */
 function md(text: string): string {
@@ -32,45 +32,25 @@ function md(text: string): string {
   {data.noIndex && <meta slot="head" name="robots" content="noindex, nofollow" />}
   <Navbar lang={lang} client:load />
 
-  <main
-    class="resume-main"
-    style={`--brand: ${data.brand.primary}; --brand-tint: ${data.brand.tint};`}
-  >
-    <!-- Print instructions (screen only) -->
-    <aside class="print-hint no-print">
-      <div class="hint-inner">
-        <span class="hint-label">💡 PDF 저장</span>
-        <span class="hint-text">브라우저 메뉴 <strong>⌘ + P</strong> → "PDF로 저장" 을 선택하세요.</span>
-        <a href={`${base}ko/for/${company}/`} class="hint-back">← 랜딩 페이지로</a>
-      </div>
-    </aside>
-
+  <main class="resume-main">
     <article class="resume-doc">
       <!-- ================================================= -->
       <!--  HEADER                                            -->
       <!-- ================================================= -->
       <header class="doc-header">
-        <div class="doc-header-main">
-          <h1 class="doc-name">우혜빈 <span class="doc-name-en">Hye Bin Woo</span></h1>
-          <p class="doc-title">AI Product Planner · Finance × LLM</p>
-          <div class="doc-contact">
-            <span>010-4999-1517</span>
-            <span class="sep">·</span>
-            <a href="mailto:elliebinn@gmail.com">elliebinn@gmail.com</a>
-            <span class="sep">·</span>
-            <a href="https://github.com/Elliebinn">github.com/Elliebinn</a>
-            <span class="sep">·</span>
-            <a href={`${base}ko/for/${company}/`}>
-              elliebinn.github.io/ko/for/{company}
-            </a>
-          </div>
+        <h1 class="doc-name">
+          우혜빈 <span class="doc-name-en">Hye Bin Woo</span>
+        </h1>
+        <p class="doc-title">AI Product Planner · Finance × LLM</p>
+        <div class="doc-contact">
+          <span>010-4999-1517</span>
+          <span class="sep">·</span>
+          <a href="mailto:elliebinn@gmail.com">elliebinn@gmail.com</a>
+          <span class="sep">·</span>
+          <a href="https://github.com/Elliebinn">github.com/Elliebinn</a>
+          <span class="sep">·</span>
+          <a href="https://elliebinn.github.io">elliebinn.github.io</a>
         </div>
-        <aside class="doc-header-tag">
-          <div class="tag-label">For</div>
-          <div class="tag-company">{data.company}</div>
-          <div class="tag-role">{data.role}</div>
-          <div class="tag-date">{data.updatedAt}</div>
-        </aside>
       </header>
 
       <!-- ================================================= -->
@@ -208,9 +188,6 @@ function md(text: string): string {
     body {
       background: #fff !important;
     }
-    .no-print {
-      display: none !important;
-    }
     main.resume-main {
       padding: 0 !important;
       max-width: none !important;
@@ -231,7 +208,8 @@ function md(text: string): string {
 
 <style>
   /* ============================================
-     RESUME DOCUMENT — ATS friendly
+     RESUME DOCUMENT — Neutral, ATS-friendly
+     토스 맞춤 힌트 없음. 일반 이력서 외형.
      ============================================ */
   .resume-main {
     padding: 8rem 1.5rem 4rem;
@@ -239,41 +217,6 @@ function md(text: string): string {
     margin: 0 auto;
     color: #111;
     word-break: keep-all;
-  }
-
-  /* ---------- print hint (screen only) ---------- */
-  .print-hint {
-    margin-bottom: 1.5rem;
-  }
-  .hint-inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem 1.25rem;
-    padding: 0.875rem 1.25rem;
-    background: var(--brand-tint);
-    border-left: 3px solid var(--brand);
-    font-size: 0.8125rem;
-    color: #333;
-  }
-  .hint-label {
-    font-weight: 700;
-    color: var(--brand);
-  }
-  .hint-text strong {
-    font-weight: 700;
-    color: #111;
-  }
-  .hint-back {
-    margin-left: auto;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--brand);
-    text-decoration: none;
-    transition: opacity 200ms ease;
-  }
-  .hint-back:hover {
-    opacity: 0.7;
   }
 
   /* ---------- document sheet ---------- */
@@ -297,19 +240,9 @@ function md(text: string): string {
      HEADER
      ============================================ */
   .doc-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 2rem;
-    align-items: start;
     padding-bottom: 1rem;
     margin-bottom: 1.5rem;
     border-bottom: 2px solid #111;
-  }
-  @media (max-width: 640px) {
-    .doc-header {
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-    }
   }
 
   .doc-name {
@@ -331,7 +264,7 @@ function md(text: string): string {
   .doc-title {
     font-size: 11pt;
     font-weight: 700;
-    color: var(--brand);
+    color: #333;
     margin: 0 0 0.75rem;
     letter-spacing: 0.01em;
   }
@@ -349,54 +282,10 @@ function md(text: string): string {
     transition: color 200ms ease;
   }
   .doc-contact a:hover {
-    color: var(--brand);
+    color: #111;
   }
   .doc-contact .sep {
     color: #ccc;
-  }
-
-  /* ---------- For {Company} tag ---------- */
-  .doc-header-tag {
-    padding: 0.75rem 1.1rem;
-    border: 1px solid #111;
-    border-top: 3px solid var(--brand);
-    background: #fff;
-    text-align: right;
-    min-width: 11rem;
-  }
-  @media (max-width: 640px) {
-    .doc-header-tag {
-      text-align: left;
-      min-width: auto;
-    }
-  }
-  .tag-label {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 8pt;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #888;
-    margin-bottom: 0.25rem;
-  }
-  .tag-company {
-    font-size: 13pt;
-    font-weight: 800;
-    color: #111;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-  }
-  .tag-role {
-    font-size: 9pt;
-    font-weight: 600;
-    color: var(--brand);
-    margin-top: 0.25rem;
-  }
-  .tag-date {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-size: 8pt;
-    color: #999;
-    margin-top: 0.35rem;
-    letter-spacing: 0.05em;
   }
 
   /* ============================================
@@ -410,7 +299,7 @@ function md(text: string): string {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--brand);
+    color: #111;
     padding-bottom: 4px;
     margin-bottom: 0.75rem;
     border-bottom: 1px solid #ccc;
