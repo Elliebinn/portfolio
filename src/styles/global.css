@@ -116,3 +116,56 @@ body {
 .section-alt:nth-child(even) {
   background-color: var(--color-bg-secondary);
 }
+
+/* Next Project CTA — hover scale + reduced-motion guard */
+.next-project-cta {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.next-project-cta:hover {
+  transform: scale(1.005);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .next-project-cta,
+  .next-project-cta:hover {
+    transform: none;
+    transition: none;
+  }
+  .next-project-cta .next-project-arrow {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Radar SVG draw animation (Capabilities section) */
+.radar-grid,
+.radar-value {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  transition: none;
+}
+.radar-value {
+  fill-opacity: 0;
+}
+[data-radar].is-visible .radar-grid {
+  animation: radar-draw 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+[data-radar].is-visible .radar-value {
+  animation: radar-draw 600ms cubic-bezier(0.22, 1, 0.36, 1) 200ms forwards,
+             radar-fill 400ms ease 600ms forwards;
+}
+@keyframes radar-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes radar-fill {
+  to { fill-opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radar-grid,
+  .radar-value {
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+    animation: none !important;
+  }
+}

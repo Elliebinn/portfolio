@@ -4,7 +4,9 @@ import {
   Brain, Cog, Search, Shuffle, MessageSquare, Lightbulb,
   ArrowRight, ExternalLink, Github, ChevronRight,
 } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import ScrollReveal from './motion/ScrollReveal';
+import CountUp from './motion/CountUp';
 import MetaSideRail, { type ProjectMeta } from './project/MetaSideRail';
 
 const BASE = '/portfolio';
@@ -101,12 +103,42 @@ export interface ProjectData {
 
 export default function ProjectDetail({ project, lang }: { project: ProjectData; lang: Lang }) {
   const highlightIcons = { brain: Brain, cog: Cog };
+  const heroRef = useRef<HTMLElement>(null);
+
+  // A1: Hero Parallax Dissolve — fade out hero on scroll
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    let rafId: number;
+
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const heroH = hero.offsetHeight;
+        // Fade over first 60% of hero height
+        const progress = Math.min(1, scrollY / (heroH * 0.6));
+        hero.style.opacity = String(1 - progress);
+        hero.style.transform = `translateY(${-progress * 20}px)`;
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen text-[var(--color-text)]" style={{ backgroundColor: 'var(--color-bg)' }}>
 
       {/* ═══ Hero — gradient inspired by Pencil mockup ═══ */}
-      <section className="relative overflow-hidden border-b border-[var(--color-border)]/50">
+      <section ref={heroRef} className="relative overflow-hidden border-b border-[var(--color-border)]/50" style={{ willChange: 'opacity, transform' }}>
         {/* Gradient backdrop */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-accent)]/8 via-transparent to-transparent" />
@@ -260,7 +292,8 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
 
           <div className="space-y-24">
             {project.walkthrough.steps.map((step, i) => (
-              <div key={i} className={`grid items-center gap-10 lg:grid-cols-2 ${i % 2 !== 0 ? 'lg:[direction:rtl]' : ''}`}>
+              <ScrollReveal key={i} delay={Math.min(i * 150, 300)}>
+              <div className={`grid items-center gap-10 lg:grid-cols-2 ${i % 2 !== 0 ? 'lg:[direction:rtl]' : ''}`}>
                 {/* Screenshot */}
                 {step.screenshotAfter ? (
                   <div className="[direction:ltr] grid grid-cols-2 gap-3">
@@ -333,6 +366,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                   </p>
                 </div>
               </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -594,19 +628,29 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
             By The Numbers
           </p>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {project.metrics.map((m) => (
-              <div
-                key={m.label}
-                className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 text-center"
-              >
-                <p className="mb-2 text-3xl font-bold text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-display)' }}>
-                  {m.value}
-                </p>
-                <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-                  {m.label}
-                </p>
-              </div>
-            ))}
+            {project.metrics.map((m) => {
+              const numMatch = m.value.match(/(\d+(?:\.\d+)?)/);
+              const numVal = numMatch ? parseFloat(numMatch[1]) : null;
+              const prefix = numMatch ? m.value.slice(0, numMatch.index) : '';
+              const suffix = numMatch ? m.value.slice((numMatch.index ?? 0) + numMatch[1].length) : '';
+              return (
+                <div
+                  key={m.label}
+                  className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 text-center"
+                >
+                  <p className="mb-2 text-3xl font-bold text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-display)' }}>
+                    {numVal !== null ? (
+                      <CountUp value={numVal} prefix={prefix} suffix={suffix} />
+                    ) : (
+                      m.value
+                    )}
+                  </p>
+                  <p className="font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
+                    {m.label}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -635,29 +679,40 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
         </section>
       </ScrollReveal>
 
-      {/* ═══ Next Project CTA — P4.5 ═══ */}
+      {/* ═══ Next Project CTA — A5 fullbleed block ═══ */}
       {project.nextProject && (
         <ScrollReveal>
           <a
             href={`${BASE}/${lang}/projects/${project.nextProject.slug}/`}
-            className="group block border-t border-[var(--color-border)]/50"
-            style={{ backgroundColor: 'var(--color-bg-secondary)' }}
+            className="next-project-cta group relative block overflow-hidden border-t border-[var(--color-border)]/50"
           >
-            <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-16 sm:py-20">
-              <div>
+            {/* Gradient backdrop */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/8 via-[var(--color-bg-secondary)] to-[var(--color-bg-secondary)] transition-opacity duration-500 group-hover:opacity-80" />
+            <div className="pointer-events-none absolute -top-20 -right-20 h-[300px] w-[300px] rounded-full bg-[var(--color-accent)]/6 blur-[100px] transition-transform duration-700 group-hover:scale-110" />
+
+            <div className="relative z-10 mx-auto flex max-w-7xl items-center gap-6 px-6 py-16 sm:py-20 lg:py-24">
+              {/* Mini thumbnail */}
+              <div className="hidden shrink-0 overflow-hidden rounded-xl border border-[var(--color-border)]/50 sm:block sm:h-20 sm:w-20 lg:h-24 lg:w-24" style={{ backgroundColor: 'var(--color-bg-detail)' }}>
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--color-accent)]/10 to-[var(--color-accent)]/5">
+                  <ArrowRight size={20} className="text-[var(--color-accent)]/40" />
+                </div>
+              </div>
+
+              <div className="flex-1 min-w-0">
                 <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-faint)]">
                   {project.nextProject.label}
                 </p>
                 <h3
-                  className="text-2xl font-bold tracking-tight text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)] sm:text-3xl lg:text-4xl"
+                  className="text-2xl font-bold tracking-tight text-[var(--color-text)] transition-colors duration-300 group-hover:text-[var(--color-accent)] sm:text-3xl lg:text-4xl"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {project.nextProject.title}
                 </h3>
               </div>
+
               <ArrowRight
                 size={28}
-                className="shrink-0 text-[var(--color-text-faint)] transition-transform group-hover:translate-x-2 group-hover:text-[var(--color-accent)]"
+                className="next-project-arrow shrink-0 text-[var(--color-text-faint)] transition-all duration-300 group-hover:translate-x-3 group-hover:text-[var(--color-accent)]"
               />
             </div>
           </a>

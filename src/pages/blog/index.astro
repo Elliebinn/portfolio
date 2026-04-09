@@ -33,21 +33,23 @@ const base = import.meta.env.BASE_URL;
         프로젝트 회고, 기술적 의사결정, 기획 인사이트를 기록합니다.
       </p>
 
-      <div class="mb-12 flex flex-wrap gap-2" id="category-filters">
+      <div class="relative mb-12 flex flex-wrap gap-2" id="category-filters">
         <button
           data-category="all"
-          class="category-btn active rounded-full border border-[var(--color-accent-light)] bg-[var(--color-accent-light)] px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-bg)] transition-all"
+          class="category-btn active relative z-10 rounded-full border border-transparent px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-bg)] transition-colors duration-200"
         >
           전체
         </button>
         {Object.entries(categoryLabels).map(([key, label]) => (
           <button
             data-category={key}
-            class="category-btn rounded-full border border-[var(--color-border)] px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-text-muted)] transition-all hover:border-[var(--color-accent-light)] hover:text-[var(--color-accent-light)]"
+            class="category-btn relative z-10 rounded-full border border-[var(--color-border)] px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-text-muted)] transition-colors duration-200 hover:border-[var(--color-accent-light)] hover:text-[var(--color-accent-light)]"
           >
             {label}
           </button>
         ))}
+        <!-- B2: sliding pill background -->
+        <span id="filter-pill-bg" class="pointer-events-none absolute rounded-full bg-[var(--color-accent-light)]" aria-hidden="true" style="transition: left 0.25s ease, top 0.25s ease, width 0.25s ease, height 0.25s ease; will-change: left, top, width, height;"></span>
       </div>
 
       <div class="space-y-0">
@@ -55,9 +57,10 @@ const base = import.meta.env.BASE_URL;
           <a
             href={`${base}blog/${post.id}/`}
             data-category={post.data.category}
-            class={`blog-post group grid items-start gap-6 py-10 lg:grid-cols-[120px_1fr_1fr] ${
+            class={`blog-post blog-card-stagger group grid items-start gap-6 py-10 lg:grid-cols-[120px_1fr_1fr] ${
               i !== posts.length - 1 ? 'border-b border-[var(--color-border)]' : ''
             }`}
+            style={`animation-delay: ${i * 80}ms`}
           >
             <div class="flex items-center gap-3">
               <span class="text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">
@@ -93,20 +96,54 @@ const base = import.meta.env.BASE_URL;
   <Footer />
 </Layout>
 
+<style>
+  @keyframes blog-fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .blog-card-stagger {
+      opacity: 0;
+      animation: blog-fade-up 0.4s ease forwards;
+    }
+  }
+</style>
+
 <script>
   const buttons = document.querySelectorAll<HTMLButtonElement>('.category-btn');
   const posts = document.querySelectorAll<HTMLElement>('.blog-post');
+  const pill = document.getElementById('filter-pill-bg');
+  const container = document.getElementById('category-filters');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function movePillTo(btn: HTMLElement) {
+    if (!pill || !container) return;
+    const containerRect = container.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    pill.style.left = `${btnRect.left - containerRect.left}px`;
+    pill.style.top = `${btnRect.top - containerRect.top}px`;
+    pill.style.width = `${btnRect.width}px`;
+    pill.style.height = `${btnRect.height}px`;
+  }
+
+  const initBtn = document.querySelector<HTMLButtonElement>('.category-btn.active');
+  if (initBtn && pill) {
+    if (prefersReduced) pill.style.transition = 'none';
+    movePillTo(initBtn);
+  }
 
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const category = btn.dataset.category;
 
       buttons.forEach(b => {
-        b.classList.remove('active', 'border-[var(--color-accent-light)]', 'bg-[var(--color-accent-light)]', 'text-[var(--color-bg)]');
+        b.classList.remove('active', 'text-[var(--color-bg)]');
         b.classList.add('border-[var(--color-border)]', 'text-[var(--color-text-muted)]');
       });
       btn.classList.remove('border-[var(--color-border)]', 'text-[var(--color-text-muted)]');
-      btn.classList.add('active', 'border-[var(--color-accent-light)]', 'bg-[var(--color-accent-light)]', 'text-[var(--color-bg)]');
+      btn.classList.add('active', 'text-[var(--color-bg)]');
+
+      movePillTo(btn);
 
       posts.forEach(post => {
         if (category === 'all' || post.dataset.category === category) {

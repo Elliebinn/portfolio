@@ -4,8 +4,10 @@
  * Desktop: sticky column. Mobile: hidden.
  * Auto-hides when fewer than 2 headings.
  * IntersectionObserver highlights the current section.
+ * C3: Each TOC item has a thin 2px progress bar on the left
+ *     that fills based on scroll progress through that section.
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 interface Heading {
   id: string;
@@ -24,6 +26,13 @@ export default function StickyTOC({
 }: Props) {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string>('');
+  const [sectionProgress, setSectionProgress] = useState<Record<string, number>>({});
+  const reducedMotion = useRef(false);
+
+  // Detect reduced motion preference
+  useEffect(() => {
+    reducedMotion.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }, []);
 
   // Extract headings from DOM
   useEffect(() => {
@@ -71,6 +80,54 @@ export default function StickyTOC({
     return () => observer.disconnect();
   }, [headings]);
 
+  // C3: Scroll progress per section
+  useEffect(() => {
+    if (headings.length < 2 || reducedMotion.current) {
+      // If reduced motion, set all to 0 (no animation)
+      return;
+    }
+
+    let rafId: number;
+
+    const updateProgress = () => {
+      const scrollY = window.scrollY;
+      const viewportH = window.innerHeight;
+      const progress: Record<string, number> = {};
+
+      headings.forEach((h, i) => {
+        const el = document.getElementById(h.id);
+        if (!el) return;
+
+        const sectionTop = el.getBoundingClientRect().top + scrollY;
+        const nextHeading = headings[i + 1];
+        const nextEl = nextHeading ? document.getElementById(nextHeading.id) : null;
+        const sectionBottom = nextEl
+          ? nextEl.getBoundingClientRect().top + scrollY
+          : document.documentElement.scrollHeight;
+
+        const sectionHeight = sectionBottom - sectionTop;
+        const scrolled = scrollY + viewportH * 0.4 - sectionTop;
+        const pct = Math.max(0, Math.min(1, scrolled / sectionHeight));
+        progress[h.id] = pct;
+      });
+
+      setSectionProgress(progress);
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updateProgress);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateProgress();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, [headings]);
+
   // Auto-hide when fewer than 2 headings
   if (headings.length < 2) return null;
 
@@ -82,16 +139,25 @@ export default function StickyTOC({
       <ul className="space-y-1.5">
         {headings.map((h) => {
           const isActive = activeId === h.id;
+          const progress = sectionProgress[h.id] ?? 0;
           return (
-            <li key={h.id}>
+            <li key={h.id} className="relative flex items-stretch gap-2">
+              {/* C3: Section progress bar */}
+              <div className="relative w-1 flex-shrink-0 overflow-hidden rounded-full bg-[var(--color-bg-emphasis)]">
+                <div
+                  className="absolute inset-x-0 top-0 rounded-full bg-[var(--color-accent)] transition-[height] duration-150"
+                  style={{ height: `${progress * 100}%` }}
+                  aria-hidden="true"
+                />
+              </div>
               <a
                 href={`#${h.id}`}
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className={`block text-[13px] leading-snug transition-colors ${
-                  h.level === 3 ? 'pl-3' : ''
+                className={`block flex-1 py-0.5 text-[13px] leading-snug transition-colors ${
+                  h.level === 3 ? 'pl-2' : ''
                 } ${
                   isActive
                     ? 'font-medium text-[var(--color-accent)]'

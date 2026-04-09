@@ -4,6 +4,7 @@ import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import BottomNav from '../../../components/BottomNav';
 import ColorPlaceholder from '../../../components/placeholders/ColorPlaceholder';
+import CountUp from '../../../components/motion/CountUp';
 
 const lang = 'ko';
 const base = import.meta.env.BASE_URL;
@@ -116,7 +117,16 @@ const base = import.meta.env.BASE_URL;
             { value: '83%', label: '운용시간 단축' },
           ].map((metric) => (
             <div class="bg-[var(--color-bg-card)] p-6 md:p-10 rounded-xl transition-shadow hover:shadow-ambient shadow-ambient-sm">
-              <p class="text-3xl md:text-4xl font-extrabold text-[var(--color-accent)] mb-2" style="font-family: var(--font-display);">{metric.value}</p>
+              <p class="text-3xl md:text-4xl font-extrabold text-[var(--color-accent)] mb-2" style="font-family: var(--font-display);">
+                {(() => {
+                  const m = metric.value.match(/(\d+(?:\.\d+)?)/);
+                  if (!m) return metric.value;
+                  const num = parseFloat(m[1]);
+                  const pre = metric.value.slice(0, m.index);
+                  const suf = metric.value.slice((m.index ?? 0) + m[1].length);
+                  return <CountUp value={num} prefix={pre} suffix={suf} client:visible />;
+                })()}
+              </p>
               <p class="text-[0.7rem] uppercase font-bold tracking-widest text-[var(--color-text-muted)]">{metric.label}</p>
             </div>
           ))}

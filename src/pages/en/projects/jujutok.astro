@@ -13,7 +13,7 @@ const project = jujutok[lang];
 <Layout title={`${project.title}${project.titleAccent} — HYEBIN.DEV`}>
   <Navbar lang={lang} client:load />
   <main>
-    <ProjectDetail project={project} lang={lang} />
+    <ProjectDetail project={project} lang={lang} client:load />
   </main>
   <Footer />
   <BottomNav lang={lang} client:load />

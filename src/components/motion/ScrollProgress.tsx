@@ -53,7 +53,7 @@ export function ScrollProgress({ variant, target, className }: ScrollProgressPro
         height: '2px',
         transformOrigin: 'left',
         scaleX,
-        background: 'currentColor',
+        background: 'linear-gradient(90deg, var(--color-accent), var(--color-accent-light))',
         zIndex: 50,
       }}
     />

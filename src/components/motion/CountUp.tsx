@@ -15,7 +15,7 @@ export interface CountUpProps {
   duration?: number;
 }
 
-const DEFAULT_DURATION = 1800;
+const DEFAULT_DURATION = 2800;
 
 // easeOutExpo
 const easeOutExpo = (t: number): number => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));

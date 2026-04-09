@@ -43,12 +43,14 @@ const mostRead = posts.slice(0, 3);
     </header>
 
     <!-- Category Filter -->
-    <div class="flex flex-wrap gap-3 mb-16 items-center" id="category-filters">
+    <div class="relative flex flex-wrap gap-3 mb-16 items-center" id="category-filters">
       <span class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)] mr-2">필터:</span>
-      <button data-category="all" class="category-btn active px-5 py-2 rounded-full bg-[var(--color-accent)] text-[var(--color-on-accent)] text-sm font-semibold transition-all">전체</button>
+      <button data-category="all" class="category-btn active relative z-10 px-5 py-2 rounded-full text-[var(--color-on-accent)] text-sm font-semibold transition-colors duration-200">전체</button>
       {Object.entries(categoryLabels).map(([key, label]) => (
-        <button data-category={key} class="category-btn px-5 py-2 rounded-full bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] text-sm font-semibold hover:bg-[var(--color-bg-detail)] transition-all">{label}</button>
+        <button data-category={key} class="category-btn relative z-10 px-5 py-2 rounded-full bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] text-sm font-semibold hover:bg-[var(--color-bg-detail)] transition-colors duration-200">{label}</button>
       ))}
+      <!-- B2: sliding pill background -->
+      <span id="filter-pill-bg" class="pointer-events-none absolute rounded-full bg-[var(--color-accent)]" aria-hidden="true" style="transition: left 0.25s ease, top 0.25s ease, width 0.25s ease, height 0.25s ease; will-change: left, top, width, height;"></span>
     </div>
 
     <!-- Blog Grid -->
@@ -114,8 +116,8 @@ const mostRead = posts.slice(0, 3);
 
       <!-- Rest of posts: 2-column grid -->
       <div class="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-14 mt-4">
-        {restPosts.map((post) => (
-          <a href={`${base}${lang}/blog/${post.id}/`} class="group blog-post" data-category={post.data.category}>
+        {restPosts.map((post, i) => (
+          <a href={`${base}${lang}/blog/${post.id}/`} class="group blog-post blog-card-stagger" data-category={post.data.category} style={`animation-delay: ${i * 100}ms`}>
             <div class="flex flex-col gap-4">
               <div class="space-y-3">
                 <div class="flex items-center gap-4 text-xs font-bold uppercase tracking-wider text-[var(--color-text-faint)]">
@@ -147,20 +149,54 @@ const mostRead = posts.slice(0, 3);
   <Footer />
 </Layout>
 
+<style>
+  @keyframes blog-fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .blog-card-stagger {
+      opacity: 0;
+      animation: blog-fade-up 0.4s ease forwards;
+    }
+  }
+</style>
+
 <script>
   const buttons = document.querySelectorAll<HTMLButtonElement>('.category-btn');
   const posts = document.querySelectorAll<HTMLElement>('.blog-post');
+  const pill = document.getElementById('filter-pill-bg');
+  const container = document.getElementById('category-filters');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function movePillTo(btn: HTMLElement) {
+    if (!pill || !container) return;
+    const containerRect = container.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    pill.style.left = `${btnRect.left - containerRect.left}px`;
+    pill.style.top = `${btnRect.top - containerRect.top}px`;
+    pill.style.width = `${btnRect.width}px`;
+    pill.style.height = `${btnRect.height}px`;
+  }
+
+  const initBtn = document.querySelector<HTMLButtonElement>('.category-btn.active');
+  if (initBtn && pill) {
+    if (prefersReduced) pill.style.transition = 'none';
+    movePillTo(initBtn);
+  }
 
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
       const category = btn.dataset.category;
 
       buttons.forEach(b => {
-        b.classList.remove('active', 'bg-[var(--color-accent)]', 'text-[var(--color-on-accent)]');
+        b.classList.remove('active', 'text-[var(--color-on-accent)]');
         b.classList.add('bg-[var(--color-secondary-container)]', 'text-[var(--color-on-secondary-container)]');
       });
       btn.classList.remove('bg-[var(--color-secondary-container)]', 'text-[var(--color-on-secondary-container)]');
-      btn.classList.add('active', 'bg-[var(--color-accent)]', 'text-[var(--color-on-accent)]');
+      btn.classList.add('active', 'text-[var(--color-on-accent)]');
+
+      movePillTo(btn);
 
       posts.forEach(post => {
         if (category === 'all' || post.dataset.category === category) {
