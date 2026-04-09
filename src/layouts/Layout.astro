@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ScrollProgress from '../components/motion/ScrollProgress';
+import ScrollToTop from '../components/ScrollToTop';
 import ClientRouter from 'astro/components/ClientRouter.astro';
 
 interface Props {
@@ -25,6 +26,7 @@ const { title = "HYEBIN.DEV" } = Astro.props;
   </head>
   <body class="antialiased">
     <ScrollProgress variant="bar" className="text-[var(--color-accent)]" client:load />
+    <ScrollToTop client:visible />
     <slot />
     <!-- Light theme only -->
   </body>

@@ -31,7 +31,7 @@ export default function Contact({ lang = 'en' as Lang }: { lang?: Lang }) {
         <ScrollReveal delay={100}>
           <div className="mb-16 text-center">
             <h2
-              className="text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tight text-[var(--color-text)]"
+              className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-black tracking-tight text-[var(--color-text)]"
               style={{ fontFamily: "var(--font-display)", fontWeight: 900 }}
             >
               {words[0]} {words[1]}{' '}
@@ -44,7 +44,7 @@ export default function Contact({ lang = 'en' as Lang }: { lang?: Lang }) {
 
         {/* CTA links with MagneticButton */}
         <ScrollReveal delay={200}>
-          <div className="flex items-center justify-center gap-10">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
             {links.map((link) => (
               <MagneticButton
                 key={link.label}

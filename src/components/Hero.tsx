@@ -87,7 +87,7 @@ export default function Hero({ lang = 'en' as Lang }: { lang?: Lang }) {
           />
 
           {/* I2 CountUp stats */}
-          <div className="mt-16 flex flex-wrap gap-x-16 gap-y-8">
+          <div className="mt-16 flex flex-wrap gap-x-8 gap-y-6 sm:gap-x-16 sm:gap-y-8">
             {stats.map((stat) => (
               <div
                 key={stat.label}

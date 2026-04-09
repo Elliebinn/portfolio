@@ -90,6 +90,19 @@ const base = import.meta.env.BASE_URL;
           </a>
         ))}
       </div>
+
+      <!-- B4: Empty Filter Feedback -->
+      <div id="empty-filter" class="hidden py-20 text-center" aria-live="polite">
+        <div class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full" style="background-color: var(--color-bg-detail);">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="8" width="32" height="24" rx="4" stroke="var(--color-outline-variant)" stroke-width="1.5" fill="none" />
+            <line x1="12" y1="18" x2="28" y2="18" stroke="var(--color-outline-variant)" stroke-width="1.5" stroke-linecap="round" />
+            <line x1="12" y1="24" x2="22" y2="24" stroke="var(--color-outline-variant)" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </div>
+        <p class="text-lg font-bold text-[var(--color-text)]">이 카테고리에 아직 글이 없어요</p>
+        <p class="mt-2 text-sm text-[var(--color-text-muted)]">다른 카테고리를 선택하거나 전체 글을 확인해보세요.</p>
+      </div>
     </div>
   </main>
 
@@ -114,6 +127,7 @@ const base = import.meta.env.BASE_URL;
   const posts = document.querySelectorAll<HTMLElement>('.blog-post');
   const pill = document.getElementById('filter-pill-bg');
   const container = document.getElementById('category-filters');
+  const emptyState = document.getElementById('empty-filter');
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function movePillTo(btn: HTMLElement) {
@@ -124,6 +138,12 @@ const base = import.meta.env.BASE_URL;
     pill.style.top = `${btnRect.top - containerRect.top}px`;
     pill.style.width = `${btnRect.width}px`;
     pill.style.height = `${btnRect.height}px`;
+  }
+
+  function updateEmptyState() {
+    if (!emptyState) return;
+    const visiblePosts = Array.from(posts).filter(p => p.style.display !== 'none');
+    emptyState.classList.toggle('hidden', visiblePosts.length > 0);
   }
 
   const initBtn = document.querySelector<HTMLButtonElement>('.category-btn.active');
@@ -152,6 +172,8 @@ const base = import.meta.env.BASE_URL;
           post.style.display = 'none';
         }
       });
+
+      updateEmptyState();
     });
   });
 </script>

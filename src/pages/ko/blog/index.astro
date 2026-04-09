@@ -57,7 +57,7 @@ const mostRead = posts.slice(0, 3);
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
       <!-- Featured Post -->
-      <a href={`${base}${lang}/blog/${featured.id}/`} class="lg:col-span-8 group cursor-pointer blog-post" data-category={featured.data.category}>
+      <a href={`${base}${lang}/blog/${featured.id}/`} class="lg:col-span-8 group cursor-pointer blog-post featured-parallax" data-category={featured.data.category}>
         <div class="relative h-[400px] sm:h-[500px] w-full rounded-xl overflow-hidden mb-6 bg-[var(--color-bg-detail)]">
           <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-text)]/70 via-transparent to-transparent z-10"></div>
           <div class="absolute bottom-8 left-8 right-8 z-20">
@@ -143,6 +143,19 @@ const mostRead = posts.slice(0, 3);
           </a>
         ))}
       </div>
+
+      <!-- B4: Empty Filter Feedback -->
+      <div id="empty-filter" class="hidden py-20 text-center" aria-live="polite">
+        <div class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full" style="background-color: var(--color-bg-detail);">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="8" width="32" height="24" rx="4" stroke="var(--color-outline-variant)" stroke-width="1.5" fill="none" />
+            <line x1="12" y1="18" x2="28" y2="18" stroke="var(--color-outline-variant)" stroke-width="1.5" stroke-linecap="round" />
+            <line x1="12" y1="24" x2="22" y2="24" stroke="var(--color-outline-variant)" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </div>
+        <p class="text-lg font-bold text-[var(--color-text)]">이 카테고리에 아직 글이 없어요</p>
+        <p class="mt-2 text-sm text-[var(--color-text-muted)]">다른 카테고리를 선택하거나 전체 글을 확인해보세요.</p>
+      </div>
     </div>
   </main>
 
@@ -160,6 +173,16 @@ const mostRead = posts.slice(0, 3);
       animation: blog-fade-up 0.4s ease forwards;
     }
   }
+  /* B1: Featured Card Inner Parallax */
+  .featured-parallax .featured-bg {
+    transition: transform 0.3s ease-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .featured-parallax .featured-bg {
+      transition: none !important;
+      transform: none !important;
+    }
+  }
 </style>
 
 <script>
@@ -167,6 +190,7 @@ const mostRead = posts.slice(0, 3);
   const posts = document.querySelectorAll<HTMLElement>('.blog-post');
   const pill = document.getElementById('filter-pill-bg');
   const container = document.getElementById('category-filters');
+  const emptyState = document.getElementById('empty-filter');
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function movePillTo(btn: HTMLElement) {
@@ -177,6 +201,12 @@ const mostRead = posts.slice(0, 3);
     pill.style.top = `${btnRect.top - containerRect.top}px`;
     pill.style.width = `${btnRect.width}px`;
     pill.style.height = `${btnRect.height}px`;
+  }
+
+  function updateEmptyState() {
+    if (!emptyState) return;
+    const visiblePosts = Array.from(posts).filter(p => p.style.display !== 'none');
+    emptyState.classList.toggle('hidden', visiblePosts.length > 0);
   }
 
   const initBtn = document.querySelector<HTMLButtonElement>('.category-btn.active');
@@ -205,6 +235,26 @@ const mostRead = posts.slice(0, 3);
           post.style.display = 'none';
         }
       });
+
+      updateEmptyState();
     });
   });
+
+  // B1: Featured Card Inner Parallax
+  if (!prefersReduced) {
+    const featured = document.querySelector<HTMLElement>('.featured-parallax');
+    const bg = featured?.querySelector<HTMLElement>('.relative');
+    if (featured && bg) {
+      featured.addEventListener('mousemove', (e) => {
+        const rect = featured.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width - 0.5) * -5;
+        const y = ((e.clientY - rect.top) / rect.height - 0.5) * -5;
+        bg.style.transform = `translate(${x}px, ${y}px)`;
+        bg.style.transition = 'transform 0.3s ease-out';
+      });
+      featured.addEventListener('mouseleave', () => {
+        bg.style.transform = 'translate(0, 0)';
+      });
+    }
+  }
 </script>

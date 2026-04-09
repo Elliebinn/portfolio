@@ -8,6 +8,7 @@ import { useEffect, useRef } from 'react';
 import ScrollReveal from './motion/ScrollReveal';
 import CountUp from './motion/CountUp';
 import MetaSideRail, { type ProjectMeta } from './project/MetaSideRail';
+import SectionDots from './project/SectionDots';
 
 const BASE = '/portfolio';
 
@@ -137,6 +138,15 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
   return (
     <div className="min-h-screen text-[var(--color-text)]" style={{ backgroundColor: 'var(--color-bg)' }}>
 
+      {/* A6: Section Progress Dots (desktop only) */}
+      <SectionDots sections={[
+        { id: 'challenge', label: 'Challenge' },
+        { id: 'walkthrough', label: 'Walkthrough' },
+        { id: 'architecture', label: 'Architecture' },
+        { id: 'tech-stack', label: 'Stack' },
+        { id: 'metrics', label: 'Metrics' },
+      ]} />
+
       {/* ═══ Hero — gradient inspired by Pencil mockup ═══ */}
       <section ref={heroRef} className="relative overflow-hidden border-b border-[var(--color-border)]/50" style={{ willChange: 'opacity, transform' }}>
         {/* Gradient backdrop */}
@@ -195,7 +205,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
 
       {/* ═══ Challenge + Solution — 2-column from Pencil ═══ */}
       {project.challenge && project.solution ? (
-        <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
+        <section id="challenge" className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
           <div className="mx-auto max-w-7xl">
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
               {/* Challenge */}
@@ -238,7 +248,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
                 <p className="mb-8 text-sm leading-[1.9] text-[var(--color-text-muted)]">
                   {project.solution.description}
                 </p>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {project.solution.badges.map((b) => (
                     <div
                       key={b.title}
@@ -278,7 +288,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       )}
 
       {/* ═══ How It Works — walkthrough with screenshots (kept) ═══ */}
-      <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
+      <section id="walkthrough" className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <p className="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
             02 How It Works
@@ -296,7 +306,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
               <div className={`grid items-center gap-10 lg:grid-cols-2 ${i % 2 !== 0 ? 'lg:[direction:rtl]' : ''}`}>
                 {/* Screenshot */}
                 {step.screenshotAfter ? (
-                  <div className="[direction:ltr] grid grid-cols-2 gap-3">
+                  <div className="[direction:ltr] grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="group overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]">
                       <div className="px-3 py-1.5 border-b border-[var(--color-border)]/50 bg-[var(--color-bg-card)]">
                         <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--color-text-muted)]">Before</span>
@@ -570,7 +580,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       )}
 
       {/* ═══ Technical Stack ═══ */}
-      <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
+      <section id="tech-stack" className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           {/* Label with horizontal lines */}
           <div className="mb-14 flex items-center gap-4">
@@ -582,7 +592,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
           </div>
           <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
             {project.stack.map((s) => (
-              <div key={s.name} className="text-center">
+              <div key={s.name} className="stack-glow-item text-center rounded-lg px-3 py-4 transition-all duration-300 cursor-default hover:bg-[var(--color-bg-card)] hover:shadow-[0_0_20px_rgba(69,98,114,0.15)]">
                 <p className="text-sm font-bold">{s.name}</p>
                 <p className="mt-1 font-mono text-[10px] tracking-wider text-[var(--color-text-muted)]">
                   {s.category}
@@ -622,7 +632,7 @@ export default function ProjectDetail({ project, lang }: { project: ProjectData;
       </section>
 
       {/* ═══ Metrics ═══ */}
-      <section className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
+      <section id="metrics" className="border-b border-[var(--color-border)]/50 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl">
           <p className="mb-12 text-xs uppercase tracking-[0.15em] text-[var(--color-accent)]">
             By The Numbers

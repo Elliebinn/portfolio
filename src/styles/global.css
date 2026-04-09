@@ -168,4 +168,8 @@ body {
     fill-opacity: 1;
     animation: none !important;
   }
+  /* A4: disable stack hover glow animation */
+  .stack-glow-item {
+    transition: none !important;
+  }
 }
