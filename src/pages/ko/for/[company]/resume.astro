@@ -1,6 +1,5 @@
 ---
 import Layout from '../../../../layouts/Layout.astro';
-import Navbar from '../../../../components/Navbar';
 import { landingTargets, getLandingTargetSlugs } from '../../../../data/landing-targets';
 
 export async function getStaticPaths() {
@@ -30,9 +29,11 @@ function md(text: string): string {
 
 <Layout title={pageTitle}>
   {data.noIndex && <meta slot="head" name="robots" content="noindex, nofollow" />}
-  <Navbar lang={lang} client:load />
 
   <main class="resume-main">
+    <nav class="resume-back no-print">
+      <a href={`${import.meta.env.BASE_URL}ko/for/${company}/`} class="back-link">← 돌아가기</a>
+    </nav>
     <article class="resume-doc">
       <!-- ================================================= -->
       <!--  HEADER                                            -->
@@ -211,8 +212,24 @@ function md(text: string): string {
      RESUME DOCUMENT — Neutral, ATS-friendly
      토스 맞춤 힌트 없음. 일반 이력서 외형.
      ============================================ */
+  /* ---------- back link ---------- */
+  .resume-back {
+    padding: 1rem 0 1.5rem;
+  }
+  .back-link {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: #999;
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+  .back-link:hover {
+    color: #111;
+  }
+
   .resume-main {
-    padding: 8rem 1.5rem 4rem;
+    padding: 3rem 1.5rem 4rem;
     max-width: 900px;
     margin: 0 auto;
     color: #111;
