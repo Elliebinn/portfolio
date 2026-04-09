@@ -47,10 +47,6 @@ const jobLabel = data.jobUrlLabel ?? '공고 보기 ↗';
       <!-- ================================================= -->
       <section class="hero reveal" style="--delay: 0ms;">
         <div class="hero-body">
-          <div class="hero-tag">
-            <span class="tag-bar"></span>
-            <span class="tag-text">A Candidate Brief · 01 / 05</span>
-          </div>
           <h1 class="hero-headline">
             {data.headline}
           </h1>
@@ -65,28 +61,6 @@ const jobLabel = data.jobUrlLabel ?? '공고 보기 ↗';
             </a>
           </div>
         </div>
-
-        <aside class="hero-meta" aria-label="Brief metadata">
-          <div class="hero-meta-row">
-            <span class="meta-label">Prepared for</span>
-            <span class="meta-value">{data.company}</span>
-          </div>
-          <div class="hero-meta-row">
-            <span class="meta-label">Role</span>
-            <span class="meta-value">{data.role}</span>
-          </div>
-          <div class="hero-meta-row">
-            <span class="meta-label">Briefing</span>
-            <span class="meta-value mono">{data.updatedAt}</span>
-          </div>
-          <div class="hero-meta-row">
-            <span class="meta-label">Status</span>
-            <span class="meta-value status">
-              <span class="status-dot"></span>
-              Intent to Apply
-            </span>
-          </div>
-        </aside>
       </section>
 
       <!-- ================================================= -->
@@ -94,8 +68,7 @@ const jobLabel = data.jobUrlLabel ?? '공고 보기 ↗';
       <!-- ================================================= -->
       <section class="why reveal" style="--delay: 120ms;">
         <header class="section-header">
-          <span class="section-index mono">02 / 05</span>
-          <h2 class="section-title">이 회사에 지원하는 이유</h2>
+          <h2 class="section-title">왜 여기인가</h2>
         </header>
         <blockquote class="why-quote">
           <span class="quote-mark" aria-hidden="true">"</span>
@@ -108,8 +81,7 @@ const jobLabel = data.jobUrlLabel ?? '공고 보기 ↗';
       <!-- ================================================= -->
       <section class="proof reveal" style="--delay: 200ms;">
         <header class="section-header">
-          <span class="section-index mono">03 / 05</span>
-          <h2 class="section-title">숫자로 정리한 임팩트</h2>
+          <h2 class="section-title">임팩트</h2>
           <p class="section-note">
             모든 수치는 공개 가능한 실무 성과입니다. 증빙 자료는 별도 요청 시 제공합니다.
           </p>
@@ -117,7 +89,7 @@ const jobLabel = data.jobUrlLabel ?? '공고 보기 ↗';
         <div class="proof-grid">
           {data.proofPoints.map((point, i) => (
             <article class="proof-card">
-              <div class="proof-idx mono">P{String(i + 1).padStart(2, '0')}</div>
+              <div class="proof-idx mono">{String(i + 1).padStart(2, '0')}</div>
               <div class="proof-value-wrap">
                 <span class="proof-value mono">{point.value}</span>
               </div>
@@ -133,12 +105,9 @@ const jobLabel = data.jobUrlLabel ?? '공고 보기 ↗';
       <!-- ================================================= -->
       <section class="skills reveal" style="--delay: 280ms;">
         <header class="section-header">
-          <span class="section-index mono">04 / 05</span>
-          <h2 class="section-title">
-            {data.role} 요구사항에 맞춰 재배치한 역량
-          </h2>
+          <h2 class="section-title">역량</h2>
           <p class="section-note">
-            전체 역량 목록이 아니라, {data.company} 공고의 핵심 요구 순서대로 선별한 상위 역량과 각각의 근거입니다.
+            핵심 역량과 각각의 근거입니다.
           </p>
         </header>
         <ol class="skill-list">
@@ -162,17 +131,13 @@ const jobLabel = data.jobUrlLabel ?? '공고 보기 ↗';
       <!-- ================================================= -->
       <section class="projects reveal" style="--delay: 360ms;">
         <header class="section-header">
-          <span class="section-index mono">05 / 05</span>
-          <h2 class="section-title">먼저 봐주셨으면 하는 프로젝트</h2>
-          <p class="section-note">
-            각 프로젝트가 이번 공고와 <em>어떻게</em> 정합되는지 한 줄로 정리했습니다.
-          </p>
+          <h2 class="section-title">프로젝트</h2>
         </header>
         <div class="project-grid">
           {data.projectMatches.map((proj, i) => (
             <a href={`${base}ko/projects/${proj.slug}/`} class="project-card">
               <div class="project-top">
-                <span class="project-idx mono">Case {String(i + 1).padStart(2, '0')}</span>
+                <span class="project-idx mono">{String(i + 1).padStart(2, '0')}</span>
                 <span class="project-arrow" aria-hidden="true">→</span>
               </div>
               <h3 class="project-title">{proj.title}</h3>
@@ -191,7 +156,6 @@ const jobLabel = data.jobUrlLabel ?? '공고 보기 ↗';
       <!-- ================================================= -->
       <section class="cta reveal" style="--delay: 440ms;">
         <div class="cta-inner">
-          <span class="cta-tag mono">END OF BRIEF</span>
           <h2 class="cta-message">{data.ctaMessage}</h2>
           <div class="cta-actions">
             <a href="mailto:elliebinn@gmail.com" class="btn btn-brand">
@@ -204,7 +168,7 @@ const jobLabel = data.jobUrlLabel ?? '공고 보기 ↗';
             )}
           </div>
           <p class="cta-footer mono">
-            Briefing prepared · {data.updatedAt} · for {data.company}
+            {data.updatedAt}
           </p>
         </div>
       </section>
