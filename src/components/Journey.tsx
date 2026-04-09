@@ -2,7 +2,7 @@ import type { Lang } from '../i18n/translations';
 import { t } from '../i18n/translations';
 import ScrollReveal from './motion/ScrollReveal';
 
-const BASE = '/portfolio';
+const BASE = '';
 
 export default function Journey({ lang = 'en' as Lang }: { lang?: Lang }) {
   const tr = t(lang).timeline;

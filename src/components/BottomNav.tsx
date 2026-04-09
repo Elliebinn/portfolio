@@ -1,6 +1,6 @@
 import type { Lang } from '../i18n/translations';
 
-const BASE = '/portfolio';
+const BASE = '';
 
 export default function BottomNav({ lang = 'en' as Lang }: { lang?: Lang }) {
   const items = [

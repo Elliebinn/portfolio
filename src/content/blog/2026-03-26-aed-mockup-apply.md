@@ -9,13 +9,13 @@ series: "quant-platform"
 seriesOrder: 6
 relatedLinks:
   - label: "AI에게 디자인을 맡겼더니 페이지마다 CSS가 달랐다"
-    url: "/portfolio/ko/blog/2026-03-23-aed-ai-redesign-chaos/"
+    url: "/ko/blog/2026-03-23-aed-ai-redesign-chaos/"
     type: "blog"
   - label: "프론트엔드 변경 공유, 자동화해봤다"
-    url: "/portfolio/ko/blog/2026-03-23-aed-frontend-checkpoint/"
+    url: "/ko/blog/2026-03-23-aed-frontend-checkpoint/"
     type: "blog"
   - label: "체크포인트 도구가 놓친 것들"
-    url: "/portfolio/ko/blog/2026-03-26-aed-checkpoint-mockup-verify/"
+    url: "/ko/blog/2026-03-26-aed-checkpoint-mockup-verify/"
     type: "blog"
 ---
 
@@ -29,7 +29,7 @@ relatedLinks:
 
 ## 목업을 넘기면 그대로 나올 줄 알았어요
 
-[HTML 목업 25개를 직접 만들고](/portfolio/ko/blog/2026-03-23-aed-ai-redesign-chaos/), 디자인 토큰(DESIGN.md)까지 정리했어요. 색상, 폰트, 간격 규칙을 문서화해서 AI에게 "이거 보고 구현해줘"라고 넘기면 될 줄 알았죠.
+[HTML 목업 25개를 직접 만들고](/ko/blog/2026-03-23-aed-ai-redesign-chaos/), 디자인 토큰(DESIGN.md)까지 정리했어요. 색상, 폰트, 간격 규칙을 문서화해서 AI에게 "이거 보고 구현해줘"라고 넘기면 될 줄 알았죠.
 
 근데 실제로 해보면 거의 매번 이런 상황이 벌어져요.
 
@@ -145,6 +145,6 @@ git clone https://github.com/Elliebinn/mockup-apply.git ~/.claude/skills/mockup-
 
 가이드 문서도 만들었어요. 예시 3개 — 대시보드 리디자인, 분석만 수행(`--analyze-only`), AI 목업 생성 후 바로 적용하는 파이프라인 — 를 넣어서 처음 쓰는 사람도 흐름을 잡을 수 있게요.
 
-[frontend-checkpoint](/portfolio/ko/blog/2026-03-23-aed-frontend-checkpoint/)가 "변경 후 기록"을 자동화한 도구라면, mockup-apply는 **"변경 자체"를 체계화한 도구**예요. 둘을 같이 쓰면 목업 적용 → 체크포인트 촬영까지 한 흐름으로 이어져요.
+[frontend-checkpoint](/ko/blog/2026-03-23-aed-frontend-checkpoint/)가 "변경 후 기록"을 자동화한 도구라면, mockup-apply는 **"변경 자체"를 체계화한 도구**예요. 둘을 같이 쓰면 목업 적용 → 체크포인트 촬영까지 한 흐름으로 이어져요.
 
 다음에는 KEEP 항목들에 대한 자동 회귀 테스트를 붙일 생각이에요. 지금은 Phase 4에서 한 번 검증하는데, 이후 다른 페이지 작업하면서 이전 KEEP 항목이 다시 깨질 수도 있거든요. 전체 KEEP 목록을 모아서 PR 단위로 한 번에 검증하는 걸 만들려고요.

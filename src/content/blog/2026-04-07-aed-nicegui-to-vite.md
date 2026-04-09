@@ -9,10 +9,10 @@ series: "quant-platform"
 seriesOrder: 8
 relatedLinks:
   - label: "개발자 없는 팀에서 사내 분석 도구를 직접 만든 후기"
-    url: "/portfolio/ko/blog/2026-03-23-aed-quant-tool-overview/"
+    url: "/ko/blog/2026-03-23-aed-quant-tool-overview/"
     type: "blog"
   - label: "목업대로 구현 안 되는 문제, mockup-apply로 해결"
-    url: "/portfolio/ko/blog/2026-03-26-aed-mockup-apply/"
+    url: "/ko/blog/2026-03-26-aed-mockup-apply/"
     type: "blog"
   - label: "mockup-apply (GitHub)"
     url: "https://github.com/Elliebinn/mockup-apply"

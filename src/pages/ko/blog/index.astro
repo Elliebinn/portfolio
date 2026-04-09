@@ -2,6 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
+import CountUp from '../../../components/motion/CountUp';
 import { getCollection } from 'astro:content';
 import { t } from '../../../i18n/translations';
 
@@ -22,141 +23,144 @@ const categoryLabels: Record<string, string> = {
 const base = import.meta.env.BASE_URL;
 const featured = posts.find(p => p.data.featured) || posts[0];
 const restPosts = posts.filter(p => p.id !== featured.id);
-const mostRead = posts.slice(0, 3);
+
+// Metrics
+const postsCount = posts.length;
+const seriesCount = new Set(posts.map(p => (p.data as any).series).filter(Boolean)).size;
+const categoriesCount = new Set(posts.map(p => p.data.category).filter(Boolean)).size;
+const recentDate = posts[0]?.data.date.toISOString().slice(0, 10) ?? '';
 ---
 
 <Layout title={`${tr.blog.pageTitle} — HYEBIN.DEV`}>
   <Navbar lang={lang} client:load />
 
-  <main class="pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
-    <!-- Header -->
-    <header class="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
-      <div class="max-w-2xl">
-        <span class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-widest mb-4 block">{tr.blog.section}</span>
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[var(--color-text)] mb-4 leading-[1.1]" style="font-family: var(--font-display);">
-          {tr.blog.pageTitle}
+  <main class="pt-32 pb-24 px-6 md:px-12 max-w-5xl mx-auto">
+
+    <!-- Hero -->
+    <header class="mb-20">
+      <!-- Top meta row -->
+      <div class="flex justify-between items-center mb-8">
+        <span class="text-[0.625rem] font-bold tracking-[0.2em] text-[var(--color-outline-variant)] uppercase">Journal · 기획 인사이트 · 프로젝트 회고</span>
+        <span class="text-[0.625rem] font-bold tracking-[0.2em] text-[var(--color-accent)] uppercase flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>최근 업데이트 {recentDate}
+        </span>
+      </div>
+
+      <!-- Layered title -->
+      <div class="relative">
+        <span
+          class="block font-extrabold leading-none tracking-tight text-[var(--color-bg-emphasis)] select-none mb-[-2vw]"
+          style="font-family: var(--font-display); font-size: clamp(4rem,12vw,10rem);"
+          aria-hidden="true"
+        >Journal</span>
+        <h1
+          class="block font-extrabold leading-none tracking-tight text-[var(--color-text)] text-2xl md:text-3xl"
+          style="font-family: var(--font-display);"
+        >
+          {tr.blog.pageTitle} · 기획과 실행 사이의 기록들
         </h1>
-        <p class="text-lg text-[var(--color-text-muted)] leading-relaxed">
-          {tr.blog.pageDescription}
-        </p>
+      </div>
+
+      <!-- Description -->
+      <p class="mt-6 text-base text-[var(--color-text-muted)] leading-relaxed max-w-xl">
+        {tr.blog.pageDescription}
+      </p>
+
+      <!-- Three metrics -->
+      <div class="mt-16 flex flex-wrap gap-x-16 gap-y-8">
+        <div class="flex flex-col gap-2">
+          <span class="text-4xl md:text-5xl font-extrabold text-[var(--color-text)] tracking-tight" style="font-family: var(--font-display);">
+            <CountUp value={postsCount} suffix="편" client:visible />
+          </span>
+          <span class="text-[0.625rem] font-bold text-[var(--color-text-faint)] uppercase tracking-widest">Total Posts</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-4xl md:text-5xl font-extrabold text-[var(--color-text)] tracking-tight" style="font-family: var(--font-display);">
+            <CountUp value={seriesCount} suffix="개 시리즈" client:visible />
+          </span>
+          <span class="text-[0.625rem] font-bold text-[var(--color-text-faint)] uppercase tracking-widest">Series</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-4xl md:text-5xl font-extrabold text-[var(--color-text)] tracking-tight" style="font-family: var(--font-display);">
+            <CountUp value={categoriesCount} suffix="개 주제" client:visible />
+          </span>
+          <span class="text-[0.625rem] font-bold text-[var(--color-text-faint)] uppercase tracking-widest">Categories</span>
+        </div>
       </div>
     </header>
 
+    <!-- Lead Article -->
+    <section class="pb-16 mb-16">
+      <span class="block font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent)] mb-6">
+        {categoryLabels[featured.data.category] || featured.data.category}
+      </span>
+      <a href={`${base}${lang}/blog/${featured.id}/`} class="group block lead-article blog-post" data-category={featured.data.category}>
+        <h2 class="text-3xl lg:text-4xl xl:text-5xl font-extrabold text-[var(--color-text)] leading-tight mb-6 group-hover:text-[var(--color-accent)] transition-colors duration-300" style="font-family: var(--font-display);">
+          {featured.data.title}
+        </h2>
+      </a>
+      <p class="text-lg text-[var(--color-text-muted)] leading-relaxed max-w-3xl mb-8">
+        {featured.data.description}
+      </p>
+      <div class="flex flex-wrap items-center gap-4 mb-8">
+        <span class="font-mono text-xs text-[var(--color-text-faint)]">{featured.data.date.toISOString().slice(0, 10)}</span>
+        <span class="text-[var(--color-border)]">·</span>
+        <span class="font-mono text-xs text-[var(--color-text-faint)] uppercase tracking-wider">{categoryLabels[featured.data.category] || featured.data.category}</span>
+      </div>
+      <a href={`${base}${lang}/blog/${featured.id}/`} class="inline-flex items-center gap-2 font-mono text-sm text-[var(--color-accent)] hover:gap-3 transition-all duration-200">
+        기사 전문 읽기 <span aria-hidden="true">→</span>
+      </a>
+    </section>
+
     <!-- Category Filter -->
-    <div class="relative flex flex-wrap gap-3 mb-16 items-center" id="category-filters">
-      <span class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)] mr-2">필터:</span>
-      <button data-category="all" class="category-btn active relative z-10 px-5 py-2 rounded-full text-[var(--color-on-accent)] text-sm font-semibold transition-colors duration-200">전체</button>
-      {Object.entries(categoryLabels).map(([key, label]) => (
-        <button data-category={key} class="category-btn relative z-10 px-5 py-2 rounded-full bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] text-sm font-semibold hover:bg-[var(--color-bg-detail)] transition-colors duration-200">{label}</button>
+    <div class="mb-12 flex flex-wrap items-center gap-1" id="category-filters" role="group" aria-label="카테고리 필터">
+      <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-faint)] mr-3">필터</span>
+      <button data-category="all" class="category-btn active font-mono text-xs text-[var(--color-text)] border-b border-[var(--color-text)] pb-0.5 mx-2 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors duration-150">전체</button>
+      <span class="text-[var(--color-border)] select-none">·</span>
+      {Object.entries(categoryLabels).map(([key, label], i) => (
+        <>
+          <button data-category={key} class="category-btn font-mono text-xs text-[var(--color-text-faint)] border-b border-transparent pb-0.5 mx-2 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors duration-150">{label}</button>
+          {i < Object.entries(categoryLabels).length - 1 && <span class="text-[var(--color-border)] select-none">·</span>}
+        </>
       ))}
-      <!-- B2: sliding pill background -->
-      <span id="filter-pill-bg" class="pointer-events-none absolute rounded-full bg-[var(--color-accent)]" aria-hidden="true" style="transition: left 0.25s ease, top 0.25s ease, width 0.25s ease, height 0.25s ease; will-change: left, top, width, height;"></span>
     </div>
 
-    <!-- Blog Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-
-      <!-- Featured Post -->
-      <a href={`${base}${lang}/blog/${featured.id}/`} class="lg:col-span-8 group cursor-pointer blog-post featured-parallax" data-category={featured.data.category}>
-        <div class="relative h-[400px] sm:h-[500px] w-full rounded-xl overflow-hidden mb-6 bg-[var(--color-bg-detail)]">
-          <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-text)]/70 via-transparent to-transparent z-10"></div>
-          <div class="absolute bottom-8 left-8 right-8 z-20">
-            <div class="flex gap-3 mb-4">
-              <span class="bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full">
-                {categoryLabels[featured.data.category] || featured.data.category}
+    <!-- Indexed List -->
+    <ol class="list-none" id="post-list">
+      {restPosts.map((post, i) => (
+        <li class="blog-post blog-card-stagger border-t border-[var(--color-border)] last:border-b" data-category={post.data.category} style={`animation-delay: ${i * 80}ms`}>
+          <a href={`${base}${lang}/blog/${post.id}/`} class="group grid grid-cols-[64px_1fr] md:grid-cols-[80px_1fr_140px] items-start gap-x-6 gap-y-2 py-6 hover:pl-2 transition-[padding] duration-200">
+            <!-- Number -->
+            <span class="font-display text-5xl font-extrabold leading-none select-none text-[var(--color-bg-emphasis)] group-hover:text-[var(--color-accent)] transition-colors duration-200" aria-hidden="true" style="font-family: var(--font-display);">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <!-- Middle: category + title + description -->
+            <div class="flex flex-col gap-1.5 min-w-0">
+              <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-accent)]">
+                {categoryLabels[post.data.category] || post.data.category}
               </span>
-              <span class="text-white/70 text-[10px] uppercase font-bold tracking-widest px-3 py-1">
-                {featured.data.date.toISOString().slice(0, 10)}
-              </span>
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--color-text)] leading-snug group-hover:text-[var(--color-accent)] transition-colors duration-200" style="font-family: var(--font-display);">
+                {post.data.title}
+              </h3>
+              <p class="text-sm text-[var(--color-text-muted)] leading-relaxed line-clamp-2">
+                {post.data.description}
+              </p>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2 group-hover:underline decoration-2 underline-offset-4" style="font-family: var(--font-display);">
-              {featured.data.title}
-            </h2>
-            <p class="text-white/80 line-clamp-2 max-w-xl text-sm">{featured.data.description}</p>
-          </div>
-        </div>
-      </a>
-
-      <!-- Sidebar: Most Read -->
-      <aside class="lg:col-span-4 space-y-6">
-        <h3 class="text-sm font-bold uppercase tracking-widest text-[var(--color-text-faint)]">인기 글</h3>
-        <div class="space-y-5">
-          {mostRead.map((post) => (
-            <a href={`${base}${lang}/blog/${post.id}/`} class="group flex gap-4 cursor-pointer">
-              <div class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-[var(--color-bg-detail)]">
-                <div class="w-full h-full flex items-center justify-center text-[var(--color-text-faint)] text-lg font-bold" style="font-family: var(--font-display);">
-                  {categoryLabels[post.data.category]?.charAt(0) || '글'}
-                </div>
-              </div>
-              <div>
-                <span class="text-[10px] font-bold text-[var(--color-accent)] uppercase tracking-wider">
-                  {categoryLabels[post.data.category] || post.data.category}
-                </span>
-                <h4 class="font-bold text-sm text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors leading-snug line-clamp-2">
-                  {post.data.title}
-                </h4>
-              </div>
-            </a>
-          ))}
-        </div>
-
-        <!-- Series -->
-        <div class="mt-8 rounded-xl bg-[var(--color-bg-card)] p-5 shadow-ambient-sm">
-          <h3 class="text-sm font-bold uppercase tracking-widest text-[var(--color-text-faint)] mb-4">시리즈</h3>
-          <div class="space-y-3">
-            <a href={`${base}${lang}/blog/2024-01-15-ratb-ai-national-exam/`} class="block text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors">
-              RATB 운용기 (5편)
-            </a>
-            <a href={`${base}${lang}/blog/2026-03-23-aed-quant-tool-overview/`} class="block text-sm font-medium text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors">
-              퀀트 플랫폼 (7편)
-            </a>
-          </div>
-        </div>
-      </aside>
-
-      <!-- Rest of posts: 2-column grid -->
-      <div class="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-14 mt-4">
-        {restPosts.map((post, i) => (
-          <a href={`${base}${lang}/blog/${post.id}/`} class="group blog-post blog-card-stagger" data-category={post.data.category} style={`animation-delay: ${i * 100}ms`}>
-            <div class="flex flex-col gap-4">
-              <div class="space-y-3">
-                <div class="flex items-center gap-4 text-xs font-bold uppercase tracking-wider text-[var(--color-text-faint)]">
-                  <span>{post.data.date.toISOString().slice(0, 10)}</span>
-                  <span class="w-1 h-1 rounded-full bg-[var(--color-outline-variant)]"></span>
-                  <span class="text-[var(--color-accent)]">{categoryLabels[post.data.category] || post.data.category}</span>
-                </div>
-                <h3 class="text-xl font-bold text-[var(--color-text)] leading-tight group-hover:text-[var(--color-accent)] transition-colors" style="font-family: var(--font-display);">
-                  {post.data.title}
-                </h3>
-                <p class="text-sm text-[var(--color-text-muted)] leading-relaxed line-clamp-3">
-                  {post.data.description}
-                </p>
-                <div class="flex flex-wrap gap-2 pt-1">
-                  {post.data.tags.slice(0, 3).map((tag: string) => (
-                    <span class="rounded-full bg-[var(--color-secondary-container)] px-2.5 py-0.5 text-[10px] font-medium text-[var(--color-on-secondary-container)]">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
+            <!-- Right: date (hidden on mobile, shown on md+) -->
+            <div class="hidden md:flex flex-col items-end justify-start pt-1">
+              <span class="font-mono text-[10px] text-[var(--color-text-faint)]">{post.data.date.toISOString().slice(0, 10)}</span>
             </div>
           </a>
-        ))}
-      </div>
+        </li>
+      ))}
+    </ol>
 
-      <!-- B4: Empty Filter Feedback -->
-      <div id="empty-filter" class="hidden py-20 text-center" aria-live="polite">
-        <div class="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full" style="background-color: var(--color-bg-detail);">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <rect x="4" y="8" width="32" height="24" rx="4" stroke="var(--color-outline-variant)" stroke-width="1.5" fill="none" />
-            <line x1="12" y1="18" x2="28" y2="18" stroke="var(--color-outline-variant)" stroke-width="1.5" stroke-linecap="round" />
-            <line x1="12" y1="24" x2="22" y2="24" stroke="var(--color-outline-variant)" stroke-width="1.5" stroke-linecap="round" />
-          </svg>
-        </div>
-        <p class="text-lg font-bold text-[var(--color-text)]">이 카테고리에 아직 글이 없어요</p>
-        <p class="mt-2 text-sm text-[var(--color-text-muted)]">다른 카테고리를 선택하거나 전체 글을 확인해보세요.</p>
-      </div>
+    <!-- Empty Filter Feedback -->
+    <div id="empty-filter" class="hidden py-20 text-center" aria-live="polite">
+      <p class="text-lg font-bold text-[var(--color-text)]">이 카테고리에 아직 글이 없어요</p>
+      <p class="mt-2 text-sm text-[var(--color-text-muted)]">다른 카테고리를 선택하거나 전체 글을 확인해보세요.</p>
     </div>
+
   </main>
 
   <Footer />
@@ -164,55 +168,30 @@ const mostRead = posts.slice(0, 3);
 
 <style>
   @keyframes blog-fade-up {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @media (prefers-reduced-motion: no-preference) {
     .blog-card-stagger {
       opacity: 0;
-      animation: blog-fade-up 0.4s ease forwards;
+      animation: blog-fade-up 0.35s ease forwards;
     }
   }
-  /* B1: Featured Card Inner Parallax */
-  .featured-parallax .featured-bg {
-    transition: transform 0.3s ease-out;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .featured-parallax .featured-bg {
-      transition: none !important;
-      transform: none !important;
-    }
+  .category-btn.active {
+    color: var(--color-text);
+    border-bottom-color: var(--color-text);
   }
 </style>
 
 <script>
   const buttons = document.querySelectorAll<HTMLButtonElement>('.category-btn');
-  const posts = document.querySelectorAll<HTMLElement>('.blog-post');
-  const pill = document.getElementById('filter-pill-bg');
-  const container = document.getElementById('category-filters');
+  const allPosts = document.querySelectorAll<HTMLElement>('.blog-post');
   const emptyState = document.getElementById('empty-filter');
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function movePillTo(btn: HTMLElement) {
-    if (!pill || !container) return;
-    const containerRect = container.getBoundingClientRect();
-    const btnRect = btn.getBoundingClientRect();
-    pill.style.left = `${btnRect.left - containerRect.left}px`;
-    pill.style.top = `${btnRect.top - containerRect.top}px`;
-    pill.style.width = `${btnRect.width}px`;
-    pill.style.height = `${btnRect.height}px`;
-  }
 
   function updateEmptyState() {
     if (!emptyState) return;
-    const visiblePosts = Array.from(posts).filter(p => p.style.display !== 'none');
+    const visiblePosts = Array.from(allPosts).filter(p => p.style.display !== 'none');
     emptyState.classList.toggle('hidden', visiblePosts.length > 0);
-  }
-
-  const initBtn = document.querySelector<HTMLButtonElement>('.category-btn.active');
-  if (initBtn && pill) {
-    if (prefersReduced) pill.style.transition = 'none';
-    movePillTo(initBtn);
   }
 
   buttons.forEach(btn => {
@@ -220,15 +199,13 @@ const mostRead = posts.slice(0, 3);
       const category = btn.dataset.category;
 
       buttons.forEach(b => {
-        b.classList.remove('active', 'text-[var(--color-on-accent)]');
-        b.classList.add('bg-[var(--color-secondary-container)]', 'text-[var(--color-on-secondary-container)]');
+        b.classList.remove('active');
+        b.style.color = '';
+        b.style.borderBottomColor = '';
       });
-      btn.classList.remove('bg-[var(--color-secondary-container)]', 'text-[var(--color-on-secondary-container)]');
-      btn.classList.add('active', 'text-[var(--color-on-accent)]');
+      btn.classList.add('active');
 
-      movePillTo(btn);
-
-      posts.forEach(post => {
+      allPosts.forEach(post => {
         if (category === 'all' || post.dataset.category === category) {
           post.style.display = '';
         } else {
@@ -239,22 +216,4 @@ const mostRead = posts.slice(0, 3);
       updateEmptyState();
     });
   });
-
-  // B1: Featured Card Inner Parallax
-  if (!prefersReduced) {
-    const featured = document.querySelector<HTMLElement>('.featured-parallax');
-    const bg = featured?.querySelector<HTMLElement>('.relative');
-    if (featured && bg) {
-      featured.addEventListener('mousemove', (e) => {
-        const rect = featured.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width - 0.5) * -5;
-        const y = ((e.clientY - rect.top) / rect.height - 0.5) * -5;
-        bg.style.transform = `translate(${x}px, ${y}px)`;
-        bg.style.transition = 'transform 0.3s ease-out';
-      });
-      featured.addEventListener('mouseleave', () => {
-        bg.style.transform = 'translate(0, 0)';
-      });
-    }
-  }
 </script>

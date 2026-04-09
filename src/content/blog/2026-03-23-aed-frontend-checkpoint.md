@@ -9,13 +9,13 @@ series: "quant-platform"
 seriesOrder: 4
 relatedLinks:
   - label: "개발자 없는 팀에서 사내 분석 도구를 직접 만든 후기"
-    url: "/portfolio/ko/blog/2026-03-23-aed-quant-tool-overview/"
+    url: "/ko/blog/2026-03-23-aed-quant-tool-overview/"
     type: "blog"
   - label: "AI에게 디자인을 맡겼더니 페이지마다 CSS가 달랐다"
-    url: "/portfolio/ko/blog/2026-03-23-aed-ai-redesign-chaos/"
+    url: "/ko/blog/2026-03-23-aed-ai-redesign-chaos/"
     type: "blog"
   - label: "체크포인트 도구가 놓친 것들"
-    url: "/portfolio/ko/blog/2026-03-26-aed-checkpoint-mockup-verify/"
+    url: "/ko/blog/2026-03-26-aed-checkpoint-mockup-verify/"
     type: "blog"
 ---
 
@@ -138,4 +138,4 @@ REPORT.md 안에는 변경 요약, 파일별 상세 diff, Before/After 스크린
 
 근데 한계가 하나 있어요. 이 도구는 "있는 것이 제대로 동작하는가"만 검증해요. "있어야 하는데 없는 것"은 못 찾아요. 목업이라는 정답지와 대조하는 단계가 아직 없거든요.
 
-다음 버전에서는 [목업 대조 검증](/portfolio/ko/blog/2026-03-26-aed-checkpoint-mockup-verify/) 단계를 추가해서, 구현에서 빠진 디테일까지 자동으로 잡을 수 있게 만들 생각이에요.
+다음 버전에서는 [목업 대조 검증](/ko/blog/2026-03-26-aed-checkpoint-mockup-verify/) 단계를 추가해서, 구현에서 빠진 디테일까지 자동으로 잡을 수 있게 만들 생각이에요.

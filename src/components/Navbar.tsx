@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Lang } from '../i18n/translations';
 import { t, getOtherLang } from '../i18n/translations';
 
-const BASE = '/portfolio';
+const BASE = '';
 
 export default function Navbar({ lang = 'en' as Lang }: { lang?: Lang }) {
   const tr = t(lang);
@@ -25,7 +25,7 @@ export default function Navbar({ lang = 'en' as Lang }: { lang?: Lang }) {
           className="flex items-center gap-2"
         >
           <img
-            src="/portfolio/assets/logo-v2-character-circle.png"
+            src="/assets/logo-v2-character-circle.png"
             alt="HB."
             className="nav-logo"
             style={{ height: '28px', width: '28px', borderRadius: '50%' }}

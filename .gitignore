@@ -26,5 +26,8 @@ pnpm-debug.log*
 # OMC runtime state
 .omc/
 
+# dev screenshots (not committed)
+.screenshots/
+
 # Cloned external reference repos (do not vendor)
 _workspace/refs/

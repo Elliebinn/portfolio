@@ -9,10 +9,10 @@ series: "quant-platform"
 seriesOrder: 3
 relatedLinks:
   - label: "개발자 없는 팀에서 사내 분석 도구를 직접 만든 후기"
-    url: "/portfolio/ko/blog/2026-03-23-aed-quant-tool-overview/"
+    url: "/ko/blog/2026-03-23-aed-quant-tool-overview/"
     type: "blog"
   - label: "프론트엔드 변경 공유, 자동화해봤다"
-    url: "/portfolio/ko/blog/2026-03-23-aed-frontend-checkpoint/"
+    url: "/ko/blog/2026-03-23-aed-frontend-checkpoint/"
     type: "blog"
 ---
 
@@ -131,7 +131,7 @@ Overview 페이지는 파란색, 비교 페이지는 보라색. 카드 모서리
 
 레이아웃과 디자인 토큰이 잡혀 있으니까, 후반부 페이지들은 "Overview의 KPI 카드 패턴으로 이 페이지도 만들어줘" 한마디면 됐어요.
 
-![v1 기본 HTML 스타일에서 v2 디자인 시스템 적용 후 — 같은 데이터, 다른 경험](/portfolio/assets/projects/quant-platform/v1-v2-compare.png)
+![v1 기본 HTML 스타일에서 v2 디자인 시스템 적용 후 — 같은 데이터, 다른 경험](/assets/projects/quant-platform/v1-v2-compare.png)
 *위 이미지는 실제 화면이 아닌 구성 예시입니다.*
 
 ---

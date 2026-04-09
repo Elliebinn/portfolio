@@ -1,7 +1,7 @@
 # LinkedIn 포스트 (2026-03-31)
 # 블로그: "'왜 이 수익이 났는지 보고 싶다'를 화면으로 풀어낸 과정"
 # 결: 인사이트형 — 고객 요구사항 번역법
-# 이미지: /portfolio/assets/blog/linkedin-translate-needs.jpg
+# 이미지: /assets/blog/linkedin-translate-needs.jpg
 
 ---
 

@@ -9,7 +9,7 @@ series: "quant-platform"
 seriesOrder: 7
 relatedLinks:
   - label: "프로젝트 상세"
-    url: "/portfolio/ko/projects/quant-platform/"
+    url: "/ko/projects/quant-platform/"
     type: "project"
 ---
 
@@ -80,7 +80,7 @@ C를 선택했어요. 유저의 질문이 크게 두 가지로 나뉘거든요.
 - "**결과가 어때?**" — 빠르게 읽고 판단하는 소비형 → **성과 요약**
 - "**왜 이런 결과가 나왔어?**" — 클릭하면서 파고드는 탐색형 → **매매 탐색**
 
-![성과 요약 탭 — 기존 3탭 기능을 하나로 통합](/portfolio/assets/projects/quant-platform/trade-explorer-overview.png)
+![성과 요약 탭 — 기존 3탭 기능을 하나로 통합](/assets/projects/quant-platform/trade-explorer-overview.png)
 *위 이미지는 실제 화면이 아닌 구성 예시입니다.*
 
 ---
@@ -93,7 +93,7 @@ C를 선택했어요. 유저의 질문이 크게 두 가지로 나뉘거든요.
 
 결론은 "**누적수익률 차트 자체가 네비게이션 허브**"가 되는 거였어요.
 
-![매매 탐색 탭 — 누적수익률 차트에 매수/매도 마커 + 구간 선택 + 종목별 기여수익률](/portfolio/assets/projects/quant-platform/trade-explorer-main.png)
+![매매 탐색 탭 — 누적수익률 차트에 매수/매도 마커 + 구간 선택 + 종목별 기여수익률](/assets/projects/quant-platform/trade-explorer-main.png)
 *위 이미지는 실제 화면이 아닌 구성 예시입니다.*
 
 **클릭하면** 해당 날짜의 스냅샷이 차트 아래에 나타나요. 누적수익률, 일간수익률, 보유종목 수. **드래그하면** 구간이 선택되고, 구간 수익률 + BM 대비 + 종목별 기여가 자동 계산돼요.
@@ -124,7 +124,7 @@ C를 선택했어요. 유저의 질문이 크게 두 가지로 나뉘거든요.
 
 종목을 클릭하면 페이지 이동 없이 바로 아래에 펼쳐져요.
 
-![종목 드릴다운 — 전체 주가 차트, 기여수익률 추이, 사이클 목록, 캔들차트까지 한 화면에](/portfolio/assets/projects/quant-platform/trade-explorer-drilldown-full.png)
+![종목 드릴다운 — 전체 주가 차트, 기여수익률 추이, 사이클 목록, 캔들차트까지 한 화면에](/assets/projects/quant-platform/trade-explorer-drilldown-full.png)
 *위 이미지는 실제 화면이 아닌 구성 예시입니다.*
 
 세 가지가 한번에 보여요.

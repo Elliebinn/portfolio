@@ -9,10 +9,10 @@ series: "ratb"
 seriesOrder: 3
 relatedLinks:
   - label: "알고리즘 하나를 만드는 데 이렇게 많은 판단이 필요했다"
-    url: "/portfolio/ko/blog/2024-03-10-ratb-algorithm-design-why/"
+    url: "/ko/blog/2024-03-10-ratb-algorithm-design-why/"
     type: "blog"
   - label: "38개를 관리하면서 심사관 앞에 서는 일"
-    url: "/portfolio/ko/blog/2024-11-15-ratb-managing-38-algorithms/"
+    url: "/ko/blog/2024-11-15-ratb-managing-38-algorithms/"
     type: "blog"
 ---
 
@@ -64,7 +64,7 @@ relatedLinks:
 
 **AI 리스크 관리 실패.** 상승장에서 잘 작동하던 AI가 하락장에서 무력했어요. 손실이 깊어지는 걸 막지 못하거나, 손절 후 재진입 타이밍을 놓쳤어요. 리스크 관리 로직이 백테스트에서는 작동했지만, 실시간 시장의 변동성 앞에서는 충분하지 않았어요.
 
-**시장 급변 대응 부족.** 기획서에 "시장 급변 시"라고만 적혀 있던 부분이 현실에서 문제가 됐어요. [알고리즘 설계 과정에서 겪었던 해상도 문제](/portfolio/ko/blog/2024-03-10-ratb-algorithm-design-why/)가 여기서 현실이 된 거예요. 급락, 급등, 변동성 폭발 — 각각 다른 대응이 필요한데, 알고리즘은 구분하지 못했어요.
+**시장 급변 대응 부족.** 기획서에 "시장 급변 시"라고만 적혀 있던 부분이 현실에서 문제가 됐어요. [알고리즘 설계 과정에서 겪었던 해상도 문제](/ko/blog/2024-03-10-ratb-algorithm-design-why/)가 여기서 현실이 된 거예요. 급락, 급등, 변동성 폭발 — 각각 다른 대응이 필요한데, 알고리즘은 구분하지 못했어요.
 
 **과도한 매매.** 잦은 리밸런싱과 섹터 로테이션이 거래비용을 키웠어요. 매매 한 번에 0.3~0.5%의 비용이 발생하는데, 월 3~4회 리밸런싱하면 연간 15% 이상의 비용이 수익을 갉아먹었어요.
 

@@ -9,10 +9,10 @@ series: "jujutok"
 seriesOrder: 2
 relatedLinks:
   - label: "AI끼리 싸우게 하면 편향이 줄어들까?"
-    url: "/portfolio/ko/blog/2026-03-15-jujutok-debate-bias-system/"
+    url: "/ko/blog/2026-03-15-jujutok-debate-bias-system/"
     type: "blog"
   - label: "주주톡 프로젝트 상세"
-    url: "/portfolio/ko/projects/jujutok/"
+    url: "/ko/projects/jujutok/"
     type: "project"
   - label: "JujuTok GitHub Repository"
     url: "https://github.com/Elliebinn/jujutok"
@@ -66,7 +66,7 @@ Claude한테 "AAPL 분석해줘"라고 했어요. 차트 얘기를 하다가 갑
 
 가중치가 0.5 미만이면 아예 안 돌려요. AAPL을 넣으면 기술 섹터로 분류되고, 원자재 에이전트(0.40)는 빠지는 거예요. 불필요한 LLM 호출을 줄이면서 분석 품질도 올리는 방법이었어요.
 
-이 매트릭스를 만들 때 자산운용사에서의 경험이 꽤 도움이 됐어요. 어떤 섹터에서 어떤 지표가 중요한지는 코드로 해결할 문제가 아니라, 기획 단계에서 도메인 지식으로 잡아야 하는 부분이거든요. 이 토론 시스템이 어떻게 기획됐는지는 [별도 글](/portfolio/ko/blog/2026-03-15-jujutok-debate-bias-system/)에서 자세히 다뤘어요.
+이 매트릭스를 만들 때 자산운용사에서의 경험이 꽤 도움이 됐어요. 어떤 섹터에서 어떤 지표가 중요한지는 코드로 해결할 문제가 아니라, 기획 단계에서 도메인 지식으로 잡아야 하는 부분이거든요. 이 토론 시스템이 어떻게 기획됐는지는 [별도 글](/ko/blog/2026-03-15-jujutok-debate-bias-system/)에서 자세히 다뤘어요.
 
 ---
 
@@ -80,7 +80,7 @@ Claude한테 "AAPL 분석해줘"라고 했어요. 차트 얘기를 하다가 갑
 
 그리고 SSE(Server-Sent Events)로 완료된 에이전트부터 바로 결과를 보내주게 했어요. 사용자 입장에서는 "60초 기다리고 결과를 한 번에 받는 것"보다 "5초마다 하나씩 결과가 나타나는 것"이 체감 속도가 훨씬 빨라요. 실제로 전체 분석이 끝나기 전에 이미 차트 에이전트 결과를 읽고 있을 수 있는 거죠.
 
-![에이전트별 분석 결과가 순차적으로 표시되는 화면](/portfolio/assets/projects/jujutok/stock-detail-full.png)
+![에이전트별 분석 결과가 순차적으로 표시되는 화면](/assets/projects/jujutok/stock-detail-full.png)
 
 ---
 
@@ -104,7 +104,7 @@ Claude한테 "AAPL 분석해줘"라고 했어요. 차트 얘기를 하다가 갑
 
 ## 비용 이야기 — 솔직히 이게 꽤 고민이었어요
 
-분석 한 번에 에이전트 6개, [토론](/portfolio/ko/blog/2026-03-15-jujutok-debate-bias-system/)까지 하면 9개 추가. 최소 15번의 LLM 호출이에요.
+분석 한 번에 에이전트 6개, [토론](/ko/blog/2026-03-15-jujutok-debate-bias-system/)까지 하면 9개 추가. 최소 15번의 LLM 호출이에요.
 
 Claude API를 직접 쓰면 호출당 비용이 쌓이는데, 사이드 프로젝트에서 그건 부담이었어요. 여기서 3일 고민했어요. 결국 Claude CLI(로컬 구독)를 써서 LLM 호출을 subprocess로 처리하기로 했어요. 사용자의 구독 범위 안에서 돌아가니까 추가 비용이 없는 구조.
 

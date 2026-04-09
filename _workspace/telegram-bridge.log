@@ -1,0 +1,50 @@
+[12:03:20] === bridge started (pid=35167, target=portfolio-claude.0, allowed_chat=5339933558) ===
+[12:03:21] RECV from=우혜빈 text=ㅗㅑ
+[12:03:22] RECV from=우혜빈 text=hi
+[12:03:23] RECV from=우혜빈 text=그러면 내가 여기서 이야기하면 니가 파악해?
+[12:04:11] RECV from=우혜빈 text=/pm 테스트
+[12:04:11] INJECTED: 테스트
+[12:15:09] RECV from=우혜빈 text=/pm 살아있어?
+[12:15:10] INJECTED: 살아있어?
+[12:15:40] RECV from=우혜빈 text=/pm 니가 해야하는역할 다 날라간거같은데 확인 가능해? 너 orchestator pm 이야
+[12:15:40] INJECTED: 니가 해야하는역할 다 날라간거같은데 확인 가능해? 너 orchestator pm 이야
+[12:16:28] RECV from=우혜빈 text=/pm 응 진행해줘 캡쳐도 가능한것 까지 확인해쓴ㄴ데 알지?
+[12:16:28] INJECTED: 응 진행해줘 캡쳐도 가능한것 까지 확인해쓴ㄴ데 알지?
+[12:17:52] RECV from=우혜빈 text=/pm 내가 말한거 말고도 니가 하고있는거 정리되면 나한테 알려줘야해 알지? 이미지는 매번 줄필요 없고 중요할때나 내가 물어볼때 주면돼
+[12:17:52] INJECTED: 내가 말한거 말고도 니가 하고있는거 정리되면 나한테 알려줘야해 알지? 이미지는 매번 줄필요 없고 중요할때나 내가 물어볼때 주면돼
+[12:22:51] RECV from=우혜빈 text=/status
+[12:23:21] RECV from=우혜빈 text=/pm 내가 없는 중간중간에 허용하는 알림와도 그냥 강제 진행가능하지?
+[12:23:22] INJECTED: 내가 없는 중간중간에 허용하는 알림와도 그냥 강제 진행가능하지?
+[12:24:46] RECV from=우혜빈 text=/pm 내가 이제부터는 직접 들어가서 허용 못하고 텔레그램으로만 말할수 있으니까 인지해
+[12:24:46] INJECTED: 내가 이제부터는 직접 들어가서 허용 못하고 텔레그램으로만 말할수 있으니까 인지해
+[12:27:05] RECV from=우혜빈 text=/pm 스크린샷 한번 찍어주고 확인하고 진행하께
+[12:27:06] INJECTED: 스크린샷 한번 찍어주고 확인하고 진행하께
+[12:33:27] getUpdates failed: {"ok":false}
+[12:48:52] getUpdates failed: {"ok":false}
+[12:49:02] getUpdates failed: {"ok":false}
+[12:49:12] getUpdates failed: {"ok":false}
+[12:49:23] getUpdates failed: {"ok":false}
+[13:06:48] getUpdates failed: {"ok":false}
+[13:06:58] getUpdates failed: {"ok":false}
+[13:07:08] getUpdates failed: {"ok":false}
+[13:23:02] getUpdates failed: {"ok":false}
+[13:23:12] getUpdates failed: {"ok":false}
+[13:23:22] getUpdates failed: {"ok":false}
+[13:23:32] getUpdates failed: {"ok":false}
+[13:38:58] getUpdates failed: {"ok":false}
+[13:39:08] getUpdates failed: {"ok":false}
+[13:39:18] getUpdates failed: {"ok":false}
+[13:52:15] getUpdates failed: {"ok":false}
+[13:52:25] getUpdates failed: {"ok":false}
+[13:52:35] getUpdates failed: {"ok":false}
+[13:52:45] getUpdates failed: {"ok":false}
+[14:04:33] RECV from=우혜빈 text=안녕
+[14:14:35] getUpdates failed: {"ok":false}
+[09:13:59] === bridge started (pid=84405, target=portfolio-claude.0, allowed_chat=5339933558) ===
+[09:14:00] RECV from=우혜빈 text=야야 /Users/ellie/Documents/career-planner 여기에서 지금 작업중인데 접근가능해?
+[09:14:19] RECV from=우혜빈 text=/Users/ellie/Documents/career-planner
+[09:22:44] === bridge started (pid=22888, target=portfolio-claude.0, allowed_chat=5339933558) ===
+[09:22:45] RECV from=우혜빈 text=/Users/ellie/Documents/career-planner 여기에서 지금 작업중인데 접근가능해?
+[09:22:45] INJECTED (raw): /Users/ellie/Documents/career-planner 여기에서 지금 작업중인데 접근가능해?
+[09:24:09] RECV from=우혜빈 text=주입됨은 없었으면하는데
+[09:24:09] INJECTED (raw): 주입됨은 없었으면하는데

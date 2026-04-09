@@ -1,4 +1,4 @@
-const BASE = '/portfolio';
+const BASE = '';
 
 export default function Footer() {
   return (

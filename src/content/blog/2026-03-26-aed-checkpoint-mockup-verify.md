@@ -9,13 +9,13 @@ series: "quant-platform"
 seriesOrder: 5
 relatedLinks:
   - label: "프론트엔드 변경 공유, 자동화해봤다"
-    url: "/portfolio/ko/blog/2026-03-23-aed-frontend-checkpoint/"
+    url: "/ko/blog/2026-03-23-aed-frontend-checkpoint/"
     type: "blog"
   - label: "AI에게 디자인을 맡겼더니 페이지마다 CSS가 달랐다"
-    url: "/portfolio/ko/blog/2026-03-23-aed-ai-redesign-chaos/"
+    url: "/ko/blog/2026-03-23-aed-ai-redesign-chaos/"
     type: "blog"
   - label: "개발자 없는 팀에서 사내 분석 도구를 직접 만든 후기"
-    url: "/portfolio/ko/blog/2026-03-23-aed-quant-tool-overview/"
+    url: "/ko/blog/2026-03-23-aed-quant-tool-overview/"
     type: "blog"
 ---
 
@@ -23,7 +23,7 @@ relatedLinks:
 
 대시보드 리디자인을 끝내고 체크포인트를 돌렸어요. 스크린샷도 찍히고, HTTP 200 OK, 콘솔 에러 0건. 리포트에 "건강도 96점"이라고 나왔어요. 잘 된 줄 알았죠.
 
-근데 실제 화면을 열어보니까 KPI 카드에 트렌드 배지(+5.2%p 같은 변화량 표시)가 없었어요. [목업](/portfolio/ko/blog/2026-03-23-aed-ai-redesign-chaos/)에는 분명히 있었는데. 기간 필터는 "전체 기간" 옵션 하나만 있었고, 사이드바 접기 버튼은 topbar 왼쪽이 아니라 footer에 있었어요.
+근데 실제 화면을 열어보니까 KPI 카드에 트렌드 배지(+5.2%p 같은 변화량 표시)가 없었어요. [목업](/ko/blog/2026-03-23-aed-ai-redesign-chaos/)에는 분명히 있었는데. 기간 필터는 "전체 기간" 옵션 하나만 있었고, 사이드바 접기 버튼은 topbar 왼쪽이 아니라 footer에 있었어요.
 
 **도구가 "통과"라고 했는데, 실제로는 빠진 게 있었어요.**
 

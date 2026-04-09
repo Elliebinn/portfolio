@@ -133,10 +133,10 @@ export default function StickyTOC({
 
   return (
     <nav className={className} aria-label="Table of contents">
-      <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-faint)]">
+      <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-text-faint)]">
         On this page
       </p>
-      <ul className="space-y-1.5">
+      <ul className="space-y-1">
         {headings.map((h) => {
           const isActive = activeId === h.id;
           const progress = sectionProgress[h.id] ?? 0;
@@ -156,7 +156,7 @@ export default function StickyTOC({
                   e.preventDefault();
                   document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className={`block flex-1 py-0.5 text-[13px] leading-snug transition-colors ${
+                className={`block flex-1 py-0.5 text-[11px] leading-snug transition-colors ${
                   h.level === 3 ? 'pl-2' : ''
                 } ${
                   isActive

@@ -2,7 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
-import StickyTOC from '../../../components/blog/StickyTOC';
+import FloatingTOC from '../../../components/blog/FloatingTOC';
 import { getCollection, render } from 'astro:content';
 import { t } from '../../../i18n/translations';
 
@@ -51,6 +51,7 @@ const categoryLabels: Record<string, string> = {
   <Navbar lang={lang} client:load />
 
   <main class="px-6 pt-32 pb-20">
+    <FloatingTOC client:load />
     <div class="mx-auto max-w-7xl">
       <a
         href={`${base}${lang}/blog/`}
@@ -184,63 +185,57 @@ const categoryLabels: Record<string, string> = {
       )}
     </article>
 
-      <!-- Sidebar with TOC -->
+      <!-- Sidebar -->
       <aside class="lg:col-span-4 hidden lg:block">
-        <div class="sticky top-32 space-y-8">
-          <StickyTOC client:load className="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm" />
-
+        <div class="sticky top-32">
           {seriesPosts.length > 1 && (
-            <div class="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm">
-              <div class="mb-1 flex items-center justify-between">
-                <h3 class="text-sm font-semibold uppercase tracking-[0.15em] text-[var(--color-text-muted)]">Series</h3>
-                <span class="font-mono text-[10px] text-[var(--color-accent)]">{currentSeriesIndex + 1}/{seriesPosts.length}</span>
+            <div class="pb-8 border-b border-[var(--color-border)]">
+              <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-faint)] mb-3">SERIES</p>
+              <div class="flex items-baseline justify-between mb-1">
+                <h3 class="text-sm font-bold text-[var(--color-text)]" style="font-family: var(--font-display);">
+                  {seriesLabels[post.data.series!] || post.data.series}
+                </h3>
+                <span class="font-mono text-[10px] text-[var(--color-text-faint)] ml-2 flex-shrink-0">
+                  {String(currentSeriesIndex + 1).padStart(2, '0')} / {String(seriesPosts.length).padStart(2, '0')}
+                </span>
               </div>
-              <p class="mb-3 text-xs text-[var(--color-text-muted)]">
-                {seriesLabels[post.data.series!] || post.data.series}
-              </p>
-              <div class="mb-4 h-0.5 w-full overflow-hidden rounded-full bg-[var(--color-border)]">
-                <div class="h-full rounded-full bg-[var(--color-accent)]" style={`width: ${((currentSeriesIndex + 1) / seriesPosts.length) * 100}%`} />
+              <!-- progress line -->
+              <div class="mb-4 h-px w-full bg-[var(--color-border)]">
+                <div class="h-full bg-[var(--color-accent)] transition-none" style={`width: ${((currentSeriesIndex + 1) / seriesPosts.length) * 100}%`} />
               </div>
-              <div class="flex flex-col gap-1.5">
+              <div class="flex flex-col">
                 {seriesPosts.map((sp, i) => {
                   const isCurrent = sp.id === post.id;
                   return (
                     <a
                       href={isCurrent ? undefined : `${base}${lang}/blog/${sp.id}/`}
                       class:list={[
-                        'group flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition-all',
+                        'group flex items-start gap-2.5 py-2 text-xs transition-colors',
                         isCurrent
-                          ? 'bg-[var(--color-accent)]/10 text-[var(--color-accent-light)] font-medium'
-                          : 'text-[var(--color-text-muted)] hover:bg-[var(--color-bg-card)] hover:text-[var(--color-text)]',
+                          ? 'text-[var(--color-accent)] font-medium cursor-default'
+                          : 'text-[var(--color-text-muted)] hover:text-[var(--color-accent)]',
                       ]}
                     >
-                      <span class:list={[
-                        'flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full font-mono text-[10px] font-bold',
-                        isCurrent
-                          ? 'bg-[var(--color-accent)] text-white'
-                          : 'border border-[var(--color-border)] text-[var(--color-text-muted)]',
-                      ]}>
-                        {i + 1}
+                      <span class="font-mono text-[10px] flex-shrink-0 mt-0.5 text-[var(--color-text-faint)]">
+                        {String(i + 1).padStart(2, '0')}
                       </span>
                       <span class="leading-snug">{sp.data.title}</span>
                     </a>
                   );
                 })}
               </div>
-              <!-- C6: prev/next stepper -->
-              <div class="mt-4 flex gap-2">
+              <!-- prev/next text links -->
+              <div class="mt-4 flex justify-between text-xs">
                 {prevSeriesPost ? (
-                  <a href={`${base}${lang}/blog/${prevSeriesPost.id}/`} class="flex flex-1 items-center gap-1.5 rounded-lg border border-[var(--color-border)] px-3 py-2 text-xs text-[var(--color-text-muted)] transition-all hover:border-[var(--color-accent)]/40 hover:text-[var(--color-accent)]">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-                    <span class="truncate">Prev</span>
+                  <a href={`${base}${lang}/blog/${prevSeriesPost.id}/`} class="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors">
+                    ← Previous
                   </a>
-                ) : <span class="flex-1" />}
+                ) : <span />}
                 {nextSeriesPost ? (
-                  <a href={`${base}${lang}/blog/${nextSeriesPost.id}/`} class="flex flex-1 items-center justify-end gap-1.5 rounded-lg border border-[var(--color-border)] px-3 py-2 text-xs text-[var(--color-text-muted)] transition-all hover:border-[var(--color-accent)]/40 hover:text-[var(--color-accent)]">
-                    <span class="truncate">Next</span>
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+                  <a href={`${base}${lang}/blog/${nextSeriesPost.id}/`} class="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors">
+                    Next →
                   </a>
-                ) : <span class="flex-1" />}
+                ) : <span />}
               </div>
             </div>
           )}

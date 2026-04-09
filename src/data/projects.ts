@@ -527,7 +527,7 @@ export const quantPlatform: Record<'en' | 'ko', ProjectData> = {
     cta: {
       heading: '전체 스토리가 궁금하세요?',
       subtext: '기획 과정, 사용자 리서치, AI 구현까지 담은 블로그 글이에요.',
-      githubUrl: '/portfolio/ko/blog/2026-03-23-aed-quant-tool-overview/',
+      githubUrl: '/ko/blog/2026-03-23-aed-quant-tool-overview/',
       githubLabel: '블로그 읽기',
     },
 

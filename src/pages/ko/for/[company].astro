@@ -1,0 +1,246 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from '../../../components/Navbar';
+import Footer from '../../../components/Footer';
+import BottomNav from '../../../components/BottomNav';
+import { landingTargets, getLandingTargetSlugs } from '../../../data/landing-targets';
+
+export async function getStaticPaths() {
+  return getLandingTargetSlugs().map((slug) => ({
+    params: { company: slug },
+  }));
+}
+
+const { company } = Astro.params;
+const data = landingTargets[company as string];
+
+if (!data) {
+  throw new Error(`Landing target not found: ${company}`);
+}
+
+const lang = 'ko';
+const base = import.meta.env.BASE_URL;
+
+const pageTitle = `${data.company} ${data.role} · 우혜빈`;
+---
+
+<Layout title={pageTitle}>
+  {data.noIndex && <meta slot="head" name="robots" content="noindex, nofollow" />}
+  <Navbar lang={lang} client:load />
+
+  <main class="pt-32 pb-24 px-6 max-w-6xl mx-auto space-y-32 break-keep">
+
+    <!-- Hero -->
+    <section class="relative">
+      <div class="max-w-4xl space-y-8">
+        <div class="flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">
+          <span>For</span>
+          <span class="px-3 py-1 rounded-full border border-[var(--color-border)] text-[var(--color-accent)]">
+            {data.company}
+          </span>
+          <span class="text-[var(--color-outline-variant)]">·</span>
+          <span>{data.role}</span>
+        </div>
+        <h1
+          class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.15] tracking-tight text-[var(--color-text)]"
+          style="font-family: var(--font-display);"
+        >
+          {data.headline}
+        </h1>
+        <p class="text-lg sm:text-xl text-[var(--color-text-muted)] max-w-3xl leading-relaxed">
+          {data.subheadline}
+        </p>
+        <div class="flex flex-wrap gap-3 pt-4">
+          <a
+            href={`${base}${lang}/resume/`}
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[var(--color-accent)] text-white text-sm font-bold hover:opacity-90 transition-opacity"
+          >
+            전체 이력서 보기 →
+          </a>
+          <a
+            href="mailto:elliebinn@gmail.com"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[var(--color-border)] text-sm font-bold hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+          >
+            elliebinn@gmail.com
+          </a>
+        </div>
+      </div>
+      <div
+        class="absolute -top-24 -right-24 w-96 h-96 rounded-full -z-10"
+        style="background-color: rgba(69, 98, 114, 0.05); filter: blur(120px);"
+      ></div>
+    </section>
+
+    <!-- Proof Points -->
+    <section class="space-y-12">
+      <div class="flex items-end justify-between">
+        <div class="space-y-3">
+          <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">
+            01 · 증거
+          </p>
+          <h2
+            class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]"
+            style="font-family: var(--font-display);"
+          >
+            숫자로 정리한 임팩트
+          </h2>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {data.proofPoints.map((point, i) => (
+          <div
+            class="p-8 rounded-[2rem] bg-white border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors space-y-3"
+            style={i % 2 === 1 ? 'transform: translateY(16px);' : ''}
+          >
+            <div
+              class="text-5xl font-extrabold text-[var(--color-accent)]"
+              style="font-family: var(--font-display);"
+            >
+              {point.value}
+            </div>
+            <div class="text-sm font-bold text-[var(--color-text)] uppercase tracking-wider">
+              {point.label}
+            </div>
+            {point.detail && (
+              <p class="text-xs text-[var(--color-text-muted)] leading-relaxed">
+                {point.detail}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Highlighted Skills — JD 키워드 순 -->
+    <section class="space-y-12">
+      <div class="space-y-3">
+        <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">
+          02 · 역량
+        </p>
+        <h2
+          class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]"
+          style="font-family: var(--font-display);"
+        >
+          {data.role} 에 맞춰 정리한 역량
+        </h2>
+        <p class="text-sm text-[var(--color-text-muted)] max-w-2xl">
+          전체 역량 목록이 아니라, {data.company} 공고의 핵심 요구사항 순서로 재배치한 상위 역량입니다.
+        </p>
+      </div>
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4">
+        {data.highlightSkills.map((skill, i) => (
+          <li
+            class="grid grid-cols-[40px_1fr] items-start gap-4 py-4"
+            style="border-top: 1px solid var(--color-border);"
+          >
+            <span
+              class="text-xl font-bold text-[var(--color-outline-variant)]"
+              style="font-family: var(--font-display);"
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span class="text-base font-bold text-[var(--color-text)] leading-snug">
+              {skill}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Highlighted Projects -->
+    <section class="space-y-12">
+      <div class="space-y-3">
+        <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">
+          03 · 프로젝트
+        </p>
+        <h2
+          class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]"
+          style="font-family: var(--font-display);"
+        >
+          먼저 봐주셨으면 하는 프로젝트
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {data.highlightProjects.map((slug) => (
+          <a
+            href={`${base}${lang}/projects/${slug}/`}
+            class="group p-8 rounded-[2rem] bg-[var(--color-bg-subtle,rgba(69,98,114,0.03))] border border-[var(--color-border)] hover:border-[var(--color-accent)] hover:shadow-lg transition-all space-y-4"
+          >
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">
+                Case Study
+              </span>
+              <span class="text-[var(--color-accent)] group-hover:translate-x-1 transition-transform">
+                →
+              </span>
+            </div>
+            <h3
+              class="text-2xl font-extrabold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors capitalize"
+              style="font-family: var(--font-display);"
+            >
+              {slug.replace(/-/g, ' ')}
+            </h3>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">
+              상세 케이스 스터디 →
+            </p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Why This Company -->
+    <section class="space-y-10">
+      <div class="space-y-3">
+        <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)] font-bold">
+          04 · 왜 {data.company}
+        </p>
+        <h2
+          class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]"
+          style="font-family: var(--font-display);"
+        >
+          이 회사에 왜 지원하는지
+        </h2>
+      </div>
+      <blockquote
+        class="relative pl-8 py-2 text-xl md:text-2xl text-[var(--color-text)] leading-relaxed"
+        style="border-left: 4px solid var(--color-accent);"
+      >
+        {data.whyCompany}
+      </blockquote>
+    </section>
+
+    <!-- CTA -->
+    <section class="text-center space-y-8 pt-8">
+      <h2
+        class="text-3xl md:text-5xl font-extrabold text-[var(--color-text)]"
+        style="font-family: var(--font-display);"
+      >
+        대화해보고 싶어요.
+      </h2>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a
+          href="mailto:elliebinn@gmail.com"
+          class="inline-flex items-center gap-2 px-6 py-4 rounded-full bg-[var(--color-accent)] text-white text-base font-bold hover:opacity-90 transition-opacity"
+        >
+          elliebinn@gmail.com
+        </a>
+        {data.jobUrl && (
+          <a
+            href={data.jobUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-6 py-4 rounded-full border border-[var(--color-border)] text-base font-bold hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+          >
+            공고 보기 ↗
+          </a>
+        )}
+      </div>
+      <p class="text-xs text-[var(--color-text-muted)] pt-4">
+        마지막 업데이트: {data.updatedAt}
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+  <BottomNav lang={lang} client:load />
+</Layout>

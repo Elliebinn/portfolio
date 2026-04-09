@@ -9,10 +9,10 @@ series: "quant-platform"
 seriesOrder: 2
 relatedLinks:
   - label: "개발자 없는 팀에서 사내 분석 도구를 직접 만든 후기"
-    url: "/portfolio/ko/blog/2026-03-23-aed-quant-tool-overview/"
+    url: "/ko/blog/2026-03-23-aed-quant-tool-overview/"
     type: "blog"
   - label: "AI에게 디자인을 맡겼더니 페이지마다 CSS가 달랐다"
-    url: "/portfolio/ko/blog/2026-03-23-aed-ai-redesign-chaos/"
+    url: "/ko/blog/2026-03-23-aed-ai-redesign-chaos/"
     type: "blog"
 ---
 
@@ -188,4 +188,4 @@ relatedLinks:
 
 ---
 
-*다음 글에서는 디자이너 없이 AI를 활용해 [20개 이상의 페이지를 리디자인한 과정](/portfolio/ko/blog/2026-03-23-aed-ai-redesign-chaos/)을 다뤄볼게요.*
+*다음 글에서는 디자이너 없이 AI를 활용해 [20개 이상의 페이지를 리디자인한 과정](/ko/blog/2026-03-23-aed-ai-redesign-chaos/)을 다뤄볼게요.*

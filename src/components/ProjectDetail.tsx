@@ -10,7 +10,7 @@ import CountUp from './motion/CountUp';
 import MetaSideRail, { type ProjectMeta } from './project/MetaSideRail';
 import SectionDots from './project/SectionDots';
 
-const BASE = '/portfolio';
+const BASE = '';
 
 const agentIcons: Record<string, typeof TrendingUp> = {
   technical: TrendingUp,

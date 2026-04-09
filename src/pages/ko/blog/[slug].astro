@@ -2,7 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
-import StickyTOC from '../../../components/blog/StickyTOC';
+import FloatingTOC from '../../../components/blog/FloatingTOC';
 import { getCollection, render } from 'astro:content';
 import { t } from '../../../i18n/translations';
 
@@ -57,6 +57,7 @@ const categoryLabels: Record<string, string> = {
   <Navbar lang={lang} client:load />
 
   <main class="pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
+    <FloatingTOC client:load />
     <!-- Breadcrumb + Back -->
     <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
       <nav class="flex items-center gap-2 text-[var(--color-text-faint)] text-[0.75rem] uppercase tracking-widest">
@@ -138,15 +139,12 @@ const categoryLabels: Record<string, string> = {
 
       <!-- Sidebar (sticky) -->
       <aside class="lg:col-span-4">
-        <div class="sticky top-32 space-y-8">
+        <div class="sticky top-32">
 
-        <!-- Table of Contents -->
-        <StickyTOC client:load className="hidden lg:block rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm" />
-
-        <!-- Author card -->
-        <div class="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm">
+        <!-- Author section -->
+        <div class="pb-8 border-b border-[var(--color-border)]">
           <div class="flex items-center gap-3 mb-3">
-            <img src="/portfolio/assets/logo-v2-character-circle.png" alt="HB" class="w-10 h-10 rounded-full" />
+            <img src="/assets/logo-v2-character-circle.png" alt="HB" class="w-8 h-8 rounded-full" />
             <div>
               <p class="text-sm font-bold text-[var(--color-text)]">우혜빈</p>
               <p class="text-[10px] text-[var(--color-text-faint)]">AI 서비스 기획자</p>
@@ -159,94 +157,83 @@ const categoryLabels: Record<string, string> = {
 
         <!-- Series navigation -->
         {seriesPosts.length > 1 && (
-          <div class="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm">
-            <div class="mb-3 flex items-center justify-between">
-              <h3 class="text-sm font-bold uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-                시리즈
+          <div class="py-8 border-b border-[var(--color-border)]">
+            <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-faint)] mb-3">SERIES</p>
+            <div class="flex items-baseline justify-between mb-1">
+              <h3 class="text-sm font-bold text-[var(--color-text)]" style="font-family: var(--font-display);">
+                {seriesLabels[post.data.series!] || post.data.series}
               </h3>
-              <!-- C6: position indicator -->
-              <span class="font-mono text-[10px] text-[var(--color-accent)]">
-                {currentSeriesIndex + 1}/{seriesPosts.length}
+              <span class="font-mono text-[10px] text-[var(--color-text-faint)] ml-2 flex-shrink-0">
+                {String(currentSeriesIndex + 1).padStart(2, '0')} / {String(seriesPosts.length).padStart(2, '0')}
               </span>
             </div>
-            <p class="mb-4 text-xs text-[var(--color-text-faint)]">
-              {seriesLabels[post.data.series!] || post.data.series}
-            </p>
-            <!-- C6: mini progress bar -->
-            <div class="mb-4 h-0.5 w-full overflow-hidden rounded-full bg-[var(--color-border)]">
+            <!-- progress line -->
+            <div class="mb-4 h-px w-full bg-[var(--color-border)]">
               <div
-                class="h-full rounded-full bg-[var(--color-accent)] transition-none"
+                class="h-full bg-[var(--color-accent)] transition-none"
                 style={`width: ${((currentSeriesIndex + 1) / seriesPosts.length) * 100}%`}
               />
             </div>
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col">
               {seriesPosts.map((sp, i) => {
                 const isCurrent = sp.id === post.id;
                 return (
                   <a
                     href={isCurrent ? undefined : `${base}${lang}/blog/${sp.id}/`}
                     class:list={[
-                      'group flex items-center gap-2 rounded-lg px-3 py-2 text-xs transition-all',
+                      'group flex items-start gap-2.5 py-2 text-xs transition-colors',
                       isCurrent
-                        ? 'bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] font-semibold'
-                        : 'text-[var(--color-text-muted)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-text)]',
+                        ? 'text-[var(--color-accent)] font-medium cursor-default'
+                        : 'text-[var(--color-text-muted)] hover:text-[var(--color-accent)]',
                     ]}
                   >
-                    <span class:list={[
-                      'flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full font-mono text-[9px] font-bold',
-                      isCurrent
-                        ? 'bg-[var(--color-accent)] text-[var(--color-on-accent)]'
-                        : 'bg-[var(--color-bg-detail)] text-[var(--color-text-faint)]',
-                    ]}>
-                      {i + 1}
+                    <span class="font-mono text-[10px] flex-shrink-0 mt-0.5 text-[var(--color-text-faint)]">
+                      {String(i + 1).padStart(2, '0')}
                     </span>
                     <span class="leading-snug line-clamp-2">{sp.data.title}</span>
                   </a>
                 );
               })}
             </div>
-            <!-- C6: prev/next arrow buttons -->
-            <div class="mt-4 flex gap-2">
+            <!-- prev/next text links -->
+            <div class="mt-4 flex justify-between text-xs">
               {prevSeriesPost ? (
                 <a
                   href={`${base}${lang}/blog/${prevSeriesPost.id}/`}
-                  class="flex flex-1 items-center gap-1.5 rounded-lg border border-[var(--color-border)] px-3 py-2 text-xs text-[var(--color-text-muted)] transition-all hover:border-[var(--color-accent)]/40 hover:text-[var(--color-accent)]"
-                  title="이전 편"
+                  class="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
                 >
-                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-                  <span class="truncate">이전</span>
+                  ← 이전편
                 </a>
-              ) : <span class="flex-1" />}
+              ) : <span />}
               {nextSeriesPost ? (
                 <a
                   href={`${base}${lang}/blog/${nextSeriesPost.id}/`}
-                  class="flex flex-1 items-center justify-end gap-1.5 rounded-lg border border-[var(--color-border)] px-3 py-2 text-xs text-[var(--color-text-muted)] transition-all hover:border-[var(--color-accent)]/40 hover:text-[var(--color-accent)]"
-                  title="다음 편"
+                  class="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
                 >
-                  <span class="truncate">다음</span>
-                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+                  다음편 →
                 </a>
-              ) : <span class="flex-1" />}
+              ) : <span />}
             </div>
           </div>
         )}
 
         <!-- Recommended -->
-        <div class="rounded-xl bg-[var(--color-bg-card)] p-6 shadow-ambient-sm">
-          <h3 class="mb-4 text-sm font-bold uppercase tracking-[0.15em] text-[var(--color-text-faint)]">추천 글</h3>
-          <div class="space-y-4">
+        <div class="pt-8">
+          <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-faint)] mb-4">더 읽어보기</p>
+          <div class="flex flex-col">
             {recommendedPosts.map((rp) => (
-              <a href={`${base}${lang}/blog/${rp.id}/`} class="group block">
-                <span class="text-[10px] font-bold text-[var(--color-accent)] uppercase tracking-wider">
+              <a href={`${base}${lang}/blog/${rp.id}/`} class="group block py-3 border-t border-[var(--color-border)] first:border-t-0">
+                <span class="text-[10px] font-mono uppercase tracking-[0.15em] text-[var(--color-accent)] block mb-0.5">
                   {categoryLabels[rp.data.category] || rp.data.category}
                 </span>
-                <h4 class="text-sm font-semibold text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors leading-snug line-clamp-2">
+                <h4 class="text-sm font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors leading-snug line-clamp-2">
                   {rp.data.title}
                 </h4>
               </a>
             ))}
           </div>
         </div>
+
         </div>
       </aside>
     </div>

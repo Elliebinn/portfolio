@@ -9,14 +9,14 @@ series: "ratb"
 seriesOrder: 2
 relatedLinks:
   - label: "AI 알고리즘이 진짜 돈을 굴려도 되는지, 누가 판단할까"
-    url: "/portfolio/ko/blog/2024-01-15-ratb-ai-national-exam/"
+    url: "/ko/blog/2024-01-15-ratb-ai-national-exam/"
     type: "blog"
   - label: "6개월간 알고리즘이 살아 움직이는 걸 지켜본 시간"
-    url: "/portfolio/ko/blog/2024-09-20-ratb-6months-live/"
+    url: "/ko/blog/2024-09-20-ratb-6months-live/"
     type: "blog"
 ---
 
-시간이 좀 지났는데, [지난 글](/portfolio/ko/blog/2024-01-15-ratb-ai-national-exam/)에서 RATB 심사가 뭔지를 다뤘잖아요. 오늘은 그 심사를 통과하기 위해 알고리즘 하나를 설계하면서 얼마나 많은 판단이 필요했는지 얘기해볼게요.
+시간이 좀 지났는데, [지난 글](/ko/blog/2024-01-15-ratb-ai-national-exam/)에서 RATB 심사가 뭔지를 다뤘잖아요. 오늘은 그 심사를 통과하기 위해 알고리즘 하나를 설계하면서 얼마나 많은 판단이 필요했는지 얘기해볼게요.
 
 근데 먼저 이 얘기부터 할게요.
 
@@ -45,7 +45,7 @@ relatedLinks:
 
 ## "왜?"가 진짜 무서운 질문이었어요
 
-[RATB](/portfolio/ko/blog/2024-01-15-ratb-ai-national-exam/)에 등록하는 AI 투자 알고리즘은 투자 유니버스를 명확히 정의해야 해요. 그리고 그 정의에는 근거가 있어야 해요.
+[RATB](/ko/blog/2024-01-15-ratb-ai-national-exam/)에 등록하는 AI 투자 알고리즘은 투자 유니버스를 명확히 정의해야 해요. 그리고 그 정의에는 근거가 있어야 해요.
 
 근데 유니버스를 "KOSPI200"처럼 뭉뚱그려서 정하면 안 됐어요. 수천 개의 ETF 중에서 어떤 걸 투자 대상으로 넣을 것인가, 왜 이 종목이고 저 종목은 아닌가를 설명할 수 있어야 했거든요.
 

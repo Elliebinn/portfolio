@@ -1,7 +1,7 @@
 import type { Lang } from '../i18n/translations';
 import { ArrowRight, Layers, GitBranch, CheckCircle, Lightbulb, Target, Zap } from 'lucide-react';
 
-const BASE = '/portfolio';
+const BASE = '';
 
 export interface CaseStudyData {
   slug: string;

@@ -136,7 +136,7 @@ src/layouts/EditorialLayout.astro
 | `src/pages/ko/projects/quant-platform.astro:362` | `assets/landing/quant/after-v2.jpg` | 동일. **false positive** |
 | `src/pages/ko/projects/jujutok.astro:89` | SVG path data `M12 9v2m0 4h.01...` | SVG path 명령어(`v` = vertical line, `2` = 길이). **false positive** |
 | `src/pages/ko/index.astro:126` | 본문 카피 "기획 프로세스 v2" | 사용자 가시 텍스트(버전 표기). PRD §2.3 "v2 페이지 잔재"와 무관. **false positive** (편집/유지 결정은 PM 판단) |
-| `src/pages/ko/blog/[slug].astro:141` | `/portfolio/assets/logo-v2-character-circle.png` | 로고 자산 파일명. **false positive** |
+| `src/pages/ko/blog/[slug].astro:141` | `/assets/logo-v2-character-circle.png` | 로고 자산 파일명. **false positive** |
 
 `src/pages/ko/v2/` 또는 `src/pages/en/v2/` 디렉토리 자체가 **존재하지 않음** (Glob 0 hit). PRD §10이 가정한 "v2 라우트 잔재"는 이미 제거되었거나 처음부터 없었음.
 

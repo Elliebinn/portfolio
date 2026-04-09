@@ -3,7 +3,7 @@ import { t } from '../i18n/translations';
 import ColorPlaceholder from './placeholders/ColorPlaceholder';
 import TiltCard from './motion/TiltCard';
 
-const BASE = '/portfolio';
+const BASE = '';
 
 const projectLinks = [
   '/en/projects/quant-platform/',
