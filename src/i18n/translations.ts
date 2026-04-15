@@ -59,7 +59,7 @@ const translations = {
       backToBlog: 'Back to Blog',
     },
     stack: {
-      section: '03 / Expertise',
+      section: '06 / Expertise',
     },
     timeline: {
       section: '04 / Timeline',
@@ -172,7 +172,7 @@ const translations = {
       backToBlog: '블로그로 돌아가기',
     },
     stack: {
-      section: '03 / 역량',
+      section: '06 / 역량',
     },
     timeline: {
       section: '04 / 연혁',

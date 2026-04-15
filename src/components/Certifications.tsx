@@ -19,13 +19,16 @@ export default function Certifications({ lang = 'en' as Lang }: { lang?: Lang })
         </ScrollReveal>
 
         {/* Minimal list — one cert per row */}
-        <div className="divide-y divide-[var(--color-bg-detail)]">
+        <div>
           {tr.items.map((cert, i) => (
             <ScrollReveal key={i} delay={i * 60}>
-              <div className="flex items-center gap-4 py-4">
+              <div
+                className="group flex items-center gap-4 py-4 px-3 rounded-[12px] cursor-default transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1 hover:bg-[rgba(69,98,114,0.03)]"
+                style={i > 0 ? { borderTop: '1px solid var(--color-bg-detail)' } : undefined}
+              >
                 {/* Left icon */}
                 <span
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all duration-[300ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-[var(--color-accent)] group-hover:text-white"
                   style={{
                     backgroundColor: 'var(--color-bg-detail)',
                     color: 'var(--color-accent)',

@@ -1,5 +1,4 @@
 import type { Lang } from '../i18n/translations';
-import ColorPlaceholder from './placeholders/ColorPlaceholder';
 import ScrollReveal from './motion/ScrollReveal';
 
 const steps = {
@@ -32,14 +31,69 @@ const vizLabel = {
   en: 'Planning Process v2',
 };
 
+const RING_RADIUS = 15;
+const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS; // ~94.25
+
+function ProgressRing({ num }: { num: string }) {
+  return (
+    <div className="relative flex-shrink-0 w-12 h-12 group-hover:[--ring-offset:0] [--ring-offset:94]">
+      <svg
+        width="48"
+        height="48"
+        viewBox="0 0 48 48"
+        className="absolute inset-0"
+        style={{ transform: 'rotate(-90deg)' }}
+        aria-hidden="true"
+      >
+        {/* Background track */}
+        <circle
+          cx="24"
+          cy="24"
+          r={RING_RADIUS}
+          fill="none"
+          stroke="var(--color-bg-detail)"
+          strokeWidth="2.5"
+        />
+        {/* Animated fill */}
+        <circle
+          cx="24"
+          cy="24"
+          r={RING_RADIUS}
+          fill="none"
+          stroke="var(--color-accent)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray={RING_CIRCUMFERENCE}
+          className="ring-fill"
+          style={{
+            strokeDashoffset: RING_CIRCUMFERENCE,
+            transition: 'stroke-dashoffset 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
+        />
+      </svg>
+      <span
+        className="absolute inset-0 flex items-center justify-center text-xs font-bold"
+        style={{ color: 'var(--color-accent)' }}
+      >
+        {num}
+      </span>
+    </div>
+  );
+}
+
 export default function Methodology({ lang = 'ko' as Lang }: { lang?: Lang }) {
   const items = steps[lang] ?? steps.ko;
 
   return (
     <section id="methodology" className="py-24" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
+      <style>{`
+        .methodology-step:hover .ring-fill {
+          stroke-dashoffset: 0 !important;
+        }
+      `}</style>
       <div className="max-w-[1440px] mx-auto px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Left: sticky title + visual */}
+          {/* Left: sticky title + process flow diagram */}
           <div className="lg:col-span-5 lg:sticky lg:top-24 lg:self-start">
             <ScrollReveal>
               <div className="flex flex-col gap-4 mb-8">
@@ -56,21 +110,29 @@ export default function Methodology({ lang = 'ko' as Lang }: { lang?: Lang }) {
             </ScrollReveal>
             <ScrollReveal delay={100}>
               <div className="bg-[var(--color-bg-card)] p-8 rounded-xl shadow-ambient">
-                <div
-                  className="aspect-video rounded-lg overflow-hidden relative"
-                  style={{ backgroundColor: 'var(--color-bg-detail)' }}
-                >
-                  <ColorPlaceholder
-                    variant="geometric"
-                    colors={['--color-bg-detail', '--color-accent']}
-                    className="w-full h-full"
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{ background: 'linear-gradient(to top right, rgba(69, 98, 114, 0.2), transparent)' }}
-                  />
+                {/* Process flow diagram: P1 → P2 → P3 → P4 */}
+                <div className="flex items-center justify-center gap-0 py-6">
+                  {['P1', 'P2', 'P3', 'P4'].map((label, idx) => (
+                    <div key={label} className="flex items-center">
+                      <div
+                        className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold flex-shrink-0"
+                        style={{
+                          backgroundColor: 'var(--color-accent)',
+                          color: 'var(--color-on-accent)',
+                        }}
+                      >
+                        {label}
+                      </div>
+                      {idx < 3 && (
+                        <div
+                          className="w-8 h-px flex-shrink-0"
+                          style={{ backgroundColor: 'var(--color-bg-detail)' }}
+                        />
+                      )}
+                    </div>
+                  ))}
                 </div>
-                <div className="mt-6 flex justify-between items-center">
+                <div className="mt-4 flex justify-between items-center">
                   <div className="flex gap-2">
                     <span className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(159, 64, 61, 0.2)' }} />
                     <span className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(69, 98, 114, 0.2)' }} />
@@ -89,13 +151,19 @@ export default function Methodology({ lang = 'ko' as Lang }: { lang?: Lang }) {
             {items.map((step, i) => (
               <ScrollReveal key={step.num} delay={i * 80}>
                 <div
-                  className={`flex gap-6 items-start group py-12 transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-2 ${
+                  className={`methodology-step relative flex gap-6 items-start group py-12 transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-2 ${
                     i < items.length - 1 ? 'border-b border-[var(--color-border)]' : ''
                   }`}
                 >
-                  <span className="bg-[var(--color-accent)] text-[var(--color-on-accent)] w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0 transition-transform duration-[400ms] ease-[ease] group-hover:scale-110">
-                    {step.num}
-                  </span>
+                  {/* Accent indicator bar */}
+                  <div
+                    className="absolute left-0 top-0 w-[3px] h-full opacity-0 group-hover:opacity-100 rounded-full"
+                    style={{
+                      backgroundColor: 'var(--color-accent)',
+                      transition: 'opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                    }}
+                  />
+                  <ProgressRing num={step.num} />
                   <div>
                     <h3 className="text-xl font-bold mb-2 text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors">
                       {step.title}

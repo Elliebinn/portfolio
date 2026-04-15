@@ -181,7 +181,7 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
                   ].join(' ')}
                 >
                   <span
-                    className="block mb-4 text-sm font-bold tracking-[0.1em]"
+                    className="block mb-4 text-sm font-bold tracking-[0.1em] tabular-nums"
                     style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
                   >
                     {p.number} / {String(total).padStart(2, '0')}
@@ -196,8 +196,8 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
                     {p.category}
                   </span>
                   <h3
-                    className="mt-4 mb-5 text-[2.25rem] font-extrabold leading-[1.15] tracking-tight"
-                    style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text)', letterSpacing: '-0.02em' }}
+                    className="mt-4 mb-5 text-[2.25rem] font-extrabold leading-[1.15] tracking-tight transition-colors duration-300 hover:text-[var(--color-accent)]"
+                    style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text)', letterSpacing: '-0.02em', cursor: 'default' }}
                   >
                     {p.title}
                   </h3>
@@ -208,12 +208,12 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
                     {p.desc}
                   </p>
 
-                  {/* Tags */}
+                  {/* Tags — hover interactive */}
                   <div className="flex flex-wrap gap-2 mb-8">
                     {p.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-full px-3 py-1.5 text-[0.6875rem] font-medium"
+                        className="rounded-full px-3 py-1.5 text-[0.6875rem] font-medium transition-[background-color,color,transform] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-[var(--color-accent)] hover:text-[var(--color-on-accent)] hover:-translate-y-0.5 cursor-default"
                         style={{
                           backgroundColor: 'var(--color-secondary-container)',
                           color: 'var(--color-on-secondary-container)',
@@ -224,11 +224,14 @@ export default function Projects({ lang = 'en' as Lang }: { lang?: Lang }) {
                     ))}
                   </div>
 
-                  {/* CTA */}
+                  {/* CTA — pill button style */}
                   <a
                     href={`${BASE}${p.href.replace(/^\//, '')}`}
-                    className="group/cta inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 hover:gap-3.5"
-                    style={{ color: 'var(--color-accent)' }}
+                    className="group/cta inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-semibold transition-[gap,background-color,color,transform,box-shadow] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:gap-3.5 hover:bg-[var(--color-accent)] hover:text-[var(--color-on-accent)] hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(69,98,114,0.15)]"
+                    style={{
+                      color: 'var(--color-accent)',
+                      border: '1.5px solid rgba(69, 98, 114, 0.2)',
+                    }}
                   >
                     {p.cta}
                     <span className="inline-block transition-transform duration-300 group-hover/cta:translate-x-1">

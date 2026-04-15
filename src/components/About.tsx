@@ -1,7 +1,8 @@
+import { useEffect, useRef } from 'react';
 import type { Lang } from '../i18n/translations';
 import { t } from '../i18n/translations';
-import ColorPlaceholder from './placeholders/ColorPlaceholder';
 import ScrollReveal from './motion/ScrollReveal';
+import MagneticButton from './motion/MagneticButton';
 
 const quote = {
   ko: '금융을 이해하는 기획자, 기술로 검증하는 실행자.',
@@ -37,83 +38,119 @@ const skills = {
 export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
   const tr = t(lang).about;
   const txt = aboutText[lang];
+  const blockquoteRef = useRef<HTMLQuoteElement | null>(null);
+
+  useEffect(() => {
+    const node = blockquoteRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          node.classList.add('bq-highlighted');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section id="about" className="px-6 py-16 sm:py-28" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-10 sm:gap-12 lg:grid-cols-[280px_1fr]">
-          {/* Photo — 4-col equivalent */}
-          <div className="hidden lg:block">
-            <ScrollReveal>
-              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-[var(--color-bg-card)] shadow-ambient">
-                <ColorPlaceholder
-                  variant="gradient"
-                  colors={["--color-accent", "--color-bg-secondary"]}
-                  className="h-full w-full"
-                />
-              </div>
-              <p className="mt-4 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-                {txt.location}
-              </p>
-            </ScrollReveal>
+      <style>{`
+        @keyframes bq-sweep {
+          from { background-size: 0% 100%; }
+          to   { background-size: 100% 100%; }
+        }
+        .bq-sweep-target {
+          background-image: linear-gradient(
+            to right,
+            rgba(69, 98, 114, 0.08),
+            rgba(69, 98, 114, 0.08)
+          );
+          background-repeat: no-repeat;
+          background-size: 0% 100%;
+          background-position: left center;
+          border-radius: 4px;
+          transition: none;
+        }
+        .bq-highlighted .bq-sweep-target {
+          animation: bq-sweep 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .skill-tag {
+          display: inline-block;
+          border-radius: 9999px;
+          background: var(--color-secondary-container);
+          padding: 0.375rem 0.75rem;
+          font-size: 11px;
+          font-weight: 500;
+          color: var(--color-on-secondary-container);
+          transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                      color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          cursor: default;
+        }
+        .skill-tag:hover {
+          background: var(--color-accent);
+          color: var(--color-on-accent);
+          transform: translateY(-2px) scale(1.03);
+        }
+      `}</style>
+
+      <div className="mx-auto max-w-3xl">
+        <ScrollReveal>
+          <p className="mb-4 sm:mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
+            {tr.section}
+          </p>
+        </ScrollReveal>
+
+        {/* Blockquote */}
+        <ScrollReveal delay={100}>
+          <blockquote
+            ref={blockquoteRef}
+            className="mb-10 sm:mb-14 border-l-[3px] pl-6 py-3 text-2xl sm:text-3xl italic leading-relaxed text-[var(--color-text)]"
+            style={{ borderColor: 'var(--color-accent)', fontFamily: 'var(--font-display)' }}
+          >
+            <span className="bq-sweep-target">{quote[lang]}</span>
+          </blockquote>
+        </ScrollReveal>
+
+        <ScrollReveal delay={200}>
+          <h2
+            className="mb-6 sm:mb-8 text-2xl font-bold leading-normal sm:text-3xl lg:text-4xl text-[var(--color-text)]"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
+            {txt.heading}{txt.heading ? ' ' : ''}
+            <span className="text-[var(--color-accent)]">
+              {txt.accent1}
+            </span>{' '}
+            {txt.mid}{' '}
+            <span className="text-[var(--color-accent)]">
+              {txt.accent2}
+            </span>
+            {txt.suffix}
+          </h2>
+        </ScrollReveal>
+
+        <ScrollReveal delay={300}>
+          <p className="mb-8 sm:mb-10 text-sm leading-[1.9] text-[var(--color-text-muted)]">
+            {txt.body}
+          </p>
+        </ScrollReveal>
+
+        {/* Skill tags */}
+        <ScrollReveal delay={400}>
+          <div className="flex flex-wrap gap-3">
+            {skills[lang].map((skill) => (
+              <MagneticButton key={skill} strength={0.25}>
+                <span className="skill-tag">{skill}</span>
+              </MagneticButton>
+            ))}
           </div>
-
-          {/* Text — 7-col equivalent */}
-          <div className="flex flex-col justify-center">
-            <ScrollReveal>
-              <p className="mb-4 sm:mb-6 text-xs uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
-                {tr.section}
-              </p>
-            </ScrollReveal>
-
-            {/* Blockquote */}
-            <ScrollReveal delay={100}>
-              <blockquote
-                className="mb-8 sm:mb-10 border-l-[3px] pl-5 py-2 text-xl sm:text-2xl italic leading-relaxed text-[var(--color-text)]"
-                style={{ borderColor: 'var(--color-accent)', fontFamily: 'var(--font-display)' }}
-              >
-                {quote[lang]}
-              </blockquote>
-            </ScrollReveal>
-
-            <ScrollReveal delay={200}>
-              <h2
-                className="mb-6 sm:mb-8 text-2xl font-bold leading-normal sm:text-3xl lg:text-4xl text-[var(--color-text)]"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                {txt.heading}{txt.heading ? ' ' : ''}
-                <span className="text-[var(--color-accent)]">
-                  {txt.accent1}
-                </span>{' '}
-                {txt.mid}{' '}
-                <span className="text-[var(--color-accent)]">
-                  {txt.accent2}
-                </span>
-                {txt.suffix}
-              </h2>
-            </ScrollReveal>
-
-            <ScrollReveal delay={300}>
-              <p className="mb-8 sm:mb-10 text-sm leading-[1.9] text-[var(--color-text-muted)]">
-                {txt.body}
-              </p>
-            </ScrollReveal>
-
-            {/* Skill tags */}
-            <ScrollReveal delay={400}>
-              <div className="flex flex-wrap gap-3">
-                {skills[lang].map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-full bg-[var(--color-secondary-container)] px-3 py-1.5 text-[11px] font-medium text-[var(--color-on-secondary-container)]"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

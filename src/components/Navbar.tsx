@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'motion/react';
 import type { Lang } from '../i18n/translations';
 import { t, getOtherLang } from '../i18n/translations';
 
@@ -7,6 +8,23 @@ const BASE = '';
 export default function Navbar({ lang = 'en' as Lang }: { lang?: Lang }) {
   const tr = t(lang);
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const { scrollY } = useScroll();
+
+  // Track scroll state for mobile menu and conditional classes
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setScrolled(latest > 80);
+  });
+
+  // Navbar background opacity: 0 at top → 1 after 100px scroll
+  const navBgOpacity = useTransform(scrollY, [0, 100], [0, 1]);
+  // Logo opacity: hidden at top → visible after scrolling
+  const logoOpacity = useTransform(scrollY, [40, 140], [0, 1]);
+  // Logo scale: slight scale-up entrance
+  const logoScale = useTransform(scrollY, [40, 140], [0.85, 1]);
+  // Logo translateY: slides down into place
+  const logoY = useTransform(scrollY, [40, 140], [-8, 0]);
 
   const navLinks = [
     { label: tr.nav.home, href: `${BASE}/${lang}/` },
@@ -18,11 +36,30 @@ export default function Navbar({ lang = 'en' as Lang }: { lang?: Lang }) {
   const otherLang = getOtherLang(lang);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass ghost-border border-t-0 border-l-0 border-r-0">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <a
+    <motion.nav
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{ willChange: 'auto' }}
+    >
+      {/* Animated glass background layer */}
+      <motion.div
+        className="absolute inset-0 glass"
+        style={{
+          opacity: navBgOpacity,
+          borderBottom: '1px solid rgba(169, 180, 185, 0.15)',
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        {/* Logo — fades in on scroll */}
+        <motion.a
           href={`${BASE}/${lang}/`}
           className="flex items-center gap-2"
+          style={{
+            opacity: logoOpacity,
+            scale: logoScale,
+            y: logoY,
+          }}
         >
           <img
             src="/assets/logo-v2-character-circle.png"
@@ -36,9 +73,9 @@ export default function Navbar({ lang = 'en' as Lang }: { lang?: Lang }) {
           >
             HB.
           </span>
-        </a>
+        </motion.a>
 
-        {/* Desktop nav */}
+        {/* Desktop nav — links always visible but subtle at top */}
         <div className="hidden items-center gap-10 md:flex">
           {navLinks.map((link) => (
             <a key={link.href} href={link.href}
@@ -90,6 +127,6 @@ export default function Navbar({ lang = 'en' as Lang }: { lang?: Lang }) {
           </a>
         </div>
       )}
-    </nav>
+    </motion.nav>
   );
 }

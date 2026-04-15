@@ -1,4 +1,5 @@
 import type { Lang } from '../i18n/translations';
+import { motion, useScroll, useTransform } from 'motion/react';
 import SplitText from './motion/SplitText';
 import CountUp from './motion/CountUp';
 import CursorSpotlight from './motion/CursorSpotlight';
@@ -31,6 +32,11 @@ export default function Hero({ lang = 'en' as Lang }: { lang?: Lang }) {
 
   const location = 'Seoul, South Korea';
   const stats = STATS[lang] ?? STATS.en;
+
+  // Scroll-linked parallax: hero text floats up and fades as you scroll
+  const { scrollY } = useScroll();
+  const heroTextY = useTransform(scrollY, [0, 400], [0, -60]);
+  const heroTextOpacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   const handleScrollDown = () => {
     const hero = document.getElementById('home');
@@ -68,8 +74,11 @@ export default function Hero({ lang = 'en' as Lang }: { lang?: Lang }) {
           </p>
         </div>
 
-        {/* Giant text — centered vertically */}
-        <div className="flex flex-1 flex-col justify-center py-12">
+        {/* Giant text — centered vertically, scroll-linked parallax */}
+        <motion.div
+          className="flex flex-1 flex-col justify-center py-12"
+          style={{ y: heroTextY, opacity: heroTextOpacity }}
+        >
           {/* Portfolio by */}
           <span
             className="mb-[-2vw] block text-[clamp(3rem,10vw,8rem)] font-extrabold leading-none tracking-tight text-[var(--color-bg-emphasis)]"
@@ -105,7 +114,7 @@ export default function Hero({ lang = 'en' as Lang }: { lang?: Lang }) {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* I3 MagneticButton scroll indicator */}
         <div className="flex justify-center pb-10">

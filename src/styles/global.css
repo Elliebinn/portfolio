@@ -84,6 +84,13 @@ body {
   filter: none;
 }
 
+/* === Tabular nums for all dynamic numbers === */
+[style*="font-family: var(--font-mono)"],
+[style*="font-family: var(--font-display)"] span[class*="CountUp"],
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
 /* === Tonal Layering Utilities === */
 
 /* Ambient shadow — for floating elements only */
@@ -173,3 +180,4 @@ body {
     transition: none !important;
   }
 }
+
