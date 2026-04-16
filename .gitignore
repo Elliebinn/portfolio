@@ -32,3 +32,9 @@ pnpm-debug.log*
 # Cloned external reference repos (do not vendor)
 _workspace/refs/
 claude-talk-to-figma-mcp/
+
+# Local Claude Code / agent configs (per-machine)
+.agents/
+.mcp.json
+.playwright-mcp/
+.superpowers/

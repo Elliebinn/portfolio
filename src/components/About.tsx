@@ -1,13 +1,7 @@
-import { useEffect, useRef } from 'react';
 import type { Lang } from '../i18n/translations';
 import { t } from '../i18n/translations';
 import ScrollReveal from './motion/ScrollReveal';
 import MagneticButton from './motion/MagneticButton';
-
-const quote = {
-  ko: '금융을 이해하는 기획자, 기술로 검증하는 실행자.',
-  en: 'A planner who understands finance, an executor who proves with technology.',
-};
 
 const aboutText = {
   en: {
@@ -38,48 +32,10 @@ const skills = {
 export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
   const tr = t(lang).about;
   const txt = aboutText[lang];
-  const blockquoteRef = useRef<HTMLQuoteElement | null>(null);
-
-  useEffect(() => {
-    const node = blockquoteRef.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          node.classList.add('bq-highlighted');
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <section id="about" className="px-6 py-16 sm:py-28" style={{ backgroundColor: 'var(--color-bg-secondary)' }}>
       <style>{`
-        @keyframes bq-sweep {
-          from { background-size: 0% 100%; }
-          to   { background-size: 100% 100%; }
-        }
-        .bq-sweep-target {
-          background-image: linear-gradient(
-            to right,
-            rgba(69, 98, 114, 0.08),
-            rgba(69, 98, 114, 0.08)
-          );
-          background-repeat: no-repeat;
-          background-size: 0% 100%;
-          background-position: left center;
-          border-radius: 4px;
-          transition: none;
-        }
-        .bq-highlighted .bq-sweep-target {
-          animation: bq-sweep 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
         .skill-tag {
           display: inline-block;
           border-radius: 9999px;
@@ -107,18 +63,7 @@ export default function About({ lang = 'en' as Lang }: { lang?: Lang }) {
           </p>
         </ScrollReveal>
 
-        {/* Blockquote */}
         <ScrollReveal delay={100}>
-          <blockquote
-            ref={blockquoteRef}
-            className="mb-10 sm:mb-14 border-l-[3px] pl-6 py-3 text-2xl sm:text-3xl italic leading-relaxed text-[var(--color-text)]"
-            style={{ borderColor: 'var(--color-accent)', fontFamily: 'var(--font-display)' }}
-          >
-            <span className="bq-sweep-target">{quote[lang]}</span>
-          </blockquote>
-        </ScrollReveal>
-
-        <ScrollReveal delay={200}>
           <h2
             className="mb-6 sm:mb-8 text-2xl font-bold leading-normal sm:text-3xl lg:text-4xl text-[var(--color-text)]"
             style={{ fontFamily: 'var(--font-display)' }}
