@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AED - Backtest Result List</title>
+<style>
+/* Geist Sans */
+@font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+    --bg-page: #f8f8f6;
+    --bg-card: #ffffff;
+    --bg-card-subtle: #fafbfc;
+    --bg-header: #0f0f12;
+    --bg-sidebar: #ffffff;
+
+    --border-card: #e8e8e4;
+    --border-hover: #d0d0cc;
+    --border-subtle: #f0f0ec;
+
+    --text-primary: #111113;
+    --text-secondary: #52525b;
+    --text-muted: #8b8b94;
+    --text-inverse: #fafafa;
+
+    --accent-blue: #2563eb;
+    --accent-emerald: #059669;
+    --accent-red: #dc2626;
+    --accent-amber: #d97706;
+    --accent-violet: #7c3aed;
+    --accent-orange: #ea580c;
+
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    --shadow-card-hover: 0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-section: 0 1px 2px rgba(0,0,0,0.03);
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --radius-card: 16px;
+    --radius-badge: 8px;
+    --radius-sm: 6px;
+}
+
+/* ── Dark Mode ── */
+body.dark {
+    --bg-page: #09090b;
+    --bg-card: #18181b;
+    --bg-card-subtle: #1c1c20;
+    --bg-header: #09090b;
+    --bg-sidebar: #111113;
+
+    --border-card: #27272a;
+    --border-hover: #3f3f46;
+    --border-subtle: #1e1e22;
+
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --text-inverse: #111113;
+
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.1);
+    --shadow-card-hover: 0 8px 30px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 15px;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+}
+
+/* ── Shell Layout ── */
+.aed-shell {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ── Sidebar ── */
+.aed-sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-card);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    flex-shrink: 0;
+    z-index: 100;
+    transition: margin-left 0.25s var(--ease-out), opacity 0.25s var(--ease-out);
+}
+.aed-sidebar.collapsed {
+    margin-left: -220px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.aed-sidebar-brand {
+    padding: 16px 16px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+.aed-sidebar-logo {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 800; font-size: 14px;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+    flex-shrink: 0;
+}
+.aed-sidebar-title { font-weight: 800; font-size: 17px; color: var(--text-primary); letter-spacing: -0.02em; }
+.aed-sidebar-subtitle { font-size: 9px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+
+.aed-sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+}
+.aed-sidebar-section {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding: 20px 16px 8px;
+}
+.aed-sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 6px;
+    margin: 1px 8px;
+    transition: all 0.15s;
+    cursor: pointer;
+}
+.aed-sidebar-link svg { flex-shrink: 0; width: 18px; height: 18px; }
+.aed-sidebar-link:hover { background: #f1f5f9; color: var(--text-primary); }
+body.dark .aed-sidebar-link:hover { background: rgba(255,255,255,0.08); }
+.aed-sidebar-link.active { background: #eff6ff; color: var(--accent-blue); font-weight: 600; }
+body.dark .aed-sidebar-link.active { background: rgba(37,99,235,0.15); }
+.aed-sidebar-link .aed-badge {
+    margin-left: auto;
+    font-size: 10px; font-weight: 700;
+    background: #dbeafe; color: var(--accent-blue);
+    padding: 1px 7px; border-radius: 999px;
+}
+body.dark .aed-sidebar-link .aed-badge { background: rgba(37,99,235,0.2); }
+
+.aed-sidebar-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.aed-sidebar-status {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--text-muted);
+}
+.aed-sidebar-status-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #10b981;
+}
+.aed-sidebar-version { font-size: 10px; color: var(--text-muted); }
+
+/* ── Content Area ── */
+.aed-content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 0;
+}
+
+/* ── Topbar ── */
+.aed-topbar {
+    height: 44px;
+    min-height: 44px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-card);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 6px;
+    font-size: 13px;
+}
+.aed-topbar-crumb { color: var(--text-muted); cursor: pointer; transition: color 0.15s; text-decoration: none; }
+.aed-topbar-crumb:hover { color: var(--accent-blue); }
+.aed-topbar-current { color: var(--text-primary); font-weight: 600; }
+.aed-topbar-sep { color: var(--text-muted); font-size: 11px; margin: 0 2px; }
+.aed-topbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.aed-footer-btn {
+    background: none; border: 1px solid var(--border-card);
+    border-radius: 6px; padding: 4px 8px;
+    font-size: 11px; font-weight: 500; color: var(--text-secondary);
+    cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; gap: 4px;
+}
+.aed-footer-btn:hover { background: #f1f5f9; border-color: var(--border-hover); }
+body.dark .aed-footer-btn:hover { background: rgba(255,255,255,0.08); }
+
+/* ── Main Content ── */
+.aed-main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 32px 48px;
+    background: var(--bg-page);
+}
+
+/* ── Page Header ── */
+.aed-page-header { margin-bottom: 20px; }
+.aed-page-title { font-size: 22px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; margin: 0; }
+.aed-page-subtitle { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 4px; }
+
+/* ── Card ── */
+.aed-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 24px;
+    transition: all 0.3s var(--ease-out);
+}
+
+/* ── Search Bar ── */
+.brl-search-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.brl-search-input {
+    flex: 1;
+    max-width: 480px;
+    position: relative;
+}
+.brl-search-input input {
+    width: 100%;
+    padding: 8px 12px 8px 36px;
+    border: 1px solid var(--border-card);
+    border-radius: 8px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.2s;
+}
+.brl-search-input input::placeholder { color: var(--text-muted); }
+.brl-search-input input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.brl-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+.brl-import-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; background: var(--bg-card);
+    border: 1px solid var(--border-card); border-radius: 8px;
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    cursor: pointer; transition: all 0.2s;
+    white-space: nowrap;
+}
+.brl-import-btn:hover { border-color: var(--border-hover); background: var(--bg-card-subtle); }
+body.dark .brl-import-btn { background: var(--bg-card); border-color: var(--border-card); color: var(--text-secondary); }
+body.dark .brl-import-btn:hover { border-color: var(--border-hover); }
+
+/* ── Filter Bar ── */
+.aed-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    transition: all 0.25s var(--ease-out);
+    overflow: hidden;
+}
+.aed-filter-bar.collapsed {
+    max-height: 0;
+    padding: 0 16px;
+    border-color: transparent;
+    margin-bottom: 0;
+    opacity: 0;
+}
+.filter-toggle-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 5px 12px;
+    background: none;
+    border: 1px solid var(--border-card);
+    border-radius: 6px;
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 12px; font-weight: 500; color: var(--text-muted);
+    cursor: pointer; transition: all 0.15s;
+}
+.filter-toggle-btn:hover { color: var(--text-primary); border-color: var(--border-hover); }
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.filter-group-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+.filter-chip {
+    display: inline-flex; align-items: center;
+    padding: 4px 12px;
+    border: 1px solid var(--border-card);
+    border-radius: 999px;
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 12px; font-weight: 500; color: var(--text-secondary);
+    cursor: pointer; transition: all 0.15s;
+    background: transparent;
+    white-space: nowrap;
+}
+.filter-chip:hover { border-color: var(--border-hover); color: var(--text-primary); }
+.filter-chip.active {
+    border-color: var(--accent-blue);
+    background: rgba(37,99,235,0.06);
+    color: var(--accent-blue);
+    font-weight: 600;
+}
+body.dark .filter-chip.active {
+    background: rgba(37,99,235,0.15);
+    color: #60a5fa;
+    border-color: #60a5fa;
+}
+
+.filter-number-input {
+    width: 60px;
+    padding: 4px 8px;
+    border: 1px solid var(--border-card);
+    border-radius: 6px;
+    background: var(--bg-card-subtle);
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    outline: none;
+    text-align: center;
+    transition: border-color 0.15s;
+}
+.filter-number-input:focus { border-color: var(--accent-blue); }
+
+.filter-select {
+    padding: 4px 28px 4px 10px;
+    border: 1px solid var(--border-card);
+    border-radius: 6px;
+    background: var(--bg-card-subtle);
+    color: var(--text-secondary);
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%238b8b94' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    transition: border-color 0.15s;
+}
+.filter-select:focus { border-color: var(--accent-blue); }
+
+.filter-separator {
+    width: 1px;
+    height: 24px;
+    background: var(--border-card);
+    flex-shrink: 0;
+}
+
+.filter-reset-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.15s;
+    white-space: nowrap;
+}
+.filter-reset-btn:hover { color: var(--accent-red); }
+
+/* ── Data Table ── */
+.brl-table-wrapper {
+    border: 1px solid var(--border-card);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-card);
+    box-shadow: var(--shadow-card);
+}
+.brl-table-scroll {
+    height: calc(100vh - 280px);
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.brl-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+}
+.brl-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.brl-table th {
+    background: var(--bg-card-subtle);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border-card);
+    position: sticky;
+    top: 0;
+}
+.brl-table th.col-num { text-align: right; }
+.brl-table th.col-check { width: 40px; text-align: center; }
+.brl-table th.col-name { width: 200px; }
+.brl-table th.col-universe { width: 90px; }
+.brl-table th.col-tags { width: 140px; }
+.brl-table th.col-cum { width: 100px; }
+.brl-table th.col-mdd { width: 90px; }
+.brl-table th.col-sharpe { width: 80px; }
+.brl-table th.col-date { width: 100px; }
+.brl-table th.col-created { width: 110px; }
+.brl-table th.col-actions { width: 80px; text-align: center; }
+
+.brl-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: middle;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-primary);
+}
+.brl-table td.col-num {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: -0.01em;
+}
+.brl-table td.col-check { text-align: center; }
+.brl-table td.col-actions { text-align: center; }
+
+.brl-table tbody tr {
+    transition: all 0.15s;
+    cursor: pointer;
+}
+.brl-table tbody tr:hover {
+    background: var(--bg-card-subtle);
+    box-shadow: inset 3px 0 0 var(--accent-blue);
+}
+.brl-table tbody tr.selected {
+    background: rgba(37,99,235,0.06);
+}
+body.dark .brl-table tbody tr.selected {
+    background: rgba(37,99,235,0.12);
+}
+
+/* ── Cell Name ── */
+.cell-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 13px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cell-name:hover { color: var(--accent-blue); }
+
+/* ── Universe Badge ── */
+.universe-badge {
+    display: inline-flex;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+.universe-badge.us-etf { background: #dbeafe; color: #1d4ed8; }
+.universe-badge.sp500 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
+.universe-badge.kospi { background: #dcfce7; color: #166534; }
+.universe-badge.kosdaq { background: #fef3c7; color: #92400e; }
+
+body.dark .universe-badge.us-etf { background: rgba(37,99,235,0.2); color: #93bbfd; }
+body.dark .universe-badge.sp500 { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #dbeafe; }
+body.dark .universe-badge.kospi { background: rgba(5,150,105,0.2); color: #6ee7b7; }
+body.dark .universe-badge.kosdaq { background: rgba(217,119,6,0.2); color: #fcd34d; }
+
+/* ── Tags ── */
+.cell-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+.tag-pill {
+    display: inline-flex;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background: var(--bg-card-subtle);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+}
+body.dark .tag-pill { background: rgba(255,255,255,0.06); border-color: var(--border-card); }
+
+/* ── Conditional Formatting ── */
+.cell-positive {
+    background: rgba(5,150,105,0.08);
+    color: var(--accent-emerald);
+    font-weight: 600;
+}
+body.dark .cell-positive {
+    background: rgba(52,211,153,0.1);
+    color: #34d399;
+}
+.cell-negative {
+    background: rgba(220,38,38,0.08);
+    color: var(--accent-red);
+    font-weight: 600;
+}
+body.dark .cell-negative {
+    background: rgba(248,113,113,0.1);
+    color: #f87171;
+}
+
+.cell-mdd-light { background: rgba(220,38,38,0.04); color: var(--accent-red); }
+.cell-mdd-medium { background: rgba(220,38,38,0.08); color: var(--accent-red); font-weight: 600; }
+.cell-mdd-heavy { background: rgba(220,38,38,0.14); color: var(--accent-red); font-weight: 700; }
+body.dark .cell-mdd-light { background: rgba(248,113,113,0.06); color: #f87171; }
+body.dark .cell-mdd-medium { background: rgba(248,113,113,0.1); color: #f87171; font-weight: 600; }
+body.dark .cell-mdd-heavy { background: rgba(248,113,113,0.18); color: #f87171; font-weight: 700; }
+
+.cell-sharpe-good {
+    background: rgba(5,150,105,0.10);
+    color: var(--accent-emerald);
+    font-weight: 600;
+}
+body.dark .cell-sharpe-good {
+    background: rgba(52,211,153,0.12);
+    color: #34d399;
+}
+.cell-sharpe-bad {
+    background: rgba(217,119,6,0.10);
+    color: var(--accent-amber);
+    font-weight: 600;
+}
+body.dark .cell-sharpe-bad {
+    background: rgba(251,191,36,0.12);
+    color: #fbbf24;
+}
+
+/* ── Action Buttons in Table ── */
+.row-action-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+}
+.row-action-btn:hover { color: var(--accent-blue); background: rgba(37,99,235,0.08); }
+
+/* ── Checkbox ── */
+.brl-checkbox {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border-hover);
+    border-radius: 4px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--bg-card);
+    transition: all 0.15s;
+    position: relative;
+}
+.brl-checkbox:checked {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+}
+.brl-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px; top: 1px;
+    width: 5px; height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* ── Inline Action Buttons ── */
+.brl-action-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 4px;
+}
+.brl-action-separator {
+    width: 1px;
+    height: 22px;
+    background: var(--border-card);
+    margin: 0 4px;
+    flex-shrink: 0;
+}
+.brl-selected-badge {
+    display: none;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    background: rgba(37,99,235,0.08);
+    border: 1px solid rgba(37,99,235,0.2);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-blue);
+    white-space: nowrap;
+    animation: aed-cardSlideUp 0.2s var(--ease-out);
+}
+.brl-selected-badge.visible { display: inline-flex; }
+.brl-selected-badge .deselect-x {
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.15s;
+    margin-left: 2px;
+}
+.brl-selected-badge .deselect-x:hover { opacity: 1; }
+body.dark .brl-selected-badge {
+    background: rgba(96,165,250,0.12);
+    border-color: rgba(96,165,250,0.25);
+    color: #60a5fa;
+}
+.brl-action-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 7px;
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 12px; font-weight: 500; color: var(--text-secondary);
+    cursor: pointer; transition: all 0.2s;
+    white-space: nowrap;
+}
+.brl-action-btn:hover { border-color: var(--border-hover); background: var(--bg-card-subtle); color: var(--text-primary); }
+.brl-action-btn.disabled {
+    opacity: 0.35;
+    pointer-events: none;
+    cursor: default;
+}
+.brl-action-btn.danger { color: var(--accent-red); }
+.brl-action-btn.danger:hover { background: rgba(220,38,38,0.06); border-color: rgba(220,38,38,0.3); }
+.brl-action-btn.danger.disabled { color: var(--text-muted); }
+body.dark .brl-action-btn { background: var(--bg-card); border-color: var(--border-card); color: var(--text-secondary); }
+body.dark .brl-action-btn:hover { border-color: var(--border-hover); color: var(--text-primary); }
+body.dark .brl-action-btn.danger { color: #f87171; }
+body.dark .brl-action-btn.danger:hover { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.3); }
+
+.brl-search-row .spacer { flex: 1; }
+
+/* ── Date cells ── */
+.cell-date {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -0.02em;
+}
+
+/* ── Animations ── */
+@keyframes aed-cardSlideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Dark mode extras ── */
+body.dark .aed-sidebar { background: var(--bg-sidebar); border-color: var(--border-card); }
+body.dark .aed-topbar { background: var(--bg-card); border-color: var(--border-card); }
+body.dark .aed-main { background: var(--bg-page); }
+body.dark .brl-search-input input { background: var(--bg-card); border-color: var(--border-card); color: var(--text-primary); }
+body.dark .brl-search-input input:focus { border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96,165,250,0.15); }
+body.dark .aed-filter-bar { background: var(--bg-card); border-color: var(--border-card); }
+body.dark .filter-chip { border-color: var(--border-card); color: var(--text-secondary); }
+body.dark .filter-chip:hover { border-color: var(--border-hover); color: var(--text-primary); }
+body.dark .filter-number-input { background: var(--bg-card-subtle); border-color: var(--border-card); color: var(--text-primary); }
+body.dark .filter-number-input:focus { border-color: #60a5fa; }
+body.dark .filter-select { background: var(--bg-card-subtle); border-color: var(--border-card); color: var(--text-secondary); }
+body.dark .brl-table-wrapper { background: var(--bg-card); border-color: var(--border-card); }
+body.dark .brl-table th { background: var(--bg-card-subtle); border-color: var(--border-card); color: var(--text-muted); }
+body.dark .brl-table td { border-color: var(--border-subtle); color: var(--text-primary); }
+body.dark .brl-table tbody tr:hover { background: var(--bg-card-subtle); }
+body.dark .brl-checkbox { background: var(--bg-card); border-color: var(--border-hover); }
+body.dark .cell-date { color: var(--text-muted); }
+body.dark .cell-name { color: var(--text-primary); }
+body.dark .cell-name:hover { color: #60a5fa; }
+body.dark .row-action-btn { color: var(--text-muted); }
+body.dark .row-action-btn:hover { color: #60a5fa; background: rgba(96,165,250,0.12); }
+
+/* Scrollbar styling */
+.brl-table-scroll::-webkit-scrollbar { width: 6px; }
+.brl-table-scroll::-webkit-scrollbar-track { background: transparent; }
+.brl-table-scroll::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
+.brl-table-scroll::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<div class="aed-shell">
+
+  <!-- ═══════════ Sidebar ═══════════ -->
+  <aside class="aed-sidebar" id="aedSidebar">
+    <!-- Brand -->
+    <a href="#" class="aed-sidebar-brand">
+      <div class="aed-sidebar-logo">A</div>
+      <div>
+        <div class="aed-sidebar-title">AED</div>
+        <div class="aed-sidebar-subtitle">Alpha Engine Dashboard</div>
+      </div>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="aed-sidebar-nav">
+      <div class="aed-sidebar-section">Backtest</div>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Overview</span>
+      </a>
+      <a href="#" class="aed-sidebar-link active">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        <span>Result List</span>
+        <span class="aed-badge">18</span>
+      </a>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        <span>Backtest Comparison</span>
+      </a>
+
+      <div class="aed-sidebar-section">Analysis</div>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        <span>Risk & Return Profile</span>
+      </a>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+        <span>Correlation Heatmap</span>
+      </a>
+
+      <div class="aed-sidebar-section">Paper Trading</div>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Paper Trading List</span>
+      </a>
+
+      <div class="aed-sidebar-section">Market Status</div>
+
+      <div class="aed-sidebar-section">Data Sources</div>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+        <span>Benchmark Loader</span>
+      </a>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+        <span>US ETF Universe</span>
+      </a>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+        <span>S&P 500 Universe</span>
+      </a>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+        <span>KOSPI 200 Universe</span>
+      </a>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+        <span>KOSDAQ 150 Universe</span>
+      </a>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        <span>Data Checker</span>
+      </a>
+
+      <div class="aed-sidebar-section">Navigation</div>
+      <a href="#" class="aed-sidebar-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <!-- Footer -->
+    <div class="aed-sidebar-footer">
+      <div class="aed-sidebar-status">
+        <span class="aed-sidebar-status-dot"></span>
+        Connected
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div class="aed-sidebar-version">AED v2.4.1</div>
+        <button class="aed-footer-btn" onclick="document.getElementById('aedSidebar').classList.toggle('collapsed')" title="사이드바 접기">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══════════ Content Area ═══════════ -->
+  <div class="aed-content-area">
+
+    <!-- Topbar -->
+    <div class="aed-topbar">
+      <a href="#" class="aed-topbar-crumb">Backtest</a>
+      <span class="aed-topbar-sep">/</span>
+      <span class="aed-topbar-current">결과 목록</span>
+      <div class="aed-topbar-right">
+        <!-- Dark mode toggle -->
+        <button class="aed-footer-btn" id="darkToggleBtn" onclick="toggleDarkMode()">
+          <svg id="moonIcon" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <svg id="sunIcon" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="aed-main">
+
+      <!-- Page Header -->
+      <div class="aed-page-header" style="display:flex; align-items:flex-start; justify-content:space-between;">
+        <div>
+          <h1 class="aed-page-title">백테스트 결과 목록</h1>
+          <p class="aed-page-subtitle">총 18개 전략</p>
+        </div>
+      </div>
+
+      <!-- Search + Actions Row -->
+      <div class="brl-search-row">
+        <div class="brl-search-input">
+          <svg class="brl-search-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" placeholder="전략 이름, ID, 태그로 검색..." id="searchInput" oninput="filterTable()">
+        </div>
+
+        <!-- Always-visible actions -->
+        <button class="brl-import-btn">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 14 14"><path d="M7 1v8m0 0L4 6m3 3l3-3"/><path d="M1 10v2a1 1 0 001 1h10a1 1 0 001-1v-2"/></svg>
+          Import
+        </button>
+
+        <div class="brl-action-separator"></div>
+
+        <!-- Selection badge -->
+        <span class="brl-selected-badge" id="selectedBadge">
+          <span id="selectedCount">0개 선택됨</span>
+          <svg class="deselect-x" onclick="deselectAll()" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+        </span>
+
+        <!-- Bulk action buttons (disabled until selection) -->
+        <div class="brl-action-group">
+          <button class="brl-action-btn disabled" id="addTagBtn">
+            <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+            Add Tag
+          </button>
+          <button class="brl-action-btn disabled" id="removeTagBtn">
+            <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/><path stroke-linecap="round" stroke-width="2" d="M15 5l4 4"/></svg>
+            Remove Tag
+          </button>
+          <button class="brl-action-btn disabled" id="exportBtn">
+            <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h4a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            Export
+          </button>
+          <button class="brl-action-btn disabled" id="pushServerBtn">
+            <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+            Push to Server
+          </button>
+        </div>
+
+        <span class="spacer"></span>
+
+        <button class="brl-action-btn danger disabled" id="deleteBtn">
+          <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          Delete
+        </button>
+
+        <div class="brl-action-separator"></div>
+
+        <button class="filter-toggle-btn" id="filterToggle" onclick="toggleFilter()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+          <span id="filterToggleText">필터 &#9662;</span>
+        </button>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="aed-filter-bar" id="filterBar">
+        <!-- Universe chips -->
+        <div class="filter-group">
+          <span class="filter-group-label">Universe</span>
+          <button class="filter-chip active" onclick="setUniverseFilter(this, 'all')">All</button>
+          <button class="filter-chip" onclick="setUniverseFilter(this, 'us-etf')">US ETF</button>
+          <button class="filter-chip" onclick="setUniverseFilter(this, 'sp500')">S&P500</button>
+          <button class="filter-chip" onclick="setUniverseFilter(this, 'kospi')">KOSPI</button>
+          <button class="filter-chip" onclick="setUniverseFilter(this, 'kosdaq')">KOSDAQ</button>
+        </div>
+
+        <div class="filter-separator"></div>
+
+        <!-- Sharpe filter -->
+        <div class="filter-group">
+          <span class="filter-group-label">Sharpe &ge;</span>
+          <input type="number" class="filter-number-input" value="0.0" step="0.1" min="-5" max="10" id="sharpeFilter" onchange="filterTable()">
+        </div>
+
+        <div class="filter-separator"></div>
+
+        <!-- Return filter -->
+        <div class="filter-group">
+          <span class="filter-group-label">수익률 &ge;</span>
+          <input type="number" class="filter-number-input" value="0" step="10" id="returnFilter" onchange="filterTable()">
+          <span class="filter-group-label" style="color: var(--text-muted);">%</span>
+        </div>
+
+        <div class="filter-separator"></div>
+
+        <!-- Tag dropdown -->
+        <div class="filter-group">
+          <span class="filter-group-label">태그</span>
+          <select class="filter-select" id="tagFilter" onchange="filterTable()">
+            <option value="">태그 선택</option>
+            <option value="momentum">momentum</option>
+            <option value="value">value</option>
+            <option value="quality">quality</option>
+            <option value="low-vol">low-vol</option>
+            <option value="growth">growth</option>
+            <option value="core">core</option>
+            <option value="experimental">experimental</option>
+          </select>
+        </div>
+
+        <!-- Reset -->
+        <button class="filter-reset-btn" onclick="resetFilters()">초기화</button>
+      </div>
+
+      <!-- Data Table -->
+      <div class="brl-table-wrapper">
+        <div class="brl-table-scroll">
+          <table class="brl-table" id="resultTable">
+            <thead>
+              <tr>
+                <th class="col-check"><input type="checkbox" class="brl-checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th>
+                <th class="col-name">Name</th>
+                <th class="col-universe">Universe</th>
+                <th class="col-tags">Tags</th>
+                <th class="col-cum col-num">Cum Return</th>
+                <th class="col-mdd col-num">MDD</th>
+                <th class="col-sharpe col-num">Sharpe</th>
+                <th class="col-date">Start</th>
+                <th class="col-date">End</th>
+                <th class="col-created">Created</th>
+                <th class="col-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /aed-main -->
+  </div><!-- /aed-content-area -->
+</div><!-- /aed-shell -->
+
+<script>
+// ── Static Data ──
+const DATA = [
+  { name: "Momentum Top 30", universe: "sp500", universeName: "S&P500", tags: ["momentum", "core"], cumReturn: 245.32, mdd: -18.45, sharpe: 1.85, start: "2015-01-02", end: "2025-12-31", created: "2026-03-20 14:22" },
+  { name: "Value Factor Q1", universe: "sp500", universeName: "S&P500", tags: ["value"], cumReturn: 178.91, mdd: -22.10, sharpe: 1.42, start: "2015-01-02", end: "2025-12-31", created: "2026-03-19 09:15" },
+  { name: "Quality Growth Blend", universe: "us-etf", universeName: "US ETF", tags: ["quality", "growth"], cumReturn: 312.05, mdd: -15.33, sharpe: 2.10, start: "2016-06-01", end: "2025-12-31", created: "2026-03-18 16:41" },
+  { name: "Low Volatility Shield", universe: "kospi", universeName: "KOSPI", tags: ["low-vol"], cumReturn: 89.45, mdd: -12.80, sharpe: 1.55, start: "2018-01-02", end: "2025-12-31", created: "2026-03-18 11:30" },
+  { name: "KOSDAQ Small Cap Alpha", universe: "kosdaq", universeName: "KOSDAQ", tags: ["momentum", "experimental"], cumReturn: -12.30, mdd: -45.20, sharpe: -0.22, start: "2020-01-02", end: "2025-12-31", created: "2026-03-17 08:55" },
+  { name: "Dividend Aristocrats", universe: "sp500", universeName: "S&P500", tags: ["value", "core"], cumReturn: 156.78, mdd: -19.50, sharpe: 1.38, start: "2015-01-02", end: "2025-12-31", created: "2026-03-16 13:20" },
+  { name: "Sector Rotation ETF", universe: "us-etf", universeName: "US ETF", tags: ["momentum"], cumReturn: 201.44, mdd: -25.60, sharpe: 1.12, start: "2017-03-15", end: "2025-12-31", created: "2026-03-15 10:42" },
+  { name: "KOSPI 200 Equal Weight", universe: "kospi", universeName: "KOSPI", tags: ["core"], cumReturn: 67.23, mdd: -28.90, sharpe: 0.78, start: "2018-01-02", end: "2025-12-31", created: "2026-03-14 15:18" },
+  { name: "Multi-Factor Composite", universe: "sp500", universeName: "S&P500", tags: ["momentum", "value", "quality"], cumReturn: 289.56, mdd: -16.80, sharpe: 2.05, start: "2015-01-02", end: "2025-12-31", created: "2026-03-13 09:30" },
+  { name: "Growth at Reasonable Price", universe: "us-etf", universeName: "US ETF", tags: ["growth", "value"], cumReturn: 198.33, mdd: -20.40, sharpe: 1.52, start: "2016-01-04", end: "2025-12-31", created: "2026-03-12 14:05" },
+  { name: "KOSDAQ Growth Leaders", universe: "kosdaq", universeName: "KOSDAQ", tags: ["growth"], cumReturn: 45.67, mdd: -38.10, sharpe: 0.45, start: "2019-07-01", end: "2025-12-31", created: "2026-03-11 11:22" },
+  { name: "Min Variance Portfolio", universe: "sp500", universeName: "S&P500", tags: ["low-vol"], cumReturn: 112.89, mdd: -10.50, sharpe: 1.72, start: "2015-01-02", end: "2025-12-31", created: "2026-03-10 08:45" },
+  { name: "Earnings Surprise Factor", universe: "us-etf", universeName: "US ETF", tags: ["quality", "experimental"], cumReturn: 167.45, mdd: -23.70, sharpe: 1.18, start: "2017-06-01", end: "2025-12-31", created: "2026-03-09 16:30" },
+  { name: "KOSPI Value Trap Avoidance", universe: "kospi", universeName: "KOSPI", tags: ["value"], cumReturn: -5.60, mdd: -32.40, sharpe: 0.12, start: "2019-01-02", end: "2025-12-31", created: "2026-03-08 10:15" },
+  { name: "Tech Momentum Surge", universe: "us-etf", universeName: "US ETF", tags: ["momentum", "growth"], cumReturn: 425.90, mdd: -30.20, sharpe: 1.65, start: "2016-01-04", end: "2025-12-31", created: "2026-03-07 13:50" },
+  { name: "Risk Parity Global", universe: "us-etf", universeName: "US ETF", tags: ["low-vol", "core"], cumReturn: 95.12, mdd: -8.90, sharpe: 1.90, start: "2017-01-03", end: "2025-12-31", created: "2026-03-06 09:00" },
+  { name: "KOSDAQ Turnaround Play", universe: "kosdaq", universeName: "KOSDAQ", tags: ["experimental"], cumReturn: -28.45, mdd: -52.30, sharpe: -0.55, start: "2021-03-01", end: "2025-12-31", created: "2026-03-05 15:40" },
+  { name: "Blue Chip Compounder", universe: "sp500", universeName: "S&P500", tags: ["quality", "core"], cumReturn: 210.67, mdd: -14.20, sharpe: 1.95, start: "2015-01-02", end: "2025-12-31", created: "2026-03-04 11:10" },
+];
+
+let selectedRows = new Set();
+
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+
+  DATA.forEach((row, idx) => {
+    const tr = document.createElement('tr');
+    tr.setAttribute('data-idx', idx);
+    tr.setAttribute('data-universe', row.universe);
+    tr.setAttribute('data-tags', row.tags.join(','));
+    tr.setAttribute('data-cum', row.cumReturn);
+    tr.setAttribute('data-sharpe', row.sharpe);
+
+    if (selectedRows.has(idx)) tr.classList.add('selected');
+
+    // Cum Return class
+    let cumClass = '';
+    if (row.cumReturn > 0) cumClass = 'cell-positive';
+    else if (row.cumReturn < 0) cumClass = 'cell-negative';
+
+    // MDD class
+    let mddClass = '';
+    const mddAbs = Math.abs(row.mdd);
+    if (mddAbs >= 35) mddClass = 'cell-mdd-heavy';
+    else if (mddAbs >= 20) mddClass = 'cell-mdd-medium';
+    else mddClass = 'cell-mdd-light';
+
+    // Sharpe class
+    let sharpeClass = '';
+    if (row.sharpe >= 1.0) sharpeClass = 'cell-sharpe-good';
+    else if (row.sharpe <= 0.5) sharpeClass = 'cell-sharpe-bad';
+
+    // Universe badge class
+    let univClass = row.universe;
+
+    // Tags HTML
+    const tagsHtml = row.tags.map(t => `<span class="tag-pill">${t}</span>`).join('');
+
+    tr.innerHTML = `
+      <td class="col-check"><input type="checkbox" class="brl-checkbox" ${selectedRows.has(idx) ? 'checked' : ''} onchange="toggleRow(${idx}, this)"></td>
+      <td><span class="cell-name">${row.name}</span></td>
+      <td><span class="universe-badge ${univClass}">${row.universeName}</span></td>
+      <td><div class="cell-tags">${tagsHtml}</div></td>
+      <td class="col-num ${cumClass}">${row.cumReturn > 0 ? '+' : ''}${row.cumReturn.toFixed(2)}%</td>
+      <td class="col-num ${mddClass}">${row.mdd.toFixed(2)}%</td>
+      <td class="col-num ${sharpeClass}">${row.sharpe.toFixed(2)}</td>
+      <td><span class="cell-date">${row.start}</span></td>
+      <td><span class="cell-date">${row.end}</span></td>
+      <td><span class="cell-date">${row.created}</span></td>
+      <td class="col-actions">
+        <button class="row-action-btn" title="View Detail">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        </button>
+        <button class="row-action-btn" title="More Actions">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/></svg>
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function toggleRow(idx, checkbox) {
+  if (checkbox.checked) {
+    selectedRows.add(idx);
+  } else {
+    selectedRows.delete(idx);
+  }
+  updateRowSelection(idx);
+  updateToolbar();
+}
+
+function updateRowSelection(idx) {
+  const row = document.querySelector(`tr[data-idx="${idx}"]`);
+  if (row) {
+    if (selectedRows.has(idx)) {
+      row.classList.add('selected');
+    } else {
+      row.classList.remove('selected');
+    }
+  }
+}
+
+function toggleSelectAll(checkbox) {
+  const rows = document.querySelectorAll('#tableBody tr');
+  rows.forEach(row => {
+    if (row.style.display === 'none') return;
+    const idx = parseInt(row.getAttribute('data-idx'));
+    const cb = row.querySelector('.brl-checkbox');
+    if (checkbox.checked) {
+      selectedRows.add(idx);
+      if (cb) cb.checked = true;
+      row.classList.add('selected');
+    } else {
+      selectedRows.delete(idx);
+      if (cb) cb.checked = false;
+      row.classList.remove('selected');
+    }
+  });
+  updateToolbar();
+}
+
+function deselectAll() {
+  selectedRows.clear();
+  document.querySelectorAll('#tableBody .brl-checkbox').forEach(cb => cb.checked = false);
+  document.querySelectorAll('#tableBody tr').forEach(row => row.classList.remove('selected'));
+  document.getElementById('selectAll').checked = false;
+  updateToolbar();
+}
+
+function updateToolbar() {
+  const count = selectedRows.size;
+  const badge = document.getElementById('selectedBadge');
+  const bulkBtns = document.querySelectorAll('.brl-action-btn:not(.brl-import-btn)');
+
+  if (count > 0) {
+    badge.classList.add('visible');
+    document.getElementById('selectedCount').textContent = `${count}개 선택됨`;
+    bulkBtns.forEach(btn => btn.classList.remove('disabled'));
+  } else {
+    badge.classList.remove('visible');
+    bulkBtns.forEach(btn => btn.classList.add('disabled'));
+  }
+}
+
+// ── Filter Logic ──
+let activeUniverse = 'all';
+
+function setUniverseFilter(chip, universe) {
+  document.querySelectorAll('.filter-group .filter-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  activeUniverse = universe;
+  filterTable();
+}
+
+function filterTable() {
+  const searchTerm = (document.getElementById('searchInput').value || '').toLowerCase();
+  const sharpeMin = parseFloat(document.getElementById('sharpeFilter').value) || 0;
+  const returnMin = parseFloat(document.getElementById('returnFilter').value) || 0;
+  const tagFilter = document.getElementById('tagFilter').value;
+
+  const rows = document.querySelectorAll('#tableBody tr');
+  rows.forEach(row => {
+    const idx = parseInt(row.getAttribute('data-idx'));
+    const d = DATA[idx];
+    let show = true;
+
+    // Universe filter
+    if (activeUniverse !== 'all' && d.universe !== activeUniverse) show = false;
+
+    // Search filter
+    if (searchTerm) {
+      const nameMatch = d.name.toLowerCase().includes(searchTerm);
+      const tagMatch = d.tags.some(t => t.toLowerCase().includes(searchTerm));
+      if (!nameMatch && !tagMatch) show = false;
+    }
+
+    // Sharpe filter
+    if (d.sharpe < sharpeMin) show = false;
+
+    // Return filter
+    if (d.cumReturn < returnMin) show = false;
+
+    // Tag filter
+    if (tagFilter && !d.tags.includes(tagFilter)) show = false;
+
+    row.style.display = show ? '' : 'none';
+  });
+}
+
+function resetFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('sharpeFilter').value = '0.0';
+  document.getElementById('returnFilter').value = '0';
+  document.getElementById('tagFilter').value = '';
+  activeUniverse = 'all';
+  document.querySelectorAll('.filter-group .filter-chip').forEach(c => c.classList.remove('active'));
+  document.querySelector('.filter-chip').classList.add('active');
+  filterTable();
+}
+
+function toggleFilter() {
+  const bar = document.getElementById('filterBar');
+  const text = document.getElementById('filterToggleText');
+  bar.classList.toggle('collapsed');
+  if (bar.classList.contains('collapsed')) {
+    text.innerHTML = '필터 &#9662;';
+  } else {
+    text.innerHTML = '필터 &#9652;';
+  }
+}
+
+// ── Dark Mode ──
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+  const moonIcon = document.getElementById('moonIcon');
+  const sunIcon = document.getElementById('sunIcon');
+  if (document.body.classList.contains('dark')) {
+    moonIcon.style.display = 'none';
+    sunIcon.style.display = 'block';
+  } else {
+    moonIcon.style.display = 'block';
+    sunIcon.style.display = 'none';
+  }
+}
+
+// ── Init ──
+renderTable();
+</script>
+
+</body>
+</html>

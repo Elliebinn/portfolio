@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AED - Overview Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Geist Sans', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+<style>
+  /* Geist Sans - from Vercel (shadcn default) */
+  @font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+  @font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+  @font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+  @font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+
+  /* ===== CSS Custom Properties ===== */
+  :root {
+    --bg-page: #f8f8f6;
+    --bg-card: #ffffff;
+    --bg-card-subtle: #fafbfc;
+    --bg-header: #0f0f12;
+    --bg-sidebar: #ffffff;
+
+    --border-card: #e8e8e4;
+    --border-hover: #d0d0cc;
+    --border-subtle: #f0f0ec;
+
+    --text-primary: #111113;
+    --text-secondary: #52525b;
+    --text-muted: #8b8b94;
+    --text-inverse: #fafafa;
+
+    --accent-blue: #2563eb;
+    --accent-emerald: #059669;
+    --accent-red: #dc2626;
+    --accent-amber: #d97706;
+    --accent-violet: #7c3aed;
+    --accent-orange: #ea580c;
+
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+    --shadow-card-hover: 0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-section: 0 1px 2px rgba(0,0,0,0.03);
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --radius-card: 16px;
+    --radius-badge: 8px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 15px;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Dark Mode ===== */
+  body.dark {
+    --bg-page: #09090b;
+    --bg-card: #18181b;
+    --bg-card-subtle: #1c1c20;
+    --bg-header: #09090b;
+    --bg-sidebar: #111113;
+
+    --border-card: #27272a;
+    --border-hover: #3f3f46;
+    --border-subtle: #1e1e22;
+
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --text-inverse: #111113;
+
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.1);
+    --shadow-card-hover: 0 8px 30px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  body.dark .section-card { background: var(--bg-card); border-color: var(--border-card); }
+  body.dark .section-card:hover { box-shadow: var(--shadow-card-hover); }
+  body.dark .kpi-card { background: var(--bg-card); border-color: var(--border-card); }
+  body.dark .kpi-card:hover { border-color: var(--border-hover); box-shadow: var(--shadow-card-hover); }
+  body.dark .kpi-label { color: var(--text-muted) !important; }
+  body.dark .sidebar { background: var(--bg-sidebar); border-color: var(--border-card); }
+  body.dark .sidebar-section { color: var(--text-muted); }
+  body.dark .sidebar-link { color: var(--text-secondary); }
+  body.dark .sidebar-link:hover { background: #27272a; color: var(--text-primary); }
+  body.dark .sidebar-link.active { background: #1e293b; color: #60a5fa; }
+  body.dark .table-header { background: #1c1c20; color: var(--text-muted); }
+  body.dark .table-row { border-color: var(--border-card); }
+  body.dark .table-row:hover { background: #1c1c20; }
+  body.dark .tab-btn { color: var(--text-muted); border-color: transparent; }
+  body.dark .tab-btn:hover { color: var(--text-primary); border-color: var(--border-hover); }
+  body.dark .tab-btn.active { color: #60a5fa; border-color: #60a5fa; }
+  body.dark .alert-item { border-color: var(--border-card); background: var(--bg-card); }
+  body.dark .chart-container { background: var(--bg-card-subtle); border-color: var(--border-card); }
+  body.dark footer { background: var(--bg-page); border-color: var(--border-card); }
+
+  /* Dark mode text color overrides */
+  body.dark .text-slate-900, body.dark .t-primary { color: var(--text-primary) !important; }
+  body.dark .text-slate-800 { color: #e4e4e7 !important; }
+  body.dark .text-slate-700 { color: #d4d4d8 !important; }
+  body.dark .text-slate-600, body.dark .t-secondary { color: var(--text-secondary) !important; }
+  body.dark .text-slate-500, body.dark .t-muted { color: var(--text-muted) !important; }
+
+  /* Dark mode positive metric glow */
+  body.dark .metric-positive { text-shadow: 0 0 20px rgba(16, 185, 129, 0.25); }
+  body.dark .metric-negative { text-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
+
+  /* Dark mode KPI card gradient tints */
+  body.dark .kpi-card[data-color="blue"] { background: linear-gradient(135deg, #18181b 0%, rgba(37, 99, 235, 0.06) 100%); }
+  body.dark .kpi-card[data-color="emerald"] { background: linear-gradient(135deg, #18181b 0%, rgba(5, 150, 105, 0.06) 100%); }
+  body.dark .kpi-card[data-color="violet"] { background: linear-gradient(135deg, #18181b 0%, rgba(124, 58, 237, 0.06) 100%); }
+  body.dark .kpi-card[data-color="amber"] { background: linear-gradient(135deg, #18181b 0%, rgba(217, 119, 6, 0.06) 100%); }
+  body.dark .kpi-card[data-color="rose"] { background: linear-gradient(135deg, #18181b 0%, rgba(225, 29, 72, 0.06) 100%); }
+
+  /* ===== KPI Cards (shadcn SectionCards pattern) ===== */
+  .kpi-card {
+    position: relative;
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-card);
+    background: var(--bg-card);
+    padding: 20px 20px 16px;
+    transition: all 0.3s var(--ease-out);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-card);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+  }
+  .kpi-card[data-color="blue"]::before { background: linear-gradient(to top, rgba(37, 99, 235, 0.04), transparent); opacity: 1; }
+  .kpi-card[data-color="emerald"]::before { background: linear-gradient(to top, rgba(5, 150, 105, 0.04), transparent); opacity: 1; }
+  .kpi-card[data-color="violet"]::before { background: linear-gradient(to top, rgba(124, 58, 237, 0.04), transparent); opacity: 1; }
+  .kpi-card[data-color="amber"]::before { background: linear-gradient(to top, rgba(217, 119, 6, 0.04), transparent); opacity: 1; }
+  .kpi-card[data-color="rose"]::before { background: linear-gradient(to top, rgba(225, 29, 72, 0.04), transparent); opacity: 1; }
+
+  .kpi-card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+    border-color: var(--border-hover);
+  }
+  .kpi-description {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 1;
+  }
+  .kpi-value {
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 31px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+    margin: 8px 0 0;
+    position: relative;
+    z-index: 1;
+  }
+  .kpi-action {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+  }
+  .kpi-footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .kpi-footer .trend-text {
+    font-weight: 600;
+    font-family: 'Geist Sans', sans-serif;
+    font-size: 12px;
+  }
+
+  /* ===== Trend Badge (pill with squiggly icon + text) ===== */
+  .trend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Geist Sans', sans-serif;
+    letter-spacing: -0.02em;
+    background: var(--bg-card-subtle);
+    border: 1px solid var(--border-card);
+    color: var(--text-secondary);
+  }
+  .trend-badge svg { width: 14px; height: 14px; }
+  .trend-badge.up { color: #059669; }
+  .trend-badge.down { color: #dc2626; }
+
+  body.dark .trend-badge {
+    background: rgba(255,255,255,0.04);
+    border-color: var(--border-card);
+  }
+  body.dark .trend-badge.up { color: #34d399; }
+  body.dark .trend-badge.down { color: #f87171; }
+
+  /* ===== Section Card ===== */
+  .section-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-card);
+    padding: 24px;
+    transition: box-shadow 0.25s var(--ease-out);
+    box-shadow: var(--shadow-section);
+  }
+  .section-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+  .section-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* ===== Chart Container (clean, no dot-grid) ===== */
+  .chart-container {
+    background: var(--bg-card-subtle);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .chart-container:hover {
+    border-color: var(--border-hover);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 4px 16px rgba(0,0,0,0.03);
+  }
+
+  /* ===== Sidebar ===== */
+  .sidebar {
+    width: 220px;
+    min-height: calc(100vh - 52px);
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-card);
+    flex-shrink: 0;
+  }
+  .sidebar-section {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    padding: 20px 16px 8px;
+  }
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    margin: 1px 8px;
+    transition: all 0.15s;
+  }
+  .sidebar-link:hover { background: rgba(0,0,0,0.04); color: var(--text-primary); }
+  .sidebar-link.active { background: rgba(37, 99, 235, 0.08); color: #2563eb; font-weight: 600; }
+
+  /* ===== Tabs ===== */
+  .tab-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: none;
+  }
+  .tab-btn:hover { color: var(--text-primary); border-color: var(--border-hover); }
+  .tab-btn.active { color: var(--accent-blue); border-color: var(--accent-blue); }
+
+  /* ===== Table ===== */
+  .data-table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .data-table th,
+  .data-table td {
+    padding: 10px 10px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .data-table td {
+    text-overflow: ellipsis;
+  }
+  .table-header {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    background: var(--bg-card-subtle);
+    border-bottom: 1px solid var(--border-card);
+  }
+  .table-row {
+    font-size: 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: all 0.15s;
+  }
+  .table-row:hover {
+    background: var(--bg-card-subtle);
+    box-shadow: inset 3px 0 0 var(--accent-blue);
+  }
+
+  /* Rank number + medal */
+  .rank-num {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .rank-medal { font-size: 15px; }
+
+  /* Sortable column headers */
+  .lb-sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s;
+    position: relative;
+  }
+  .lb-sortable:hover { color: var(--accent-blue); }
+  .lb-sortable.active {
+    color: var(--accent-blue);
+    font-weight: 700;
+  }
+  .lb-sortable .sort-icon {
+    font-size: 9px;
+    opacity: 0.3;
+    margin-left: 2px;
+  }
+  .lb-sortable.active .sort-icon { opacity: 1; }
+
+  /* Delta indicator */
+  .delta-cell { overflow: visible !important; text-overflow: clip !important; }
+  .delta-up { color: var(--accent-emerald); font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .delta-down { color: var(--accent-red); font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .delta-same { color: var(--text-muted); font-size: 11px; }
+
+  /* Sparkline */
+  .sparkline-cell { padding: 4px 2px !important; }
+  .sparkline-cell svg { display: block; }
+
+  /* ===== Animations ===== */
+  .stagger-in {
+    animation: cardEntry 0.55s var(--ease-out) both;
+  }
+  .stagger-in:nth-child(1) { animation-delay: 0.04s; }
+  .stagger-in:nth-child(2) { animation-delay: 0.08s; }
+  .stagger-in:nth-child(3) { animation-delay: 0.12s; }
+  .stagger-in:nth-child(4) { animation-delay: 0.16s; }
+  .stagger-in:nth-child(5) { animation-delay: 0.20s; }
+
+  @keyframes cardEntry {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Section-level stagger */
+  .section-fade {
+    animation: sectionFade 0.6s var(--ease-out) both;
+  }
+  @keyframes sectionFade {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== Alert Items ===== */
+  .alert-item {
+    border: 1px solid var(--border-card);
+    border-radius: 10px;
+    padding: 12px 16px;
+    transition: all 0.2s var(--ease-out);
+    background: var(--bg-card);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .alert-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 10px 0 0 10px;
+  }
+  .alert-item[data-severity="critical"]::before { background: var(--accent-red); }
+  .alert-item[data-severity="warning"]::before { background: var(--accent-orange); }
+  .alert-item[data-severity="caution"]::before { background: var(--accent-amber); }
+
+  .alert-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .alert-item .alert-body {
+    max-height: 200px;
+    overflow: hidden;
+    transition: max-height 0.3s var(--ease-out), opacity 0.2s;
+  }
+  .alert-item.collapsed .alert-body {
+    max-height: 0;
+    opacity: 0;
+  }
+  .alert-chevron {
+    transition: transform 0.25s var(--ease-out);
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+  }
+  .alert-item.collapsed .alert-chevron {
+    transform: rotate(-90deg);
+  }
+
+  /* Pulse animation for critical */
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+    50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
+  }
+  .pulse-critical {
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  /* ===== Universe Badges ===== */
+  .badge-sp500 { background: rgba(37, 99, 235, 0.08); color: #2563eb; border: 1px solid rgba(37, 99, 235, 0.15); }
+  .badge-usetf { background: rgba(5, 150, 105, 0.08); color: #059669; border: 1px solid rgba(5, 150, 105, 0.15); }
+  .badge-kospi { background: rgba(217, 119, 6, 0.08); color: #d97706; border: 1px solid rgba(217, 119, 6, 0.15); }
+  .badge-custom { background: rgba(124, 58, 237, 0.08); color: #7c3aed; border: 1px solid rgba(124, 58, 237, 0.15); }
+
+  body.dark .badge-sp500 { background: rgba(96, 165, 250, 0.12); color: #93bbfd; border-color: rgba(96, 165, 250, 0.2); }
+  body.dark .badge-usetf { background: rgba(52, 211, 153, 0.12); color: #6ee7b7; border-color: rgba(52, 211, 153, 0.2); }
+  body.dark .badge-kospi { background: rgba(251, 191, 36, 0.12); color: #fcd34d; border-color: rgba(251, 191, 36, 0.2); }
+  body.dark .badge-custom { background: rgba(167, 139, 250, 0.12); color: #c4b5fd; border-color: rgba(167, 139, 250, 0.2); }
+
+  /* ===== Scrollbar ===== */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-thumb { background: #c4c4c4; border-radius: 3px; }
+  body.dark ::-webkit-scrollbar-thumb { background: #3f3f46; }
+  ::-webkit-scrollbar-track { background: transparent; }
+
+  /* ===== Metric value base ===== */
+  .metric-value {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Header -->
+<header style="background: var(--bg-header);" class="text-white px-6 py-3 flex items-center justify-between relative z-50">
+  <div class="flex items-center gap-3">
+    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-sm font-extrabold shadow-lg shadow-blue-500/20">A</div>
+    <div>
+      <span class="text-[15px] font-bold tracking-tight">AED</span>
+      <span class="text-xs text-zinc-500 ml-2 font-medium">Alpha Engine Dashboard</span>
+    </div>
+  </div>
+  <div class="flex items-center gap-5 text-sm text-zinc-500">
+    <a href="#" class="hover:text-white transition-colors text-xs font-medium">About</a>
+    <button id="darkToggle" onclick="toggleDarkMode()" class="w-8 h-8 rounded-full bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center transition-colors border border-zinc-700">
+      <svg id="darkIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+      <svg id="lightIcon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="flex">
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-section">Backtest</div>
+  <a href="#" class="sidebar-link active">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+    Overview
+  </a>
+  <a href="#" class="sidebar-link">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+    Backtest Result List
+  </a>
+  <a href="#" class="sidebar-link">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+    Backtest Comparison
+  </a>
+
+  <div class="sidebar-section">Analysis</div>
+  <a href="#" class="sidebar-link">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+    Risk &amp; Return Profile
+  </a>
+  <a href="#" class="sidebar-link">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+    Correlation Heatmap
+  </a>
+
+  <div class="sidebar-section">Forward Test</div>
+  <div class="sidebar-section">Live Trading</div>
+  <div class="sidebar-section">Market Status</div>
+
+  <div class="sidebar-section">Data Sources</div>
+  <a href="#" class="sidebar-link">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+    Benchmark Loader
+  </a>
+  <a href="#" class="sidebar-link">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+    US ETF Universe
+  </a>
+  <a href="#" class="sidebar-link">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+    S&amp;P 500 Universe
+  </a>
+</nav>
+
+<!-- Main Content -->
+<main class="flex-1 px-8 py-6 min-w-0">
+
+  <!-- Page Title (Phase 8: subtitle added) -->
+  <div class="mb-6 section-fade" style="animation-delay: 0s;">
+    <h1 class="text-[28px] font-extrabold t-primary tracking-tight" style="color: var(--text-primary);">Overview</h1>
+    <p class="text-sm t-muted mt-1 font-medium" style="color: var(--text-muted);">Strategy performance summary across all universes</p>
+  </div>
+
+  <!-- ==================== Row 1: KPI Summary Cards (Phase 2: shadcn SectionCards) ==================== -->
+  <div class="grid grid-cols-5 gap-4 mb-6">
+    <!-- Total Strategies -->
+    <div class="kpi-card stagger-in" data-color="blue">
+      <div class="kpi-description">Total Strategies</div>
+      <div class="kpi-value t-primary" style="color: var(--text-primary);" data-target="28" data-format="int">0</div>
+      <div class="kpi-action">
+        <span class="trend-badge up">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 12C4 9 5.5 4 8 7s3.5-4 6-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          +3
+        </span>
+      </div>
+      <div class="kpi-footer">
+        <span class="trend-text" style="color: var(--accent-emerald);">+3 this week</span>
+        <span class="t-muted" style="color: var(--text-muted);">from 25 strategies</span>
+      </div>
+    </div>
+
+    <!-- Avg Return -->
+    <div class="kpi-card stagger-in" data-color="emerald">
+      <div class="kpi-description">Avg Return</div>
+      <div class="kpi-value metric-positive" style="color: var(--accent-emerald);" data-target="142.3" data-format="pct-plus">0</div>
+      <div class="kpi-action">
+        <span class="trend-badge up">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 12C4 9 5.5 4 8 7s3.5-4 6-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          +12.0%
+        </span>
+      </div>
+      <div class="kpi-footer">
+        <span class="trend-text" style="color: var(--accent-emerald);">+12.0%</span>
+        <span class="t-muted" style="color: var(--text-muted);">vs. prev month</span>
+      </div>
+    </div>
+
+    <!-- Avg Sharpe -->
+    <div class="kpi-card stagger-in" data-color="violet">
+      <div class="kpi-description">Avg Sharpe</div>
+      <div class="kpi-value t-primary" style="color: var(--text-primary);" data-target="0.87" data-format="dec">0</div>
+      <div class="kpi-action">
+        <span class="trend-badge up">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 12C4 9 5.5 4 8 7s3.5-4 6-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          +0.05
+        </span>
+      </div>
+      <div class="kpi-footer">
+        <span class="t-muted" style="color: var(--text-muted);">risk-adjusted return</span>
+      </div>
+    </div>
+
+    <!-- Success Rate -->
+    <div class="kpi-card stagger-in" data-color="amber">
+      <div class="kpi-description">Success Rate</div>
+      <div class="kpi-value metric-positive" style="color: var(--accent-emerald);" data-target="78.6" data-format="pct">0</div>
+      <div class="kpi-action">
+        <span class="trend-badge up">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 12C4 9 5.5 4 8 7s3.5-4 6-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          +2.1%
+        </span>
+      </div>
+      <div class="kpi-footer">
+        <span class="metric-value text-xs font-semibold" style="color: var(--text-primary);">22</span>
+        <span class="t-muted" style="color: var(--text-muted);">of 28 profitable</span>
+      </div>
+    </div>
+
+    <!-- Best CAGR -->
+    <div class="kpi-card stagger-in" data-color="rose">
+      <div class="kpi-description">Best CAGR</div>
+      <div class="kpi-value metric-positive" style="color: var(--accent-emerald);" data-target="1054.4" data-format="pct-plus">0</div>
+      <div class="kpi-action">
+        <span class="trend-badge up">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 12C4 9 5.5 4 8 7s3.5-4 6-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          #1
+        </span>
+      </div>
+      <div class="kpi-footer">
+        <span class="t-muted" style="color: var(--accent-blue); font-weight: 600; font-size: 12px;">TurtleAggressiveStrategy</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== Row 2: Leaderboard + Risk-Return Scatter ==================== -->
+  <div class="grid grid-cols-5 gap-6 mb-6 section-fade" style="animation-delay: 0.12s;">
+    <!-- Performance Leaderboard -->
+    <div class="col-span-3 section-card">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="section-title">Performance Leaderboard</h2>
+          <p class="section-subtitle mt-0.5">Top 5 strategies · click column to sort</p>
+        </div>
+      </div>
+
+      <!-- Table with sortable headers -->
+      <div id="leaderboard-content">
+        <table class="data-table">
+          <colgroup>
+            <col style="width: 4%;">
+            <col style="width: 5%;">
+            <col style="width: 29%;">
+            <col style="width: 6%;">
+            <col style="width: 14%;">
+            <col style="width: 14%;">
+            <col style="width: 14%;">
+            <col style="width: 14%;">
+          </colgroup>
+          <thead>
+            <tr class="table-header">
+              <th class="text-center rounded-tl-lg">#</th>
+              <th class="text-center" title="Rank change from previous sort">△</th>
+              <th class="text-left">Name</th>
+              <th class="text-center">Trend</th>
+              <th class="text-right lb-sortable active" data-sort="return" onclick="sortLeaderboard('return', this)">Return <span class="sort-icon">▼</span></th>
+              <th class="text-right lb-sortable" data-sort="sharpe" onclick="sortLeaderboard('sharpe', this)">Sharpe <span class="sort-icon">▼</span></th>
+              <th class="text-right lb-sortable" data-sort="calmar" onclick="sortLeaderboard('calmar', this)">Calmar <span class="sort-icon">▼</span></th>
+              <th class="text-right rounded-tr-lg lb-sortable" data-sort="mdd" onclick="sortLeaderboard('mdd', this)">MDD <span class="sort-icon">▲</span></th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Risk-Return Mini Scatter -->
+    <div class="col-span-2 section-card">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="section-title">Risk-Return Profile</h2>
+          <p class="section-subtitle mt-0.5">Sharpe ratio vs cumulative return</p>
+        </div>
+      </div>
+      <div class="chart-container p-3" style="height: 300px;">
+        <canvas id="scatterChart"></canvas>
+      </div>
+      <div class="flex items-center gap-4 mt-3 text-xs" style="color: var(--text-muted);">
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> S&P500</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> USETF</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> KOSPI</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-violet-500"></span> Custom</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== Row 3: Return Distribution + IS vs OS ==================== -->
+  <div class="grid grid-cols-2 gap-6 mb-6 section-fade" style="animation-delay: 0.2s;">
+    <!-- Return Distribution -->
+    <div class="section-card">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="section-title">Return Distribution</h2>
+          <p class="section-subtitle mt-0.5">All strategies histogram</p>
+        </div>
+      </div>
+      <div class="chart-container p-3" style="height: 240px;">
+        <canvas id="histogramChart"></canvas>
+      </div>
+      <div class="flex items-center gap-6 mt-3 text-xs">
+        <span style="color: var(--text-muted);">Mean: <span class="metric-value font-semibold" style="color: var(--text-primary);">142.3%</span></span>
+        <span style="color: var(--text-muted);">Median: <span class="metric-value font-semibold" style="color: var(--text-primary);">98.7%</span></span>
+        <span style="color: var(--text-muted);">Std: <span class="metric-value font-semibold" style="color: var(--text-primary);">185.4%</span></span>
+      </div>
+    </div>
+
+    <!-- IS vs OS Health -->
+    <div class="section-card">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="section-title">IS vs OS Health</h2>
+          <p class="section-subtitle mt-0.5">Overfitting detection metrics</p>
+        </div>
+        <span class="px-2.5 py-1 text-[10px] font-bold rounded-full" style="background: rgba(217, 119, 6, 0.08); color: var(--accent-amber); border: 1px solid rgba(217, 119, 6, 0.15);">Overfitting Check</span>
+      </div>
+      <div class="chart-container p-3" style="height: 240px;">
+        <canvas id="isOsChart"></canvas>
+      </div>
+      <div class="flex items-center justify-between mt-3 text-xs">
+        <div class="flex items-center gap-4" style="color: var(--text-muted);">
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-blue-500"></span> In-Sample</span>
+          <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-orange-400"></span> Out-of-Sample</span>
+        </div>
+        <span class="font-semibold" style="color: var(--accent-amber);">OS Degradation: -22%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== Row 4: Recent Activity + Universe Distribution ==================== -->
+  <div class="grid grid-cols-5 gap-6 mb-6 section-fade" style="animation-delay: 0.28s;">
+    <!-- Recent Activity -->
+    <div class="col-span-3 section-card">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="section-title">Recent Activity</h2>
+          <p class="section-subtitle mt-0.5">Strategies created in the last 7 days</p>
+        </div>
+      </div>
+      <table class="data-table">
+        <colgroup>
+          <col style="width: 28%;">
+          <col style="width: 14%;">
+          <col style="width: 18%;">
+          <col style="width: 13%;">
+          <col style="width: 13%;">
+          <col style="width: 14%;">
+        </colgroup>
+        <thead>
+          <tr class="table-header">
+            <th class="text-left rounded-tl-lg">Name</th>
+            <th class="text-center">Universe</th>
+            <th class="text-right">Return</th>
+            <th class="text-right">Sharpe</th>
+            <th class="text-right">MDD</th>
+            <th class="text-center rounded-tr-lg">Created</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-row">
+            <td class="text-left"><a href="#" style="color: var(--accent-blue);" class="hover:underline font-medium text-sm">TurtleHighcagrV36Strategy</a></td>
+            <td class="text-center"><span class="badge-sp500 text-[10px] font-semibold px-2 py-0.5 rounded-full">S&P500</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-semibold metric-positive" style="color: var(--accent-emerald);">+199.27%</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium" style="color: var(--text-primary);">0.80</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium metric-negative" style="color: var(--accent-red);">-22.4%</span></td>
+            <td class="text-center text-xs" style="color: var(--text-muted);">02/19 03:20</td>
+          </tr>
+          <tr class="table-row">
+            <td class="text-left"><a href="#" style="color: var(--accent-blue);" class="hover:underline font-medium text-sm">TurtleAggressiveStrategy</a></td>
+            <td class="text-center"><span class="badge-sp500 text-[10px] font-semibold px-2 py-0.5 rounded-full">S&P500</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-semibold metric-positive" style="color: var(--accent-emerald);">+230.03%</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium" style="color: var(--text-primary);">0.94</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium metric-negative" style="color: var(--accent-red);">-18.3%</span></td>
+            <td class="text-center text-xs" style="color: var(--text-muted);">02/19 03:01</td>
+          </tr>
+          <tr class="table-row">
+            <td class="text-left"><a href="#" style="color: var(--accent-blue);" class="hover:underline font-medium text-sm">TurtleRrV64Strategy</a></td>
+            <td class="text-center"><span class="badge-sp500 text-[10px] font-semibold px-2 py-0.5 rounded-full">S&P500</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-semibold metric-positive" style="color: var(--accent-emerald);">+127.89%</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium" style="color: var(--text-primary);">0.68</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium metric-negative" style="color: var(--accent-red);">-15.2%</span></td>
+            <td class="text-center text-xs" style="color: var(--text-muted);">02/19 02:53</td>
+          </tr>
+          <tr class="table-row">
+            <td class="text-left"><a href="#" style="color: var(--accent-blue);" class="hover:underline font-medium text-sm">MomentumCross_v12</a></td>
+            <td class="text-center"><span class="badge-usetf text-[10px] font-semibold px-2 py-0.5 rounded-full">USETF</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-semibold metric-positive" style="color: var(--accent-emerald);">+112.45%</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium" style="color: var(--text-primary);">0.72</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium metric-negative" style="color: var(--accent-red);">-20.1%</span></td>
+            <td class="text-center text-xs" style="color: var(--text-muted);">02/18 14:22</td>
+          </tr>
+          <tr class="table-row">
+            <td class="text-left"><a href="#" style="color: var(--accent-blue);" class="hover:underline font-medium text-sm">MeanRevertDaily_v3</a></td>
+            <td class="text-center"><span class="badge-sp500 text-[10px] font-semibold px-2 py-0.5 rounded-full">S&P500</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-semibold metric-positive" style="color: var(--accent-emerald);">+98.30%</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium" style="color: var(--text-primary);">0.55</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium metric-negative" style="color: var(--accent-red);">-28.7%</span></td>
+            <td class="text-center text-xs" style="color: var(--text-muted);">02/18 11:05</td>
+          </tr>
+          <tr class="table-row">
+            <td class="text-left"><a href="#" style="color: var(--accent-blue);" class="hover:underline font-medium text-sm">DualMomentum_ETF_v5</a></td>
+            <td class="text-center"><span class="badge-usetf text-[10px] font-semibold px-2 py-0.5 rounded-full">USETF</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-semibold metric-positive" style="color: var(--accent-emerald);">+85.60%</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium" style="color: var(--text-primary);">0.91</span></td>
+            <td class="text-right"><span class="metric-value text-sm font-medium metric-negative" style="color: var(--accent-red);">-12.5%</span></td>
+            <td class="text-center text-xs" style="color: var(--text-muted);">02/17 09:30</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Universe Distribution -->
+    <div class="col-span-2 section-card">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="section-title">Universe Distribution</h2>
+          <p class="section-subtitle mt-0.5">28 strategies by universe</p>
+        </div>
+      </div>
+      <div class="chart-container p-3" style="height: 260px;">
+        <canvas id="universeChart"></canvas>
+      </div>
+      <div class="mt-4 space-y-2.5">
+        <div class="flex items-center justify-between text-sm">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-sm bg-blue-500"></span>
+            <span style="color: var(--text-secondary);">S&P500</span>
+          </div>
+          <span class="metric-value font-semibold" style="color: var(--text-primary);">18 <span style="color: var(--text-muted);" class="font-normal">(64.3%)</span></span>
+        </div>
+        <div class="flex items-center justify-between text-sm">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-sm bg-emerald-500"></span>
+            <span style="color: var(--text-secondary);">US ETF</span>
+          </div>
+          <span class="metric-value font-semibold" style="color: var(--text-primary);">6 <span style="color: var(--text-muted);" class="font-normal">(21.4%)</span></span>
+        </div>
+        <div class="flex items-center justify-between text-sm">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-sm bg-amber-500"></span>
+            <span style="color: var(--text-secondary);">KOSPI</span>
+          </div>
+          <span class="metric-value font-semibold" style="color: var(--text-primary);">3 <span style="color: var(--text-muted);" class="font-normal">(10.7%)</span></span>
+        </div>
+        <div class="flex items-center justify-between text-sm">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-sm bg-violet-500"></span>
+            <span style="color: var(--text-secondary);">Custom</span>
+          </div>
+          <span class="metric-value font-semibold" style="color: var(--text-primary);">1 <span style="color: var(--text-muted);" class="font-normal">(3.6%)</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== Row 5: Creation Trend + Alerts ==================== -->
+  <div class="grid grid-cols-2 gap-6 mb-8 section-fade" style="animation-delay: 0.36s;">
+    <!-- Strategy Creation Trend -->
+    <div class="section-card">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="section-title">Strategy Creation Trend</h2>
+          <p class="section-subtitle mt-0.5">Monthly creation count with quality trend</p>
+        </div>
+      </div>
+      <div class="chart-container p-3" style="height: 240px;">
+        <canvas id="trendChart"></canvas>
+      </div>
+      <div class="flex items-center gap-4 mt-3 text-xs" style="color: var(--text-muted);">
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded" style="background: rgba(100, 116, 139, 0.5);"></span> Monthly Count</span>
+        <span class="flex items-center gap-1.5"><span class="w-6 h-0.5 bg-blue-500 rounded"></span> Avg Sharpe</span>
+      </div>
+    </div>
+
+    <!-- Alerts & Watchlist (Phase 5: accordion, left border, pulse) -->
+    <div class="section-card">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="section-title">Alerts &amp; Watchlist</h2>
+          <p class="section-subtitle mt-0.5">Issues requiring attention</p>
+        </div>
+        <span class="px-2.5 py-1 text-[10px] font-bold rounded-full" style="background: rgba(220, 38, 38, 0.08); color: var(--accent-red); border: 1px solid rgba(220, 38, 38, 0.15);">9 issues</span>
+      </div>
+
+      <div class="space-y-2.5">
+        <!-- Negative Sharpe -->
+        <div class="alert-item" data-severity="critical" onclick="toggleAlert(this)">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full pulse-critical" style="background: var(--accent-red);"></span>
+              <span class="text-xs font-bold uppercase tracking-wider" style="color: var(--accent-red);">Negative Sharpe</span>
+              <span class="text-xs" style="color: var(--text-muted);">2 strategies</span>
+            </div>
+            <svg class="alert-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="alert-body mt-2 pl-4 space-y-1.5">
+            <div class="flex items-center justify-between text-sm">
+              <a href="#" style="color: var(--accent-blue);" class="hover:underline">BreakoutFail_v2</a>
+              <span class="metric-value font-semibold text-xs" style="color: var(--accent-red);">Sharpe: -0.23</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <a href="#" style="color: var(--accent-blue);" class="hover:underline">RandomWalk_test</a>
+              <span class="metric-value font-semibold text-xs" style="color: var(--accent-red);">Sharpe: -0.15</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- High MDD -->
+        <div class="alert-item" data-severity="warning" onclick="toggleAlert(this)">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full" style="background: var(--accent-orange);"></span>
+              <span class="text-xs font-bold uppercase tracking-wider" style="color: var(--accent-orange);">High MDD &gt; 30%</span>
+              <span class="text-xs" style="color: var(--text-muted);">3 strategies</span>
+            </div>
+            <svg class="alert-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="alert-body mt-2 pl-4 space-y-1.5">
+            <div class="flex items-center justify-between text-sm">
+              <a href="#" style="color: var(--accent-blue);" class="hover:underline">AggressiveLev_v1</a>
+              <span class="metric-value font-semibold text-xs" style="color: var(--accent-orange);">MDD: -42.3%</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <a href="#" style="color: var(--accent-blue);" class="hover:underline">VolatileMom_v3</a>
+              <span class="metric-value font-semibold text-xs" style="color: var(--accent-orange);">MDD: -35.1%</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <a href="#" style="color: var(--accent-blue);" class="hover:underline">DeepValue_v2</a>
+              <span class="metric-value font-semibold text-xs" style="color: var(--accent-orange);">MDD: -31.8%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- OS Degradation -->
+        <div class="alert-item" data-severity="caution" onclick="toggleAlert(this)">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full" style="background: var(--accent-amber);"></span>
+              <span class="text-xs font-bold uppercase tracking-wider" style="color: var(--accent-amber);">OS Degradation &gt; 50%</span>
+              <span class="text-xs" style="color: var(--text-muted);">4 strategies</span>
+            </div>
+            <svg class="alert-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="alert-body mt-2 pl-4 space-y-1.5">
+            <div class="flex items-center justify-between text-sm">
+              <a href="#" style="color: var(--accent-blue);" class="hover:underline">OverfitExample_v1</a>
+              <span class="metric-value font-semibold text-xs" style="color: var(--accent-amber);">IS: 1.20 &rarr; OS: 0.31</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <a href="#" style="color: var(--accent-blue);" class="hover:underline">CurveFit_mom_v4</a>
+              <span class="metric-value font-semibold text-xs" style="color: var(--accent-amber);">IS: 0.95 &rarr; OS: 0.28</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <a href="#" style="color: var(--accent-blue);" class="hover:underline">NoiseTrade_v2</a>
+              <span class="metric-value font-semibold text-xs" style="color: var(--accent-amber);">IS: 1.08 &rarr; OS: 0.42</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <a href="#" style="color: var(--accent-blue);" class="hover:underline">ParamSearch_v7</a>
+              <span class="metric-value font-semibold text-xs" style="color: var(--accent-amber);">IS: 0.88 &rarr; OS: 0.19</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- Footer -->
+<footer style="background: var(--bg-header); border-top: 1px solid var(--border-card);" class="text-zinc-600 text-xs text-center py-4">
+  AED - Alpha Engine Dashboard &middot; Overview Dashboard v2 &middot; 2026-02-26
+</footer>
+
+<script>
+// ===== Sample Data =====
+const strategies = [
+  { name: 'TurtleAggressiveStrategy', universe: 'S&P500', ret: 230.03, sharpe: 0.94, mdd: -18.3, cagr: 28.5 },
+  { name: 'TurtleHighcagrV36Strategy', universe: 'S&P500', ret: 199.27, sharpe: 0.80, mdd: -22.4, cagr: 24.2 },
+  { name: 'golden_cross_v2_filtered', universe: 'S&P500', ret: 1054.40, sharpe: 1.09, mdd: -26.4, cagr: 27.7 },
+  { name: 'TurtleRrV64Strategy', universe: 'S&P500', ret: 127.89, sharpe: 0.68, mdd: -15.2, cagr: 18.3 },
+  { name: 'MomentumCross_v12', universe: 'USETF', ret: 112.45, sharpe: 0.72, mdd: -20.1, cagr: 16.8 },
+  { name: 'MeanRevertDaily_v3', universe: 'S&P500', ret: 98.30, sharpe: 0.55, mdd: -28.7, cagr: 14.5 },
+  { name: 'DualMomentum_ETF_v5', universe: 'USETF', ret: 85.60, sharpe: 0.91, mdd: -12.5, cagr: 13.2 },
+  { name: 'VolBreakout_v8', universe: 'S&P500', ret: 78.20, sharpe: 0.63, mdd: -19.8, cagr: 12.1 },
+  { name: 'TrendFollow_KOSPI_v2', universe: 'KOSPI', ret: 65.40, sharpe: 0.48, mdd: -25.3, cagr: 10.7 },
+  { name: 'SmartBeta_v3', universe: 'S&P500', ret: 145.80, sharpe: 0.85, mdd: -17.6, cagr: 20.1 },
+  { name: 'FactorRot_v2', universe: 'USETF', ret: 92.10, sharpe: 0.77, mdd: -16.2, cagr: 14.0 },
+  { name: 'KOSPI_Mom_v1', universe: 'KOSPI', ret: 42.30, sharpe: 0.38, mdd: -30.5, cagr: 7.4 },
+  { name: 'Sector_Rotation_v4', universe: 'USETF', ret: 118.70, sharpe: 0.82, mdd: -14.8, cagr: 17.5 },
+  { name: 'ValueMom_Combo_v3', universe: 'S&P500', ret: 167.50, sharpe: 0.90, mdd: -21.2, cagr: 22.0 },
+  { name: 'MinVol_v2', universe: 'S&P500', ret: 62.80, sharpe: 0.95, mdd: -10.8, cagr: 10.3 },
+  { name: 'EqualWeight_v1', universe: 'S&P500', ret: 88.90, sharpe: 0.65, mdd: -23.1, cagr: 13.5 },
+  { name: 'RiskParity_v3', universe: 'USETF', ret: 71.20, sharpe: 0.88, mdd: -11.3, cagr: 11.4 },
+  { name: 'GoldenDead_v1', universe: 'S&P500', ret: 156.30, sharpe: 0.78, mdd: -24.5, cagr: 21.0 },
+  { name: 'MACD_Cross_v5', universe: 'S&P500', ret: 134.60, sharpe: 0.71, mdd: -22.8, cagr: 19.0 },
+  { name: 'BollingerBand_v2', universe: 'S&P500', ret: 108.40, sharpe: 0.60, mdd: -26.1, cagr: 15.8 },
+  { name: 'Pairs_ETF_v1', universe: 'USETF', ret: 55.30, sharpe: 0.52, mdd: -18.4, cagr: 9.2 },
+  { name: 'KOSPI_Value_v1', universe: 'KOSPI', ret: 38.70, sharpe: 0.35, mdd: -32.4, cagr: 6.8 },
+  { name: 'AggressiveLev_v1', universe: 'S&P500', ret: 245.80, sharpe: 0.42, mdd: -42.3, cagr: 28.8 },
+  { name: 'VolatileMom_v3', universe: 'S&P500', ret: 178.90, sharpe: 0.51, mdd: -35.1, cagr: 23.2 },
+  { name: 'DeepValue_v2', universe: 'S&P500', ret: 89.40, sharpe: 0.44, mdd: -31.8, cagr: 13.6 },
+  { name: 'BreakoutFail_v2', universe: 'S&P500', ret: -12.30, sharpe: -0.23, mdd: -38.5, cagr: -2.6 },
+  { name: 'RandomWalk_test', universe: 'Custom', ret: -8.50, sharpe: -0.15, mdd: -25.2, cagr: -1.8 },
+  { name: 'OverfitExample_v1', universe: 'S&P500', ret: 45.60, sharpe: 0.31, mdd: -29.4, cagr: 7.8 },
+];
+
+// ===== KPI Counter Animation (Phase 2) =====
+function animateCounters() {
+  const kpiValues = document.querySelectorAll('.kpi-value[data-target]');
+  kpiValues.forEach(el => {
+    const target = parseFloat(el.dataset.target);
+    const format = el.dataset.format;
+    const duration = 1200;
+    const startTime = performance.now();
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function formatValue(val) {
+      switch(format) {
+        case 'int': return Math.round(val).toString();
+        case 'pct': return val.toFixed(1) + '%';
+        case 'pct-plus': return '+' + val.toFixed(1) + '%';
+        case 'dec': return val.toFixed(2);
+        default: return val.toFixed(1);
+      }
+    }
+
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutCubic(progress);
+      const currentValue = easedProgress * target;
+      el.textContent = formatValue(currentValue);
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+    requestAnimationFrame(update);
+  });
+}
+// Start counter animation after a brief delay
+setTimeout(animateCounters, 300);
+
+// ===== Leaderboard (Enhanced) =====
+
+// Generate fake sparkline data for each strategy
+strategies.forEach(s => {
+  const pts = [];
+  let val = 100;
+  for (let i = 0; i < 20; i++) {
+    // Trend based on actual return, with random noise
+    const trend = s.ret > 0 ? 0.02 : -0.01;
+    const noise = (Math.random() - 0.45) * 8;
+    val += val * trend + noise;
+    if (val < 10) val = 10;
+    pts.push(val);
+  }
+  s.sparkline = pts;
+  s.calmar = s.cagr / Math.abs(s.mdd);
+});
+
+function getBadgeClass(universe) {
+  const map = { 'S&P500': 'badge-sp500', 'USETF': 'badge-usetf', 'KOSPI': 'badge-kospi', 'Custom': 'badge-custom' };
+  return map[universe] || 'badge-custom';
+}
+
+function makeSparklineSvg(pts, color) {
+  const w = 64, h = 24, pad = 1;
+  const min = Math.min(...pts), max = Math.max(...pts);
+  const range = max - min || 1;
+  const coords = pts.map((v, i) => {
+    const x = pad + (i / (pts.length - 1)) * (w - pad * 2);
+    const y = pad + (1 - (v - min) / range) * (h - pad * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  const gradId = 'sg' + Math.random().toString(36).slice(2, 6);
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${color}" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+    </linearGradient></defs>
+    <path d="M${coords.join(' L')} L${w - pad},${h} L${pad},${h} Z" fill="url(#${gradId})" stroke="none"/>
+    <polyline points="${coords.join(' ')}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+function getRankHtml(rank) {
+  const medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
+  if (medals[rank]) return `<span class="rank-medal">${medals[rank]}</span>`;
+  return `<span class="rank-num">${rank}</span>`;
+}
+
+function getDeltaHtml(delta) {
+  if (delta === null) return '<span class="delta-same">—</span>';
+  if (delta > 0) return `<span class="delta-down">▼${delta}</span>`;
+  if (delta < 0) return `<span class="delta-up">▲${Math.abs(delta)}</span>`;
+  return '<span class="delta-same">—</span>';
+}
+
+// Sort state
+let currentSort = 'return';
+let prevRanks = {}; // name → previous rank
+
+const sortFns = {
+  return: (a, b) => b.ret - a.ret,
+  sharpe: (a, b) => b.sharpe - a.sharpe,
+  calmar: (a, b) => b.calmar - a.calmar,
+  mdd: (a, b) => Math.abs(a.mdd) - Math.abs(b.mdd), // lower MDD = better
+};
+
+function sortLeaderboard(type, thEl) {
+  // Save previous ranks
+  const prevSorted = [...strategies].sort(sortFns[currentSort]);
+  prevSorted.forEach((s, i) => { prevRanks[s.name] = i + 1; });
+
+  currentSort = type;
+
+  // Update header active state
+  document.querySelectorAll('.lb-sortable').forEach(el => el.classList.remove('active'));
+  if (thEl) thEl.classList.add('active');
+
+  renderLeaderboard();
+}
+
+function renderLeaderboard() {
+  const sorted = [...strategies].sort(sortFns[currentSort]).slice(0, 5);
+  const tbody = document.getElementById('leaderboard-body');
+
+  tbody.innerHTML = sorted.map((s, i) => {
+    const rank = i + 1;
+    const prevRank = prevRanks[s.name] || null;
+    const delta = prevRank ? prevRank - rank : null; // positive = moved up in list
+    const sparkColor = s.ret >= 0 ? 'var(--accent-emerald)' : 'var(--accent-red)';
+    const sparkSvg = makeSparklineSvg(s.sparkline, s.ret >= 0 ? '#10b981' : '#ef4444');
+
+    return `<tr class="table-row">
+      <td class="text-center">${getRankHtml(rank)}</td>
+      <td class="text-center delta-cell">${getDeltaHtml(delta)}</td>
+      <td class="text-left"><a href="#" style="color: var(--accent-blue);" class="hover:underline font-medium text-sm">${s.name}</a></td>
+      <td class="sparkline-cell text-center">${sparkSvg}</td>
+      <td class="text-right"><span class="metric-value text-sm font-semibold" style="color: ${s.ret >= 0 ? 'var(--accent-emerald)' : 'var(--accent-red)'};">${s.ret >= 0 ? '+' : ''}${s.ret.toFixed(2)}%</span></td>
+      <td class="text-right"><span class="metric-value text-sm font-medium" style="color: var(--text-primary);">${s.sharpe.toFixed(2)}</span></td>
+      <td class="text-right"><span class="metric-value text-sm font-medium" style="color: var(--text-primary);">${s.calmar.toFixed(2)}</span></td>
+      <td class="text-right"><span class="metric-value text-sm font-medium" style="color: var(--accent-red);">${s.mdd.toFixed(1)}%</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// Initial render (no delta on first load)
+renderLeaderboard();
+
+// ===== Alert Accordion (Phase 5) =====
+function toggleAlert(el) {
+  el.classList.toggle('collapsed');
+}
+
+// ===== Dark Mode =====
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  document.getElementById('darkIcon').classList.toggle('hidden', isDark);
+  document.getElementById('lightIcon').classList.toggle('hidden', !isDark);
+  updateChartTheme(isDark);
+}
+
+function getChartColors(isDark) {
+  return {
+    text: isDark ? '#a1a1aa' : '#71717a',
+    grid: isDark ? '#27272a' : '#e8e8e4',
+    tick: isDark ? '#a1a1aa' : '#71717a',
+  };
+}
+
+function updateChartTheme(isDark) {
+  const c = getChartColors(isDark);
+  [scatterChart, histogramChart, isOsChart, trendChart].forEach(chart => {
+    if (!chart) return;
+    Object.values(chart.options.scales).forEach(scale => {
+      if (scale.ticks) scale.ticks.color = c.tick;
+      if (scale.grid) scale.grid.color = c.grid;
+      if (scale.title) scale.title.color = c.text;
+    });
+    if (chart.options.plugins?.legend?.labels) {
+      chart.options.plugins.legend.labels.color = c.text;
+    }
+    if (chart.options.plugins?.annotation?.annotations) {
+      Object.values(chart.options.plugins.annotation.annotations).forEach(ann => {
+        if (ann.label) ann.label.color = '#ffffff';
+      });
+    }
+    chart.update('none');
+  });
+  const universeChartInstance = Chart.getChart(document.getElementById('universeChart'));
+  if (universeChartInstance) {
+    universeChartInstance.data.datasets[0].borderColor = isDark ? '#18181b' : '#ffffff';
+    universeChartInstance.update('none');
+  }
+}
+
+// ===== Chart Tooltip Config (Phase 3: shadcn-style) =====
+const tooltipConfig = {
+  backgroundColor: '#18181b',
+  titleFont: { family: 'Geist Sans', size: 11, weight: '600' },
+  bodyFont: { family: 'Geist Sans', size: 11 },
+  padding: { top: 10, bottom: 10, left: 14, right: 14 },
+  cornerRadius: 10,
+  borderColor: 'rgba(255,255,255,0.08)',
+  borderWidth: 1,
+  caretSize: 0,
+  boxPadding: 4,
+  displayColors: true,
+};
+
+// ===== Chart: Risk-Return Scatter =====
+const universeColors = { 'S&P500': '#3b82f6', 'USETF': '#10b981', 'KOSPI': '#f59e0b', 'Custom': '#8b5cf6' };
+const scatterDatasets = {};
+strategies.forEach(s => {
+  if (!scatterDatasets[s.universe]) scatterDatasets[s.universe] = [];
+  scatterDatasets[s.universe].push({ x: s.sharpe, y: s.ret, name: s.name });
+});
+
+const scatterChart = new Chart(document.getElementById('scatterChart'), {
+  type: 'scatter',
+  data: {
+    datasets: Object.entries(scatterDatasets).map(([univ, points]) => ({
+      label: univ,
+      data: points,
+      backgroundColor: universeColors[univ] + '80',
+      borderColor: universeColors[univ],
+      borderWidth: 1.5,
+      pointRadius: 6,
+      pointHoverRadius: 9,
+    }))
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        ...tooltipConfig,
+        callbacks: {
+          label: ctx => {
+            const p = ctx.raw;
+            return `${p.name}: Return ${p.y.toFixed(1)}%, Sharpe ${p.x.toFixed(2)}`;
+          }
+        },
+      }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: 'Sharpe Ratio', font: { family: 'Geist Sans', size: 11, weight: '600' }, color: '#71717a' },
+        grid: { color: '#e8e8e4' },
+        ticks: { color: '#71717a', font: { family: 'Geist Sans', size: 10 } },
+        min: -0.5,
+      },
+      y: {
+        title: { display: true, text: 'Cumulative Return (%)', font: { family: 'Geist Sans', size: 11, weight: '600' }, color: '#71717a' },
+        grid: { color: '#e8e8e4' },
+        ticks: { color: '#71717a', font: { family: 'Geist Sans', size: 10 }, callback: v => v + '%' },
+      }
+    }
+  }
+});
+
+// ===== Chart: Return Distribution Histogram =====
+const returns = strategies.map(s => s.ret);
+const bins = [-100, -50, 0, 50, 100, 150, 200, 300, 500, 1100];
+const binCounts = new Array(bins.length - 1).fill(0);
+returns.forEach(r => {
+  for (let i = 0; i < bins.length - 1; i++) {
+    if (r >= bins[i] && r < bins[i + 1]) { binCounts[i]++; break; }
+  }
+});
+
+const histogramChart = new Chart(document.getElementById('histogramChart'), {
+  type: 'bar',
+  data: {
+    labels: ['<-50', '-50~0', '0~50', '50~100', '100~150', '150~200', '200~300', '300~500', '500+'],
+    datasets: [{
+      data: binCounts,
+      backgroundColor: 'rgba(59, 130, 246, 0.45)',
+      borderColor: 'rgba(59, 130, 246, 0.7)',
+      borderWidth: 1,
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        ...tooltipConfig,
+        callbacks: { label: ctx => `${ctx.raw} strategies` }
+      },
+      annotation: {
+        annotations: {
+          meanLine: {
+            type: 'line',
+            xMin: 5.4, xMax: 5.4,
+            borderColor: '#ef4444',
+            borderWidth: 2,
+            borderDash: [6, 3],
+            label: { display: true, content: 'Mean', position: 'start', backgroundColor: '#ef4444', font: { size: 10, family: 'Geist Sans', weight: '600' }, padding: 4, borderRadius: 4 }
+          },
+          medianLine: {
+            type: 'line',
+            xMin: 3.9, xMax: 3.9,
+            borderColor: '#3b82f6',
+            borderWidth: 2,
+            borderDash: [6, 3],
+            label: { display: true, content: 'Median', position: 'start', backgroundColor: '#3b82f6', font: { size: 10, family: 'Geist Sans', weight: '600' }, padding: 4, borderRadius: 4 }
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: 'Return Range (%)', font: { family: 'Geist Sans', size: 11, weight: '600' }, color: '#71717a' },
+        grid: { display: false },
+        ticks: { color: '#71717a', font: { family: 'Geist Sans', size: 9 } }
+      },
+      y: {
+        title: { display: true, text: 'Count', font: { family: 'Geist Sans', size: 11, weight: '600' }, color: '#71717a' },
+        grid: { color: '#e8e8e4' },
+        ticks: { color: '#71717a', font: { family: 'Geist Sans', size: 10 }, stepSize: 2 },
+        beginAtZero: true,
+      }
+    }
+  }
+});
+
+// ===== Chart: IS vs OS Health =====
+const isOsChart = new Chart(document.getElementById('isOsChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Sharpe', 'CAGR (%)', 'Volatility (%)', 'MDD (%)'],
+    datasets: [
+      {
+        label: 'In-Sample',
+        data: [1.05, 22.4, 17.2, 21.8],
+        backgroundColor: 'rgba(59, 130, 246, 0.6)',
+        borderColor: 'rgba(59, 130, 246, 0.9)',
+        borderWidth: 1,
+        borderRadius: 6,
+      },
+      {
+        label: 'Out-of-Sample',
+        data: [0.82, 18.1, 19.5, 24.3],
+        backgroundColor: 'rgba(251, 146, 60, 0.6)',
+        borderColor: 'rgba(251, 146, 60, 0.9)',
+        borderWidth: 1,
+        borderRadius: 6,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: tooltipConfig,
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: '#71717a', font: { family: 'Geist Sans', size: 11, weight: '600' } }
+      },
+      y: {
+        grid: { color: '#e8e8e4' },
+        ticks: { color: '#71717a', font: { family: 'Geist Sans', size: 10 } },
+        beginAtZero: true,
+      }
+    }
+  }
+});
+
+// ===== Chart: Universe Distribution Doughnut =====
+new Chart(document.getElementById('universeChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['S&P500', 'US ETF', 'KOSPI', 'Custom'],
+    datasets: [{
+      data: [18, 6, 3, 1],
+      backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'],
+      borderWidth: 3,
+      borderColor: '#ffffff',
+      hoverOffset: 6,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '62%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        ...tooltipConfig,
+        callbacks: {
+          label: ctx => `${ctx.label}: ${ctx.raw} strategies (${((ctx.raw / 28) * 100).toFixed(1)}%)`
+        }
+      }
+    }
+  }
+});
+
+// ===== Chart: Strategy Creation Trend (Phase 3: gradient fill) =====
+const trendCtx = document.getElementById('trendChart').getContext('2d');
+const trendGradient = trendCtx.createLinearGradient(0, 0, 0, 240);
+trendGradient.addColorStop(0, 'rgba(59, 130, 246, 0.2)');
+trendGradient.addColorStop(1, 'rgba(59, 130, 246, 0.01)');
+
+const trendChart = new Chart(trendCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Sep 2025', 'Oct 2025', 'Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026'],
+    datasets: [
+      {
+        label: 'Monthly Count',
+        data: [5, 4, 3, 6, 7, 3],
+        backgroundColor: 'rgba(113, 113, 122, 0.35)',
+        borderColor: 'rgba(113, 113, 122, 0.6)',
+        borderWidth: 1,
+        borderRadius: 6,
+        yAxisID: 'y',
+        order: 2,
+      },
+      {
+        label: 'Avg Sharpe',
+        data: [0.62, 0.71, 0.68, 0.78, 0.85, 0.92],
+        type: 'line',
+        borderColor: '#3b82f6',
+        backgroundColor: trendGradient,
+        borderWidth: 2.5,
+        pointRadius: 5,
+        pointBackgroundColor: '#3b82f6',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        tension: 0.35,
+        fill: true,
+        yAxisID: 'y1',
+        order: 1,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: tooltipConfig,
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: '#71717a', font: { family: 'Geist Sans', size: 10 } }
+      },
+      y: {
+        position: 'left',
+        title: { display: true, text: 'Count', font: { family: 'Geist Sans', size: 11, weight: '600' }, color: '#71717a' },
+        grid: { color: '#e8e8e4' },
+        ticks: { color: '#71717a', font: { family: 'Geist Sans', size: 10 }, stepSize: 2 },
+        beginAtZero: true,
+      },
+      y1: {
+        position: 'right',
+        title: { display: true, text: 'Avg Sharpe', font: { family: 'Geist Sans', size: 11, weight: '600' }, color: '#3b82f6' },
+        grid: { display: false },
+        ticks: { color: '#3b82f6', font: { family: 'Geist Sans', size: 10 } },
+        min: 0,
+        max: 1.5,
+      }
+    }
+  }
+});
+</script>
+
+<!-- Embedded mode: hide sidebar & header when loaded inside combined mockup -->
+<script>
+(function() {
+  if (new URLSearchParams(window.location.search).get('embedded') === '1') {
+    var header = document.querySelector('header');
+    if (header) header.style.display = 'none';
+    var sidebar = document.querySelector('nav.sidebar');
+    if (sidebar) sidebar.style.display = 'none';
+    var flex = document.querySelector('.flex');
+    if (flex) flex.style.minHeight = 'auto';
+  }
+})();
+</script>
+</body>
+</html>

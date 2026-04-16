@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Projects - Magazine Spread (Mockup B)</title>
+<style>
+  :root {
+    --color-bg: #f7f9fb;
+    --color-bg-secondary: #f0f4f7;
+    --color-bg-emphasis: #d9e4ea;
+    --color-text: #2a3439;
+    --color-text-muted: #566166;
+    --color-text-faint: #717c82;
+    --color-accent: #456272;
+    --color-border: rgba(113, 124, 130, 0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Geist Sans', 'Noto Sans KR', system-ui, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+  }
+  .display { font-family: 'Outfit', system-ui, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  section {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+  }
+
+  /* Section header */
+  .section-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .section-header .label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .section-header .meta {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+  }
+
+  /* Magazine spread */
+  .project {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 8rem;
+    position: relative;
+  }
+  .project-image {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: var(--color-bg-secondary);
+    position: relative;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .project-image:hover { transform: scale(1.005); }
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  /* Big number overlay using mix-blend-mode */
+  .project-number-overlay {
+    position: absolute;
+    top: -2rem;
+    left: -1rem;
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: clamp(8rem, 18vw, 16rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--color-bg);
+    mix-blend-mode: difference;
+    pointer-events: none;
+    z-index: 2;
+    letter-spacing: -0.05em;
+  }
+  .project-category-overlay {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.95);
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 1rem;
+    z-index: 3;
+  }
+
+  /* Right column text */
+  .project-text {
+    padding-top: 2rem;
+  }
+  .project-meta {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-faint);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+  }
+  .project-title {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 1.875rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+  .project-desc {
+    font-size: 0.8125rem;
+    line-height: 1.85;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+  .project-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--color-accent);
+    padding-bottom: 0.25rem;
+    transition: gap 0.3s;
+  }
+  .project-cta::after { content: '→'; }
+  .project-cta:hover { gap: 0.875rem; }
+
+  @media (max-width: 768px) {
+    section { padding: 3rem 1.5rem; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .project { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 4rem; }
+    .project-number-overlay { font-size: 6rem; top: -1rem; }
+    .project-title { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<section>
+  <div class="section-header">
+    <div>
+      <span class="label">04 / Selected Work</span>
+      <h2 class="display">만들어 온 것들</h2>
+    </div>
+    <span class="meta">2024 — 2026</span>
+  </div>
+
+  <article class="project">
+    <div class="project-image">
+      <span class="project-number-overlay">01</span>
+      <span class="project-category-overlay">FinTech UX</span>
+      <img src="file:///Users/ellie/Documents/portfolio/public/assets/landing/project-quant.jpg" alt="퀀트 플랫폼">
+    </div>
+    <div class="project-text">
+      <div class="project-meta">
+        <span>Service Planning · IA</span>
+        <span>2024 — Now</span>
+      </div>
+      <h3 class="project-title display">퀀트 전략 분석 플랫폼</h3>
+      <p class="project-desc">리서처 4명이 매일 쓰는 도구. 200개+ 전략의 정보구조를 재설계하고, 20개+ 페이지를 직접 설계했어요.</p>
+      <a href="#" class="project-cta">Read Case</a>
+    </div>
+  </article>
+
+  <article class="project">
+    <div class="project-image">
+      <span class="project-number-overlay">02</span>
+      <span class="project-category-overlay">AI Design</span>
+      <img src="file:///Users/ellie/Documents/portfolio/public/assets/landing/project-jujutok.jpg" alt="주주톡">
+    </div>
+    <div class="project-text">
+      <div class="project-meta">
+        <span>Solo Build · LLM</span>
+        <span>2025</span>
+      </div>
+      <h3 class="project-title display">주주톡: AI 주식 분석</h3>
+      <p class="project-desc">6개 AI 에이전트가 병렬 분석하고, 4명의 투자 페르소나가 토론하는 구조를 설계했어요.</p>
+      <a href="#" class="project-cta">Read Case</a>
+    </div>
+  </article>
+
+  <article class="project">
+    <div class="project-image">
+      <span class="project-number-overlay">03</span>
+      <span class="project-category-overlay">Algorithm</span>
+      <img src="file:///Users/ellie/Documents/portfolio/public/assets/landing/project-ratb.jpg" alt="RATB">
+    </div>
+    <div class="project-text">
+      <div class="project-meta">
+        <span>Robo-Advisor</span>
+        <span>2022 — 2024</span>
+      </div>
+      <h3 class="project-title display">RATB 로보어드바이저 운용</h3>
+      <p class="project-desc">38개 AI 투자 알고리즘을 기획하고, 200개 계좌를 동시에 관리하는 프로세스를 설계했어요.</p>
+      <a href="#" class="project-cta">Read More</a>
+    </div>
+  </article>
+
+  <article class="project">
+    <div class="project-image">
+      <span class="project-number-overlay">04</span>
+      <span class="project-category-overlay">Internal Tool</span>
+      <img src="file:///Users/ellie/Documents/portfolio/public/assets/landing/project-aum.jpg" alt="AUM">
+    </div>
+    <div class="project-text">
+      <div class="project-meta">
+        <span>Workflow Automation</span>
+        <span>2023 — 2024</span>
+      </div>
+      <h3 class="project-title display">AI 운용지원 시스템</h3>
+      <p class="project-desc">운용역 워크플로우를 관찰해서 자동화/판단 단계를 분리. 매매·운용시간을 83% 단축했어요.</p>
+      <a href="#" class="project-cta">Read Case</a>
+    </div>
+  </article>
+</section>
+
+</body>
+</html>

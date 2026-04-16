@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Capabilities B — Donut/Ring Gauge</title>
+<style>
+  :root {
+    --color-bg: #f7f9fb; --color-bg-secondary: #f0f4f7; --color-bg-emphasis: #d9e4ea;
+    --color-text: #2a3439; --color-text-muted: #566166; --color-text-faint: #717c82;
+    --color-accent: #456272; --color-accent-light: #385666;
+    --color-border: rgba(113, 124, 130, 0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Noto Sans KR', system-ui, sans-serif; background: var(--color-bg); color: var(--color-text); -webkit-font-smoothing: antialiased; }
+  .display { font-family: 'Outfit', system-ui, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  section { max-width: 1440px; margin: 0 auto; padding: 6rem 2rem; }
+  .label { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: 1rem; display: block; }
+  h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+  .intro { font-size: 1rem; line-height: 1.8; color: var(--color-text-muted); max-width: 44ch; margin-bottom: 4rem; }
+
+  /* Ring gauges grid */
+  .gauges {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+  .gauge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    cursor: default;
+  }
+  .gauge-ring {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  .gauge-ring svg {
+    transform: rotate(-90deg);
+    width: 120px;
+    height: 120px;
+  }
+  .gauge-ring circle {
+    fill: none;
+    stroke-width: 6;
+    cx: 60;
+    cy: 60;
+    r: 52;
+  }
+  .gauge-ring .track {
+    stroke: var(--color-bg-emphasis);
+  }
+  .gauge-ring .fill {
+    stroke: var(--color-accent);
+    stroke-linecap: round;
+    stroke-dasharray: 326.73;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .gauge-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+  }
+  .gauge-label {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    text-align: center;
+  }
+  .gauge-sub {
+    font-size: 0.6875rem;
+    color: var(--color-text-faint);
+    text-align: center;
+    line-height: 1.5;
+    max-width: 14ch;
+  }
+
+  /* Detail cards below */
+  .details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .detail {
+    padding: 1.5rem;
+    border-top: 2px solid var(--color-accent);
+    background: var(--color-bg-secondary);
+  }
+  .detail h3 { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.375rem; }
+  .detail p { font-size: 0.75rem; line-height: 1.6; color: var(--color-text-muted); }
+
+  @media (max-width: 768px) {
+    .gauges { grid-template-columns: repeat(3, 1fr); }
+    .details { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<section>
+  <span class="label">03 / 역량</span>
+  <h2 class="display">금융, 기획, 그리고 기술</h2>
+  <p class="intro">금융을 이해하는 기획자는 단순한 화면 설계에 그치지 않습니다. 시장의 투자 구조, 사용자의 실제 워크플로우, 그리고 AI 모델의 가능성을 동시에 봅니다.</p>
+
+  <!-- Ring gauges -->
+  <div class="gauges">
+    <div class="gauge">
+      <div class="gauge-ring">
+        <svg><circle class="track"/><circle class="fill" style="stroke-dashoffset: 16.34;"/></svg>
+        <span class="gauge-value display">95</span>
+      </div>
+      <span class="gauge-label">서비스 기획</span>
+      <span class="gauge-sub">문제 정의부터 요건정의서까지</span>
+    </div>
+    <div class="gauge">
+      <div class="gauge-ring">
+        <svg><circle class="track"/><circle class="fill" style="stroke-dashoffset: 32.67;"/></svg>
+        <span class="gauge-value display">90</span>
+      </div>
+      <span class="gauge-label">금융 도메인</span>
+      <span class="gauge-sub">ETF, 알고리즘, 로보어드바이저</span>
+    </div>
+    <div class="gauge">
+      <div class="gauge-ring">
+        <svg><circle class="track"/><circle class="fill" style="stroke-dashoffset: 49.01;"/></svg>
+        <span class="gauge-value display">85</span>
+      </div>
+      <span class="gauge-label">UX 설계</span>
+      <span class="gauge-sub">와이어프레임, 디자인 시스템</span>
+    </div>
+    <div class="gauge">
+      <div class="gauge-ring">
+        <svg><circle class="track"/><circle class="fill" style="stroke-dashoffset: 49.01;"/></svg>
+        <span class="gauge-value display">85</span>
+      </div>
+      <span class="gauge-label">리서치</span>
+      <span class="gauge-sub">현업 관찰, 니즈 발견</span>
+    </div>
+    <div class="gauge">
+      <div class="gauge-ring">
+        <svg><circle class="track"/><circle class="fill" style="stroke-dashoffset: 65.35;"/></svg>
+        <span class="gauge-value display">80</span>
+      </div>
+      <span class="gauge-label">AI 활용</span>
+      <span class="gauge-sub">멀티에이전트, 프롬프트</span>
+    </div>
+  </div>
+
+  <!-- Detail cards -->
+  <div class="details">
+    <div class="detail">
+      <h3>서비스 기획</h3>
+      <p>문제 정의, 정보구조 설계, 요건정의서 작성까지 기획 전 과정을 수행합니다.</p>
+    </div>
+    <div class="detail">
+      <h3>사용자 리서치</h3>
+      <p>현업 워크플로우를 직접 관찰해서 요청 뒤의 진짜 니즈를 발견합니다.</p>
+    </div>
+    <div class="detail">
+      <h3>UX 설계</h3>
+      <p>와이어프레임부터 디자인 시스템 구축, 20개+ 페이지를 직접 설계합니다.</p>
+    </div>
+    <div class="detail">
+      <h3>AI 활용</h3>
+      <p>Claude Code, 멀티에이전트 설계, 프롬프트 엔지니어링으로 기획을 검증합니다.</p>
+    </div>
+  </div>
+</section>
+</body>
+</html>

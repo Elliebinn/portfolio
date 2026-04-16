@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AED - Backtest Comparison</title>
+
+    <!-- Geist Sans -->
+    <style>
+    @font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+    @font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+    @font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+    @font-face { font-family: 'Geist Sans'; src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+    </style>
+
+    <style>
+    /* ── CSS Variables ── */
+    :root {
+        --bg-page: #f8f8f6;
+        --bg-card: #ffffff;
+        --bg-card-subtle: #fafbfc;
+        --bg-header: #0f0f12;
+        --bg-sidebar: #ffffff;
+        --border-card: #e8e8e4;
+        --border-hover: #d0d0cc;
+        --border-subtle: #f0f0ec;
+        --text-primary: #111113;
+        --text-secondary: #52525b;
+        --text-muted: #8b8b94;
+        --text-inverse: #fafafa;
+        --accent-blue: #2563eb;
+        --accent-emerald: #059669;
+        --accent-red: #dc2626;
+        --accent-amber: #d97706;
+        --accent-violet: #7c3aed;
+        --accent-orange: #ea580c;
+        --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+        --shadow-card-hover: 0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+        --shadow-section: 0 1px 2px rgba(0,0,0,0.03);
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        --radius-card: 16px;
+        --radius-badge: 8px;
+        --radius-sm: 6px;
+        --positive-color: #059669;
+        --negative-color: #dc2626;
+    }
+
+    body.dark {
+        --bg-page: #09090b;
+        --bg-card: #18181b;
+        --bg-card-subtle: #1c1c20;
+        --bg-header: #09090b;
+        --bg-sidebar: #111113;
+        --border-card: #27272a;
+        --border-hover: #3f3f46;
+        --border-subtle: #1e1e22;
+        --text-primary: #fafafa;
+        --text-secondary: #a1a1aa;
+        --text-muted: #71717a;
+        --text-inverse: #111113;
+        --shadow-card: 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.1);
+        --shadow-card-hover: 0 8px 30px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
+        --positive-color: #34d399;
+        --negative-color: #f87171;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'Geist Sans', sans-serif;
+        background: var(--bg-page);
+        color: var(--text-primary);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Shell Layout ── */
+    .aed-shell {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    .aed-sidebar {
+        width: 220px;
+        min-width: 220px;
+        background: var(--bg-sidebar);
+        border-right: 1px solid var(--border-card);
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        flex-shrink: 0;
+        z-index: 100;
+        transition: margin-left 0.25s var(--ease-out), opacity 0.25s var(--ease-out);
+    }
+    .aed-sidebar.collapsed {
+        margin-left: -220px;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .aed-sidebar-brand {
+        padding: 16px 16px 14px;
+        border-bottom: 1px solid var(--border-subtle);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: inherit;
+    }
+    .aed-sidebar-logo {
+        width: 32px; height: 32px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #3b82f6, #6366f1);
+        display: flex; align-items: center; justify-content: center;
+        color: white; font-weight: 800; font-size: 14px;
+        box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+        flex-shrink: 0;
+    }
+    .aed-sidebar-title { font-weight: 800; font-size: 17px; color: var(--text-primary); letter-spacing: -0.02em; }
+    .aed-sidebar-subtitle { font-size: 9px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+
+    .aed-sidebar-nav {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0;
+    }
+    .aed-sidebar-section {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        padding: 20px 16px 8px;
+    }
+    .aed-sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 16px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        text-decoration: none;
+        border-radius: 6px;
+        margin: 1px 8px;
+        transition: all 0.15s;
+        cursor: pointer;
+    }
+    .aed-sidebar-link svg { flex-shrink: 0; width: 18px; height: 18px; }
+    .aed-sidebar-link:hover { background: #f1f5f9; color: var(--text-primary); }
+    body.dark .aed-sidebar-link:hover { background: rgba(255,255,255,0.08); }
+    .aed-sidebar-link.active { background: #eff6ff; color: var(--accent-blue); font-weight: 600; }
+    body.dark .aed-sidebar-link.active { background: rgba(37,99,235,0.15); }
+
+    .aed-sidebar-footer {
+        padding: 12px 16px;
+        border-top: 1px solid var(--border-subtle);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .aed-sidebar-status {
+        display: flex; align-items: center; gap: 6px;
+        font-size: 11px; color: var(--text-muted);
+    }
+    .aed-sidebar-status-dot {
+        width: 6px; height: 6px; border-radius: 50%; background: #10b981;
+    }
+    .aed-sidebar-version { font-size: 10px; color: var(--text-muted); }
+
+    /* ── Content Area ── */
+    .aed-content-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-width: 0;
+    }
+
+    /* ── Topbar ── */
+    .aed-topbar {
+        height: 44px;
+        min-height: 44px;
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border-card);
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        gap: 6px;
+        font-size: 13px;
+    }
+    .aed-topbar-crumb { color: var(--text-muted); cursor: pointer; transition: color 0.15s; text-decoration: none; }
+    .aed-topbar-crumb:hover { color: var(--accent-blue); }
+    .aed-topbar-current { color: var(--text-primary); font-weight: 600; }
+    .aed-topbar-sep { color: var(--text-muted); font-size: 11px; margin: 0 2px; }
+    .aed-topbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+
+    .aed-footer-btn {
+        background: none; border: 1px solid var(--border-card);
+        border-radius: 6px; padding: 4px 8px;
+        font-size: 11px; font-weight: 500; color: var(--text-secondary);
+        cursor: pointer; transition: all 0.15s;
+        display: flex; align-items: center; gap: 4px;
+        font-family: 'Geist Sans', sans-serif;
+    }
+    .aed-footer-btn:hover { background: #f1f5f9; border-color: var(--border-hover); }
+    body.dark .aed-footer-btn:hover { background: rgba(255,255,255,0.08); }
+
+    /* ── Main Content ── */
+    .aed-main {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 32px 48px;
+        background: var(--bg-page);
+    }
+
+    /* ── Common Components ── */
+    .aed-page-header { margin-bottom: 20px; }
+    .aed-page-title { font-size: 22px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; margin: 0; }
+    .aed-page-subtitle { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-top: 4px; }
+
+    .aed-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-card);
+        box-shadow: var(--shadow-card);
+        padding: 24px;
+        transition: all 0.3s var(--ease-out);
+    }
+
+    /* ── Animations ── */
+    @keyframes aed-cardSlideUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes dropIn {
+        from { opacity: 0; transform: translateY(-6px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ================================================================
+       COMPARISON PAGE STYLES
+       ================================================================ */
+
+    /* ── Search & Selection Bar ── */
+    .bc-search-bar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 0;
+    }
+
+    .bc-search-wrap {
+        position: relative;
+        flex: 1;
+        max-width: 420px;
+    }
+
+    .bc-search-input {
+        width: 100%;
+        height: 38px;
+        padding: 0 12px 0 36px;
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-badge);
+        background: var(--bg-card);
+        color: var(--text-primary);
+        font-family: 'Geist Sans', sans-serif;
+        font-size: 13px;
+        font-weight: 400;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .bc-search-input::placeholder { color: var(--text-muted); }
+    .bc-search-input:focus {
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+
+    .bc-search-icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        pointer-events: none;
+    }
+
+    /* Search dropdown */
+    .bc-search-dropdown {
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: 10px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+        z-index: 200;
+        animation: dropIn 0.2s ease;
+        max-height: 280px;
+        overflow-y: auto;
+        display: none;
+    }
+    .bc-search-dropdown.open { display: block; }
+    body.dark .bc-search-dropdown { box-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+
+    .bc-dropdown-item {
+        padding: 9px 14px;
+        font-size: 13px;
+        font-weight: 400;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: background 0.1s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .bc-dropdown-item:first-child { border-radius: 10px 10px 0 0; }
+    .bc-dropdown-item:last-child { border-radius: 0 0 10px 10px; }
+    .bc-dropdown-item:hover { background: #f8fafc; }
+    body.dark .bc-dropdown-item:hover { background: rgba(255,255,255,0.06); }
+    .bc-dropdown-item.selected {
+        color: var(--accent-blue);
+        font-weight: 600;
+        background: #eff6ff;
+    }
+    body.dark .bc-dropdown-item.selected { background: rgba(37,99,235,0.15); }
+    .bc-dropdown-item .bc-item-tag {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--text-muted);
+        background: var(--bg-card-subtle);
+        border: 1px solid var(--border-subtle);
+        padding: 1px 6px;
+        border-radius: 4px;
+        margin-left: auto;
+    }
+
+    /* Benchmark selector */
+    .bc-benchmark-select {
+        height: 38px;
+        padding: 0 32px 0 12px;
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-badge);
+        background: var(--bg-card);
+        color: var(--text-primary);
+        font-family: 'Geist Sans', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        outline: none;
+        appearance: none;
+        cursor: pointer;
+        transition: border-color 0.2s;
+        background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238b8b94' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+    }
+    .bc-benchmark-select:hover { border-color: var(--border-hover); }
+    .bc-benchmark-select:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .bc-benchmark-label {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    /* ── Filter Chips (selected portfolios) ── */
+    .bc-chips-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+        min-height: 30px;
+    }
+    .bc-chips-label {
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-muted);
+        margin-right: 4px;
+        white-space: nowrap;
+    }
+
+    /* ── Tag Buttons ── */
+    .bc-tag-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 12px;
+        border: 1px solid var(--border-card);
+        border-radius: 999px;
+        font-family: 'Geist Sans', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        background: var(--bg-card);
+        cursor: pointer;
+        transition: all 0.15s;
+    }
+    .bc-tag-btn:hover {
+        border-color: var(--accent-blue);
+        color: var(--accent-blue);
+    }
+    .bc-tag-btn.active {
+        background: #eff6ff;
+        border-color: var(--accent-blue);
+        color: var(--accent-blue);
+    }
+    body.dark .bc-tag-btn.active {
+        background: rgba(37,99,235,0.15);
+    }
+    .bc-tag-count {
+        font-size: 10px;
+        font-weight: 700;
+        background: var(--bg-card-subtle);
+        color: var(--text-muted);
+        padding: 0 5px;
+        border-radius: 999px;
+        min-width: 16px;
+        text-align: center;
+    }
+    .bc-tag-btn.active .bc-tag-count {
+        background: rgba(37,99,235,0.15);
+        color: var(--accent-blue);
+    }
+    .bc-tag-add-all {
+        display: none;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 12px;
+        border: 1px dashed var(--accent-blue);
+        border-radius: 999px;
+        font-family: 'Geist Sans', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--accent-blue);
+        background: rgba(37,99,235,0.04);
+        cursor: pointer;
+        transition: all 0.15s;
+        margin-left: 4px;
+    }
+    .bc-tag-add-all:hover {
+        background: rgba(37,99,235,0.1);
+    }
+
+    .aed-filter-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 500;
+        border: 1px solid var(--border-card);
+        background: var(--bg-card);
+        color: var(--text-primary);
+        cursor: default;
+        transition: all 0.15s;
+        white-space: nowrap;
+    }
+    .aed-filter-chip .chip-dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+    .aed-filter-chip .chip-remove {
+        width: 16px; height: 16px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: all 0.15s;
+        font-size: 12px;
+        line-height: 1;
+        flex-shrink: 0;
+    }
+    .aed-filter-chip .chip-remove:hover {
+        background: var(--accent-red);
+        color: white;
+    }
+
+    /* ── Control Bar ── */
+    .bc-control-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        margin-bottom: 4px;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+    .bc-control-left {
+        display: flex;
+        align-items: center;
+        gap: 0;
+    }
+
+    .aed-inline-tabs {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        background: var(--bg-card-subtle);
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-badge);
+        padding: 3px;
+    }
+    .aed-inline-tab {
+        padding: 6px 14px;
+        font-family: 'Geist Sans', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-muted);
+        background: transparent;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+    }
+    .aed-inline-tab:hover {
+        color: var(--text-primary);
+        background: var(--bg-card);
+    }
+    .aed-inline-tab.active {
+        color: var(--accent-blue);
+        background: var(--bg-card);
+        font-weight: 600;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    /* IS/OS Toggle */
+    .bc-toggle-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .bc-toggle-label {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-secondary);
+    }
+    .bc-toggle {
+        position: relative;
+        width: 40px;
+        height: 22px;
+        background: var(--border-card);
+        border-radius: 11px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .bc-toggle.on { background: var(--accent-blue); }
+    .bc-toggle-knob {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 16px;
+        height: 16px;
+        background: white;
+        border-radius: 50%;
+        transition: transform 0.2s var(--ease-out);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .bc-toggle.on .bc-toggle-knob { transform: translateX(18px); }
+
+    /* ── Chart Area ── */
+    .bc-chart-area {
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-card);
+        box-shadow: var(--shadow-card);
+        padding: 0;
+        overflow: hidden;
+        animation: aed-cardSlideUp 0.5s var(--ease-out) 0.06s both;
+    }
+
+    .bc-chart-placeholder {
+        position: relative;
+        width: 100%;
+        min-height: 420px;
+        background: var(--bg-card-subtle);
+        border-radius: 0 0 12px 12px;
+        overflow: hidden;
+    }
+    .bc-chart-placeholder .chart-grid {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle, var(--border-subtle) 0.7px, transparent 0.7px);
+        background-size: 20px 20px;
+        opacity: 0.6;
+    }
+
+    /* SVG chart lines */
+    .bc-chart-svg {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 420px;
+    }
+
+    /* Chart legend */
+    .bc-chart-legend {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-badge);
+        padding: 10px 14px;
+        box-shadow: var(--shadow-card);
+    }
+    .bc-legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-secondary);
+    }
+    .bc-legend-dot {
+        width: 10px; height: 3px;
+        border-radius: 2px;
+        flex-shrink: 0;
+    }
+
+    /* Chart y-axis labels */
+    .bc-chart-y-labels {
+        position: absolute;
+        left: 12px;
+        top: 20px;
+        bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .bc-y-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--text-muted);
+    }
+
+    /* Chart x-axis labels */
+    .bc-chart-x-labels {
+        position: absolute;
+        bottom: 10px;
+        left: 60px;
+        right: 20px;
+        display: flex;
+        justify-content: space-between;
+        z-index: 2;
+        pointer-events: none;
+    }
+    .bc-x-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--text-muted);
+    }
+
+    /* Chart title */
+    .bc-chart-header {
+        padding: 16px 20px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .bc-chart-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text-primary);
+        letter-spacing: -0.01em;
+    }
+
+    /* ── Performance Table ── */
+    .bc-perf-section {
+        animation: aed-cardSlideUp 0.5s var(--ease-out) 0.09s both;
+    }
+    .bc-perf-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: -0.01em;
+        margin-bottom: 12px;
+    }
+
+    .bc-perf-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-card);
+        overflow: hidden;
+        box-shadow: var(--shadow-card);
+    }
+    .bc-perf-table thead th {
+        background: var(--bg-card-subtle);
+        color: var(--text-muted);
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 10px 14px;
+        text-align: right;
+        border-bottom: 1px solid var(--border-card);
+        white-space: nowrap;
+    }
+    .bc-perf-table thead th:first-child {
+        text-align: left;
+    }
+    .bc-perf-table tbody td {
+        padding: 12px 14px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-primary);
+        text-align: right;
+        border-bottom: 1px solid var(--border-subtle);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+    }
+    .bc-perf-table tbody td:first-child {
+        text-align: left;
+        font-family: 'Geist Sans', sans-serif;
+        font-weight: 500;
+    }
+    .bc-perf-table tbody tr {
+        transition: all 0.15s;
+    }
+    .bc-perf-table tbody tr:hover {
+        background: var(--bg-card-subtle);
+    }
+    .bc-perf-table tbody tr:hover td:first-child {
+        box-shadow: inset 3px 0 0 var(--accent-blue);
+    }
+    .bc-perf-table tbody tr:last-child td { border-bottom: none; }
+
+    .bc-name-cell {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .bc-name-dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+    .bc-name-label {
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+    .bc-name-tag {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--text-muted);
+        background: var(--bg-card-subtle);
+        border: 1px solid var(--border-subtle);
+        padding: 1px 5px;
+        border-radius: 4px;
+        margin-left: 4px;
+    }
+
+    /* Conditional formatting */
+    .val-positive { color: var(--positive-color); }
+    .val-negative { color: var(--negative-color); }
+    .val-neutral { color: var(--text-secondary); }
+    .val-best {
+        font-weight: 700;
+        position: relative;
+    }
+    .val-best::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--accent-blue);
+        border-radius: 1px;
+    }
+
+    /* ── Utility ── */
+    .gap-stack-16 > * + * { margin-top: 16px; }
+    .gap-stack-20 > * + * { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="aed-shell">
+        <!-- ════════════════════════════════════════════════════════════
+             SIDEBAR
+             ════════════════════════════════════════════════════════════ -->
+        <aside class="aed-sidebar" id="sidebar">
+            <!-- Brand -->
+            <a href="/overview" class="aed-sidebar-brand">
+                <div class="aed-sidebar-logo">A</div>
+                <div>
+                    <div class="aed-sidebar-title">AED</div>
+                    <div class="aed-sidebar-subtitle">Alpha Engine Dashboard</div>
+                </div>
+            </a>
+
+            <!-- Navigation -->
+            <nav class="aed-sidebar-nav">
+                <div class="aed-sidebar-section">Backtest</div>
+                <a class="aed-sidebar-link" href="/overview">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    <span>Overview</span>
+                </a>
+                <a class="aed-sidebar-link" href="/backtest/result-list">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                    <span>Backtest Results</span>
+                </a>
+                <a class="aed-sidebar-link active" href="/backtest_comparison">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    <span>Comparison</span>
+                </a>
+
+                <div class="aed-sidebar-section">Analysis</div>
+                <a class="aed-sidebar-link" href="/risk_return_profile">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span>Risk/Return Profile</span>
+                </a>
+                <a class="aed-sidebar-link" href="/correlation">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
+                    <span>Correlation</span>
+                </a>
+
+                <div class="aed-sidebar-section">Paper Trading</div>
+                <a class="aed-sidebar-link" href="/paper-trading/list">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>Paper Trading</span>
+                </a>
+
+                <div class="aed-sidebar-section">Data Sources</div>
+                <a class="aed-sidebar-link" href="/benchmark_loader">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    <span>Benchmark Loader</span>
+                </a>
+                <a class="aed-sidebar-link" href="/usetf_universe_loader">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+                    <span>US ETF Universe</span>
+                </a>
+                <a class="aed-sidebar-link" href="/data_checker">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                    <span>Data Checker</span>
+                </a>
+
+                <div class="aed-sidebar-section">Navigation</div>
+                <a class="aed-sidebar-link" href="/settings">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <!-- Footer -->
+            <div class="aed-sidebar-footer">
+                <div class="aed-sidebar-status">
+                    <span class="aed-sidebar-status-dot"></span>
+                    Connected
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <div class="aed-sidebar-version">AED v2.4.1</div>
+                    <button class="aed-footer-btn" onclick="document.getElementById('sidebar').classList.toggle('collapsed')" title="사이드바 접기">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/></svg>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ════════════════════════════════════════════════════════════
+             CONTENT AREA
+             ════════════════════════════════════════════════════════════ -->
+        <div class="aed-content-area">
+            <!-- Topbar -->
+            <div class="aed-topbar">
+                <a class="aed-topbar-crumb" href="/overview">Backtest</a>
+                <span class="aed-topbar-sep">/</span>
+                <span class="aed-topbar-current">Comparison</span>
+                <div class="aed-topbar-right">
+                    <button class="aed-footer-btn" onclick="document.body.classList.toggle('dark')">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                        <span>Dark</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="aed-main">
+                <div class="gap-stack-20">
+
+                    <!-- ── Page Header ── -->
+                    <div class="aed-page-header" style="animation: aed-cardSlideUp 0.5s var(--ease-out) 0.0s both;">
+                        <h1 class="aed-page-title">백테스트 비교</h1>
+                        <p class="aed-page-subtitle">Compare portfolio performance with benchmarks</p>
+                    </div>
+
+                    <!-- ── Search & Selection Section ── -->
+                    <div class="aed-card" style="animation: aed-cardSlideUp 0.5s var(--ease-out) 0.03s both;">
+                        <!-- Row 1: Search + Benchmark Selector -->
+                        <div class="bc-search-bar">
+                            <div class="bc-search-wrap">
+                                <span class="bc-search-icon">
+                                    <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                </span>
+                                <input type="text" class="bc-search-input" id="searchInput" placeholder="포트폴리오 검색..." autocomplete="off">
+                                <!-- Search Dropdown -->
+                                <div class="bc-search-dropdown" id="searchDropdown">
+                                    <div class="bc-dropdown-item selected" onclick="selectPortfolio(this, 'SPY')">
+                                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        S&P 500 (Benchmark)
+                                        <span class="bc-item-tag">Benchmark</span>
+                                    </div>
+                                    <div class="bc-dropdown-item" onclick="selectPortfolio(this, 'Alpha_Growth_01')">
+                                        Alpha_Growth_01
+                                        <span class="bc-item-tag">Growth</span>
+                                    </div>
+                                    <div class="bc-dropdown-item" onclick="selectPortfolio(this, 'Alpha_Val_03')">
+                                        Alpha_Val_03
+                                        <span class="bc-item-tag">Value</span>
+                                    </div>
+                                    <div class="bc-dropdown-item" onclick="selectPortfolio(this, 'Alpha_Mom_05')">
+                                        Alpha_Momentum_05
+                                        <span class="bc-item-tag">Momentum</span>
+                                    </div>
+                                    <div class="bc-dropdown-item" onclick="selectPortfolio(this, 'Alpha_Quality_02')">
+                                        Alpha_Quality_02
+                                        <span class="bc-item-tag">Quality</span>
+                                    </div>
+                                    <div class="bc-dropdown-item" onclick="selectPortfolio(this, 'Alpha_LowVol_04')">
+                                        Alpha_LowVol_04
+                                        <span class="bc-item-tag">LowVol</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span class="bc-benchmark-label">벤치마크:</span>
+                            <select class="bc-benchmark-select" id="benchmarkSelect">
+                                <option value="spy" selected>S&P 500 (SPY)</option>
+                                <option value="qqq">NASDAQ 100 (QQQ)</option>
+                                <option value="iwm">Russell 2000 (IWM)</option>
+                                <option value="kospi">KOSPI 200</option>
+                            </select>
+                        </div>
+
+                        <!-- Row 2: Tag Filter -->
+                        <div class="bc-tag-row" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding-top:12px; border-top:1px solid var(--border-subtle); margin-top:12px;">
+                            <span style="font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:0.04em; text-transform:uppercase; white-space:nowrap;">태그:</span>
+                            <button class="bc-tag-btn active" onclick="toggleTag(this)">
+                                Growth <span class="bc-tag-count">5</span>
+                            </button>
+                            <button class="bc-tag-btn" onclick="toggleTag(this)">
+                                Value <span class="bc-tag-count">4</span>
+                            </button>
+                            <button class="bc-tag-btn" onclick="toggleTag(this)">
+                                Momentum <span class="bc-tag-count">6</span>
+                            </button>
+                            <button class="bc-tag-btn" onclick="toggleTag(this)">
+                                Quality <span class="bc-tag-count">3</span>
+                            </button>
+                            <button class="bc-tag-btn" onclick="toggleTag(this)">
+                                LowVol <span class="bc-tag-count">2</span>
+                            </button>
+                            <button class="bc-tag-add-all" id="addAllBtn" onclick="addAllByTag()" style="display:inline-flex;">
+                                + 전체 추가 (5)
+                            </button>
+                        </div>
+
+                        <!-- Row 3: Selected Chips -->
+                        <div class="bc-chips-row" id="chipsRow">
+                            <span class="bc-chips-label">선택됨:</span>
+                            <span class="aed-filter-chip">
+                                <span class="chip-dot" style="background: #94a3b8;"></span>
+                                S&P 500 (Benchmark)
+                                <span class="chip-remove" onclick="this.parentElement.remove()">&times;</span>
+                            </span>
+                            <span class="aed-filter-chip">
+                                <span class="chip-dot" style="background: #2563eb;"></span>
+                                Alpha_Growth_01
+                                <span class="chip-remove" onclick="this.parentElement.remove()">&times;</span>
+                            </span>
+                            <span class="aed-filter-chip">
+                                <span class="chip-dot" style="background: #059669;"></span>
+                                Alpha_Val_03
+                                <span class="chip-remove" onclick="this.parentElement.remove()">&times;</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- ── Chart Section ── -->
+                    <div class="bc-chart-area">
+                        <!-- Control Bar -->
+                        <div class="bc-control-bar" style="padding: 10px 20px; margin-bottom: 0;">
+                            <div class="bc-control-left">
+                                <div class="aed-inline-tabs">
+                                    <button class="aed-inline-tab active" onclick="setActiveTab(this)">전체 기간</button>
+                                    <button class="aed-inline-tab" onclick="setActiveTab(this)">IS</button>
+                                    <button class="aed-inline-tab" onclick="setActiveTab(this)">OS</button>
+                                    <button class="aed-inline-tab" onclick="setActiveTab(this)">Custom</button>
+                                </div>
+                            </div>
+                            <div class="bc-toggle-wrap">
+                                <span class="bc-toggle-label">IS/OS 분리</span>
+                                <div class="bc-toggle on" id="isosToggle" onclick="this.classList.toggle('on')">
+                                    <div class="bc-toggle-knob"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart Header -->
+                        <div class="bc-chart-header">
+                            <span class="bc-chart-title">누적 수익률 비교</span>
+                        </div>
+
+                        <!-- Chart Placeholder -->
+                        <div class="bc-chart-placeholder">
+                            <div class="chart-grid"></div>
+
+                            <!-- Y-axis labels -->
+                            <div class="bc-chart-y-labels">
+                                <span class="bc-y-label">200%</span>
+                                <span class="bc-y-label">150%</span>
+                                <span class="bc-y-label">100%</span>
+                                <span class="bc-y-label">50%</span>
+                                <span class="bc-y-label">0%</span>
+                                <span class="bc-y-label">-20%</span>
+                            </div>
+
+                            <!-- X-axis labels -->
+                            <div class="bc-chart-x-labels">
+                                <span class="bc-x-label">2018</span>
+                                <span class="bc-x-label">2019</span>
+                                <span class="bc-x-label">2020</span>
+                                <span class="bc-x-label">2021</span>
+                                <span class="bc-x-label">2022</span>
+                                <span class="bc-x-label">2023</span>
+                                <span class="bc-x-label">2024</span>
+                                <span class="bc-x-label">2025</span>
+                            </div>
+
+                            <!-- IS/OS separation line -->
+                            <div style="position:absolute; left:62%; top:20px; bottom:40px; width:2px; background: var(--accent-red); opacity:0.5; z-index:2;"></div>
+                            <div style="position:absolute; left:calc(62% + 6px); top:24px; font-size:10px; font-weight:600; color:var(--accent-red); z-index:2; font-family:'JetBrains Mono',monospace; opacity:0.7;">IS|OS 2022-01</div>
+
+                            <!-- SVG Lines -->
+                            <svg class="bc-chart-svg" viewBox="0 0 1000 420" preserveAspectRatio="none">
+                                <!-- Horizontal grid lines -->
+                                <line x1="50" y1="45" x2="980" y2="45" stroke="var(--border-subtle)" stroke-width="0.5" />
+                                <line x1="50" y1="115" x2="980" y2="115" stroke="var(--border-subtle)" stroke-width="0.5" />
+                                <line x1="50" y1="185" x2="980" y2="185" stroke="var(--border-subtle)" stroke-width="0.5" />
+                                <line x1="50" y1="255" x2="980" y2="255" stroke="var(--border-subtle)" stroke-width="0.5" />
+                                <line x1="50" y1="325" x2="980" y2="325" stroke="var(--border-subtle)" stroke-width="0.5" />
+                                <line x1="50" y1="395" x2="980" y2="395" stroke="var(--border-subtle)" stroke-width="0.5" />
+
+                                <!-- S&P 500 (Benchmark) — grey dashed -->
+                                <polyline
+                                    fill="none"
+                                    stroke="#94a3b8"
+                                    stroke-width="2"
+                                    stroke-dasharray="6,4"
+                                    points="
+                                        60,325
+                                        120,318
+                                        180,310
+                                        220,340
+                                        260,350
+                                        300,310
+                                        340,295
+                                        380,280
+                                        420,275
+                                        460,260
+                                        500,250
+                                        540,245
+                                        580,255
+                                        620,240
+                                        660,250
+                                        700,230
+                                        740,220
+                                        780,225
+                                        820,210
+                                        860,200
+                                        900,190
+                                        940,180
+                                        970,175
+                                    "
+                                />
+
+                                <!-- Alpha_Growth_01 — blue solid -->
+                                <polyline
+                                    fill="none"
+                                    stroke="#2563eb"
+                                    stroke-width="2.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    points="
+                                        60,325
+                                        120,310
+                                        180,285
+                                        220,310
+                                        260,290
+                                        300,260
+                                        340,235
+                                        380,210
+                                        420,195
+                                        460,170
+                                        500,155
+                                        540,130
+                                        580,150
+                                        620,120
+                                        660,135
+                                        700,105
+                                        740,90
+                                        780,100
+                                        820,80
+                                        860,70
+                                        900,55
+                                        940,50
+                                        970,45
+                                    "
+                                />
+
+                                <!-- Alpha_Val_03 — emerald solid -->
+                                <polyline
+                                    fill="none"
+                                    stroke="#059669"
+                                    stroke-width="2.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    points="
+                                        60,325
+                                        120,315
+                                        180,295
+                                        220,315
+                                        260,295
+                                        300,270
+                                        340,250
+                                        380,230
+                                        420,220
+                                        460,200
+                                        500,185
+                                        540,165
+                                        580,180
+                                        620,155
+                                        660,165
+                                        700,140
+                                        740,125
+                                        780,135
+                                        820,115
+                                        860,105
+                                        900,90
+                                        940,80
+                                        970,70
+                                    "
+                                />
+                            </svg>
+
+                            <!-- Legend (inside chart) -->
+                            <div class="bc-chart-legend">
+                                <div class="bc-legend-item">
+                                    <span class="bc-legend-dot" style="background: #94a3b8; height: 2px; border-top: 1px dashed #94a3b8; background: none;"></span>
+                                    S&P 500 (Benchmark)
+                                </div>
+                                <div class="bc-legend-item">
+                                    <span class="bc-legend-dot" style="background: #2563eb;"></span>
+                                    Alpha_Growth_01
+                                </div>
+                                <div class="bc-legend-item">
+                                    <span class="bc-legend-dot" style="background: #059669;"></span>
+                                    Alpha_Val_03
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── Performance Table ── -->
+                    <div class="bc-perf-section">
+                        <div class="bc-perf-title">성과 지표</div>
+                        <table class="bc-perf-table">
+                            <thead>
+                                <tr>
+                                    <th>Portfolio</th>
+                                    <th>CAGR</th>
+                                    <th>Volatility</th>
+                                    <th>Sharpe</th>
+                                    <th>Sortino</th>
+                                    <th>MDD</th>
+                                    <th>Calmar</th>
+                                    <th>Win Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="bc-name-cell">
+                                            <span class="bc-name-dot" style="background: #94a3b8;"></span>
+                                            <span class="bc-name-label">S&P 500 (Benchmark)</span>
+                                            <span class="bc-name-tag">BM</span>
+                                        </div>
+                                    </td>
+                                    <td class="val-positive">12.3%</td>
+                                    <td class="val-neutral">15.2%</td>
+                                    <td class="val-positive">0.81</td>
+                                    <td class="val-positive">1.12</td>
+                                    <td class="val-negative">-33.9%</td>
+                                    <td class="val-positive">0.36</td>
+                                    <td class="val-neutral">54.2%</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="bc-name-cell">
+                                            <span class="bc-name-dot" style="background: #2563eb;"></span>
+                                            <span class="bc-name-label">Alpha_Growth_01</span>
+                                            <span class="bc-name-tag">Growth</span>
+                                        </div>
+                                    </td>
+                                    <td class="val-positive" style="position:relative;">
+                                        34.5%
+                                        <span style="position:absolute; bottom:-1px; left:0; right:0; height:2px; background:var(--accent-blue); border-radius:1px;"></span>
+                                    </td>
+                                    <td class="val-neutral">18.7%</td>
+                                    <td class="val-positive">1.84</td>
+                                    <td class="val-positive" style="position:relative;">
+                                        2.95
+                                        <span style="position:absolute; bottom:-1px; left:0; right:0; height:2px; background:var(--accent-blue); border-radius:1px;"></span>
+                                    </td>
+                                    <td class="val-negative">-15.2%</td>
+                                    <td class="val-positive">2.27</td>
+                                    <td class="val-neutral">58.1%</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="bc-name-cell">
+                                            <span class="bc-name-dot" style="background: #059669;"></span>
+                                            <span class="bc-name-label">Alpha_Val_03</span>
+                                            <span class="bc-name-tag">Value</span>
+                                        </div>
+                                    </td>
+                                    <td class="val-positive">28.1%</td>
+                                    <td class="val-neutral" style="position:relative;">
+                                        12.3%
+                                        <span style="position:absolute; bottom:-1px; left:0; right:0; height:2px; background:var(--accent-blue); border-radius:1px;"></span>
+                                    </td>
+                                    <td class="val-positive" style="position:relative;">
+                                        2.28
+                                        <span style="position:absolute; bottom:-1px; left:0; right:0; height:2px; background:var(--accent-blue); border-radius:1px;"></span>
+                                    </td>
+                                    <td class="val-positive">2.73</td>
+                                    <td class="val-negative" style="position:relative;">
+                                        -11.8%
+                                        <span style="position:absolute; bottom:-1px; left:0; right:0; height:2px; background:var(--accent-blue); border-radius:1px;"></span>
+                                    </td>
+                                    <td class="val-positive" style="position:relative;">
+                                        2.38
+                                        <span style="position:absolute; bottom:-1px; left:0; right:0; height:2px; background:var(--accent-blue); border-radius:1px;"></span>
+                                    </td>
+                                    <td class="val-neutral" style="position:relative;">
+                                        61.3%
+                                        <span style="position:absolute; bottom:-1px; left:0; right:0; height:2px; background:var(--accent-blue); border-radius:1px;"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div><!-- /.gap-stack-20 -->
+            </div><!-- /.aed-main -->
+        </div><!-- /.aed-content-area -->
+    </div><!-- /.aed-shell -->
+
+    <!-- ── JavaScript ── -->
+    <script>
+    // Tab switching
+    function setActiveTab(el) {
+        el.parentElement.querySelectorAll('.aed-inline-tab').forEach(function(tab) {
+            tab.classList.remove('active');
+        });
+        el.classList.add('active');
+    }
+
+    // Tag toggle — clicking a tag filters the search dropdown to only show matching portfolios
+    function toggleTag(el) {
+        var wasActive = el.classList.contains('active');
+        // Deactivate all tags first
+        document.querySelectorAll('.bc-tag-btn').forEach(function(btn) {
+            btn.classList.remove('active');
+        });
+        var addAllBtn = document.getElementById('addAllBtn');
+        if (wasActive) {
+            // Deselect: show all items, hide "add all"
+            addAllBtn.style.display = 'none';
+            document.querySelectorAll('.bc-dropdown-item').forEach(function(item) {
+                item.style.display = 'flex';
+            });
+        } else {
+            // Activate this tag: filter dropdown items by tag
+            el.classList.add('active');
+            var tagName = el.textContent.trim().split(/\s+/)[0]; // get tag name before count
+            var count = 0;
+            document.querySelectorAll('.bc-dropdown-item').forEach(function(item) {
+                var itemTag = item.querySelector('.bc-item-tag');
+                if (itemTag && itemTag.textContent.trim() === tagName) {
+                    item.style.display = 'flex';
+                    count++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            // Show "add all" button with count
+            addAllBtn.textContent = '+ 전체 추가 (' + count + ')';
+            addAllBtn.style.display = 'inline-flex';
+            // Open dropdown to show filtered results
+            document.getElementById('searchDropdown').classList.add('open');
+        }
+    }
+
+    function addAllByTag() {
+        // Select all visible (non-selected) dropdown items
+        document.querySelectorAll('.bc-dropdown-item').forEach(function(item) {
+            if (item.style.display !== 'none' && !item.classList.contains('selected')) {
+                item.classList.add('selected');
+            }
+        });
+        // Visual feedback
+        var btn = document.getElementById('addAllBtn');
+        btn.textContent = '✓ 추가됨';
+        btn.style.borderStyle = 'solid';
+        btn.style.background = 'rgba(5,150,105,0.08)';
+        btn.style.color = 'var(--accent-emerald)';
+        btn.style.borderColor = 'var(--accent-emerald)';
+        setTimeout(function() {
+            btn.style.display = 'none';
+            btn.textContent = '+ 전체 추가';
+            btn.style.borderStyle = 'dashed';
+            btn.style.background = 'rgba(37,99,235,0.04)';
+            btn.style.color = 'var(--accent-blue)';
+            btn.style.borderColor = 'var(--accent-blue)';
+        }, 1500);
+    }
+
+    // Search dropdown
+    var searchInput = document.getElementById('searchInput');
+    var searchDropdown = document.getElementById('searchDropdown');
+
+    searchInput.addEventListener('focus', function() {
+        searchDropdown.classList.add('open');
+    });
+
+    // Filter dropdown items on input
+    searchInput.addEventListener('input', function() {
+        var query = this.value.toLowerCase();
+        var items = searchDropdown.querySelectorAll('.bc-dropdown-item');
+        var hasVisible = false;
+        items.forEach(function(item) {
+            var text = item.textContent.toLowerCase();
+            if (text.includes(query)) {
+                item.style.display = 'flex';
+                hasVisible = true;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+        if (hasVisible) {
+            searchDropdown.classList.add('open');
+        } else {
+            searchDropdown.classList.remove('open');
+        }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.bc-search-wrap')) {
+            searchDropdown.classList.remove('open');
+        }
+    });
+
+    // Select portfolio from dropdown
+    function selectPortfolio(el, name) {
+        // Toggle selected state on dropdown item
+        el.classList.toggle('selected');
+
+        if (el.classList.contains('selected')) {
+            // Add check icon if not present
+            if (!el.querySelector('svg')) {
+                var checkSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                checkSvg.setAttribute('width', '14');
+                checkSvg.setAttribute('height', '14');
+                checkSvg.setAttribute('fill', 'none');
+                checkSvg.setAttribute('stroke', 'currentColor');
+                checkSvg.setAttribute('viewBox', '0 0 24 24');
+                var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('stroke-linecap', 'round');
+                path.setAttribute('stroke-linejoin', 'round');
+                path.setAttribute('stroke-width', '2');
+                path.setAttribute('d', 'M5 13l4 4L19 7');
+                checkSvg.appendChild(path);
+                el.insertBefore(checkSvg, el.firstChild);
+            }
+
+            // Add chip
+            addChip(name);
+        } else {
+            // Remove check icon
+            var svg = el.querySelector('svg');
+            if (svg) svg.remove();
+
+            // Remove chip
+            removeChipByName(name);
+        }
+    }
+
+    // Chip colors
+    var chipColors = ['#2563eb', '#059669', '#7c3aed', '#ea580c', '#d97706', '#dc2626'];
+    var chipColorIndex = 2; // start after the two already shown
+
+    function addChip(name) {
+        var chipsRow = document.getElementById('chipsRow');
+        var chip = document.createElement('span');
+        chip.className = 'aed-filter-chip';
+        chip.setAttribute('data-name', name);
+        var color = chipColors[chipColorIndex % chipColors.length];
+        chipColorIndex++;
+        chip.innerHTML = '<span class="chip-dot" style="background:' + color + ';"></span>' +
+            name +
+            '<span class="chip-remove" onclick="removeChip(this)">&times;</span>';
+        chipsRow.appendChild(chip);
+    }
+
+    function removeChip(removeBtn) {
+        var chip = removeBtn.parentElement;
+        var name = chip.getAttribute('data-name');
+        chip.remove();
+
+        // Unselect in dropdown
+        var items = searchDropdown.querySelectorAll('.bc-dropdown-item');
+        items.forEach(function(item) {
+            if (item.textContent.includes(name)) {
+                item.classList.remove('selected');
+                var svg = item.querySelector('svg');
+                if (svg) svg.remove();
+            }
+        });
+    }
+
+    function removeChipByName(name) {
+        var chips = document.querySelectorAll('.aed-filter-chip[data-name="' + name + '"]');
+        chips.forEach(function(chip) { chip.remove(); });
+    }
+    </script>
+</body>
+</html>
