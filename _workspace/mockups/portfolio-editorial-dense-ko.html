@@ -577,6 +577,266 @@
     .reveal { opacity: 1; transform: none; }
   }
 
+  /* Writing section */
+  .writing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 768px) { .writing-grid { grid-template-columns: 1fr; } }
+  .writing-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: all 0.5s var(--ease);
+    text-decoration: none;
+    color: var(--fg);
+    position: relative;
+    overflow: hidden;
+  }
+  .writing-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 60%, var(--card-accent, var(--accent)) 200%);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease);
+    pointer-events: none;
+  }
+  .writing-card:hover { border-color: rgba(226,226,226,0.16); transform: translateY(-4px); }
+  .writing-card:hover::before { opacity: 0.06; }
+  .writing-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .writing-cat {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--card-accent, var(--accent));
+    padding: 3px 10px;
+    border: 1px solid;
+    border-color: var(--card-accent, var(--accent));
+    border-radius: 100px;
+    opacity: 0.8;
+  }
+  .writing-date {
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.05em;
+  }
+  .writing-title {
+    font-family: 'Paperlogy', 'Space Grotesk', 'Pretendard', sans-serif;
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+    flex: 1;
+  }
+  .writing-excerpt {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .writing-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .writing-read {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--faint);
+  }
+  .writing-card-footer ph-arrow-right,
+  .writing-card-footer [class*="ph-arrow-right"] {
+    color: var(--faint);
+    transition: all 0.4s var(--ease);
+  }
+  .writing-card:hover .writing-card-footer ph-arrow-right,
+  .writing-card:hover .writing-card-footer [class*="ph-arrow-right"] {
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+  .writing-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s var(--ease);
+    margin-top: 32px;
+  }
+  .writing-more:hover { color: var(--accent-soft); }
+  .writing-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--faint);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+
+  /* Reader overlay */
+  .reader-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .reader-overlay.active { pointer-events: all; visibility: visible; }
+  .reader-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease);
+  }
+  .reader-overlay.active .reader-backdrop { opacity: 1; }
+  .reader-panel {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    width: min(96vw, 1100px);
+    max-height: 92vh;
+    background: var(--bg);
+    border-radius: 24px 24px 0 0;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .reader-overlay.active .reader-panel {
+    transform: translateX(-50%) translateY(0);
+  }
+  .reader-handle {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .reader-handle::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+  }
+  .reader-close {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    margin-left: auto;
+  }
+  .reader-close:hover { border-color: var(--fg); color: var(--fg); }
+  .reader-body {
+    padding: 48px 80px 80px;
+    max-width: 66ch;
+    margin: 0 auto;
+  }
+  @media (max-width: 640px) { .reader-body { padding: 32px 24px 64px; } }
+  .reader-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .reader-meta .cat {
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  .reader-meta .sep { color: var(--faint); }
+  .reader-title {
+    font-family: 'Paperlogy', 'Space Grotesk', 'Pretendard', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    margin-bottom: 32px;
+  }
+  .reader-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--faint);
+    margin-bottom: 40px;
+  }
+  .reader-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .reader-text p { margin-bottom: 1.25rem; }
+  .reader-text strong { color: var(--fg); font-weight: 600; }
+  .reader-text em { color: var(--accent-soft); font-style: normal; }
+  .reader-text blockquote {
+    border-left: 2px solid var(--accent);
+    padding-left: 20px;
+    margin: 2rem 0;
+    font-size: 17px;
+    color: var(--fg);
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .reader-text h2 {
+    font-family: 'Paperlogy', 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--fg);
+    margin: 2.5rem 0 1rem;
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  .reader-text h2::before {
+    content: '#';
+    position: absolute;
+    left: -1.5em;
+    color: var(--accent);
+    opacity: 0.4;
+    font-weight: 400;
+  }
+
   /* WIP marker */
   .wip-badge {
     display: inline-block;
@@ -617,6 +877,7 @@
   <a href="#home" class="nav-brand">Hyebin.</a>
   <div class="nav-links">
     <a href="#work" class="nav-link">Work</a>
+    <a href="#writing" class="nav-link">Writing</a>
     <a href="#about" class="nav-link">About</a>
     <a href="#contact" class="nav-link">Contact</a>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -848,6 +1109,85 @@
   </div>
 </section>
 
+<!-- Writing -->
+<section class="section" id="writing">
+  <div class="section-head reveal">
+    <div>
+      <p class="section-label">02 / 글</p>
+      <h2 class="section-title syne"><em>생각의</em> 기록.</h2>
+    </div>
+    <p class="section-label">17 posts · 2024 — 2026</p>
+  </div>
+
+  <div class="writing-grid reveal">
+
+    <!-- Card 1: 도메인 (deep-dive) -->
+    <a href="#" class="writing-card" data-cursor="Read" data-post="algorithm-6months" style="--card-accent: var(--midnight);">
+      <div class="writing-card-top">
+        <span class="writing-cat">deep-dive</span>
+        <span class="writing-date">2024.09.20</span>
+      </div>
+      <h3 class="writing-title">6개월간 알고리즘이 살아 움직이는 걸 지켜본 시간</h3>
+      <p class="writing-excerpt">RATB 운용 ③ — 라이브로 돌아가는 알고리즘이 시장에서 어떻게 반응하는지, 기획자가 직접 6개월을 지켜보며 배운 것들.</p>
+      <div class="writing-card-footer">
+        <span class="writing-read">8 min read</span>
+        <ph-arrow-right weight="regular" size="16"></ph-arrow-right>
+      </div>
+    </a>
+
+    <!-- Card 2: 판단력 (planning) -->
+    <a href="#" class="writing-card" data-cursor="Read" data-post="finding-real-needs" style="--card-accent: var(--accent);">
+      <div class="writing-card-top">
+        <span class="writing-cat">planning</span>
+        <span class="writing-date">2026.03.23</span>
+      </div>
+      <h3 class="writing-title">사용자가 '불편하다'고 할 때, 진짜 문제 찾기</h3>
+      <p class="writing-excerpt">"날짜 선택이 불편하다"는 달력 위젯 문제가 아니었다. 운용 경험에서 읽어낸 진짜 니즈와, 요청에 없던 기능이 당연해지는 과정.</p>
+      <div class="writing-card-footer">
+        <span class="writing-read">6 min read</span>
+        <ph-arrow-right weight="regular" size="16"></ph-arrow-right>
+      </div>
+    </a>
+
+    <!-- Card 3: 시스템 (deep-dive) -->
+    <a href="#" class="writing-card" data-cursor="Read" data-post="multi-agent" style="--card-accent: var(--midnight);">
+      <div class="writing-card-top">
+        <span class="writing-cat">deep-dive</span>
+        <span class="writing-date">2026.03.20</span>
+      </div>
+      <h3 class="writing-title">AI 에이전트 1개로는 왜 안 됐을까</h3>
+      <p class="writing-excerpt">단일 에이전트의 한계를 경험하고, 6개 에이전트 + 4명의 투자 페르소나가 토론하는 멀티에이전트 구조로 바꾼 이유.</p>
+      <div class="writing-card-footer">
+        <span class="writing-read">10 min read</span>
+        <ph-arrow-right weight="regular" size="16"></ph-arrow-right>
+      </div>
+    </a>
+
+    <!-- Card 4: 실행력 (project) -->
+    <a href="#" class="writing-card" data-cursor="Read" data-post="framework-migration" style="--card-accent: #D4833D;">
+      <div class="writing-card-top">
+        <span class="writing-cat">project</span>
+        <span class="writing-date">2026.04.07</span>
+      </div>
+      <h3 class="writing-title">3주짜리 프레임워크 이주를 5일에 끝낸 법</h3>
+      <p class="writing-excerpt">NiceGUI → Next.js → Vite+React. 두 번 틀린 선택을 인정하고, PRD와 디자인 토큰을 재활용해서 5일 만에 이전한 과정.</p>
+      <div class="writing-card-footer">
+        <span class="writing-read">7 min read</span>
+        <ph-arrow-right weight="regular" size="16"></ph-arrow-right>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="reveal" style="text-align:center; margin-top:48px;">
+    <a href="/blog" class="writing-more" data-cursor="All posts">
+      전체 글 보기
+      <span class="writing-count">17</span>
+      <ph-arrow-right weight="regular" size="14"></ph-arrow-right>
+    </a>
+  </div>
+</section>
+
 <!-- About -->
 <section class="section" id="about">
   <div class="section-head reveal">
@@ -922,6 +1262,106 @@
     <p>포트폴리오 목업 · v1</p>
   </footer>
 </section>
+
+<!-- Reader Overlay -->
+<div class="reader-overlay" id="readerOverlay">
+  <div class="reader-backdrop" id="readerBackdrop"></div>
+  <div class="reader-panel">
+    <div class="reader-handle">
+      <button class="reader-close" id="readerClose">✕ 닫기</button>
+    </div>
+    <div class="reader-body" id="readerBody">
+      <!-- Content injected dynamically -->
+    </div>
+  </div>
+</div>
+
+<!-- Blog post content templates (hidden) -->
+<template id="post-finding-real-needs">
+  <div class="reader-meta">
+    <span class="cat">planning</span>
+    <span class="sep">·</span>
+    <span>2026.03.23</span>
+    <span class="sep">·</span>
+    <span>6 min read</span>
+  </div>
+  <h1 class="reader-title">사용자가 '불편하다'고 할 때,<br/>진짜 문제 찾기</h1>
+  <div class="reader-divider"></div>
+  <div class="reader-text">
+    <p>리서처가 "날짜 선택이 불편하다"고 했을 때, 대부분의 PM이라면 달력 위젯을 교체하는 걸 떠올릴 것입니다. 달력 라이브러리를 비교하고, 디자이너에게 요청하고, 스프린트에 넣겠죠.</p>
+    <p>하지만 직접 펀드를 운용해본 경험이 있으면, 그 불편함의 본질이 달라 보입니다.</p>
+    <h2>운용역이 진짜 필요한 건 "다음 리밸런싱 날짜"</h2>
+    <p>포트폴리오를 관리할 때 중요한 건 <strong>아무 날짜가 아닙니다</strong>. 운용역은 비중이 실제로 바뀐 날, 즉 리밸런싱이 일어난 시점을 확인하고 싶어합니다. 매일의 데이터를 하나씩 넘기는 건 의미 없는 작업이에요.</p>
+    <blockquote>"다음 리밸런싱 날짜로 점프하고 싶다"가 진짜 요청이었습니다.</blockquote>
+    <p>이걸 알 수 있었던 건 기획서를 쓰는 입장이 아니라, <strong>실제로 200개 계좌의 일별 비중을 확인했던 경험</strong> 덕분이었습니다. 요청에 적혀 있지 않았지만, 운용자라면 당연히 필요한 기능이었습니다.</p>
+    <h2>비중 차트 클릭 = Holdings 테이블 동기화</h2>
+    <p>같은 맥락에서 만든 기능이 하나 더 있습니다. 포트폴리오 비중 차트에서 특정 날짜를 클릭하면, 그 날짜의 보유 종목 테이블이 자동으로 동기화됩니다. 차트와 테이블이 같은 날짜를 바라보는 거죠.</p>
+    <p>이것도 요청에 없었습니다. 하지만 <em>비중 차트를 보다가 "이 날 뭘 들고 있었지?"라고 궁금해하는 순간</em>은 매일 일어나는 일이에요.</p>
+    <h2>도메인 경험이 추론의 재료가 된다</h2>
+    <p>PM의 도메인 지식이 깊으면, 사용자의 표면적 요청 뒤에 있는 맥락을 읽을 수 있습니다. "불편하다"가 어떤 불편인지, "보고 싶다"가 정확히 무엇을 의미하는지. 이건 인터뷰로 알아내기 어려운 종류의 이해입니다.</p>
+    <p><strong>보이는 요청보다 운용 맥락을 읽는 것.</strong> 이 프로젝트에서 가장 크게 배운 것 중 하나입니다.</p>
+  </div>
+</template>
+
+<template id="post-algorithm-6months">
+  <div class="reader-meta">
+    <span class="cat" style="color: var(--midnight);">deep-dive</span>
+    <span class="sep">·</span>
+    <span>2024.09.20</span>
+    <span class="sep">·</span>
+    <span>8 min read</span>
+  </div>
+  <h1 class="reader-title">6개월간 알고리즘이 살아 움직이는 걸<br/>지켜본 시간</h1>
+  <div class="reader-divider"></div>
+  <div class="reader-text">
+    <p>백테스트에서 좋은 성과를 보이는 알고리즘과, 실제 시장에서 돈을 굴릴 수 있는 알고리즘은 다릅니다. RATB 프로젝트에서 알고리즘 38개의 라이브 운용을 6개월간 지켜보며 기획자로서 배운 것들을 정리합니다.</p>
+    <h2>백테스트 성과 ≠ 라이브 성과</h2>
+    <p>과적합된 알고리즘은 백테스트에서는 샤프지수 3.0을 찍지만, 라이브에서는 1.0도 유지하지 못합니다. <strong>IS/OS 기간 분리 검증</strong>이 왜 필수인지를, 숫자가 아닌 체감으로 알게 됐습니다.</p>
+    <blockquote>숫자만 보면 다 좋아 보입니다. 하지만 그 숫자가 어떤 시장 환경에서 나온 건지를 모르면, 판단이 아니라 도박입니다.</blockquote>
+    <p>6개월의 관찰이 남긴 가장 큰 교훈은, <em>기획자가 데이터를 직접 보지 않으면 올바른 판단을 할 수 없다</em>는 것이었습니다.</p>
+  </div>
+</template>
+
+<template id="post-multi-agent">
+  <div class="reader-meta">
+    <span class="cat" style="color: var(--midnight);">deep-dive</span>
+    <span class="sep">·</span>
+    <span>2026.03.20</span>
+    <span class="sep">·</span>
+    <span>10 min read</span>
+  </div>
+  <h1 class="reader-title">AI 에이전트 1개로는<br/>왜 안 됐을까</h1>
+  <div class="reader-divider"></div>
+  <div class="reader-text">
+    <p>주주톡 프로젝트 초기에는 하나의 AI 에이전트가 종목 분석부터 리포트 작성까지 모든 걸 담당했습니다. 결과는 "그럴듯하지만 편향된" 분석이었습니다.</p>
+    <h2>단일 에이전트의 한계</h2>
+    <p>하나의 에이전트는 <strong>자기 분석을 자기가 검증</strong>합니다. 확증 편향이 구조적으로 내장돼 있는 거죠. "이 종목은 좋다"고 판단하면, 뒷받침 근거만 찾게 됩니다.</p>
+    <h2>6개 에이전트 + 4명의 투자 페르소나</h2>
+    <p>해결책은 역할을 분리하는 것이었습니다. 분석 에이전트, 리스크 에이전트, 매크로 에이전트가 각자 독립적으로 분석하고, 4명의 투자 페르소나(가치투자자, 모멘텀, 보수적, 공격적)가 그 결과를 놓고 토론합니다.</p>
+    <blockquote>편향을 없앨 순 없습니다. 대신 편향이 서로 충돌하는 구조를 만들 수 있습니다.</blockquote>
+  </div>
+</template>
+
+<template id="post-framework-migration">
+  <div class="reader-meta">
+    <span class="cat" style="color: #D4833D;">project</span>
+    <span class="sep">·</span>
+    <span>2026.04.07</span>
+    <span class="sep">·</span>
+    <span>7 min read</span>
+  </div>
+  <h1 class="reader-title">3주짜리 프레임워크 이주를<br/>5일에 끝낸 법</h1>
+  <div class="reader-divider"></div>
+  <div class="reader-text">
+    <p>NiceGUI(Python UI)로 시작해서, Next.js를 거쳐, Vite + React에 안착하기까지. 프레임워크를 두 번 바꾸는 건 두 번 실패한 것처럼 보이지만, <strong>빠르게 인정하고 옮긴 것</strong>이 오히려 시간을 절약했습니다.</p>
+    <h2>왜 NiceGUI를 버렸나</h2>
+    <p>NiceGUI는 Python으로 빠르게 UI를 만들 수 있지만, 차트 인터랙션(드릴다운, 날짜 동기화)에 한계가 있었습니다. 서버 사이드 렌더링이라 매 클릭이 서버 왕복이었어요.</p>
+    <h2>왜 Next.js도 버렸나</h2>
+    <p>내부 도구에 SSR은 불필요하고, 번들이 과잉이었습니다. <em>HMR 속도가 곧 개발 속도</em>인 1인 개발에서, Vite의 즉시 반영이 결정적이었습니다.</p>
+    <h2>5일 이전의 비밀: PRD와 디자인 토큰</h2>
+    <p>이전이 빨랐던 건 <strong>PRD에 지표 산식이 표준화</strong>되어 있었고, <strong>DESIGN.md에 모든 토큰</strong>이 정의되어 있었기 때문입니다. 구조가 코드가 아닌 문서에 있었으니, 프레임워크만 갈아끼우면 됐습니다.</p>
+  </div>
+</template>
 
 <script>
   // Preloader
@@ -1014,6 +1454,46 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Reader overlay
+  const overlay = document.getElementById('readerOverlay');
+  const readerBody = document.getElementById('readerBody');
+  const postMap = {
+    'finding-real-needs': 'post-finding-real-needs',
+    'algorithm-6months': 'post-algorithm-6months',
+    'multi-agent': 'post-multi-agent',
+    'framework-migration': 'post-framework-migration',
+  };
+
+  function openReader(slug) {
+    const tpl = document.getElementById(postMap[slug]);
+    if (!tpl) return;
+    readerBody.innerHTML = tpl.innerHTML;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Reset scroll
+    overlay.querySelector('.reader-panel').scrollTop = 0;
+  }
+
+  function closeReader() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('readerClose').addEventListener('click', closeReader);
+  document.getElementById('readerBackdrop').addEventListener('click', closeReader);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) closeReader();
+  });
+
+  // Writing card clicks
+  document.querySelectorAll('.writing-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      const slug = card.dataset.post;
+      if (slug) openReader(slug);
+    });
+  });
 </script>
 </body>
 </html>
