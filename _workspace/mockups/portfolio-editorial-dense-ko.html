@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyebin Woo — AI Product Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<style>
+  /* Paperlogy — Korean display font (via Noonnu) */
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-fall@1.1/Paperlogy-4Regular.woff2') format('woff2');
+    font-weight: 400; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-fall@1.1/Paperlogy-6SemiBold.woff2') format('woff2');
+    font-weight: 600; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-fall@1.1/Paperlogy-7Bold.woff2') format('woff2');
+    font-weight: 700; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Paperlogy';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-fall@1.1/Paperlogy-8ExtraBold.woff2') format('woff2');
+    font-weight: 800; font-display: swap;
+  }
+</style>
+<script type="module" src="https://unpkg.com/@phosphor-icons/webcomponents@2.1"></script>
+<style>
+  :root {
+    /* Dark (default) — Kinetic Architect */
+    --bg: #0e0e0e;
+    --bg-2: #131313;
+    --fg: #e2e2e2;
+    --muted: #888888;
+    --faint: #555555;
+    --border: rgba(226,226,226,0.08);
+    --accent: #008585;
+    --accent-soft: #ADFFFE;
+    --cyan: #ADFFFE;
+    --midnight: #8688e1;
+    --glow: rgba(0,133,133,0.15);
+    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  html[data-theme="light"] {
+    --bg: #F0EDE5;
+    --bg-2: #E8E4DA;
+    --fg: #161513;
+    --muted: #6B6964;
+    --border: rgba(0,0,0,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', 'Pretendard', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+    overflow-x: hidden;
+    cursor: none;
+  }
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 80;
+    opacity: 0.028;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* Typography
+   * Display (emphasis): Space Grotesk (Latin) → Paperlogy (Korean fallback)
+   * Body (base): Inter (Latin) → Pretendard (Korean fallback)
+   */
+  .syne { font-family: 'Paperlogy', 'Space Grotesk', 'Pretendard', sans-serif; font-feature-settings: 'ss01'; }
+  .inter { font-family: 'Inter', 'Pretendard', sans-serif; }
+  h1, h2, h3, h4 {
+    font-family: 'Paperlogy', 'Space Grotesk', 'Pretendard', sans-serif;
+    letter-spacing: -0.04em;
+  }
+  /* Korean-only emphasis utility */
+  .paperlogy { font-family: 'Paperlogy', 'Pretendard', sans-serif; letter-spacing: -0.03em; }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    mix-blend-mode: difference;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 80px;
+    background: rgba(255,255,255,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-line-fill {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 0%;
+    background: var(--fg);
+    transition: height 0.1s linear;
+  }
+  .scroll-label {
+    writing-mode: vertical-rl;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .scroll-indicator.hidden { opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease); }
+
+  /* Custom cursor — ring + dot */
+  .cursor {
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: difference;
+  }
+  .cursor-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s var(--ease), opacity 0.15s var(--ease);
+  }
+  .cursor-ring {
+    position: absolute;
+    top: -14px; left: -14px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), width 0.3s var(--ease), height 0.3s var(--ease), top 0.3s var(--ease), left 0.3s var(--ease);
+  }
+  .cursor.hover .cursor-dot { transform: translate(-50%, -50%) scale(0.5); opacity: 0.5; }
+  .cursor.hover .cursor-ring { width: 40px; height: 40px; top: -20px; left: -20px; border-color: rgba(255,255,255,0.8); }
+  .cursor-label {
+    position: absolute;
+    top: 28px; left: 14px;
+    background: #008585;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: all 0.3s var(--ease);
+  }
+  .cursor.has-label .cursor-label { opacity: 1; transform: translateY(0); }
+  @media (hover: none) {
+    body { cursor: default; }
+    .cursor { display: none; }
+  }
+
+  /* Preloader */
+  #preloader {
+    position: fixed; inset: 0; z-index: 200;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    gap: 32px;
+    transition: opacity 0.6s var(--ease), visibility 0.6s var(--ease);
+  }
+  #preloader.done { opacity: 0; visibility: hidden; }
+  .pl-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: clamp(32px, 6vw, 56px);
+    letter-spacing: -0.04em;
+    overflow: hidden;
+  }
+  .pl-name span {
+    display: inline-block;
+    animation: plUp 0.8s var(--ease) forwards;
+    transform: translateY(110%);
+    opacity: 0;
+  }
+  .pl-name span:nth-child(1) { animation-delay: 0.1s; }
+  .pl-name span:nth-child(2) { animation-delay: 0.2s; }
+  @keyframes plUp { to { transform: translateY(0); opacity: 1; } }
+  .pl-bar {
+    width: 240px; height: 1px; background: var(--border);
+    overflow: hidden; position: relative;
+  }
+  .pl-fill {
+    position: absolute; inset: 0; background: var(--accent);
+    transform-origin: left; transform: scaleX(0);
+    animation: plFill 1.1s var(--ease) 0.2s forwards;
+  }
+  @keyframes plFill { to { transform: scaleX(1); } }
+
+  /* Navigation */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 70;
+    padding: 16px 44px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: all 0.6s var(--ease);
+  }
+  .nav.scrolled {
+    top: 16px; left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    width: auto;
+    padding: 10px 8px 10px 20px;
+    background: rgba(14,14,14,0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.3);
+  }
+  html[data-theme="light"] .nav.scrolled {
+    background: rgba(240,237,229,0.7);
+  }
+  .nav-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.03em;
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 32px;
+    transition: gap 0.6s var(--ease);
+  }
+  .nav.scrolled .nav-links { gap: 20px; }
+  .nav-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.3s var(--ease);
+    position: relative;
+  }
+  .nav-link:hover { color: var(--fg); }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 1px;
+    background: var(--fg);
+    transition: width 0.4s var(--ease);
+  }
+  .nav-link:hover::after { width: 100%; }
+  .nav-cta {
+    background: #008585;
+    color: #ffffff;
+    padding: 10px 18px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s var(--ease);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .nav-cta:hover { background: #006d6d; box-shadow: 0 0 15px rgba(0,133,133,0.15); }
+  .theme-toggle {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--fg);
+    display: flex; align-items: center; justify-content: center;
+    cursor: none;
+    transition: all 0.3s var(--ease);
+  }
+  .theme-toggle:hover { border-color: var(--fg); }
+
+  /* Hero */
+  .hero {
+    min-height: 100svh;
+    padding: 140px 44px 44px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative;
+  }
+  .hero-meta {
+    display: flex; justify-content: space-between; align-items: start;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+  }
+  .hero-meta-col { display: flex; flex-direction: column; gap: 4px; }
+  .hero-meta .label { color: var(--muted); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .hero-title {
+    font-family: 'Clash Display', 'Space Grotesk', sans-serif;
+    font-size: clamp(72px, 12vw, 176px);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.88;
+  }
+  .hero-title .line {
+    display: block;
+    overflow: hidden;
+  }
+  .hero-title .line span {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    animation: slideUp 1.1s var(--ease) forwards;
+  }
+  .hero-title .line:nth-child(1) span { animation-delay: 1.0s; }
+  .hero-title .line:nth-child(2) span { animation-delay: 1.15s; }
+  .hero-title .line:nth-child(3) span { animation-delay: 1.3s; }
+  @keyframes slideUp { to { transform: translateY(0); opacity: 1; } }
+  .hero-title em {
+    font-style: normal;
+    color: #008585;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeIn 1s var(--ease) 1.6s forwards;
+  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
+  /* Section */
+  .section { padding: 120px 44px; }
+  .section-head {
+    display: flex; align-items: end; justify-content: space-between;
+    margin-bottom: 80px;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+  }
+  .section-title em {
+    font-style: normal;
+    color: #008585;
+  }
+
+  /* Work section */
+  .work-grid { display: flex; flex-direction: column; gap: 24px; }
+  .work-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--bg-2);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--fg);
+    transition: transform 0.6s var(--ease), background 0.6s var(--ease);
+    position: relative;
+  }
+  .work-card:hover { background: color-mix(in srgb, var(--bg-2) 70%, var(--fg) 5%); }
+  .work-card-meta {
+    padding: 48px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 480px;
+  }
+  .work-num {
+    font-family: 'Inter', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+  .work-title {
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin-top: 24px;
+  }
+  .work-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 16px;
+    line-height: 1.6;
+    max-width: 42ch;
+  }
+  .work-details {
+    display: flex; justify-content: space-between; align-items: end;
+    gap: 24px; margin-top: 32px;
+    padding-top: 24px; border-top: 1px solid var(--border);
+  }
+  .work-info { display: flex; gap: 32px; flex-wrap: wrap; }
+  .work-info-item { display: flex; flex-direction: column; gap: 4px; }
+  .work-info-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .work-info-value { font-size: 13px; font-weight: 500; }
+  .work-metrics { display: flex; gap: 24px; align-items: baseline; }
+  .work-metric-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 40px; font-weight: 700; letter-spacing: -0.04em; line-height: 1;
+    color: #008585;
+  }
+  .work-metric-value em {
+    font-style: normal;
+    color: #008585;
+  }
+  .work-metric-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+
+  .work-visual {
+    position: relative;
+    background: linear-gradient(135deg, #2A2826 0%, #1A1918 100%);
+    overflow: hidden;
+  }
+  .work-visual .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    transition: all 0.8s var(--ease);
+  }
+  .work-card:hover .blob { opacity: 0.9; transform: scale(1.2); }
+  .work-visual .blob-1 { width: 280px; height: 280px; top: 10%; left: 20%; background: var(--accent); }
+  .work-visual .blob-2 { width: 200px; height: 200px; bottom: 10%; right: 10%; background: var(--accent-soft); }
+  .work-corner {
+    position: absolute;
+    top: 32px; right: 32px;
+    width: 48px; height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(14,14,14,0.4);
+    backdrop-filter: blur(10px);
+    transition: transform 0.5s var(--ease);
+  }
+  .work-card:hover .work-corner { transform: rotate(45deg); }
+  .work-mock {
+    position: absolute;
+    inset: 24% 10% 10% 10%;
+    background: var(--bg);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 16px;
+    display: flex; flex-direction: column; gap: 8px;
+    opacity: 0.92;
+  }
+  .mock-bar { height: 8px; background: var(--border); border-radius: 4px; }
+  .mock-bar.sm { width: 40%; }
+  .mock-bar.md { width: 60%; }
+  .mock-bar.lg { width: 100%; }
+  .mock-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 8px 0; }
+  .mock-cell { aspect-ratio: 1; background: var(--border); border-radius: 4px; }
+  .mock-cell.accent { background: var(--accent); opacity: 0.4; }
+
+  .work-card.wide { grid-template-columns: 5fr 7fr; }
+  .work-card.narrow { grid-template-columns: 1fr; }
+  .work-card.narrow .work-visual { aspect-ratio: 16/9; min-height: 320px; }
+
+  @media (max-width: 1024px) {
+    .work-card, .work-card.wide { grid-template-columns: 1fr; }
+    .work-card-meta { min-height: auto; }
+    .work-visual { aspect-ratio: 16/10; }
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .about-lead {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 32px;
+  }
+  .about-body { font-size: 16px; color: var(--muted); line-height: 1.62; }
+  .about-details { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); }
+  .about-kv-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .about-kv-value { font-size: 14px; }
+  .skills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding-top: 24px; margin-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .skill-pill {
+    font-size: 12px;
+    padding: 6px 14px 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--fg);
+    transition: all 0.3s var(--ease);
+    display: inline-flex; align-items: center; gap: 6px;
+    position: relative;
+  }
+  .skill-pill::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+    flex-shrink: 0;
+  }
+  .skill-pill:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 15px var(--glow); }
+  .skill-pill:hover::before { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+
+  /* Marquee */
+  .marquee { overflow: hidden; padding: 32px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .marquee-track { display: flex; width: max-content; animation: slide 40s linear infinite; gap: 72px; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-item {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .marquee-dot { color: var(--cyan); }
+
+  /* Contact */
+  .contact { padding: 120px 44px 44px; }
+  .contact-title {
+    font-size: clamp(48px, 10vw, 136px);
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    text-transform: uppercase;
+    margin-bottom: 64px;
+  }
+  .contact-title em {
+    font-style: normal;
+    color: #008585;
+  }
+  .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding-top: 32px; border-top: 1px solid var(--border); }
+  @media (max-width: 720px) { .contact-grid { grid-template-columns: 1fr; } }
+  .contact-item { display: flex; flex-direction: column; gap: 6px; }
+  .contact-item a { color: var(--fg); text-decoration: none; font-size: 18px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; transition: color 0.3s var(--ease); }
+  .contact-item a:hover { color: var(--accent-soft); }
+  .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 32px; margin-top: 64px;
+    border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition-duration: 0s !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  /* WIP marker */
+  .wip-badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #D4A05A;
+    border: 1px solid #D4A05A;
+    padding: 3px 8px;
+    border-radius: 100px;
+    margin-left: 12px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div id="preloader">
+  <div class="pl-name"><span>Hyebin</span>&nbsp;<span>Woo</span></div>
+  <div class="pl-bar"><div class="pl-fill"></div></div>
+</div>
+
+<!-- Scroll Indicator -->
+<div class="scroll-indicator" id="scrollIndicator">
+  <div class="scroll-line"><div class="scroll-line-fill" id="scrollFill"></div></div>
+  <span class="scroll-label">Scroll</span>
+</div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="cursor-label" id="cursorLabel"></div>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="#home" class="nav-brand">Hyebin.</a>
+  <div class="nav-links">
+    <a href="#work" class="nav-link">Work</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <ph-sun weight="regular" size="16" id="themeIcon"></ph-sun>
+    </button>
+    <a href="#contact" class="nav-cta">연락하기 <ph-hand-waving weight="fill" size="14"></ph-hand-waving></a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-meta">
+    <div class="hero-meta-col">
+      <span class="label">Based in</span>
+      <span>Seoul, KR</span>
+    </div>
+    <div class="hero-meta-col" style="text-align: right;">
+      <span class="label">Portfolio</span>
+      <span>2026 / v1</span>
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <p class="label" style="margin-bottom: 32px;">AI Product Manager · 2022—Now</p>
+      <h1 class="hero-title syne">
+        <span class="line"><span>Hyebin</span></span>
+        <span class="line"><span><em>Woo.</em></span></span>
+      </h1>
+      <p class="hero-subtitle">
+        PRD를 쓰고, HTML 목업을 만들고, 지표 산식까지 감사하는 AI PM. 38개 AI 투자 알고리즘 기획, 200+ 실운용 계좌, 운용시간 83% 단축.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Service Planning</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">AI Agents</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Finance Domain</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Information Architecture</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">UX Design</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Prototyping</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Service Planning</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">AI Agents</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Finance Domain</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Information Architecture</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">UX Design</span><span class="marquee-item marquee-dot">✦</span>
+    <span class="marquee-item">Prototyping</span><span class="marquee-item marquee-dot">✦</span>
+  </div>
+</div>
+
+<!-- Work -->
+<section class="section" id="work">
+  <div class="section-head reveal">
+    <div>
+      <p class="section-label">01 / 주요 작업</p>
+      <h2 class="section-title syne"><em>세 번의</em> 판단.</h2>
+    </div>
+    <p class="section-label">2022 — 2026</p>
+  </div>
+
+  <div class="work-grid">
+
+    <!-- Case 1 -->
+    <a href="#" class="work-card reveal" data-cursor="View case">
+      <div class="work-card-meta">
+        <div class="work-num">№ 01 · 케이스 스터디 · FinTech Platform</div>
+        <div>
+          <h3 class="work-title">리서처가 매일 여는<br/>첫 화면을<br/>다시 만들었습니다.</h3>
+          <p class="work-sub">리서처 4명이 매일 쓰는 도구. 디자이너도, 프론트엔드 개발자도 없는 팀에서 200개+ 전략의 정보구조를 재설계하고, HTML 목업이 그대로 제품이 됐어요.</p>
+        </div>
+        <div class="work-details">
+          <div class="work-info">
+            <div class="work-info-item">
+              <span class="work-info-label">Company</span>
+              <span class="work-info-value">AssetPlus</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Role</span>
+              <span class="work-info-value">AI Product Manager</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Year</span>
+              <span class="work-info-value">2025 — Now</span>
+            </div>
+          </div>
+          <div class="work-metrics">
+            <div>
+              <div class="work-metric-value">32<em>↑</em></div>
+              <div class="work-metric-label">목업 제작</div>
+            </div>
+            <div>
+              <div class="work-metric-value">20<em>+</em></div>
+              <div class="work-metric-label">페이지 설계</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-visual">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="work-corner"><ph-arrow-up-right weight="regular" size="20"></ph-arrow-up-right></div>
+        <div class="work-mock">
+          <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
+          </div>
+          <div class="mock-bar md"></div>
+          <div class="mock-bar sm"></div>
+          <div class="mock-grid">
+            <div class="mock-cell accent"></div>
+            <div class="mock-cell"></div>
+            <div class="mock-cell"></div>
+          </div>
+          <div class="mock-bar lg"></div>
+          <div class="mock-bar md"></div>
+          <div class="mock-bar sm"></div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Case 2 -->
+    <a href="#" class="work-card reveal" data-cursor="View case">
+      <div class="work-card-meta">
+        <div class="work-num">№ 02 · 케이스 스터디 · Solo Build</div>
+        <div>
+          <h3 class="work-title">6개 AI 에이전트,<br/>4명의 투자자가<br/>토론합니다.</h3>
+          <p class="work-sub">AI 멀티에이전트 주식 분석 플랫폼. 에이전트가 분석하고, 투자 페르소나가 토론한 뒤 결론을 내리는 bias-mitigation 구조. 기획부터 개발까지 혼자.</p>
+        </div>
+        <div class="work-details">
+          <div class="work-info">
+            <div class="work-info-item">
+              <span class="work-info-label">Type</span>
+              <span class="work-info-value">Solo Build</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Role</span>
+              <span class="work-info-value">PM + Engineer</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Year</span>
+              <span class="work-info-value">2025</span>
+            </div>
+          </div>
+          <div class="work-metrics">
+            <div>
+              <div class="work-metric-value">6</div>
+              <div class="work-metric-label">에이전트</div>
+            </div>
+            <div>
+              <div class="work-metric-value">31<em>k</em></div>
+              <div class="work-metric-label">LOC Solo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-visual">
+        <div class="blob blob-1" style="background: #6884A0;"></div>
+        <div class="blob blob-2" style="background: #3D8268;"></div>
+        <div class="work-corner"><ph-arrow-up-right weight="regular" size="20"></ph-arrow-up-right></div>
+        <div class="work-mock">
+          <div class="mock-bar md"></div>
+          <div class="mock-bar lg"></div>
+          <div class="mock-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="mock-cell"></div>
+            <div class="mock-cell accent"></div>
+            <div class="mock-cell"></div>
+            <div class="mock-cell"></div>
+          </div>
+          <div class="mock-bar sm"></div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Case 3 -->
+    <a href="#" class="work-card reveal" data-cursor="View case">
+      <div class="work-card-meta">
+        <div class="work-num">№ 03 · 케이스 스터디 · Regulated Review</div>
+        <div>
+          <h3 class="work-title">로보어드바이저<br/>국가 심사,<br/>3회 전원 통과.</h3>
+          <p class="work-sub">RATB 알고리즘 운용. 22차(2개) → 23차(8개) → 24차(28개)로 확장하며 전원 통과.</p>
+        </div>
+        <div class="work-details">
+          <div class="work-info">
+            <div class="work-info-item">
+              <span class="work-info-label">Company</span>
+              <span class="work-info-value">AssetPlus</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Role</span>
+              <span class="work-info-value">Algorithm Planner</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Year</span>
+              <span class="work-info-value">2022 — 2024</span>
+            </div>
+          </div>
+          <div class="work-metrics">
+            <div>
+              <div class="work-metric-value">38</div>
+              <div class="work-metric-label">알고리즘</div>
+            </div>
+            <div>
+              <div class="work-metric-value">3<em>/3</em></div>
+              <div class="work-metric-label">심사 통과</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-visual">
+        <div class="blob blob-1" style="background: #D4833D;"></div>
+        <div class="blob blob-2" style="background: #7E6EA0;"></div>
+        <div class="work-corner"><ph-arrow-up-right weight="regular" size="20"></ph-arrow-up-right></div>
+        <div class="work-mock">
+          <div class="mock-bar lg"></div>
+          <div class="mock-bar md"></div>
+          <div style="height: 60px; background: linear-gradient(to top right, var(--border), transparent); border-radius: 4px; margin: 8px 0; position: relative;">
+            <div style="position: absolute; right: 20%; top: 30%; width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"></div>
+          </div>
+          <div class="mock-bar sm"></div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="section-head reveal">
+    <div>
+      <p class="section-label">05 / 소개</p>
+      <h2 class="section-title syne">금융을 아는 PM이<br/><em>직접 만들면.</em></h2>
+    </div>
+  </div>
+
+  <div class="about-grid reveal">
+    <div>
+      <p class="about-lead">
+        금융을 이해하는 기획자, 기술로 검증하는 실행자.
+      </p>
+      <p class="about-body">
+        AssetPlus 자산운용에서 AI 투자 알고리즘 38개를 기획했고, 200개 이상의 운용 계좌를 동시에 관리했어요. 디자이너 없는 팀에서 20개+ 분석 페이지를 설계했고, AI 멀티에이전트 주식 분석 플랫폼을 혼자 기획부터 개발까지 했어요. 기획서, 디자인 시스템, 지표 감사까지 — PM이 할 수 있는 rigor의 범위를 넓히는 중.
+      </p>
+    </div>
+    <div>
+      <div class="about-details">
+        <div>
+          <p class="about-kv-label">학력</p>
+          <p class="about-kv-value">Johns Hopkins<br/>M.S. Finance</p>
+        </div>
+        <div>
+          <p class="about-kv-label">현재</p>
+          <p class="about-kv-value">AssetPlus<br/>2022 — Now</p>
+        </div>
+        <div>
+          <p class="about-kv-label">Domain</p>
+          <p class="about-kv-value">Finance · AI<br/>Robo-advisor</p>
+        </div>
+        <div>
+          <p class="about-kv-label">Stack</p>
+          <p class="about-kv-value">Figma · Next.js<br/>FastAPI · Claude</p>
+        </div>
+      </div>
+      <div class="skills">
+        <span class="skill-pill">Service Planning</span>
+        <span class="skill-pill">AI Agents</span>
+        <span class="skill-pill">Finance</span>
+        <span class="skill-pill">IA Design</span>
+        <span class="skill-pill">Prototyping</span>
+        <span class="skill-pill">UX Research</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <p class="section-label">06 / 연락</p>
+    <h2 class="contact-title syne">Plan.<br/>Build.<br/><em>Prove.</em></h2>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-item">
+      <span class="section-label">Email</span>
+      <a href="mailto:elliebinn@gmail.com" data-cursor="Copy">elliebinn@gmail.com <ph-copy weight="regular" size="14"></ph-copy></a>
+    </div>
+    <div class="contact-item">
+      <span class="section-label">LinkedIn</span>
+      <a href="#" data-cursor="Visit">hyebin-woo <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right></a>
+    </div>
+    <div class="contact-item">
+      <span class="section-label">GitHub</span>
+      <a href="#" data-cursor="Visit">Elliebinn <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right></a>
+    </div>
+  </div>
+  <footer class="footer">
+    <p>© 2026 우혜빈 · Made in Seoul</p>
+    <p>포트폴리오 목업 · v1</p>
+  </footer>
+</section>
+
+<script>
+  // Preloader
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('preloader').classList.add('done'), 1400);
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > 60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    lastY = y;
+  });
+
+  // Scroll indicator
+  const scrollFill = document.getElementById('scrollFill');
+  const scrollIndicator = document.getElementById('scrollIndicator');
+  window.addEventListener('scroll', () => {
+    const pct = Math.min(100, (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    scrollFill.style.height = pct + '%';
+    if (pct > 95) scrollIndicator.classList.add('hidden');
+    else scrollIndicator.classList.remove('hidden');
+  });
+
+  // Custom cursor — ring + dot
+  const cursor = document.getElementById('cursor');
+  const cursorLabel = document.getElementById('cursorLabel');
+  let mx = 0, my = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+  function loop() {
+    cx += (mx - cx) * 0.5; cy += (my - cy) * 0.5;
+    cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  document.querySelectorAll('[data-cursor]').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('hover', 'has-label');
+      cursorLabel.textContent = el.dataset.cursor;
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('hover', 'has-label');
+    });
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    if (!el.dataset.cursor) {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    }
+  });
+
+  // Copy email
+  document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const email = a.href.replace('mailto:', '');
+      navigator.clipboard?.writeText(email);
+      cursorLabel.textContent = 'Copied ✓';
+      setTimeout(() => { cursorLabel.textContent = 'Copy'; }, 1500);
+    });
+  });
+
+  // Theme toggle
+  const toggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const saved = localStorage.getItem('hb-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  function updateIcon() {
+    const t = document.documentElement.getAttribute('data-theme');
+    themeIcon.outerHTML = t === 'dark'
+      ? '<ph-sun weight="regular" size="16" id="themeIcon"></ph-sun>'
+      : '<ph-moon weight="regular" size="16" id="themeIcon"></ph-moon>';
+  }
+  updateIcon();
+  toggle.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('hb-theme', next);
+    updateIcon();
+  });
+
+  // Reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

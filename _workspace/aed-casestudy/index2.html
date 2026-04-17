@@ -220,7 +220,7 @@
           <div class="mt-8 pt-6 border-t border-bdr-subtle space-y-2 text-[14px]">
             <div class="flex items-start gap-3">
               <span class="text-txt-muted font-medium w-14 flex-shrink-0">역할</span>
-              <span class="text-txt-secondary">기획 · 화면 설계 · 프론트엔드 구현</span>
+              <span class="text-txt-secondary">기획 · 화면 설계 · 프론트엔드 구현 · QA 파이프라인</span>
             </div>
             <div class="flex items-start gap-3">
               <span class="text-txt-muted font-medium w-14 flex-shrink-0">기간</span>
@@ -1120,111 +1120,87 @@
           </div>
         </div>
 
-        <!-- Health score — 두 체크포인트 비교 (기능 확장형 vs 폴리시형) -->
-        <div class="mb-4 flex items-center justify-between">
-          <p class="text-[11px] font-bold tracking-wider uppercase text-txt-muted">건강도 점수 · 두 가지 변경 유형</p>
-          <p class="text-[11px] text-txt-muted">from REPORT.md</p>
-        </div>
-        <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <!-- REPORT.md 자동 생성 리포트 샘플 - Document Unfurl reveal (left to right) -->
+        <style>
+          .report-reveal { position: relative; }
+          .report-reveal__meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #8A8B8E;
+          }
+          .report-reveal__meta .divider { display: inline-block; width: 40px; height: 1px; background: #E8E8E8; margin-right: 12px; vertical-align: middle; }
+          .report-reveal__frame {
+            position: relative;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid #E8E8E8;
+            background: white;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.02), 0 12px 40px -12px rgba(27, 28, 28, 0.08);
+            line-height: 0;
+          }
+          .report-reveal__img {
+            width: 100%;
+            height: auto;
+            display: block;
+            clip-path: inset(0 100% 0 0);
+            transform: translateX(-24px);
+            opacity: 0.6;
+            transition:
+              clip-path 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.8s ease-out;
+          }
+          .report-reveal.is-revealed .report-reveal__img {
+            clip-path: inset(0 0 0 0);
+            transform: translateX(0);
+            opacity: 1;
+          }
+          /* Scan line - subtle highlight following the reveal edge (left→right sweep) */
+          .report-reveal__scan {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, rgba(45, 74, 90, 0.45), transparent);
+            left: 0;
+            opacity: 0;
+            z-index: 4;
+            pointer-events: none;
+          }
+          .report-reveal.is-revealed .report-reveal__scan {
+            animation: scan-sweep 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+          @keyframes scan-sweep {
+            0% { left: 0; opacity: 0; }
+            8% { opacity: 1; }
+            92% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .report-reveal__img {
+              clip-path: inset(0 0 0 0);
+              transform: translateX(0);
+              opacity: 1;
+              transition: none;
+            }
+            .report-reveal__scan { display: none; }
+          }
+        </style>
 
-          <!-- Checkpoint 1: 기능 확장형 (03-26 dashboard) -->
-          <div class="bg-white rounded-[16px] border border-bdr-subtle p-6">
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <p class="text-[10px] font-bold tracking-wider uppercase text-txt-muted mb-1">기능 확장형</p>
-                <p class="font-display font-bold text-base">03-26 · 대시보드 전면 리디자인</p>
-              </div>
-              <div class="text-right">
-                <p class="text-[10px] text-txt-muted">변화</p>
-                <p class="font-display font-bold text-lg text-txt-primary">100 → 96</p>
-                <p class="text-[11px] text-txt-muted">−4</p>
-              </div>
-            </div>
-            <div class="space-y-2 text-[12px] mb-4">
-              <div class="flex items-center gap-2">
-                <span class="text-txt-muted w-20 shrink-0">시각(20%)</span>
-                <div class="flex-1 h-1.5 bg-surface-subtle rounded-full overflow-hidden"><div class="h-full bg-aed-slate/60" style="width:90%;"></div></div>
-                <span class="font-mono text-[11px] text-txt-muted w-16 text-right">100 → 90</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="text-txt-muted w-20 shrink-0">인터(15%)</span>
-                <div class="flex-1 h-1.5 bg-surface-subtle rounded-full overflow-hidden"><div class="h-full bg-aed-slate/60" style="width:90%;"></div></div>
-                <span class="font-mono text-[11px] text-txt-muted w-16 text-right">100 → 90</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="text-txt-muted w-20 shrink-0">콘솔·로드·경고</span>
-                <div class="flex-1 h-1.5 bg-surface-subtle rounded-full overflow-hidden"><div class="h-full bg-aed-emerald/70" style="width:100%;"></div></div>
-                <span class="font-mono text-[11px] text-txt-muted w-16 text-right">100 → 100</span>
-              </div>
-            </div>
-            <div class="pt-4 border-t border-bdr-subtle space-y-1.5 text-[12px] text-txt-secondary">
-              <p>· 기능 10배 확장 → 품질 surface가 커지며 미세 감점</p>
-              <p>· HIGH 이슈 2건 (TypeError, NiceGUI DOM 탐색) <span class="text-aed-emerald font-semibold">→ 당일 수정</span></p>
-              <p>· 프로덕션 구간(90+) 유지 · 콘솔 에러 0/0</p>
-            </div>
+        <div class="report-reveal mb-10">
+          <div class="report-reveal__meta">
+            <span><span class="divider"></span>자동 생성된 리포트 샘플</span>
+            <span style="font-weight:500; text-transform:none; letter-spacing:0;">REPORT.md · 2026-03-26 대시보드 리디자인</span>
           </div>
-
-          <!-- Checkpoint 2: 폴리시형 (03-27 backtest polish) -->
-          <div class="bg-white rounded-[16px] border border-bdr-subtle p-6">
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <p class="text-[10px] font-bold tracking-wider uppercase text-aed-emerald mb-1">폴리시형</p>
-                <p class="font-display font-bold text-base">03-27 · 백테스트 디테일 폴리시</p>
-              </div>
-              <div class="text-right">
-                <p class="text-[10px] text-txt-muted">변화</p>
-                <p class="font-display font-bold text-lg text-aed-emerald">96 → 98</p>
-                <p class="text-[11px] text-aed-emerald font-semibold">+2</p>
-              </div>
-            </div>
-            <div class="space-y-2 text-[12px] mb-4">
-              <div class="flex items-center gap-2">
-                <span class="text-txt-muted w-20 shrink-0">시각(20%)</span>
-                <div class="flex-1 h-1.5 bg-surface-subtle rounded-full overflow-hidden"><div class="h-full bg-aed-emerald" style="width:90%;"></div></div>
-                <span class="font-mono text-[11px] text-aed-emerald w-16 text-right">80 → 90</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="text-txt-muted w-20 shrink-0">인터(15%)</span>
-                <div class="flex-1 h-1.5 bg-surface-subtle rounded-full overflow-hidden"><div class="h-full bg-aed-emerald/70" style="width:100%;"></div></div>
-                <span class="font-mono text-[11px] text-txt-muted w-16 text-right">100 → 100</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="text-txt-muted w-20 shrink-0">콘솔·로드·경고</span>
-                <div class="flex-1 h-1.5 bg-surface-subtle rounded-full overflow-hidden"><div class="h-full bg-aed-emerald/70" style="width:100%;"></div></div>
-                <span class="font-mono text-[11px] text-txt-muted w-16 text-right">100 → 100</span>
-              </div>
-            </div>
-            <div class="pt-4 border-t border-bdr-subtle space-y-1.5 text-[12px] text-txt-secondary">
-              <p>· 순수 UI 폴리시 · 3탭 풀페이지 13장 캡처</p>
-              <p>· 시각 감점 80 → 90으로 개선</p>
-              <p>· VERDICT: <span class="text-aed-emerald font-semibold">IMPROVED</span></p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 요약 지표 -->
-        <div class="bg-white rounded-[16px] border border-bdr-subtle p-6 mb-10">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div>
-              <p class="font-display text-3xl md:text-4xl font-bold text-txt-primary">97</p>
-              <p class="mt-1 text-[11px] font-semibold tracking-wider uppercase text-txt-muted">평균 건강도</p>
-              <p class="text-[12px] text-txt-secondary leading-snug mt-1">측정된 체크포인트 2건 평균</p>
-            </div>
-            <div>
-              <p class="font-display text-3xl md:text-4xl font-bold text-txt-primary">0</p>
-              <p class="mt-1 text-[11px] font-semibold tracking-wider uppercase text-txt-muted">미수정 HIGH 이슈</p>
-              <p class="text-[12px] text-txt-secondary leading-snug mt-1">발견된 이슈 전수 당일~다음날 수정</p>
-            </div>
-            <div>
-              <p class="font-display text-3xl md:text-4xl font-bold text-txt-primary">0</p>
-              <p class="mt-1 text-[11px] font-semibold tracking-wider uppercase text-txt-muted">신규 콘솔 에러</p>
-              <p class="text-[12px] text-txt-secondary leading-snug mt-1">모든 체크포인트에서 리그레션 0</p>
-            </div>
-            <div>
-              <p class="font-display text-3xl md:text-4xl font-bold text-aed-emerald">IMPROVED</p>
-              <p class="mt-1 text-[11px] font-semibold tracking-wider uppercase text-txt-muted">최종 판정</p>
-              <p class="text-[12px] text-txt-secondary leading-snug mt-1">리포트 자동 verdict</p>
-            </div>
+          <div class="report-reveal__frame">
+            <img class="report-reveal__img" src="checkpoints/checkpoint-report.png" alt="체크포인트 자동 생성 리포트 — 건강도 점수, 수정된 이슈, VERDICT" />
+            <div class="report-reveal__scan"></div>
           </div>
         </div>
 
@@ -1580,6 +1556,10 @@
           <span class="inline-block px-4 py-1.5 rounded-full text-[11px] font-bold tracking-wider uppercase" style="background: rgba(45,74,90,0.08); color: #2D4A5A;">Strategy List</span>
           <h3 class="font-display text-3xl tracking-tight leading-tight" style="font-weight: 300;">분류 체계가<br/>검색을 대체하다</h3>
           <p class="text-txt-secondary text-[15px] leading-relaxed">검색창에 타이핑하는 대신<br/>유니버스와 태그를 선택하면 즉시 좁혀집니다.<br/>리스트에서 행을 클릭하면 요약 패널이 열리며<br/>핵심 성과 지표를 한눈에 확인할 수 있습니다.</p>
+          <div class="pt-4 border-t border-bdr-subtle">
+            <span class="text-[10px] font-bold tracking-wider uppercase text-aed-slate">탐색 · 선별</span>
+            <p class="mt-1 text-[13px] text-txt-secondary">467개 전략 중 분석 대상을 좁히는 단계 — 대시보드에서 감지한 이상 신호를 여기서 추적.</p>
+          </div>
         </div>
       </div>
 
@@ -1921,6 +1901,17 @@
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+    // Report reveal — document unfurl from left
+    const reportObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-revealed');
+          reportObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('.report-reveal').forEach(el => reportObs.observe(el));
 
     // Count-up animation
     const countObs = new IntersectionObserver((entries) => {
