@@ -1,0 +1,488 @@
+---
+import Layout from '../../../../../layouts/Layout.astro';
+import { landingTargets, getLandingTargetSlugs } from '../../../../../data/landing-targets';
+
+export async function getStaticPaths() {
+  return getLandingTargetSlugs().map((slug) => ({
+    params: { company: slug },
+  }));
+}
+
+const { company } = Astro.params;
+const data = landingTargets[company as string];
+
+if (!data) {
+  throw new Error(`Landing target not found: ${company}`);
+}
+
+const lang = 'ko';
+const resume = data.tailoredResume;
+
+// 제목도 "맞춤 이력서" 티 안 나게 일반적으로
+const pageTitle = '우혜빈 · 이력서';
+
+/** `**text**` → `<strong>text</strong>` 간이 마크다운 렌더 */
+function md(text: string): string {
+  return text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+---
+
+<Layout title={pageTitle}>
+  {data.noIndex && <meta slot="head" name="robots" content="noindex, nofollow" />}
+
+  <main class="resume-main">
+    <nav class="resume-back no-print">
+      <a href={`${import.meta.env.BASE_URL}ko/for/${company}/`} class="back-link">← 돌아가기</a>
+    </nav>
+    <article class="resume-doc">
+      <!-- ================================================= -->
+      <!--  HEADER                                            -->
+      <!-- ================================================= -->
+      <header class="doc-header">
+        <h1 class="doc-name">
+          우혜빈 <span class="doc-name-en">Hye Bin Woo</span>
+        </h1>
+        <p class="doc-title">AI Product Planner · Finance × LLM</p>
+        <div class="doc-contact">
+          <span>010-4999-1517</span>
+          <span class="sep">·</span>
+          <a href="mailto:elliebinn@gmail.com">elliebinn@gmail.com</a>
+          <span class="sep">·</span>
+          <a href="https://github.com/Elliebinn">github.com/Elliebinn</a>
+          <span class="sep">·</span>
+          <a href="https://elliebinn.github.io">elliebinn.github.io</a>
+        </div>
+      </header>
+
+      <!-- ================================================= -->
+      <!--  SUMMARY                                           -->
+      <!-- ================================================= -->
+      <section class="doc-section">
+        <h2 class="doc-section-title">Professional Summary</h2>
+        <p class="doc-summary" set:html={md(resume.summary)} />
+      </section>
+
+      <!-- ================================================= -->
+      <!--  CORE COMPETENCIES                                 -->
+      <!-- ================================================= -->
+      <section class="doc-section">
+        <h2 class="doc-section-title">Core Competencies</h2>
+        <dl class="doc-skills">
+          {resume.competencies.map((comp) => (
+            <div class="doc-skill-row">
+              <dt>{comp.label}</dt>
+              <dd>{comp.items}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <!-- ================================================= -->
+      <!--  WORK EXPERIENCE                                   -->
+      <!-- ================================================= -->
+      <section class="doc-section">
+        <h2 class="doc-section-title">Work Experience</h2>
+        {resume.experiences.map((exp) => (
+          <article class="doc-exp">
+            <div class="doc-exp-row">
+              <h3 class="doc-exp-company">
+                {exp.company}
+                {exp.team && <span class="doc-exp-team"> · {exp.team}</span>}
+              </h3>
+              <span class="doc-exp-meta">
+                {exp.period}
+                {exp.employment && <span class="doc-exp-employment"> · {exp.employment}</span>}
+              </span>
+            </div>
+            {exp.subtitle && <p class="doc-exp-sub">{exp.subtitle}</p>}
+            {exp.sections.map((sec) => (
+              <div class="doc-exp-section">
+                <h4 class="doc-exp-heading">{sec.heading}</h4>
+                <ul class="doc-bullets">
+                  {sec.bullets.map((bullet) => (
+                    <li set:html={md(bullet)} />
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </article>
+        ))}
+      </section>
+
+      <!-- ================================================= -->
+      <!--  SIDE PROJECT                                      -->
+      <!-- ================================================= -->
+      {resume.sideProject && (
+        <section class="doc-section">
+          <h2 class="doc-section-title">Side Project</h2>
+          <article class="doc-exp">
+            <div class="doc-exp-row">
+              <h3 class="doc-exp-company">{resume.sideProject.title}</h3>
+              <span class="doc-exp-meta">{resume.sideProject.meta}</span>
+            </div>
+            <p class="doc-exp-sub">{resume.sideProject.subtitle}</p>
+            <ul class="doc-bullets">
+              {resume.sideProject.bullets.map((bullet) => (
+                <li set:html={md(bullet)} />
+              ))}
+            </ul>
+          </article>
+        </section>
+      )}
+
+      <!-- ================================================= -->
+      <!--  EDUCATION                                         -->
+      <!-- ================================================= -->
+      <section class="doc-section">
+        <h2 class="doc-section-title">Education</h2>
+        <dl class="doc-list">
+          {resume.education.map((edu) => (
+            <div class="doc-list-row">
+              <dt>
+                <strong>{edu.school}</strong>
+                <span class="doc-list-detail"> · {edu.degree}</span>
+              </dt>
+              <dd>{edu.period}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <!-- ================================================= -->
+      <!--  CERTIFICATIONS                                    -->
+      <!-- ================================================= -->
+      <section class="doc-section">
+        <h2 class="doc-section-title">Certifications</h2>
+        <dl class="doc-list">
+          {resume.certifications.map((cert) => (
+            <div class="doc-list-row">
+              <dt>{cert.name}</dt>
+              <dd>{cert.date}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <!-- ================================================= -->
+      <!--  LANGUAGES                                         -->
+      <!-- ================================================= -->
+      <section class="doc-section">
+        <h2 class="doc-section-title">Languages</h2>
+        <p class="doc-languages">{resume.languages}</p>
+      </section>
+    </article>
+  </main>
+</Layout>
+
+<style is:global>
+  /* ============================================
+     PRINT-MODE: hide site chrome
+     ============================================ */
+  @media print {
+    nav,
+    footer,
+    [class*='BottomNav'],
+    [class*='ScrollProgress'],
+    [class*='ScrollToTop'] {
+      display: none !important;
+    }
+    body {
+      background: #fff !important;
+    }
+    main.resume-main {
+      padding: 0 !important;
+      max-width: none !important;
+    }
+    .resume-doc {
+      box-shadow: none !important;
+      border: none !important;
+      padding: 15mm 15mm 18mm !important;
+      margin: 0 !important;
+      max-width: none !important;
+    }
+    @page {
+      size: A4;
+      margin: 0;
+    }
+  }
+</style>
+
+<style>
+  /* ============================================
+     RESUME DOCUMENT — Neutral, ATS-friendly
+     토스 맞춤 힌트 없음. 일반 이력서 외형.
+     ============================================ */
+  /* ---------- back link ---------- */
+  .resume-back {
+    padding: 1rem 0 1.5rem;
+  }
+  .back-link {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: #999;
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+  .back-link:hover {
+    color: #111;
+  }
+
+  .resume-main {
+    padding: 3rem 1.5rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+    color: #111;
+    word-break: keep-all;
+  }
+
+  /* ---------- document sheet ---------- */
+  .resume-doc {
+    background: #fff;
+    padding: 3rem 3rem 3.5rem;
+    box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.12);
+    border: 1px solid #e5e5e5;
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, system-ui, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.6;
+    color: #111;
+  }
+  @media (max-width: 640px) {
+    .resume-doc {
+      padding: 1.75rem 1.25rem 2rem;
+    }
+  }
+
+  /* ============================================
+     HEADER
+     ============================================ */
+  .doc-header {
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #111;
+  }
+
+  .doc-name {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 22pt;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 0.25rem;
+    color: #111;
+  }
+  .doc-name-en {
+    font-size: 14pt;
+    font-weight: 500;
+    color: #666;
+    margin-left: 0.5rem;
+    letter-spacing: 0;
+  }
+  .doc-title {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 0.75rem;
+    letter-spacing: 0.01em;
+  }
+  .doc-contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 9.5pt;
+    color: #555;
+  }
+  .doc-contact a {
+    color: #555;
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+  .doc-contact a:hover {
+    color: #111;
+  }
+  .doc-contact .sep {
+    color: #ccc;
+  }
+
+  /* ============================================
+     SECTION
+     ============================================ */
+  .doc-section {
+    margin-top: 1.5rem;
+  }
+  .doc-section-title {
+    font-size: 10pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #111;
+    padding-bottom: 4px;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid #ccc;
+  }
+
+  /* ============================================
+     SUMMARY
+     ============================================ */
+  .doc-summary {
+    font-size: 10.5pt;
+    line-height: 1.7;
+    color: #222;
+    margin: 0;
+  }
+  .doc-summary strong {
+    font-weight: 700;
+    color: #111;
+  }
+
+  /* ============================================
+     SKILLS (dl)
+     ============================================ */
+  .doc-skills {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin: 0;
+  }
+  .doc-skill-row {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    align-items: baseline;
+    gap: 1rem;
+    font-size: 10pt;
+  }
+  @media (max-width: 640px) {
+    .doc-skill-row {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+      padding-bottom: 0.4rem;
+    }
+  }
+  .doc-skill-row dt {
+    font-weight: 800;
+    color: #111;
+    white-space: nowrap;
+  }
+  .doc-skill-row dd {
+    color: #444;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* ============================================
+     EXPERIENCE
+     ============================================ */
+  .doc-exp {
+    margin-bottom: 1.25rem;
+    page-break-inside: avoid;
+  }
+  .doc-exp:last-child {
+    margin-bottom: 0;
+  }
+  .doc-exp-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .doc-exp-company {
+    font-size: 11.5pt;
+    font-weight: 800;
+    color: #111;
+    margin: 0 0 0.1rem;
+  }
+  .doc-exp-team {
+    font-weight: 600;
+    color: #555;
+  }
+  .doc-exp-meta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9pt;
+    color: #888;
+    white-space: nowrap;
+  }
+  .doc-exp-employment {
+    color: #aaa;
+  }
+  .doc-exp-sub {
+    font-size: 10pt;
+    color: #555;
+    font-style: italic;
+    margin: 0 0 0.5rem;
+  }
+  .doc-exp-section {
+    margin-top: 0.75rem;
+  }
+  .doc-exp-heading {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 0.25rem;
+  }
+  .doc-bullets {
+    margin: 0 0 0 1.1rem;
+    padding: 0;
+    list-style: disc;
+  }
+  .doc-bullets li {
+    font-size: 10pt;
+    line-height: 1.55;
+    color: #222;
+    margin-bottom: 0.25rem;
+  }
+  .doc-bullets li:last-child {
+    margin-bottom: 0;
+  }
+  .doc-bullets strong {
+    font-weight: 700;
+    color: #111;
+  }
+
+  /* ============================================
+     LIST (education / certs)
+     ============================================ */
+  .doc-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+  .doc-list-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.3rem 0;
+    font-size: 10pt;
+    border-bottom: 1px dotted #e5e5e5;
+  }
+  .doc-list-row:last-child {
+    border-bottom: none;
+  }
+  .doc-list-row dt {
+    color: #222;
+  }
+  .doc-list-row dt strong {
+    font-weight: 700;
+    color: #111;
+  }
+  .doc-list-detail {
+    color: #666;
+  }
+  .doc-list-row dd {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9pt;
+    color: #888;
+    margin: 0;
+  }
+
+  /* ============================================
+     LANGUAGES
+     ============================================ */
+  .doc-languages {
+    font-size: 10pt;
+    color: #222;
+    margin: 0;
+  }
+</style>

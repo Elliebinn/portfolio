@@ -1,0 +1,508 @@
+---
+// PDF 출력 전용 이력서 — /ko/resume-pdf/
+// 브라우저에서 열어 Cmd+P → "PDF로 저장" → A4 · 여백 없음 · 배경 그래픽 체크
+//
+// 내용은 src/data/resume.ts에서 import됩니다. 수정은 resume.ts에서.
+import { resume, boldToHtml } from '../../../data/resume';
+---
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>우혜빈 · 이력서 (Hye Bin Woo Resume)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --accent: #456272;
+    --text: #1a1f24;
+    --muted: #555e66;
+    --faint: #8a949d;
+    --rule: #1a1f24;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    font-family: 'Noto Sans KR', 'Manrope', -apple-system, sans-serif;
+    color: var(--text);
+    background: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ===== A4 페이지 설정 ===== */
+  @page {
+    size: A4;
+    margin: 14mm 14mm 14mm 14mm;
+  }
+
+  .page {
+    width: 182mm; /* A4 width - margins */
+    min-height: 269mm; /* A4 height - margins */
+    margin: 0 auto;
+    padding: 0;
+    background: #ffffff;
+    font-size: 9.5pt;
+    line-height: 1.55;
+  }
+
+  /* ===== Typography ===== */
+  .display { font-family: 'Manrope', 'Noto Sans KR', sans-serif; font-weight: 800; letter-spacing: -0.01em; }
+  .mono { font-variant-numeric: tabular-nums; }
+
+  /* ===== Masthead ===== */
+  .masthead {
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 6pt;
+    margin-bottom: 14pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .masthead .label {
+    font-size: 7pt;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .masthead .meta {
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16pt;
+    gap: 20pt;
+  }
+  .header h1 {
+    font-family: 'Manrope', 'Noto Sans KR', sans-serif;
+    font-weight: 900;
+    font-size: 28pt;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 3pt;
+  }
+  .header h1 .en {
+    color: var(--faint);
+    font-weight: 500;
+    font-size: 20pt;
+    margin-left: 4pt;
+  }
+  .header .role {
+    font-size: 8pt;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .contact {
+    display: flex;
+    flex-direction: column;
+    gap: 2pt;
+    font-size: 8pt;
+    color: var(--muted);
+    text-align: right;
+  }
+  .contact a { color: var(--muted); text-decoration: none; }
+
+  /* ===== Section ===== */
+  section { margin-bottom: 14pt; page-break-inside: avoid; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8pt;
+    margin-bottom: 7pt;
+  }
+  .section-header h2 {
+    font-size: 7pt;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .section-header .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    opacity: 0.3;
+  }
+
+  /* ===== Summary ===== */
+  .summary-lead {
+    font-family: 'Manrope', 'Noto Sans KR', sans-serif;
+    font-weight: 800;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 4pt;
+  }
+  .summary-body {
+    font-size: 9pt;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 170mm;
+  }
+  .summary-body strong { color: var(--text); font-weight: 700; }
+
+  /* ===== Experience ===== */
+  .job { margin-bottom: 12pt; }
+  .job:last-child { margin-bottom: 0; }
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 3pt;
+  }
+  .job-title {
+    font-family: 'Manrope', 'Noto Sans KR', sans-serif;
+    font-weight: 800;
+    font-size: 11pt;
+    color: var(--text);
+  }
+  .job-title .sub {
+    font-weight: 700;
+    font-size: 9pt;
+    color: var(--muted);
+  }
+  .job-period {
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .job-org {
+    font-size: 8pt;
+    color: var(--muted);
+    margin-bottom: 4pt;
+  }
+
+  .project { margin-top: 6pt; }
+  .project-title {
+    font-family: 'Manrope', 'Noto Sans KR', sans-serif;
+    font-weight: 800;
+    font-size: 9.5pt;
+    color: var(--text);
+    margin-bottom: 3pt;
+  }
+
+  ul.bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  ul.bullets li {
+    font-size: 8.8pt;
+    line-height: 1.55;
+    color: var(--muted);
+    padding-left: 9pt;
+    position: relative;
+    margin-bottom: 2pt;
+  }
+  ul.bullets li:before {
+    content: '●';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-size: 4.5pt;
+    line-height: 14pt;
+  }
+  ul.bullets li strong { color: var(--text); font-weight: 700; }
+
+  /* ===== Side Project ===== */
+  .side-quote {
+    font-style: italic;
+    font-size: 9pt;
+    color: var(--muted);
+    margin-bottom: 4pt;
+    padding-left: 8pt;
+    border-left: 2px solid var(--accent);
+  }
+
+  /* ===== 2-col ===== */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20pt;
+    margin-bottom: 14pt;
+  }
+
+  .edu-item { margin-bottom: 5pt; }
+  .edu-item:last-child { margin-bottom: 0; }
+  .edu-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 6pt;
+  }
+  .edu-name {
+    font-family: 'Manrope', 'Noto Sans KR', sans-serif;
+    font-weight: 800;
+    font-size: 9.5pt;
+    color: var(--text);
+  }
+  .edu-date {
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+  .edu-sub {
+    font-size: 8pt;
+    color: var(--muted);
+    margin-top: 1pt;
+  }
+
+  .cert-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 6pt;
+    padding: 1.5pt 0;
+    font-size: 8.5pt;
+  }
+  .cert-name { font-weight: 700; color: var(--text); }
+  .cert-date {
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  /* ===== Skills ===== */
+  .skill-row {
+    display: flex;
+    gap: 12pt;
+    padding: 2pt 0;
+    font-size: 8.5pt;
+    line-height: 1.6;
+  }
+  .skill-label {
+    width: 70pt;
+    flex-shrink: 0;
+    font-size: 7pt;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-top: 2pt;
+  }
+  .skill-list { color: var(--muted); flex: 1; }
+
+  /* ===== Print ===== */
+  @media print {
+    html, body { background: white; }
+    .page {
+      width: 100%;
+      min-height: auto;
+      padding: 0;
+      margin: 0;
+    }
+    section { page-break-inside: avoid; }
+    .job { page-break-inside: avoid; }
+  }
+
+  /* ===== Screen preview ===== */
+  @media screen {
+    body {
+      background: #f2f3f5;
+      padding: 20pt 0;
+    }
+    .page {
+      background: white;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 14mm;
+      width: 210mm;
+      min-height: 297mm;
+    }
+    .pdf-button {
+      position: fixed;
+      top: 16pt;
+      right: 16pt;
+      background: var(--accent);
+      color: white;
+      padding: 10pt 18pt;
+      border-radius: 999pt;
+      font-size: 10pt;
+      font-weight: 700;
+      font-family: 'Manrope', sans-serif;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      z-index: 1000;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6pt;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .pdf-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+    }
+    .pdf-button:active {
+      transform: translateY(0);
+    }
+  }
+  @media print {
+    .pdf-button { display: none !important; }
+  }
+</style>
+</head>
+<body>
+  <button class="pdf-button" onclick="window.print()" aria-label="PDF 저장">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+    PDF로 저장
+  </button>
+
+  <div class="page">
+
+    <!-- Masthead -->
+    <div class="masthead">
+      <span class="label">우혜빈 · 이력서</span>
+      <span class="meta">2026 · AI Product Planner</span>
+    </div>
+
+    <div class="header">
+      <div>
+        <h1 class="display">{resume.name.ko}<span class="en">{resume.name.en}</span></h1>
+        <p class="role">{resume.role}</p>
+      </div>
+      <div class="contact">
+        <a href={`tel:+82${resume.contact.phone.replace(/-/g, '').replace(/^0/, '')}`} class="mono">{resume.contact.phone}</a>
+        <a href={`mailto:${resume.contact.email}`}>{resume.contact.email}</a>
+        <a href={resume.contact.githubUrl}>{resume.contact.github}</a>
+        <a href={resume.contact.portfolioUrl}>{resume.contact.portfolio}</a>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <section>
+      <div class="section-header">
+        <h2>Summary</h2>
+        <span class="rule"></span>
+      </div>
+      <p class="summary-lead">{resume.summary.lead}</p>
+      <p class="summary-body" set:html={boldToHtml(resume.summary.body)} />
+    </section>
+
+    <!-- Work Experience -->
+    <section>
+      <div class="section-header">
+        <h2>Work Experience</h2>
+        <span class="rule"></span>
+      </div>
+
+      {resume.jobs.map((job) => (
+        <div class="job">
+          <div class="job-header">
+            <div class="job-title">
+              {job.company}{job.department && <span class="sub"> · {job.department}</span>}
+            </div>
+            <div class="job-period mono">{job.period}</div>
+          </div>
+          {job.org && <div class="job-org">{job.org}</div>}
+
+          {job.projects.map((project) => (
+            <div class="project">
+              <p class="project-title">{project.title}</p>
+              {project.description && <p class="job-org" style="font-style: italic;">{project.description}</p>}
+              <ul class="bullets">
+                {project.bullets.map((bullet) => (
+                  <li set:html={boldToHtml(bullet)} />
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ))}
+    </section>
+
+    <!-- Side Project -->
+    <section>
+      <div class="section-header">
+        <h2>Side Project</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="job-header">
+        <div class="job-title">{resume.sideProject.title} <span class="sub">· {resume.sideProject.sub}</span></div>
+        <div class="job-period">{resume.sideProject.role}</div>
+      </div>
+      <p class="side-quote">"{resume.sideProject.quote}"</p>
+      <ul class="bullets">
+        {resume.sideProject.bullets.map((bullet) => (
+          <li set:html={boldToHtml(bullet)} />
+        ))}
+      </ul>
+    </section>
+
+    <!-- Education + Certifications -->
+    <div class="two-col">
+      <section>
+        <div class="section-header">
+          <h2>Education</h2>
+          <span class="rule"></span>
+        </div>
+        {resume.education.map((edu) => (
+          <div class="edu-item">
+            <div class="edu-row">
+              <span class="edu-name">{edu.name}</span>
+              <span class="edu-date mono">{edu.period}</span>
+            </div>
+            <div class="edu-sub">{edu.degree}</div>
+          </div>
+        ))}
+      </section>
+
+      <section>
+        <div class="section-header">
+          <h2>Certifications</h2>
+          <span class="rule"></span>
+        </div>
+        {resume.certifications.map((cert) => (
+          <div class="cert-row">
+            <span class="cert-name">{cert.name}</span>
+            <span class="cert-date mono">{cert.date}</span>
+          </div>
+        ))}
+      </section>
+    </div>
+
+    <!-- Additional Information -->
+    <section>
+      <div class="section-header">
+        <h2>Additional Information</h2>
+        <span class="rule"></span>
+      </div>
+      {resume.skills.map((row) => (
+        <div class="skill-row">
+          <span class="skill-label">{row.label}</span>
+          <span class="skill-list">{row.items}</span>
+        </div>
+      ))}
+      <div class="skill-row">
+        <span class="skill-label">언어</span>
+        <span class="skill-list">{resume.language.primary}{resume.language.note && ` · ${resume.language.note}`}</span>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

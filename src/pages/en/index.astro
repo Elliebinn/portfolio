@@ -1,69 +1,429 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Navbar from '../../components/Navbar';
-import Hero from '../../components/Hero';
-import About from '../../components/About';
-import Projects from '../../components/Projects';
-
-import Journey from '../../components/Journey';
-import Certifications from '../../components/Certifications';
-import Contact from '../../components/Contact';
-import Footer from '../../components/Footer';
-import BottomNav from '../../components/BottomNav';
-import ScrollProgress from '../../components/motion/ScrollProgress';
-import { getCollection } from 'astro:content';
-
-const lang = 'en';
-const posts = (await getCollection('blog'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
-const base = import.meta.env.BASE_URL;
+import V2Layout from '../../layouts/V2Layout.astro';
 ---
+<V2Layout title="Hyebin Woo — AI Service Planner" lang="en">
 
-<Layout title="HYEBIN.DEV">
-  <ScrollProgress variant="bar" client:load />
-  <Navbar lang={lang} client:load />
-  <main>
-    <Hero lang={lang} client:load />
-    <About lang={lang} client:visible />
-    <Projects lang={lang} client:visible />
+<!-- Preloader -->
+<div id="preloader">
+  <div class="pl-name"><span>Hyebin</span>&nbsp;<span>Woo</span></div>
+  <div class="pl-bar"><div class="pl-fill"></div></div>
+</div>
 
-    <section id="blog" class="border-t border-[var(--color-border)] px-6 py-28">
-      <div class="mx-auto max-w-7xl">
-        <p class="mb-8 text-xs uppercase tracking-[0.15em] text-[var(--color-text-muted)]">Writings</p>
-        <div class="mb-12 flex items-end justify-between">
-          <h2 class="text-4xl font-bold sm:text-5xl" style="font-family: var(--font-display);">From the Blog</h2>
-          <a href={`${base}blog/`} class="hidden items-center gap-2 text-sm font-medium text-[var(--color-accent-light)] transition-colors hover:text-[var(--color-text)] sm:inline-flex">
-            View all &rarr;
-          </a>
-        </div>
+<!-- Scroll Indicator -->
+<div class="scroll-indicator" id="scrollIndicator">
+  <div class="scroll-line"><div class="scroll-line-fill" id="scrollFill"></div></div>
+  <span class="scroll-label">Scroll</span>
+</div>
 
-        {/* Numbered list */}
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="cursor-label" id="cursorLabel"></div>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="#home" class="nav-brand">Hyebin.</a>
+  <div class="nav-links">
+    <a href="#work" class="nav-link">Work</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <ph-sun weight="regular" size="16" id="themeIcon"></ph-sun>
+    </button>
+    <a href="#contact" class="nav-cta">Say hi <ph-hand-waving weight="fill" size="14"></ph-hand-waving></a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-meta">
+    <div class="hero-meta-col">
+      <span class="label">Based in</span>
+      <span>Seoul, KR</span>
+    </div>
+    <div class="hero-meta-col" style="text-align: right;">
+      <span class="label">Portfolio</span>
+      <span>2026 / v1</span>
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <p class="label" style="margin-bottom: 32px;">AI Service Planner &middot; 2022—Now</p>
+      <h1 class="hero-title syne">
+        <span class="line"><span>Hyebin</span></span>
+        <span class="line"><span><em>Woo.</em></span></span>
+      </h1>
+      <p class="hero-subtitle">
+        Finance-domain PM who writes specs, builds mockups, and ships. 38 AI investment algorithms planned, 200+ live accounts, &minus;83% ops time.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Service Planning</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">AI Agents</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Finance Domain</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Information Architecture</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">UX Design</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Prototyping</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Service Planning</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">AI Agents</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Finance Domain</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Information Architecture</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">UX Design</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Prototyping</span><span class="marquee-item marquee-dot">&#10022;</span>
+  </div>
+</div>
+
+<!-- Work -->
+<section class="section" id="work">
+  <div class="section-head reveal">
+    <div>
+      <p class="section-label">01 / Selected Work</p>
+      <h2 class="section-title syne"><em>Three</em> decisions<br/>not three features.</h2>
+    </div>
+    <p class="section-label">2022 — 2026</p>
+  </div>
+
+  <div class="work-grid">
+
+    <!-- Case 1 -->
+    <a href="#" class="work-card reveal" data-cursor="View case">
+      <div class="work-card-meta">
+        <div class="work-num">&#8470; 01 / AED</div>
         <div>
-          {posts.map((post, i) => (
-            <a href={`${base}blog/${post.id}/`} class="group relative grid grid-cols-[48px_1fr_auto] sm:grid-cols-[64px_1fr_auto] items-center gap-4 sm:gap-6 border-t border-[var(--color-border)] py-6 rounded-xl transition-[padding,background] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:pl-4 hover:bg-[rgba(69,98,114,0.03)]">
-              <span class="text-3xl sm:text-4xl font-bold text-[var(--color-text)]/10 transition-colors duration-300 group-hover:text-[var(--color-accent-light)]" style="font-family: var(--font-mono);">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <div>
-                <h3 class="text-[15px] sm:text-base font-bold leading-snug transition-colors duration-300 group-hover:text-[var(--color-accent-light)]">{post.data.title}</h3>
-                <p class="mt-1 hidden text-sm leading-relaxed text-[var(--color-text-muted)] sm:line-clamp-1">{post.data.description}</p>
-              </div>
-              <div class="text-right flex flex-col items-end gap-1">
-                <p class="text-xs uppercase tracking-[0.15em] text-[var(--color-accent-light)]">{post.data.category}</p>
-                <p class="text-xs text-[var(--color-text-muted)]" style="font-family: var(--font-mono);">{post.data.date.toISOString().slice(0, 10)}</p>
-                <span class="mt-1 text-sm text-[var(--color-accent-light)] opacity-0 -translate-x-2 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-x-0">→</span>
-              </div>
-            </a>
-          ))}
+          <h3 class="work-title">Redesigning<br/>how quant<br/>researchers work.</h3>
+          <p class="work-sub">A tool used daily by 4 researchers. No designer, no frontend dev. Taxonomy for 200+ strategies rebuilt from scratch — the HTML mockup became the product.</p>
+        </div>
+        <div class="work-details">
+          <div class="work-info">
+            <div class="work-info-item">
+              <span class="work-info-label">Company</span>
+              <span class="work-info-value">AssetPlus</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Role</span>
+              <span class="work-info-value">AI Service Planner</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Year</span>
+              <span class="work-info-value">2025 — Now</span>
+            </div>
+          </div>
+          <div class="work-metrics">
+            <div>
+              <div class="work-metric-value">32<em>&uarr;</em></div>
+              <div class="work-metric-label">Mockups shipped</div>
+            </div>
+            <div>
+              <div class="work-metric-value">20<em>+</em></div>
+              <div class="work-metric-label">Pages designed</div>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+      <div class="work-visual">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="work-corner"><ph-arrow-up-right weight="regular" size="20"></ph-arrow-up-right></div>
+        <div class="work-mock">
+          <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
+          </div>
+          <div class="mock-bar md"></div>
+          <div class="mock-bar sm"></div>
+          <div class="mock-grid">
+            <div class="mock-cell accent"></div>
+            <div class="mock-cell"></div>
+            <div class="mock-cell"></div>
+          </div>
+          <div class="mock-bar lg"></div>
+          <div class="mock-bar md"></div>
+          <div class="mock-bar sm"></div>
+        </div>
+      </div>
+    </a>
 
-    <Journey lang={lang} client:visible />
-    <Certifications lang={lang} client:visible />
-    <Contact lang={lang} client:visible />
-  </main>
-  <Footer />
-  <BottomNav lang={lang} client:load />
-</Layout>
+    <!-- Case 2 -->
+    <a href="#" class="work-card reveal" data-cursor="View case">
+      <div class="work-card-meta">
+        <div class="work-num">&#8470; 02 / JujuTok</div>
+        <div>
+          <h3 class="work-title">6 AI agents,<br/>4 debates,<br/>one verdict.</h3>
+          <p class="work-sub">Multi-agent stock analysis platform. Designed the bias-mitigation structure where 4 investor personas debate before concluding. Planned and shipped alone.</p>
+        </div>
+        <div class="work-details">
+          <div class="work-info">
+            <div class="work-info-item">
+              <span class="work-info-label">Type</span>
+              <span class="work-info-value">Solo Build</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Role</span>
+              <span class="work-info-value">PM + Engineer</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Year</span>
+              <span class="work-info-value">2025</span>
+            </div>
+          </div>
+          <div class="work-metrics">
+            <div>
+              <div class="work-metric-value">6</div>
+              <div class="work-metric-label">Agent types</div>
+            </div>
+            <div>
+              <div class="work-metric-value">31<em>k</em></div>
+              <div class="work-metric-label">LOC solo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-visual">
+        <div class="blob blob-1" style="background: #6884A0;"></div>
+        <div class="blob blob-2" style="background: #3D8268;"></div>
+        <div class="work-corner"><ph-arrow-up-right weight="regular" size="20"></ph-arrow-up-right></div>
+        <div class="work-mock">
+          <div class="mock-bar md"></div>
+          <div class="mock-bar lg"></div>
+          <div class="mock-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="mock-cell"></div>
+            <div class="mock-cell accent"></div>
+            <div class="mock-cell"></div>
+            <div class="mock-cell"></div>
+          </div>
+          <div class="mock-bar sm"></div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Case 3 -->
+    <a href="#" class="work-card reveal" data-cursor="View case">
+      <div class="work-card-meta">
+        <div class="work-num">&#8470; 03 / RATB <span class="wip-badge">WIP</span></div>
+        <div>
+          <h3 class="work-title">Passed<br/>national<br/>review — 3&times;.</h3>
+          <p class="work-sub">Robo-advisor algorithm operations. Scaled planning from 2 &rarr; 8 &rarr; 28 strategies across three rounds. All passed regulatory review.</p>
+        </div>
+        <div class="work-details">
+          <div class="work-info">
+            <div class="work-info-item">
+              <span class="work-info-label">Company</span>
+              <span class="work-info-value">AssetPlus</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Role</span>
+              <span class="work-info-value">Algorithm Planner</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Year</span>
+              <span class="work-info-value">2022 — 2024</span>
+            </div>
+          </div>
+          <div class="work-metrics">
+            <div>
+              <div class="work-metric-value">38</div>
+              <div class="work-metric-label">Algorithms</div>
+            </div>
+            <div>
+              <div class="work-metric-value">3<em>/3</em></div>
+              <div class="work-metric-label">Rounds passed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-visual">
+        <div class="blob blob-1" style="background: #D4833D;"></div>
+        <div class="blob blob-2" style="background: #7E6EA0;"></div>
+        <div class="work-corner"><ph-arrow-up-right weight="regular" size="20"></ph-arrow-up-right></div>
+        <div class="work-mock">
+          <div class="mock-bar lg"></div>
+          <div class="mock-bar md"></div>
+          <div style="height: 60px; background: linear-gradient(to top right, var(--border), transparent); border-radius: 4px; margin: 8px 0; position: relative;">
+            <div style="position: absolute; right: 20%; top: 30%; width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"></div>
+          </div>
+          <div class="mock-bar sm"></div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="section-head reveal">
+    <div>
+      <p class="section-label">02 / About</p>
+      <h2 class="section-title syne">A planner<br/>who <em>ships</em>.</h2>
+    </div>
+  </div>
+
+  <div class="about-grid reveal">
+    <div>
+      <p class="about-lead">
+        Finance-trained, systems-minded. I find the missing taxonomy behind "add search," and build the spec that ships.
+      </p>
+      <p class="about-body">
+        At AssetPlus Asset Management, I planned 38 AI investment algorithms and simultaneously managed 200+ live accounts. On a team with no designer, I designed 20+ analysis pages. I also planned and built a multi-agent stock analysis platform solo, from spec to deployment. PRDs, design systems, metric audits — expanding the scope of rigor a PM can own.
+      </p>
+    </div>
+    <div>
+      <div class="about-details">
+        <div>
+          <p class="about-kv-label">Education</p>
+          <p class="about-kv-value">Johns Hopkins<br/>M.S. Finance</p>
+        </div>
+        <div>
+          <p class="about-kv-label">Current</p>
+          <p class="about-kv-value">AssetPlus<br/>2022 — Now</p>
+        </div>
+        <div>
+          <p class="about-kv-label">Domain</p>
+          <p class="about-kv-value">Finance &middot; AI<br/>Robo-advisor</p>
+        </div>
+        <div>
+          <p class="about-kv-label">Stack</p>
+          <p class="about-kv-value">Figma &middot; Next.js<br/>FastAPI &middot; Claude</p>
+        </div>
+      </div>
+      <div class="skills">
+        <span class="skill-pill">Service Planning</span>
+        <span class="skill-pill">AI Agents</span>
+        <span class="skill-pill">Finance</span>
+        <span class="skill-pill">IA Design</span>
+        <span class="skill-pill">Prototyping</span>
+        <span class="skill-pill">UX Research</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <p class="section-label">03 / Get in touch</p>
+    <h2 class="contact-title syne">Plan.<br/>Build.<br/><em>Prove.</em></h2>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-item">
+      <span class="section-label">Email</span>
+      <a href="mailto:elliebinn@gmail.com" data-cursor="Copy">elliebinn@gmail.com <ph-copy weight="regular" size="14"></ph-copy></a>
+    </div>
+    <div class="contact-item">
+      <span class="section-label">LinkedIn</span>
+      <a href="#" data-cursor="Visit">hyebin-woo <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right></a>
+    </div>
+    <div class="contact-item">
+      <span class="section-label">GitHub</span>
+      <a href="#" data-cursor="Visit">Elliebinn <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right></a>
+    </div>
+  </div>
+  <footer class="footer">
+    <p>&copy; 2026 Hyebin Woo &middot; Made in Seoul</p>
+    <p>Portfolio mockup v1</p>
+  </footer>
+</section>
+
+<script>
+  // Preloader
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('preloader').classList.add('done'), 1400);
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > 60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    lastY = y;
+  });
+
+  // Scroll indicator
+  const scrollFill = document.getElementById('scrollFill');
+  const scrollIndicator = document.getElementById('scrollIndicator');
+  window.addEventListener('scroll', () => {
+    const pct = Math.min(100, (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    scrollFill.style.height = pct + '%';
+    if (pct > 95) scrollIndicator.classList.add('hidden');
+    else scrollIndicator.classList.remove('hidden');
+  });
+
+  // Custom cursor — ring + dot
+  const cursor = document.getElementById('cursor');
+  const cursorLabel = document.getElementById('cursorLabel');
+  let mx = 0, my = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+  function loop() {
+    cx += (mx - cx) * 0.5; cy += (my - cy) * 0.5;
+    cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  document.querySelectorAll('[data-cursor]').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('hover', 'has-label');
+      cursorLabel.textContent = el.dataset.cursor;
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('hover', 'has-label');
+    });
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    if (!el.dataset.cursor) {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    }
+  });
+
+  // Copy email
+  document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const email = a.href.replace('mailto:', '');
+      navigator.clipboard?.writeText(email);
+      cursorLabel.textContent = 'Copied ✓';
+      setTimeout(() => { cursorLabel.textContent = 'Copy'; }, 1500);
+    });
+  });
+
+  // Theme toggle
+  const toggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const saved = localStorage.getItem('hb-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  function updateIcon() {
+    const t = document.documentElement.getAttribute('data-theme');
+    themeIcon.outerHTML = t === 'dark'
+      ? '<ph-sun weight="regular" size="16" id="themeIcon"></ph-sun>'
+      : '<ph-moon weight="regular" size="16" id="themeIcon"></ph-moon>';
+  }
+  updateIcon();
+  toggle.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('hb-theme', next);
+    updateIcon();
+  });
+
+  // Reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</V2Layout>

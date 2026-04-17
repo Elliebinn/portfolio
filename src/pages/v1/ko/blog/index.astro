@@ -1,0 +1,219 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Navbar from '../../../../components/Navbar';
+import Footer from '../../../../components/Footer';
+import CountUp from '../../../../components/motion/CountUp';
+import { getCollection } from 'astro:content';
+import { t } from '../../../../i18n/translations';
+
+const lang = 'ko';
+const tr = t(lang);
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const categoryLabels: Record<string, string> = {
+  project: '프로젝트',
+  planning: '기획',
+  'deep-dive': '삽질기',
+  skill: '스킬',
+};
+
+const base = import.meta.env.BASE_URL;
+const featured = posts.find(p => p.data.featured) || posts[0];
+const restPosts = posts.filter(p => p.id !== featured.id);
+
+// Metrics
+const postsCount = posts.length;
+const seriesCount = new Set(posts.map(p => (p.data as any).series).filter(Boolean)).size;
+const categoriesCount = new Set(posts.map(p => p.data.category).filter(Boolean)).size;
+const recentDate = posts[0]?.data.date.toISOString().slice(0, 10) ?? '';
+---
+
+<Layout title={`${tr.blog.pageTitle} — HYEBIN.DEV`}>
+  <Navbar lang={lang} client:load />
+
+  <main class="pt-32 pb-24 px-6 md:px-12 max-w-5xl mx-auto">
+
+    <!-- Hero -->
+    <header class="mb-20">
+      <!-- Top meta row -->
+      <div class="flex justify-between items-center mb-8">
+        <span class="text-[0.625rem] font-bold tracking-[0.2em] text-[var(--color-outline-variant)] uppercase">Journal · 기획 인사이트 · 프로젝트 회고</span>
+        <span class="text-[0.625rem] font-bold tracking-[0.2em] text-[var(--color-accent)] uppercase flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>최근 업데이트 {recentDate}
+        </span>
+      </div>
+
+      <!-- Layered title -->
+      <div class="relative">
+        <span
+          class="block font-extrabold leading-none tracking-tight text-[var(--color-bg-emphasis)] select-none mb-[-2vw]"
+          style="font-family: var(--font-display); font-size: clamp(4rem,12vw,10rem);"
+          aria-hidden="true"
+        >Journal</span>
+        <h1
+          class="block font-extrabold leading-none tracking-tight text-[var(--color-text)] text-2xl md:text-3xl"
+          style="font-family: var(--font-display);"
+        >
+          {tr.blog.pageTitle} · 기획과 실행 사이의 기록들
+        </h1>
+      </div>
+
+      <!-- Description -->
+      <p class="mt-6 text-base text-[var(--color-text-muted)] leading-relaxed max-w-xl">
+        {tr.blog.pageDescription}
+      </p>
+
+      <!-- Three metrics -->
+      <div class="mt-16 flex flex-wrap gap-x-16 gap-y-8">
+        <div class="flex flex-col gap-2">
+          <span class="text-4xl md:text-5xl font-extrabold text-[var(--color-text)] tracking-tight" style="font-family: var(--font-display);">
+            <CountUp value={postsCount} suffix="편" client:visible />
+          </span>
+          <span class="text-[0.625rem] font-bold text-[var(--color-text-faint)] uppercase tracking-widest">Total Posts</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-4xl md:text-5xl font-extrabold text-[var(--color-text)] tracking-tight" style="font-family: var(--font-display);">
+            <CountUp value={seriesCount} suffix="개 시리즈" client:visible />
+          </span>
+          <span class="text-[0.625rem] font-bold text-[var(--color-text-faint)] uppercase tracking-widest">Series</span>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-4xl md:text-5xl font-extrabold text-[var(--color-text)] tracking-tight" style="font-family: var(--font-display);">
+            <CountUp value={categoriesCount} suffix="개 주제" client:visible />
+          </span>
+          <span class="text-[0.625rem] font-bold text-[var(--color-text-faint)] uppercase tracking-widest">Categories</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Lead Article -->
+    <section class="pb-16 mb-16">
+      <span class="block font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-accent)] mb-6">
+        {categoryLabels[featured.data.category] || featured.data.category}
+      </span>
+      <a href={`${base}${lang}/blog/${featured.id}/`} class="group block lead-article blog-post" data-category={featured.data.category}>
+        <h2 class="text-3xl lg:text-4xl xl:text-5xl font-extrabold text-[var(--color-text)] leading-tight mb-6 group-hover:text-[var(--color-accent)] transition-colors duration-300" style="font-family: var(--font-display);">
+          {featured.data.title}
+        </h2>
+      </a>
+      <p class="text-lg text-[var(--color-text-muted)] leading-relaxed max-w-3xl mb-8">
+        {featured.data.description}
+      </p>
+      <div class="flex flex-wrap items-center gap-4 mb-8">
+        <span class="font-mono text-xs text-[var(--color-text-faint)]">{featured.data.date.toISOString().slice(0, 10)}</span>
+        <span class="text-[var(--color-border)]">·</span>
+        <span class="font-mono text-xs text-[var(--color-text-faint)] uppercase tracking-wider">{categoryLabels[featured.data.category] || featured.data.category}</span>
+      </div>
+      <a href={`${base}${lang}/blog/${featured.id}/`} class="inline-flex items-center gap-2 font-mono text-sm text-[var(--color-accent)] hover:gap-3 transition-all duration-200">
+        기사 전문 읽기 <span aria-hidden="true">→</span>
+      </a>
+    </section>
+
+    <!-- Category Filter -->
+    <div class="mb-12 flex flex-wrap items-center gap-1" id="category-filters" role="group" aria-label="카테고리 필터">
+      <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-faint)] mr-3">필터</span>
+      <button data-category="all" class="category-btn active font-mono text-xs text-[var(--color-text)] border-b border-[var(--color-text)] pb-0.5 mx-2 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors duration-150">전체</button>
+      <span class="text-[var(--color-border)] select-none">·</span>
+      {Object.entries(categoryLabels).map(([key, label], i) => (
+        <>
+          <button data-category={key} class="category-btn font-mono text-xs text-[var(--color-text-faint)] border-b border-transparent pb-0.5 mx-2 hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors duration-150">{label}</button>
+          {i < Object.entries(categoryLabels).length - 1 && <span class="text-[var(--color-border)] select-none">·</span>}
+        </>
+      ))}
+    </div>
+
+    <!-- Indexed List -->
+    <ol class="list-none" id="post-list">
+      {restPosts.map((post, i) => (
+        <li class="blog-post blog-card-stagger border-t border-[var(--color-border)] last:border-b" data-category={post.data.category} style={`animation-delay: ${i * 80}ms`}>
+          <a href={`${base}${lang}/blog/${post.id}/`} class="group grid grid-cols-[64px_1fr] md:grid-cols-[80px_1fr_140px] items-start gap-x-6 gap-y-2 py-6 hover:pl-2 transition-[padding] duration-200">
+            <!-- Number -->
+            <span class="font-display text-5xl font-extrabold leading-none select-none text-[var(--color-bg-emphasis)] group-hover:text-[var(--color-accent)] transition-colors duration-200" aria-hidden="true" style="font-family: var(--font-display);">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <!-- Middle: category + title + description -->
+            <div class="flex flex-col gap-1.5 min-w-0">
+              <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-accent)]">
+                {categoryLabels[post.data.category] || post.data.category}
+              </span>
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--color-text)] leading-snug group-hover:text-[var(--color-accent)] transition-colors duration-200" style="font-family: var(--font-display);">
+                {post.data.title}
+              </h3>
+              <p class="text-sm text-[var(--color-text-muted)] leading-relaxed line-clamp-2">
+                {post.data.description}
+              </p>
+            </div>
+            <!-- Right: date (hidden on mobile, shown on md+) -->
+            <div class="hidden md:flex flex-col items-end justify-start pt-1">
+              <span class="font-mono text-[10px] text-[var(--color-text-faint)]">{post.data.date.toISOString().slice(0, 10)}</span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <!-- Empty Filter Feedback -->
+    <div id="empty-filter" class="hidden py-20 text-center" aria-live="polite">
+      <p class="text-lg font-bold text-[var(--color-text)]">이 카테고리에 아직 글이 없어요</p>
+      <p class="mt-2 text-sm text-[var(--color-text-muted)]">다른 카테고리를 선택하거나 전체 글을 확인해보세요.</p>
+    </div>
+
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  @keyframes blog-fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .blog-card-stagger {
+      opacity: 0;
+      animation: blog-fade-up 0.35s ease forwards;
+    }
+  }
+  .category-btn.active {
+    color: var(--color-text);
+    border-bottom-color: var(--color-text);
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.category-btn');
+  const allPosts = document.querySelectorAll<HTMLElement>('.blog-post');
+  const emptyState = document.getElementById('empty-filter');
+
+  function updateEmptyState() {
+    if (!emptyState) return;
+    const visiblePosts = Array.from(allPosts).filter(p => p.style.display !== 'none');
+    emptyState.classList.toggle('hidden', visiblePosts.length > 0);
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.dataset.category;
+
+      buttons.forEach(b => {
+        b.classList.remove('active');
+        b.style.color = '';
+        b.style.borderBottomColor = '';
+      });
+      btn.classList.add('active');
+
+      allPosts.forEach(post => {
+        if (category === 'all' || post.dataset.category === category) {
+          post.style.display = '';
+        } else {
+          post.style.display = 'none';
+        }
+      });
+
+      updateEmptyState();
+    });
+  });
+</script>

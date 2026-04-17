@@ -1,0 +1,342 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Navbar from '../../../../components/Navbar';
+import Footer from '../../../../components/Footer';
+import FloatingTOC from '../../../../components/blog/FloatingTOC';
+import { getCollection, render } from 'astro:content';
+import { t } from '../../../../i18n/translations';
+
+const lang = 'ko';
+const tr = t(lang);
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const base = import.meta.env.BASE_URL;
+
+const allPosts = await getCollection('blog');
+const seriesPosts = post.data.series
+  ? allPosts
+      .filter((p) => p.data.series === post.data.series)
+      .sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0))
+  : [];
+
+const recommendedPosts = allPosts
+  .filter(p => p.id !== post.id)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const currentSeriesIndex = seriesPosts.findIndex((p) => p.id === post.id);
+const prevSeriesPost = currentSeriesIndex > 0 ? seriesPosts[currentSeriesIndex - 1] : null;
+const nextSeriesPost = currentSeriesIndex < seriesPosts.length - 1 ? seriesPosts[currentSeriesIndex + 1] : null;
+
+const seriesLabels: Record<string, string> = {
+  'quant-platform': '퀀트 리서치 플랫폼',
+  'jujutok': '주주톡',
+  'ratb': 'RATB 운용기',
+};
+
+const categoryLabels: Record<string, string> = {
+  project: '프로젝트',
+  tech: '기술',
+  planning: '기획',
+  'deep-dive': '삽질기',
+  retrospective: '회고',
+};
+---
+
+<Layout title={`${post.data.title} — HYEBIN.DEV`}>
+  <Navbar lang={lang} client:load />
+
+  <main class="pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
+    <FloatingTOC client:load />
+    <!-- Breadcrumb + Back -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+      <nav class="flex items-center gap-2 text-[var(--color-text-faint)] text-[0.75rem] uppercase tracking-widest">
+        <a class="hover:text-[var(--color-accent)] transition-colors" href={`${base}${lang}/blog/`}>Blog</a>
+        <span>›</span>
+        <span class="text-[var(--color-accent)] font-bold">{categoryLabels[post.data.category] || post.data.category}</span>
+      </nav>
+      <a class="flex items-center gap-2 text-[var(--color-accent)] font-bold text-[0.75rem] uppercase tracking-widest hover:-translate-x-1 transition-transform" href={`${base}${lang}/blog/`}>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        {tr.blog.backToBlog}
+      </a>
+    </div>
+
+    <!-- Article Header -->
+    <header class="mb-12">
+      <div class="mb-4 flex items-center gap-3">
+        <span class="rounded-full bg-[var(--color-secondary-container)] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[var(--color-on-secondary-container)]">
+          {categoryLabels[post.data.category] || post.data.category}
+        </span>
+        <span class="font-mono text-xs text-[var(--color-text-faint)]">
+          {post.data.date.toISOString().slice(0, 10)}
+        </span>
+      </div>
+      <h1 class="mb-4 text-3xl sm:text-4xl md:text-5xl font-extrabold leading-snug text-[var(--color-text)]" style="font-family: var(--font-display);">
+        {post.data.title}
+      </h1>
+      <p class="text-lg text-[var(--color-text-muted)] max-w-3xl">
+        {post.data.description}
+      </p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {post.data.tags.map((tag: string) => (
+          <span class="rounded-full bg-[var(--color-secondary-container)] px-2.5 py-0.5 text-[10px] font-medium text-[var(--color-on-secondary-container)]">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </header>
+
+    <!-- 2-column: Article + Sidebar -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+      <!-- Article body -->
+      <article class="lg:col-span-8">
+        <div class="prose-custom" style="max-width: 66ch;">
+          <Content />
+        </div>
+
+        <!-- Related links (bottom of article) -->
+        {post.data.relatedLinks.length > 0 && (
+          <div class="mt-16 pt-10" style="border-top: 1px solid var(--color-border);">
+            <h3 class="mb-6 text-sm font-bold uppercase tracking-[0.15em] text-[var(--color-text-faint)]">
+              함께 보면 좋은 글
+            </h3>
+            <div class="flex flex-col gap-3">
+              {post.data.relatedLinks.map((link: { label: string; url: string; type: string }) => (
+                <a
+                  href={link.url}
+                  target={link.type === 'github' || link.type === 'linkedin' ? '_blank' : undefined}
+                  rel={link.type === 'github' || link.type === 'linkedin' ? 'noopener noreferrer' : undefined}
+                  class="group flex items-center gap-3 rounded-xl bg-[var(--color-bg-card)] px-5 py-4 shadow-ambient-sm transition-all hover:shadow-ambient"
+                >
+                  <div class="flex-1">
+                    <span class="text-sm font-medium text-[var(--color-text)] transition-colors group-hover:text-[var(--color-accent)]">
+                      {link.label}
+                    </span>
+                    <span class="ml-2 font-mono text-[10px] uppercase tracking-wider text-[var(--color-text-faint)]">
+                      {link.type}
+                    </span>
+                  </div>
+                  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-text-faint)] group-hover:text-[var(--color-accent)]">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </article>
+
+      <!-- Sidebar (sticky) -->
+      <aside class="lg:col-span-4">
+        <div class="sticky top-32">
+
+        <!-- Author section -->
+        <div class="pb-8 border-b border-[var(--color-border)]">
+          <div class="flex items-center gap-3 mb-3">
+            <img src="/assets/logo-v2-character-circle.png" alt="HB" class="w-8 h-8 rounded-full" />
+            <div>
+              <p class="text-sm font-bold text-[var(--color-text)]">우혜빈</p>
+              <p class="text-[10px] text-[var(--color-text-faint)]">AI 서비스 기획자</p>
+            </div>
+          </div>
+          <p class="text-xs text-[var(--color-text-muted)] leading-relaxed">
+            복잡한 금융 구조를 이해할 수 있는 경험으로 바꿉니다.
+          </p>
+        </div>
+
+        <!-- Series navigation -->
+        {seriesPosts.length > 1 && (
+          <div class="py-8 border-b border-[var(--color-border)]">
+            <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-faint)] mb-3">SERIES</p>
+            <div class="flex items-baseline justify-between mb-1">
+              <h3 class="text-sm font-bold text-[var(--color-text)]" style="font-family: var(--font-display);">
+                {seriesLabels[post.data.series!] || post.data.series}
+              </h3>
+              <span class="font-mono text-[10px] text-[var(--color-text-faint)] ml-2 flex-shrink-0">
+                {String(currentSeriesIndex + 1).padStart(2, '0')} / {String(seriesPosts.length).padStart(2, '0')}
+              </span>
+            </div>
+            <!-- progress line -->
+            <div class="mb-4 h-px w-full bg-[var(--color-border)]">
+              <div
+                class="h-full bg-[var(--color-accent)] transition-none"
+                style={`width: ${((currentSeriesIndex + 1) / seriesPosts.length) * 100}%`}
+              />
+            </div>
+            <div class="flex flex-col">
+              {seriesPosts.map((sp, i) => {
+                const isCurrent = sp.id === post.id;
+                return (
+                  <a
+                    href={isCurrent ? undefined : `${base}${lang}/blog/${sp.id}/`}
+                    class:list={[
+                      'group flex items-start gap-2.5 py-2 text-xs transition-colors',
+                      isCurrent
+                        ? 'text-[var(--color-accent)] font-medium cursor-default'
+                        : 'text-[var(--color-text-muted)] hover:text-[var(--color-accent)]',
+                    ]}
+                  >
+                    <span class="font-mono text-[10px] flex-shrink-0 mt-0.5 text-[var(--color-text-faint)]">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span class="leading-snug line-clamp-2">{sp.data.title}</span>
+                  </a>
+                );
+              })}
+            </div>
+            <!-- prev/next text links -->
+            <div class="mt-4 flex justify-between text-xs">
+              {prevSeriesPost ? (
+                <a
+                  href={`${base}${lang}/blog/${prevSeriesPost.id}/`}
+                  class="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
+                >
+                  ← 이전편
+                </a>
+              ) : <span />}
+              {nextSeriesPost ? (
+                <a
+                  href={`${base}${lang}/blog/${nextSeriesPost.id}/`}
+                  class="text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
+                >
+                  다음편 →
+                </a>
+              ) : <span />}
+            </div>
+          </div>
+        )}
+
+        <!-- Recommended -->
+        <div class="pt-8">
+          <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--color-text-faint)] mb-4">더 읽어보기</p>
+          <div class="flex flex-col">
+            {recommendedPosts.map((rp) => (
+              <a href={`${base}${lang}/blog/${rp.id}/`} class="group block py-3 border-t border-[var(--color-border)] first:border-t-0">
+                <span class="text-[10px] font-mono uppercase tracking-[0.15em] text-[var(--color-accent)] block mb-0.5">
+                  {categoryLabels[rp.data.category] || rp.data.category}
+                </span>
+                <h4 class="text-sm font-medium text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors leading-snug line-clamp-2">
+                  {rp.data.title}
+                </h4>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style is:global>
+  .prose-custom { line-height: 1.8; color: var(--color-text-muted); }
+  .prose-custom h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.5rem; font-weight: 700; color: var(--color-text); font-family: var(--font-display); position: relative; }
+  .prose-custom h3 { margin-top: 2rem; margin-bottom: 0.75rem; font-size: 1.25rem; font-weight: 600; color: var(--color-text); position: relative; }
+  .prose-custom h2:hover::before, .prose-custom h3:hover::before { content: '#'; position: absolute; left: -1.5em; color: var(--color-accent); opacity: 0.5; font-weight: 400; }
+  .prose-custom p { margin-bottom: 1.25rem; font-size: 0.9375rem; }
+  .prose-custom ul, .prose-custom ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+  .prose-custom li { margin-bottom: 0.5rem; font-size: 0.9375rem; }
+  .prose-custom ul li { list-style-type: disc; }
+  .prose-custom ol li { list-style-type: decimal; }
+  .prose-custom strong { color: var(--color-text); font-weight: 600; }
+  .prose-custom a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 2px; }
+  .prose-custom a:hover { color: var(--color-accent-light); }
+  .prose-custom pre { position: relative; margin-bottom: 1.5rem; border-radius: 0.75rem; background-color: #1e293b !important; padding: 1.25rem; overflow-x: auto; font-size: 0.8125rem; line-height: 1.7; }
+  .prose-custom pre:hover .copy-btn { opacity: 1; }
+  .prose-custom pre code { color: #e2e8f0 !important; }
+  .prose-custom code { font-family: var(--font-mono); font-size: 0.85em; }
+  .prose-custom :not(pre) > code { padding: 0.15em 0.4em; border-radius: 0.25rem; background-color: var(--color-bg-detail); color: var(--color-accent); }
+  .prose-custom blockquote { margin-bottom: 1.25rem; border-left: 3px solid var(--color-accent); padding-left: 1rem; color: var(--color-text-muted); font-style: italic; }
+  .prose-custom hr { margin: 2rem 0; border-color: var(--color-border); }
+  .prose-custom img { border-radius: 0.75rem; margin-bottom: 0.5rem; }
+  .prose-custom table { width: 100%; margin-bottom: 1.5rem; border-collapse: collapse; font-size: 0.875rem; }
+  .prose-custom th { text-align: left; padding: 0.75rem 1rem; border-bottom: 2px solid var(--color-bg-detail); color: var(--color-text); font-weight: 600; font-size: 0.8125rem; }
+  .prose-custom td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border); color: var(--color-text-muted); }
+  .prose-custom tr:last-child td { border-bottom: none; }
+  .prose-custom tbody tr:hover { background-color: var(--color-bg-card); }
+  .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.25rem 0.6rem; font-size: 0.7rem; font-family: var(--font-mono); background: rgba(255,255,255,0.08); color: #94a3b8; border: 1px solid rgba(255,255,255,0.12); border-radius: 0.375rem; cursor: pointer; opacity: 0; transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease; }
+  .copy-btn.copied { background: var(--color-accent); color: var(--color-on-accent); border-color: var(--color-accent); opacity: 1; }
+</style>
+
+<script>
+  document.querySelectorAll('.prose-custom pre').forEach((pre) => {
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = 'Copy';
+    btn.setAttribute('aria-label', 'Copy code');
+    pre.appendChild(btn);
+    btn.addEventListener('click', () => {
+      const code = pre.querySelector('code');
+      const text = code ? code.innerText : (pre as HTMLElement).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 800);
+      });
+    });
+  });
+</script>
+
+<script>
+  // C5: Blog Image Zoom
+  (function() {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const overlay = document.createElement('div');
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Image preview');
+    overlay.style.cssText = [
+      'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;',
+      'background:rgba(0,0,0,0.85);backdrop-filter:blur(4px);',
+      'opacity:0;pointer-events:none;cursor:zoom-out;',
+      prefersReduced ? '' : 'transition:opacity 0.2s ease;',
+    ].join('');
+    const img = document.createElement('img');
+    img.style.cssText = [
+      'max-width:90vw;max-height:90vh;border-radius:8px;object-fit:contain;',
+      'box-shadow:0 25px 60px rgba(0,0,0,0.5);',
+      prefersReduced ? '' : 'transition:transform 0.2s ease;transform:scale(0.92);',
+    ].join('');
+    img.alt = '';
+    overlay.appendChild(img);
+    document.body.appendChild(overlay);
+
+    function open(src: string, alt: string) {
+      img.src = src; img.alt = alt;
+      overlay.style.pointerEvents = 'auto';
+      overlay.style.opacity = '1';
+      if (!prefersReduced) img.style.transform = 'scale(1)';
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', onKey);
+    }
+    function close() {
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+      if (!prefersReduced) img.style.transform = 'scale(0.92)';
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') close(); }
+    overlay.addEventListener('click', close);
+    img.addEventListener('click', (e) => e.stopPropagation());
+
+    document.querySelectorAll<HTMLImageElement>('.prose-custom img').forEach((el) => {
+      el.style.cursor = 'zoom-in';
+      el.addEventListener('click', () => open(el.src, el.alt));
+    });
+  })();
+</script>

@@ -1,79 +1,429 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Navbar from '../../components/Navbar';
-import Hero from '../../components/Hero';
-import About from '../../components/About';
-import Methodology from '../../components/Methodology';
-import Capabilities from '../../components/Capabilities';
-import Projects from '../../components/Projects';
-
-import Journey from '../../components/Journey';
-import Certifications from '../../components/Certifications';
-import Contact from '../../components/Contact';
-import Footer from '../../components/Footer';
-import BottomNav from '../../components/BottomNav';
-import ScrollProgress from '../../components/motion/ScrollProgress';
-import { getCollection } from 'astro:content';
-
-const lang = 'ko';
-const posts = (await getCollection('blog'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 4);
-const base = import.meta.env.BASE_URL;
-
-const categoryLabels: Record<string, string> = {
-  project: '프로젝트',
-  planning: '기획',
-  'deep-dive': '삽질기',
-  skill: '스킬',
-};
+import V2Layout from '../../layouts/V2Layout.astro';
 ---
+<V2Layout title="Hyebin Woo — AI Product Manager" lang="ko">
 
-<Layout title="HB. | 우혜빈 포트폴리오">
-  <ScrollProgress variant="bar" client:load />
-  <Navbar lang={lang} client:load />
+<!-- Preloader -->
+<div id="preloader">
+  <div class="pl-name"><span>Hyebin</span>&nbsp;<span>Woo</span></div>
+  <div class="pl-bar"><div class="pl-fill"></div></div>
+</div>
 
-  <main>
-    <Hero lang={lang} client:load />
-    <About lang={lang} client:visible />
-    <Methodology lang={lang} client:visible />
-    <Capabilities lang={lang} client:visible />
-    <Projects lang={lang} client:visible />
+<!-- Scroll Indicator -->
+<div class="scroll-indicator" id="scrollIndicator">
+  <div class="scroll-line"><div class="scroll-line-fill" id="scrollFill"></div></div>
+  <span class="scroll-label">Scroll</span>
+</div>
 
-    <section id="blog" class="py-24 max-w-[1440px] mx-auto px-6 md:px-8">
-      <div class="flex items-end justify-between mb-16">
-        <div class="flex flex-col gap-4">
-          <span class="text-xs font-bold text-[var(--color-accent)] uppercase tracking-widest">05 / 블로그</span>
-          <h2 class="text-[2.5rem] font-bold text-[var(--color-text)]" style="font-family: var(--font-display);">최근 글</h2>
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="cursor-label" id="cursorLabel"></div>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="#home" class="nav-brand">Hyebin.</a>
+  <div class="nav-links">
+    <a href="#work" class="nav-link">Work</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <ph-sun weight="regular" size="16" id="themeIcon"></ph-sun>
+    </button>
+    <a href="#contact" class="nav-cta">연락하기 <ph-hand-waving weight="fill" size="14"></ph-hand-waving></a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-meta">
+    <div class="hero-meta-col">
+      <span class="label">Based in</span>
+      <span>Seoul, KR</span>
+    </div>
+    <div class="hero-meta-col" style="text-align: right;">
+      <span class="label">Portfolio</span>
+      <span>2026 / v1</span>
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <p class="label" style="margin-bottom: 32px;">AI Product Manager &middot; 2022—Now</p>
+      <h1 class="hero-title syne">
+        <span class="line"><span>Hyebin</span></span>
+        <span class="line"><span><em>Woo.</em></span></span>
+      </h1>
+      <p class="hero-subtitle">
+        PRD를 쓰고, HTML 목업을 만들고, 지표 산식까지 감사하는 AI PM. 38개 AI 투자 알고리즘 기획, 200+ 실운용 계좌, 운용시간 83% 단축.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Service Planning</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">AI Agents</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Finance Domain</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Information Architecture</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">UX Design</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Prototyping</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Service Planning</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">AI Agents</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Finance Domain</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Information Architecture</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">UX Design</span><span class="marquee-item marquee-dot">&#10022;</span>
+    <span class="marquee-item">Prototyping</span><span class="marquee-item marquee-dot">&#10022;</span>
+  </div>
+</div>
+
+<!-- Work -->
+<section class="section" id="work">
+  <div class="section-head reveal">
+    <div>
+      <p class="section-label">01 / 주요 작업</p>
+      <h2 class="section-title syne"><em>세 번의</em> 판단.</h2>
+    </div>
+    <p class="section-label">2022 — 2026</p>
+  </div>
+
+  <div class="work-grid">
+
+    <!-- Case 1 -->
+    <a href="#" class="work-card reveal" data-cursor="View case">
+      <div class="work-card-meta">
+        <div class="work-num">&#8470; 01 &middot; 케이스 스터디 &middot; FinTech Platform</div>
+        <div>
+          <h3 class="work-title">리서처가 매일 여는<br/>첫 화면을<br/>다시 만들었습니다.</h3>
+          <p class="work-sub">리서처 4명이 매일 쓰는 도구. 디자이너도, 프론트엔드 개발자도 없는 팀에서 200개+ 전략의 정보구조를 재설계하고, HTML 목업이 그대로 제품이 됐어요.</p>
         </div>
-        <a href={`${base}${lang}/blog/`} class="text-sm font-bold text-[var(--color-accent)] hover:underline hidden sm:inline-flex items-center gap-2">
-          전체 보기 →
-        </a>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-        {posts.map((post, i) => (
-          <a href={`${base}${lang}/blog/${post.id}/`} class="group relative grid grid-cols-[48px_1fr_auto] items-start gap-4 py-6 rounded-xl transition-[padding,background] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:pl-4 hover:bg-[rgba(69,98,114,0.03)]" style="border-top: 1px solid var(--color-border);">
-            <span class="text-2xl font-bold text-[var(--color-outline-variant)] group-hover:text-[var(--color-accent)] transition-colors duration-300" style="font-family: var(--font-display);">
-              {String(i + 1).padStart(2, '0')}
-            </span>
+        <div class="work-details">
+          <div class="work-info">
+            <div class="work-info-item">
+              <span class="work-info-label">Company</span>
+              <span class="work-info-value">AssetPlus</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Role</span>
+              <span class="work-info-value">AI Product Manager</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Year</span>
+              <span class="work-info-value">2025 — Now</span>
+            </div>
+          </div>
+          <div class="work-metrics">
             <div>
-              <h3 class="text-base font-bold leading-snug text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors duration-300">{post.data.title}</h3>
-              <p class="mt-1 text-xs text-[var(--color-text-faint)] line-clamp-2">{post.data.description}</p>
+              <div class="work-metric-value">32<em>&uarr;</em></div>
+              <div class="work-metric-label">목업 제작</div>
             </div>
-            <div class="text-right flex-shrink-0 flex flex-col items-end gap-1">
-              <p class="text-[10px] uppercase tracking-widest text-[var(--color-accent)] font-bold">{categoryLabels[post.data.category] || post.data.category}</p>
-              <p class="text-[10px] text-[var(--color-text-faint)]">{post.data.date.toISOString().slice(0, 10)}</p>
-              <span class="mt-1 text-sm text-[var(--color-accent)] opacity-0 -translate-x-2 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-x-0">→</span>
+            <div>
+              <div class="work-metric-value">20<em>+</em></div>
+              <div class="work-metric-label">페이지 설계</div>
             </div>
-          </a>
-        ))}
+          </div>
+        </div>
       </div>
-    </section>
+      <div class="work-visual">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="work-corner"><ph-arrow-up-right weight="regular" size="20"></ph-arrow-up-right></div>
+        <div class="work-mock">
+          <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
+          </div>
+          <div class="mock-bar md"></div>
+          <div class="mock-bar sm"></div>
+          <div class="mock-grid">
+            <div class="mock-cell accent"></div>
+            <div class="mock-cell"></div>
+            <div class="mock-cell"></div>
+          </div>
+          <div class="mock-bar lg"></div>
+          <div class="mock-bar md"></div>
+          <div class="mock-bar sm"></div>
+        </div>
+      </div>
+    </a>
 
-    <Journey lang={lang} client:visible />
-    <Certifications lang={lang} client:visible />
-    <Contact lang={lang} client:visible />
-  </main>
-  <Footer />
-  <BottomNav lang={lang} client:load />
-</Layout>
+    <!-- Case 2 -->
+    <a href="#" class="work-card reveal" data-cursor="View case">
+      <div class="work-card-meta">
+        <div class="work-num">&#8470; 02 &middot; 케이스 스터디 &middot; Solo Build</div>
+        <div>
+          <h3 class="work-title">6개 AI 에이전트,<br/>4명의 투자자가<br/>토론합니다.</h3>
+          <p class="work-sub">AI 멀티에이전트 주식 분석 플랫폼. 에이전트가 분석하고, 투자 페르소나가 토론한 뒤 결론을 내리는 bias-mitigation 구조. 기획부터 개발까지 혼자.</p>
+        </div>
+        <div class="work-details">
+          <div class="work-info">
+            <div class="work-info-item">
+              <span class="work-info-label">Type</span>
+              <span class="work-info-value">Solo Build</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Role</span>
+              <span class="work-info-value">PM + Engineer</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Year</span>
+              <span class="work-info-value">2025</span>
+            </div>
+          </div>
+          <div class="work-metrics">
+            <div>
+              <div class="work-metric-value">6</div>
+              <div class="work-metric-label">에이전트</div>
+            </div>
+            <div>
+              <div class="work-metric-value">31<em>k</em></div>
+              <div class="work-metric-label">LOC Solo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-visual">
+        <div class="blob blob-1" style="background: #6884A0;"></div>
+        <div class="blob blob-2" style="background: #3D8268;"></div>
+        <div class="work-corner"><ph-arrow-up-right weight="regular" size="20"></ph-arrow-up-right></div>
+        <div class="work-mock">
+          <div class="mock-bar md"></div>
+          <div class="mock-bar lg"></div>
+          <div class="mock-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="mock-cell"></div>
+            <div class="mock-cell accent"></div>
+            <div class="mock-cell"></div>
+            <div class="mock-cell"></div>
+          </div>
+          <div class="mock-bar sm"></div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Case 3 -->
+    <a href="#" class="work-card reveal" data-cursor="View case">
+      <div class="work-card-meta">
+        <div class="work-num">&#8470; 03 &middot; 케이스 스터디 &middot; Regulated Review</div>
+        <div>
+          <h3 class="work-title">로보어드바이저<br/>국가 심사,<br/>3회 전원 통과.</h3>
+          <p class="work-sub">RATB 알고리즘 운용. 22차(2개) &rarr; 23차(8개) &rarr; 24차(28개)로 확장하며 전원 통과.</p>
+        </div>
+        <div class="work-details">
+          <div class="work-info">
+            <div class="work-info-item">
+              <span class="work-info-label">Company</span>
+              <span class="work-info-value">AssetPlus</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Role</span>
+              <span class="work-info-value">Algorithm Planner</span>
+            </div>
+            <div class="work-info-item">
+              <span class="work-info-label">Year</span>
+              <span class="work-info-value">2022 — 2024</span>
+            </div>
+          </div>
+          <div class="work-metrics">
+            <div>
+              <div class="work-metric-value">38</div>
+              <div class="work-metric-label">알고리즘</div>
+            </div>
+            <div>
+              <div class="work-metric-value">3<em>/3</em></div>
+              <div class="work-metric-label">심사 통과</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-visual">
+        <div class="blob blob-1" style="background: #D4833D;"></div>
+        <div class="blob blob-2" style="background: #7E6EA0;"></div>
+        <div class="work-corner"><ph-arrow-up-right weight="regular" size="20"></ph-arrow-up-right></div>
+        <div class="work-mock">
+          <div class="mock-bar lg"></div>
+          <div class="mock-bar md"></div>
+          <div style="height: 60px; background: linear-gradient(to top right, var(--border), transparent); border-radius: 4px; margin: 8px 0; position: relative;">
+            <div style="position: absolute; right: 20%; top: 30%; width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"></div>
+          </div>
+          <div class="mock-bar sm"></div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="section-head reveal">
+    <div>
+      <p class="section-label">05 / 소개</p>
+      <h2 class="section-title syne">금융을 아는 PM이<br/><em>직접 만들면.</em></h2>
+    </div>
+  </div>
+
+  <div class="about-grid reveal">
+    <div>
+      <p class="about-lead">
+        금융을 이해하는 기획자, 기술로 검증하는 실행자.
+      </p>
+      <p class="about-body">
+        AssetPlus 자산운용에서 AI 투자 알고리즘 38개를 기획했고, 200개 이상의 운용 계좌를 동시에 관리했어요. 디자이너 없는 팀에서 20개+ 분석 페이지를 설계했고, AI 멀티에이전트 주식 분석 플랫폼을 혼자 기획부터 개발까지 했어요. 기획서, 디자인 시스템, 지표 감사까지 — PM이 할 수 있는 rigor의 범위를 넓히는 중.
+      </p>
+    </div>
+    <div>
+      <div class="about-details">
+        <div>
+          <p class="about-kv-label">학력</p>
+          <p class="about-kv-value">Johns Hopkins<br/>M.S. Finance</p>
+        </div>
+        <div>
+          <p class="about-kv-label">현재</p>
+          <p class="about-kv-value">AssetPlus<br/>2022 — Now</p>
+        </div>
+        <div>
+          <p class="about-kv-label">Domain</p>
+          <p class="about-kv-value">Finance &middot; AI<br/>Robo-advisor</p>
+        </div>
+        <div>
+          <p class="about-kv-label">Stack</p>
+          <p class="about-kv-value">Figma &middot; Next.js<br/>FastAPI &middot; Claude</p>
+        </div>
+      </div>
+      <div class="skills">
+        <span class="skill-pill">Service Planning</span>
+        <span class="skill-pill">AI Agents</span>
+        <span class="skill-pill">Finance</span>
+        <span class="skill-pill">IA Design</span>
+        <span class="skill-pill">Prototyping</span>
+        <span class="skill-pill">UX Research</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <p class="section-label">06 / 연락</p>
+    <h2 class="contact-title syne">Plan.<br/>Build.<br/><em>Prove.</em></h2>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-item">
+      <span class="section-label">Email</span>
+      <a href="mailto:elliebinn@gmail.com" data-cursor="Copy">elliebinn@gmail.com <ph-copy weight="regular" size="14"></ph-copy></a>
+    </div>
+    <div class="contact-item">
+      <span class="section-label">LinkedIn</span>
+      <a href="#" data-cursor="Visit">hyebin-woo <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right></a>
+    </div>
+    <div class="contact-item">
+      <span class="section-label">GitHub</span>
+      <a href="#" data-cursor="Visit">Elliebinn <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right></a>
+    </div>
+  </div>
+  <footer class="footer">
+    <p>&copy; 2026 우혜빈 &middot; Made in Seoul</p>
+    <p>포트폴리오 목업 &middot; v1</p>
+  </footer>
+</section>
+
+<script>
+  // Preloader
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('preloader').classList.add('done'), 1400);
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > 60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    lastY = y;
+  });
+
+  // Scroll indicator
+  const scrollFill = document.getElementById('scrollFill');
+  const scrollIndicator = document.getElementById('scrollIndicator');
+  window.addEventListener('scroll', () => {
+    const pct = Math.min(100, (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    scrollFill.style.height = pct + '%';
+    if (pct > 95) scrollIndicator.classList.add('hidden');
+    else scrollIndicator.classList.remove('hidden');
+  });
+
+  // Custom cursor — ring + dot
+  const cursor = document.getElementById('cursor');
+  const cursorLabel = document.getElementById('cursorLabel');
+  let mx = 0, my = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+  function loop() {
+    cx += (mx - cx) * 0.5; cy += (my - cy) * 0.5;
+    cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  document.querySelectorAll('[data-cursor]').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('hover', 'has-label');
+      cursorLabel.textContent = el.dataset.cursor;
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('hover', 'has-label');
+    });
+  });
+  document.querySelectorAll('a, button').forEach(el => {
+    if (!el.dataset.cursor) {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    }
+  });
+
+  // Copy email
+  document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const email = a.href.replace('mailto:', '');
+      navigator.clipboard?.writeText(email);
+      cursorLabel.textContent = 'Copied ✓';
+      setTimeout(() => { cursorLabel.textContent = 'Copy'; }, 1500);
+    });
+  });
+
+  // Theme toggle
+  const toggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const saved = localStorage.getItem('hb-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  function updateIcon() {
+    const t = document.documentElement.getAttribute('data-theme');
+    themeIcon.outerHTML = t === 'dark'
+      ? '<ph-sun weight="regular" size="16" id="themeIcon"></ph-sun>'
+      : '<ph-moon weight="regular" size="16" id="themeIcon"></ph-moon>';
+  }
+  updateIcon();
+  toggle.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('hb-theme', next);
+    updateIcon();
+  });
+
+  // Reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</V2Layout>

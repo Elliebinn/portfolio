@@ -1,0 +1,517 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Navbar from '../../../../components/Navbar';
+import Footer from '../../../../components/Footer';
+import BottomNav from '../../../../components/BottomNav';
+import ColorPlaceholder from '../../../../components/placeholders/ColorPlaceholder';
+import CountUp from '../../../../components/motion/CountUp';
+
+const lang = 'ko';
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout title="퀀트 전략 분석 플랫폼 · 우혜빈 포트폴리오">
+  <Navbar lang={lang} client:load />
+
+  <main class="pt-24 break-keep">
+    <!-- Hero -->
+    <section class="relative min-h-[870px] flex items-center px-6 md:px-8 max-w-7xl mx-auto overflow-hidden">
+      <div class="grid lg:grid-cols-2 gap-12 items-center z-10">
+        <div class="space-y-8 opacity-0 animate-fade-up" style="animation-delay: 0.1s;">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[var(--color-text)] leading-[1.2] tracking-tight" style="font-family: var(--font-display);">
+            퀀트 리서처의 불편을<br/>
+            <span class="text-[var(--color-accent)] italic">직접 고친 이야기</span>
+          </h1>
+          <p class="text-lg text-[var(--color-text-muted)] max-w-lg leading-relaxed">
+            프론트 0명, 디자이너 0명인 6인 팀에서 리서처 4명이 매일 쓰는 200+ 전략 분석 도구를 직접 기획·설계·구현했어요. "요청된 기능"이 아니라 "실제로 필요한 구조"를 만드는 케이스 스터디.
+          </p>
+          <div class="flex gap-4 flex-wrap">
+            <span class="px-4 py-2 rounded-full text-sm font-semibold tracking-wide" style="background-color: #d3e4fe; color: #435368;">FINTECH UX</span>
+            <span class="px-4 py-2 rounded-full text-sm font-semibold tracking-wide" style="background-color: #d3e4fe; color: #435368;">SYSTEM ARCHITECTURE</span>
+          </div>
+        </div>
+        <div class="relative opacity-0 animate-fade-up" style="animation-delay: 0.3s;">
+          <div class="bg-[var(--color-bg-card)] rounded-xl overflow-hidden shadow-ambient aspect-video relative">
+            <ColorPlaceholder variant="gradient" colors={["--color-accent", "--color-secondary"]} label="Quant Platform" className="w-full h-full" />
+            <div class="absolute top-6 right-6 p-6 rounded-xl shadow-ambient glass">
+              <div class="flex items-center gap-3">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" class="text-[var(--color-accent)]">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <div>
+                  <p class="text-[10px] font-bold uppercase tracking-widest text-[var(--color-accent)]">Status</p>
+                  <p class="text-lg font-extrabold text-[var(--color-text)]">IA 재설계 100%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Build Timeline -->
+    <section class="py-24 px-6 md:px-8 max-w-7xl mx-auto">
+      <div class="flex items-center gap-4 mb-12">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest" style="background-color: var(--color-bg-detail); color: var(--color-accent);">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse"></span>
+          In Progress
+        </span>
+        <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)]">Build Timeline · 2026.02 - Now</p>
+      </div>
+      <div class="relative pl-8 md:pl-12">
+        <div class="absolute left-0 top-2 bottom-2 w-[2px] bg-[var(--color-bg-emphasis)]"></div>
+        {[
+          {
+            phase: 'Phase 1',
+            period: '2026.02',
+            title: '초기 SPEC 작성',
+            desc: '4개 핵심 페이지 목업을 10 Phase로 분할 설계. SPEC v1·v1.1로 실행 경험 반영.',
+          },
+          {
+            phase: 'Phase 2',
+            period: '2026.03 중순',
+            title: '핵심 기능 개발',
+            desc: '포트폴리오 비중 오버레이(최대 5종목), S&P500 하드코딩을 전략별 동적 벤치마크로 마이그레이션, Hit Ratio 3M·6M·1Y·2Y 토글.',
+          },
+          {
+            phase: 'Phase 3',
+            period: '2026.03.23 - 03.24',
+            title: '디자인 리뉴얼 v1',
+            desc: '7개 페이지 제목 22px/700 통일, layout.py 단일화, 55장 체크포인트 스크린샷 기록.',
+          },
+          {
+            phase: 'Phase 4',
+            period: '2026.03.25 - 03.27',
+            title: '디자이너 피드백 기반 리디자인',
+            desc: '디자이너 2명 평가에서 7 REQ를 도출한 뒤, 14개 업계 리서치를 참조해 대시보드·결과목록·비교·상세 페이지를 전면 리디자인.',
+          },
+          {
+            phase: 'Now',
+            period: '진행 중',
+            title: '기여수익률 + 툴팁 시스템',
+            desc: 'Brinson Attribution 산식 구현, 금융 용어 한·영 툴팁 시스템 8개 페이지 적용.',
+            current: true,
+          },
+        ].map((item) => (
+          <div class="relative mb-10 last:mb-0">
+            <div class={`absolute -left-[33px] md:-left-[49px] top-1.5 w-3.5 h-3.5 rounded-full border-4 border-[var(--color-bg)] ${item.current ? 'bg-[var(--color-accent)] animate-pulse' : 'bg-[var(--color-text-faint)]'}`}></div>
+            <div class="flex flex-col md:flex-row md:items-baseline md:gap-4 mb-2">
+              <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)]">{item.phase}</p>
+              <p class="text-xs text-[var(--color-text-faint)] font-medium">{item.period}</p>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold text-[var(--color-text)] mb-2" style="font-family: var(--font-display);">{item.title}</h3>
+            <p class="text-[var(--color-text-muted)] leading-relaxed max-w-3xl">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Impact Metrics -->
+    <section class="py-24" style="background-color: var(--color-bg-secondary);">
+      <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          {[
+            { value: '20+', label: '페이지 재설계' },
+            { value: '25', label: 'HTML 목업 제작' },
+            { value: '200+', label: '전략 태그 분류' },
+            { value: '83%', label: '운용시간 단축' },
+          ].map((metric) => (
+            <div class="bg-[var(--color-bg-card)] p-6 md:p-10 rounded-xl transition-shadow hover:shadow-ambient shadow-ambient-sm">
+              <p class="text-3xl md:text-4xl font-extrabold text-[var(--color-accent)] mb-2" style="font-family: var(--font-display);">
+                {(() => {
+                  const m = metric.value.match(/(\d+(?:\.\d+)?)/);
+                  if (!m) return metric.value;
+                  const num = parseFloat(m[1]);
+                  const pre = metric.value.slice(0, m.index);
+                  const suf = metric.value.slice((m.index ?? 0) + m[1].length);
+                  return <CountUp value={num} prefix={pre} suffix={suf} client:visible />;
+                })()}
+              </p>
+              <p class="text-[0.7rem] uppercase font-bold tracking-widest text-[var(--color-text-muted)]">{metric.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 01. Problem Definition -->
+    <section class="py-32 px-6 md:px-8 max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+        <div class="space-y-6">
+          <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase">01. Problem Definition</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold leading-tight text-[var(--color-text)]" style="font-family: var(--font-display);">
+            "검색 추가해주세요" 뒤에<br/>숨은 진짜 문제
+          </h2>
+          <div class="space-y-4 text-[var(--color-text-muted)] text-lg leading-relaxed">
+            <p>리서처 4명이 매일 200+ 전략을 분석하는데, 계속 같은 요청이 반복됐어요. <span class="text-[var(--color-text)] font-semibold">"검색 추가해주세요", "필터 더 만들어주세요", "날짜 선택이 불편해요".</span></p>
+            <p>기능을 하나씩 추가하면 해결될 줄 알았는데, 요청이 멈추지 않았어요. 옆에 앉아서 직접 리서처의 분석 워크플로우를 관찰한 다음에야 알았어요. <span class="text-[var(--color-text)] font-semibold">진짜 문제는 "분류 체계 부재"</span>였다는 걸요. 검색은 증상이었고, 원인은 구조였어요.</p>
+          </div>
+        </div>
+        <div class="p-12 rounded-xl relative group" style="background-color: var(--color-bg-secondary);">
+          <div class="absolute -inset-4 rounded-[2rem] blur-2xl transition-all duration-700" style="background-color: rgba(69, 98, 114, 0.05);"></div>
+          <svg class="w-full relative z-10" fill="none" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 80H120M280 80H350M200 40V120M200 180V260" stroke="#456272" stroke-linecap="round" stroke-width="4"/>
+            <circle cx="200" cy="150" fill="rgba(69, 98, 114, 0.1)" r="40" stroke="#456272" stroke-width="2"/>
+            <rect fill="#d9e4ea" height="40" rx="4" width="120" x="140" y="70"/>
+            <rect fill="#d9e4ea" height="40" rx="4" width="120" x="140" y="190"/>
+            <circle cx="200" cy="150" fill="#456272" r="10"/>
+            <text fill="#ffffff" style="font-family: Manrope; font-size: 8px; font-weight: bold;" text-anchor="middle" x="200" y="153">X</text>
+          </svg>
+          <p class="mt-8 text-center text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">Legacy System Bottleneck Analysis</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02. Research Insight -->
+    <section class="py-32" style="background-color: var(--color-bg);">
+      <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <div class="mb-16">
+          <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">02. Research Insight</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">요청 뒤의 진짜 니즈</h2>
+          <p class="text-[var(--color-text-muted)] mt-4 max-w-2xl">이전 직장에서 직접 펀드 운용을 지원한 경험을 바탕으로, 리서처가 요청한 기능이 아니라 실제로 필요한 기능을 판별했어요.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Mapping 1 -->
+          <div class="p-8 rounded-xl" style="background-color: var(--color-bg-secondary);">
+            <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-3">They said</p>
+            <p class="text-lg font-semibold text-[var(--color-text)] mb-6">"검색 추가해주세요"</p>
+            <div class="flex justify-center mb-6">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-accent)]"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            </div>
+            <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)] mb-3">Root cause</p>
+            <p class="text-base font-semibold text-[var(--color-text)] mb-4">분류 체계 부재</p>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">200+ 전략이 분류 없이 나열됨. 검색은 증상, 태그 기반 분류가 진짜 해결책이었음.</p>
+          </div>
+          <!-- Mapping 2 -->
+          <div class="p-8 rounded-xl" style="background-color: var(--color-bg-secondary);">
+            <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-3">They said</p>
+            <p class="text-lg font-semibold text-[var(--color-text)] mb-6">"날짜 선택이 불편해요"</p>
+            <div class="flex justify-center mb-6">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="text-[var(--color-accent)]"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            </div>
+            <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)] mb-3">Root cause</p>
+            <p class="text-base font-semibold text-[var(--color-text)] mb-4">리밸런싱 시점 탐색 어려움</p>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">리서처는 '날짜'가 아니라 '리밸런싱 포인트'를 찾고 있었음. 포인트 기반 네비로 재설계.</p>
+          </div>
+          <!-- Mapping 3 -->
+          <div class="p-8 rounded-xl shadow-ambient" style="background-color: var(--color-accent); color: var(--color-on-accent);">
+            <p class="text-xs font-bold uppercase tracking-widest opacity-70 mb-3">They didn't say</p>
+            <p class="text-lg font-semibold mb-6">(벤치마크 비교 무의미함)</p>
+            <div class="flex justify-center mb-6">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+            </div>
+            <p class="text-xs font-bold uppercase tracking-widest opacity-70 mb-3">Proactive fix</p>
+            <p class="text-base font-semibold mb-4">전략별 동적 벤치마크</p>
+            <p class="text-sm leading-relaxed opacity-90">한국 전략을 S&P500과 비교하는 게 무의미하다는 걸 펀드 운용 경험으로 파악. 요청 없이 선제적으로 구현.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02.5 Decision Log -->
+    <section class="py-32 px-6 md:px-8 max-w-7xl mx-auto">
+      <div class="mb-16 max-w-2xl">
+        <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">02.5 Decision Log</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)] leading-tight" style="font-family: var(--font-display);">왜 이렇게 결정했는지</h2>
+        <p class="text-[var(--color-text-muted)] mt-4 leading-relaxed">
+          기능 목록보다 중요한 건 "왜 그 기능을 그렇게 만들었는가"예요. 7개 결정과 각각의 근거를 기록해요.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-x-12 gap-y-10">
+        {[
+          {
+            n: '01',
+            decision: '폴더형 분류 대신 태그 시스템',
+            why: '하나의 전략이 여러 카테고리(모멘텀+한국주식)에 동시에 속할 수 있음. 사용자가 자유롭게 분류 기준을 만들 수 있도록 폴더 트리 대신 다중 태그 채택.',
+          },
+          {
+            n: '02',
+            decision: '날짜 드래그 대신 리밸런싱 포인트 네비게이션',
+            why: '실무에서 포지션 변화 추적의 핵심은 "리밸런싱 시점". 펀드 운영 경험에서 도출한, 사용자가 요청한 적 없는 선제적 기능.',
+          },
+          {
+            n: '03',
+            decision: '별도 차트 대신 stacked chart 위 종목 오버레이',
+            why: '차트와 테이블을 오가며 분석하는 실무 행동을 그대로 반영. 500+ 종목 노이즈 문제는 "전체 투자비중 회색 영역"으로 단순화해 해결.',
+          },
+          {
+            n: '04',
+            decision: 'AI에게 "알아서 해줘" 금지, DESIGN.md 명시 문서화',
+            why: '디자이너 없이 20+ 페이지 일관성을 확보하려면 명시적 규칙 문서가 필수. 색상·폰트·간격·컴포넌트 토큰을 모두 코드화해 AI 결과물의 변동성 제거.',
+          },
+          {
+            n: '05',
+            decision: 'S&P500 하드코딩에서 전략별 동적 벤치마크로 전환',
+            why: '한국 주식 전략을 S&P500과 비교하는 건 무의미. universe별 자동 매칭(KOSPI200/KOSDAQ150/S&P500) + 수동 드롭다운으로 전환. 도메인 지식이 기술 결정을 바꾼 사례.',
+          },
+          {
+            n: '06',
+            decision: 'Hit Ratio 1Y 고정에서 3M·6M·1Y·2Y 다중 토글로 전환',
+            why: '짧은 보유 전략과 긴 보유 전략은 1Y 단일 지표로는 비교 불가. 비동기 재로드로 UX를 끊지 않으면서 4개 보유기간 동시 분석 가능하게 설계.',
+          },
+          {
+            n: '07',
+            decision: 'flat 13개 메뉴에서 워크플로우 기반 collapsible 그룹으로 재구조화',
+            why: '"주요 vs 보조 구분이 없다"는 디자이너 피드백(REQ-01)을 받아, Data Sources 9개를 기본 접힘으로 처리하고 핵심 분석 기능을 상단으로 끌어올림.',
+          },
+        ].map((item) => (
+          <div class="space-y-3">
+            <div class="flex items-baseline gap-4">
+              <span class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)]">{item.n}</span>
+              <h3 class="text-lg md:text-xl font-bold text-[var(--color-text)] leading-snug">{item.decision}</h3>
+            </div>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed pl-10">{item.why}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 03. Tech Stack Reality -->
+    <section class="py-32 px-6 md:px-8 max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-5 space-y-6">
+          <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase">03. Tech Stack Reality</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold leading-tight text-[var(--color-text)]" style="font-family: var(--font-display);">
+            기획자가<br/>직접 다루는 스택
+          </h2>
+          <div class="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
+            <p>화면 설계만 하고 넘기지 않아요. 데이터 쿼리부터 차트 옵션까지 직접 만져야 디자이너 없는 6인 팀에서 빠르게 반복할 수 있어요.</p>
+            <p>스택은 화려하지 않지만 의도적이에요. <span class="text-[var(--color-text)] font-semibold">ClickHouse</span>로 200+ 전략의 시계열 쿼리를 빠르게 돌리고, <span class="text-[var(--color-text)] font-semibold">NiceGUI(Python)</span>로 백엔드 데이터에 가까운 곳에서 UI를 짜고, <span class="text-[var(--color-text)] font-semibold">Plotly</span>로 금융 차트의 디테일(unified hover, tabular nums)을 통제해요.</p>
+          </div>
+        </div>
+        <div class="lg:col-span-7 grid grid-cols-2 gap-3">
+          {[
+            { layer: 'Data', name: 'ClickHouse', role: '200+ 전략 시계열 쿼리, OLAP 집계' },
+            { layer: 'Data', name: 'MySQL', role: '메타데이터 · 사용자 · 태그 마스터' },
+            { layer: 'Backend', name: 'Python', role: '백테스트 엔진, 산식 구현, ETL' },
+            { layer: 'UI', name: 'NiceGUI', role: '컴포넌트 기반 풀스택 (sanitize=False)' },
+            { layer: 'Chart', name: 'Plotly', role: 'add_shape 기반 리밸런싱 마커, unified hover' },
+            { layer: 'AI Tooling', name: 'Claude Code', role: 'mockup-apply / frontend-checkpoint 스킬 운영' },
+          ].map((item) => (
+            <div class="p-6 rounded-xl space-y-2" style="background-color: var(--color-bg-secondary);">
+              <p class="text-[10px] font-bold uppercase tracking-widest text-[var(--color-text-faint)]">{item.layer}</p>
+              <p class="text-lg font-bold text-[var(--color-text)]" style="font-family: var(--font-display);">{item.name}</p>
+              <p class="text-xs text-[var(--color-text-muted)] leading-relaxed">{item.role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 04. Design System -->
+    <section class="py-32" style="background-color: var(--color-bg-secondary);">
+      <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-20">
+          <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">04. Design System</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">The Architect's Framework</h2>
+          <p class="mt-4 text-[var(--color-text-muted)]">디자이너 없이, 스케일과 일관성을 유지할 수 있도록 토큰 기반의 시스템을 구축했어요.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Colors -->
+          <div class="bg-[var(--color-bg-card)] p-8 rounded-xl space-y-6">
+            <p class="text-xs font-bold uppercase tracking-widest opacity-50 text-[var(--color-text)]">Colors</p>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg" style="background-color: #456272;"></div>
+                <span class="text-xs font-mono text-[var(--color-text)]">#456272</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg" style="background-color: #d9e4ea;"></div>
+                <span class="text-xs font-mono text-[var(--color-text)]">#D9E4EA</span>
+              </div>
+            </div>
+          </div>
+          <!-- Typography -->
+          <div class="bg-[var(--color-bg-card)] p-8 rounded-xl space-y-6">
+            <p class="text-xs font-bold uppercase tracking-widest opacity-50 text-[var(--color-text)]">Typography</p>
+            <div class="space-y-2">
+              <p class="text-2xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Aa</p>
+              <p class="text-xs text-[var(--color-text-muted)]">Manrope Display</p>
+              <p class="text-lg font-medium text-[var(--color-text)]">Aa</p>
+              <p class="text-xs text-[var(--color-text-muted)]">Body Sans</p>
+            </div>
+          </div>
+          <!-- Spacing -->
+          <div class="bg-[var(--color-bg-card)] p-8 rounded-xl space-y-6">
+            <p class="text-xs font-bold uppercase tracking-widest opacity-50 text-[var(--color-text)]">Spacing</p>
+            <div class="flex items-end gap-2 h-20">
+              <div class="w-4 h-4 bg-[var(--color-bg-emphasis)]"></div>
+              <div class="w-4 h-8 bg-[var(--color-bg-emphasis)]"></div>
+              <div class="w-4 h-12 bg-[var(--color-bg-emphasis)]"></div>
+              <div class="w-4 h-16 bg-[var(--color-bg-emphasis)]"></div>
+            </div>
+            <p class="text-xs text-[var(--color-text-muted)]">8pt Grid Logic</p>
+          </div>
+          <!-- Components -->
+          <div class="bg-[var(--color-bg-card)] p-8 rounded-xl space-y-6">
+            <p class="text-xs font-bold uppercase tracking-widest opacity-50 text-[var(--color-text)]">Components</p>
+            <div class="space-y-3">
+              <div class="h-8 rounded-full w-full" style="background-color: rgba(69, 98, 114, 0.1);"></div>
+              <div class="h-8 rounded-md w-2/3" style="background-color: #d9e4ea;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05. Transformation -->
+    <section class="py-32 px-6 md:px-8 max-w-7xl mx-auto">
+      <div class="mb-16">
+        <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">05. Transformation</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">Visual Evolution</h2>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-12 mb-20">
+        <div class="space-y-6">
+          <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">Before</p>
+          <div class="bg-[var(--color-bg-secondary)] rounded-xl overflow-hidden grayscale opacity-60">
+            <ColorPlaceholder variant="minimal" colors={["--color-bg-detail"]} label="Before" className="w-full h-full object-cover" />
+          </div>
+        </div>
+        <div class="space-y-6">
+          <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)]">After</p>
+          <div class="rounded-xl overflow-hidden shadow-ambient" style="background-color: rgba(69, 98, 114, 0.05);">
+            <ColorPlaceholder variant="minimal" colors={["--color-bg-emphasis"]} label="After" className="w-full h-full object-cover" />
+          </div>
+        </div>
+      </div>
+      <!-- 페이지별 건강도 점수 변화 (체크포인트 정량 추적) -->
+      <div class="p-10 md:p-12 rounded-2xl" style="background-color: var(--color-bg-detail);">
+        <div class="max-w-3xl mx-auto">
+          <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)] mb-2">Checkpoint Health Score</p>
+          <h3 class="text-2xl md:text-3xl font-extrabold text-[var(--color-text)] mb-2" style="font-family: var(--font-display);">변경을 정량으로 추적합니다</h3>
+          <p class="text-[var(--color-text-muted)] mb-10 leading-relaxed">
+            모든 UI 변경을 frontend-checkpoint 스킬로 Before/After 스냅샷 + 건강도 점수로 기록해요. "느낌으로 좋아졌다"가 아니라 숫자로 검증합니다.
+          </p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { page: '비교 페이지', before: 91, after: 95, delta: '+4' },
+              { page: '결과 목록', before: 95, after: 99, delta: '+4' },
+              { page: '상세 페이지', before: 96, after: 98, delta: '+2' },
+              { page: '대시보드', before: 100, after: 96, delta: '−4', note: '기능 대폭 추가' },
+            ].map((item) => (
+              <div class="space-y-2">
+                <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">{item.page}</p>
+                <div class="flex items-baseline gap-2">
+                  <span class="text-3xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">{item.after}</span>
+                  <span class="text-sm font-semibold text-[var(--color-text-faint)]">/ {item.before}</span>
+                </div>
+                <p class="text-xs font-bold text-[var(--color-accent)]">{item.delta}{item.note ? ` · ${item.note}` : ''}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05.5 Designer Feedback Loop -->
+    <section class="py-32 px-6 md:px-8 max-w-7xl mx-auto">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-32">
+          <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase">05.5 Feedback Loop</p>
+          <h2 class="text-3xl md:text-4xl font-extrabold leading-tight text-[var(--color-text)]" style="font-family: var(--font-display);">
+            디자이너가 2.5점을 줬을 때
+          </h2>
+          <div class="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
+            <p>외부 UX/UI 디자이너 2명에게 종합 평가를 요청했어요. 결과는 <span class="text-[var(--color-text)] font-semibold">해나 2.5/5, 제나 3.9/5</span>. "기능에 충실하나 UX 불편"이 핵심 메시지였어요.</p>
+            <p>방어하지 않고, 피드백을 <span class="text-[var(--color-text)] font-semibold">7개 REQ</span>로 분해했어요. 각 REQ는 Bloomberg, Koyfin, Morningstar 등 <span class="text-[var(--color-text)] font-semibold">14개 업계 레퍼런스</span>를 출처로 명시한 SPEC이 됐고, 그대로 구현으로 옮겼어요.</p>
+          </div>
+          <div class="flex gap-8 pt-4">
+            <div>
+              <p class="text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">7</p>
+              <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)] mt-1">REQ 분해</p>
+            </div>
+            <div>
+              <p class="text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">14</p>
+              <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)] mt-1">레퍼런스 출처</p>
+            </div>
+            <div>
+              <p class="text-4xl font-extrabold text-[var(--color-text)]" style="font-family: var(--font-display);">8/8</p>
+              <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-text-faint)] mt-1">REQ 구현 완료</p>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 space-y-3">
+          {[
+            { req: 'REQ-01', feedback: '"좌측 네비게이션바 정리 필요"', solution: 'Collapsible 그룹핑, Data Sources 9개 기본 접힘', status: '구현 완료' },
+            { req: 'REQ-02-A', feedback: '"홈화면 \'개요\' 명칭 변경"', solution: '"대시보드"로 명명 변경', status: '구현 완료' },
+            { req: 'REQ-02-D', feedback: '"수익률 랭킹 전략 필요"', solution: '리더보드 + 기간 필터 탭 신규', status: '구현 완료' },
+            { req: 'REQ-03', feedback: '"어려운 금융 용어 주석 부재"', solution: 'glossary.py + hover tooltip 시스템', status: '구현 완료' },
+            { req: 'REQ-04-A', feedback: '"필터링 기능 섹션 없음"', solution: '필터 바 신규 (Universe/Sharpe/Return/태그)', status: '구현 완료' },
+            { req: 'REQ-04-D', feedback: '"중요 지표 강조 부족"', solution: '조건부 셀 색상 (수익률/MDD/Sharpe)', status: '구현 완료' },
+            { req: 'REQ-05-A', feedback: '"비교 UI 어수선함"', solution: '검색·칩·차트·테이블을 수직 흐름으로 재구조', status: '구현 완료' },
+          ].map((item) => (
+            <div class="grid grid-cols-12 gap-4 p-5 rounded-xl items-start" style="background-color: var(--color-bg-secondary);">
+              <div class="col-span-12 md:col-span-2">
+                <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)]">{item.req}</p>
+              </div>
+              <div class="col-span-12 md:col-span-5">
+                <p class="text-sm font-semibold text-[var(--color-text)] leading-snug">{item.feedback}</p>
+              </div>
+              <div class="col-span-12 md:col-span-5">
+                <p class="text-sm text-[var(--color-text-muted)] leading-snug">{item.solution}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 06. Currently Building -->
+    <section class="py-32" style="background-color: var(--color-bg-secondary);">
+      <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
+          <div class="max-w-xl">
+            <p class="text-[var(--color-accent)] font-bold tracking-widest text-sm uppercase mb-4">06. Currently Building</p>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--color-text)] leading-tight" style="font-family: var(--font-display);">아직 만들고 있는 것들</h2>
+            <p class="text-[var(--color-text-muted)] mt-4 leading-relaxed">
+              완성된 케이스 스터디가 아니라 진행 중인 빌드 로그예요. 새 결정이 나오면 이 페이지가 자라요.
+            </p>
+          </div>
+          <div class="h-[2px] flex-grow mb-4 hidden md:block" style="background-color: var(--color-bg-detail);"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-[var(--color-bg-card)] p-10 md:p-12 rounded-xl">
+            <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)] mb-4">In Progress</p>
+            <h3 class="text-2xl font-bold mb-4 text-[var(--color-text)]" style="font-family: var(--font-display);">기여수익률 산식 구현</h3>
+            <p class="text-[var(--color-text-muted)] leading-relaxed mb-4">
+              Brinson Attribution 기반으로 Holding Return과 Trading Return을 분리해 계산하는 모듈. 펀드 운용에서 "어느 종목이, 어느 시점의 매매가 수익에 얼마나 기여했는지" 추적하기 위한 핵심 지표예요.
+            </p>
+            <p class="text-xs text-[var(--color-text-faint)]">10+ 수식 · 7개 DB 컬럼 · rolling_metrics 신규 테이블</p>
+          </div>
+          <div class="bg-[var(--color-bg-card)] p-10 md:p-12 rounded-xl">
+            <p class="text-xs font-bold uppercase tracking-widest text-[var(--color-accent)] mb-4">In Progress</p>
+            <h3 class="text-2xl font-bold mb-4 text-[var(--color-text)]" style="font-family: var(--font-display);">금융 용어 툴팁 시스템</h3>
+            <p class="text-[var(--color-text-muted)] leading-relaxed mb-4">
+              "어려운 금융 용어 주석이 없어 어렵다"는 디자이너 피드백에서 출발. glossary.py로 한·영 용어를 관리하고, 모든 금융 지표 라벨에 hover tooltip을 일관 적용하는 중이에요.
+            </p>
+            <p class="text-xs text-[var(--color-text-faint)]">12+ 용어 사전 · 한·영 다국어 · 8개 페이지 적용 진행 중</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Project CTA — P4.5 -->
+    <a href={`${base}ko/projects/jujutok/`} class="group block border-t border-[var(--color-border)]/50" style="background-color: var(--color-bg-secondary);">
+      <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-16 sm:py-20">
+        <div>
+          <p class="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-faint)]">다음 프로젝트</p>
+          <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[var(--color-text)] group-hover:text-[var(--color-accent)] transition-colors" style="font-family: var(--font-display);">
+            주주톡 — AI 주식 분석
+          </h3>
+        </div>
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="shrink-0 text-[var(--color-text-faint)] group-hover:translate-x-2 group-hover:text-[var(--color-accent)] transition-transform"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>
+      </div>
+    </a>
+  </main>
+
+  <Footer />
+  <BottomNav lang={lang} client:load />
+</Layout>
+
+<style is:global>
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up { animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+</style>
