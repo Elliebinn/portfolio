@@ -19,6 +19,11 @@ const { title = "Hyebin Woo", lang = "ko" } = Astro.props;
   <title>{title}</title>
 </head>
 <body>
+  <!-- Page transition overlay -->
+  <div class="page-transition" id="pageTransition">
+    <div class="pt-top"></div>
+    <div class="pt-bot"></div>
+  </div>
   <slot />
 </body>
 </html>

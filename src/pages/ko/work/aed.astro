@@ -29,6 +29,69 @@ import '../../../styles/v2-casestudy.css';
     body { -webkit-font-smoothing: antialiased; word-break: keep-all; background: #131313; color: #f2f2f0; overflow-x: hidden; cursor: none; }
   </style>
 
+<!-- Case study nav -->
+<style>
+  .cs-nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 200;
+    padding: 22px 44px;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: padding .45s var(--ease, cubic-bezier(0.25,0.46,0.45,0.94)),
+                top .45s var(--ease), left .45s var(--ease), right .45s var(--ease),
+                border-radius .45s var(--ease), background .4s var(--ease),
+                backdrop-filter .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .cs-nav.scrolled {
+    top: 16px; left: 22%; right: 22%;
+    padding: 14px 36px;
+    border-radius: 100px;
+    background: rgba(12,12,11,0.80);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  }
+  .cs-nav-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 18px;
+    color: #e2e2e2; text-decoration: none;
+  }
+  .cs-nav-right { display: flex; align-items: center; gap: 24px; }
+  .cs-back-link {
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #888; text-decoration: none;
+    position: relative; transition: color 0.3s;
+  }
+  .cs-back-link::after {
+    content: ''; position: absolute;
+    bottom: -2px; left: 0; width: 0; height: 1px;
+    background: #e2e2e2; transition: width 0.3s;
+  }
+  .cs-back-link:hover { color: #e2e2e2; }
+  .cs-back-link:hover::after { width: 100%; }
+  .cs-theme-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 100px;
+    border: 1px solid rgba(226,226,226,0.15);
+    background: transparent; color: #e2e2e2;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: none; transition: border-color 0.3s;
+  }
+  .cs-theme-btn:hover { border-color: #e2e2e2; }
+  @media (max-width: 900px) {
+    .cs-nav.scrolled { left: 5%; right: 5%; }
+    .cs-nav { padding: 16px 20px; }
+  }
+</style>
+
+<nav class="cs-nav" id="csNav">
+  <a href="/ko/" class="cs-nav-brand">Hyebin.</a>
+  <div class="cs-nav-right">
+    <a href="/ko/" class="cs-back-link">Back Home</a>
+    <button class="cs-theme-btn" id="csThemeBtn">◐ Dark</button>
+  </div>
+</nav>
+
 <!-- Crosshair cursor -->
 <div class="cursor" id="cursor">
   <div class="cursor-dot"></div>
@@ -1341,6 +1404,35 @@ import '../../../styles/v2-casestudy.css';
 
   <!-- Scripts -->
   <script is:inline>
+    // Page transition — enter animation
+    const pt = document.getElementById('pageTransition');
+    if (pt) {
+      pt.classList.add('enter');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          pt.classList.add('done');
+          setTimeout(() => { pt.classList.remove('enter', 'done'); }, 600);
+        });
+      });
+    }
+
+    // Back button — exit transition
+    document.querySelectorAll('.cs-back-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        if (pt) pt.classList.add('exit');
+        setTimeout(() => { window.location.href = href; }, 500);
+      });
+    });
+
+    // Case study nav scroll
+    const csNav = document.getElementById('csNav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) csNav.classList.add('scrolled');
+      else csNav.classList.remove('scrolled');
+    }, { passive: true });
+
     // Scroll reveal
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });

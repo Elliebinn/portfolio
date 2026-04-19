@@ -1,0 +1,55 @@
+---
+import V2Layout from '../../layouts/V2Layout.astro';
+import { WritingShell } from '../../components/writing/WritingShell';
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
+import '../../styles/v2-writing.css';
+
+const allPosts = await getCollection('blog');
+const sorted = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const postsData = sorted.map((post) => ({
+  slug: post.id,
+  title: post.data.title,
+  description: post.data.description,
+  date: new Date(post.data.date).toLocaleDateString('en-US', {
+    year: 'numeric', month: 'short', day: 'numeric',
+  }),
+  category: post.data.category,
+  tags: post.data.tags,
+  series: post.data.series,
+  seriesOrder: post.data.seriesOrder,
+  featured: post.data.featured,
+  relatedLinks: post.data.relatedLinks,
+  html: marked.parse(post.body ?? '', { async: false }) as string,
+}));
+---
+<V2Layout title="Writing — Hyebin Woo" lang="en">
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor">
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+    <div class="cursor-label" id="cursorLabel"></div>
+  </div>
+
+  <WritingShell client:load posts={postsData} lang="en" />
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const cursorLabel = document.getElementById('cursorLabel');
+    if (cursor) {
+      let mx = 0, my = 0, cx = 0, cy = 0;
+      document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+      function loop() {
+        cx += (mx - cx) * 0.5; cy += (my - cy) * 0.5;
+        cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+        requestAnimationFrame(loop);
+      }
+      loop();
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+      });
+    }
+  </script>
+</V2Layout>

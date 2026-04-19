@@ -27,6 +27,7 @@ import V2Layout from '../../layouts/V2Layout.astro';
   <a href="#home" class="nav-brand">Hyebin.</a>
   <div class="nav-links">
     <a href="#work" class="nav-link">Work</a>
+    <a href="/en/writing" class="nav-link">Writing</a>
     <a href="#about" class="nav-link">About</a>
     <a href="/ko/resume" class="nav-link">Resume</a>
     <a href="#contact" class="nav-link">Contact</a>
@@ -34,7 +35,6 @@ import V2Layout from '../../layouts/V2Layout.astro';
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
       <ph-sun weight="regular" size="16" id="themeIcon"></ph-sun>
     </button>
-    <a href="#contact" class="nav-cta">Say hi <ph-hand-waving weight="fill" size="14"></ph-hand-waving></a>
   </div>
 </nav>
 
@@ -96,61 +96,34 @@ import V2Layout from '../../layouts/V2Layout.astro';
   <div class="work-grid">
 
     <!-- Case 1 -->
-    <a href="/ko/work/aed" class="work-card reveal" data-cursor="View case">
+    <a href="/ko/work/aed" class="work-card reveal" data-cursor="View case" style="grid-template-columns: 1fr 1fr;">
       <div class="work-card-meta">
-        <div class="work-num">&#8470; 01 / AED</div>
-        <div>
-          <h3 class="work-title">Redesigning<br/>how quant<br/>researchers work.</h3>
-          <p class="work-sub">A tool used daily by 4 researchers. No designer, no frontend dev. Taxonomy for 200+ strategies rebuilt from scratch — the HTML mockup became the product.</p>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--muted);">01</span>
+          <span class="wip-badge">● Work in Progress</span>
         </div>
-        <div class="work-details">
-          <div class="work-info">
-            <div class="work-info-item">
-              <span class="work-info-label">Company</span>
-              <span class="work-info-value">AssetPlus</span>
-            </div>
-            <div class="work-info-item">
-              <span class="work-info-label">Role</span>
-              <span class="work-info-value">AI Service Planner</span>
-            </div>
-            <div class="work-info-item">
-              <span class="work-info-label">Year</span>
-              <span class="work-info-value">2025 — Now</span>
-            </div>
+        <div>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Alphabridge / 2025 — Now</p>
+          <h3 class="work-title" style="font-size:clamp(24px,3vw,36px); line-height:1.2; margin-bottom:16px;">Redesigning how quant researchers work.</h3>
+          <div style="display:flex; gap:8px; margin-bottom:24px;">
+            <span style="font-size:11px; padding:4px 12px; border:1px solid var(--border); border-radius:100px; color:var(--muted);">FinTech</span>
+            <span style="font-size:11px; padding:4px 12px; border:1px solid var(--border); border-radius:100px; color:var(--muted);">Dashboard</span>
           </div>
-          <div class="work-metrics">
-            <div>
-              <div class="work-metric-value">32<em>&uarr;</em></div>
-              <div class="work-metric-label">Mockups shipped</div>
-            </div>
-            <div>
-              <div class="work-metric-value">20<em>+</em></div>
-              <div class="work-metric-label">Pages designed</div>
-            </div>
+        </div>
+        <div class="work-metrics" style="margin-top:auto;">
+          <div>
+            <div class="work-metric-value">32<em>&uarr;</em></div>
+            <div class="work-metric-label">Mockups shipped</div>
+          </div>
+          <div>
+            <div class="work-metric-value">20<em>+</em></div>
+            <div class="work-metric-label">Pages designed</div>
           </div>
         </div>
       </div>
-      <div class="work-visual">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
+      <div class="work-visual" style="overflow:hidden; min-height:320px;">
         <div class="work-corner"><ph-arrow-up-right weight="regular" size="20"></ph-arrow-up-right></div>
-        <div class="work-mock">
-          <div style="display: flex; gap: 6px; margin-bottom: 8px;">
-            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
-            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
-            <span style="width:8px;height:8px;border-radius:50%;background:var(--border);"></span>
-          </div>
-          <div class="mock-bar md"></div>
-          <div class="mock-bar sm"></div>
-          <div class="mock-grid">
-            <div class="mock-cell accent"></div>
-            <div class="mock-cell"></div>
-            <div class="mock-cell"></div>
-          </div>
-          <div class="mock-bar lg"></div>
-          <div class="mock-bar md"></div>
-          <div class="mock-bar sm"></div>
-        </div>
+        <img src="/images/aed/aed-main-thumnail.png" alt="AED Dashboard" style="width:100%; height:100%; object-fit:cover; transition: transform 0.6s var(--ease);" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
       </div>
     </a>
 
@@ -275,18 +248,21 @@ import V2Layout from '../../layouts/V2Layout.astro';
         Finance-trained, systems-minded. I find the missing taxonomy behind "add search," and build the spec that ships.
       </p>
       <p class="about-body">
-        At AssetPlus Asset Management, I planned 38 AI investment algorithms and simultaneously managed 200+ live accounts. On a team with no designer, I designed 20+ analysis pages. I also planned and built a multi-agent stock analysis platform solo, from spec to deployment. PRDs, design systems, metric audits — expanding the scope of rigor a PM can own.
+        At AssetPlus Asset Management, I planned 38 AI investment algorithms and passed national regulatory review, while managing 200+ live accounts. Now at Alphabridge, I'm redesigning the strategy analysis dashboard used daily by the quant research team. On a team with no designer, I designed 20+ analysis pages and solo-built a multi-agent stock analysis platform from spec to deployment.
       </p>
+      <a href="/ko/resume" class="view-cv" data-cursor="Resume">
+        Resume <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right>
+      </a>
     </div>
     <div>
       <div class="about-details">
         <div>
           <p class="about-kv-label">Education</p>
-          <p class="about-kv-value">Johns Hopkins<br/>M.S. Finance</p>
+          <p class="about-kv-value">Johns Hopkins University<br/>B.A. Economics · Minor in Marketing</p>
         </div>
         <div>
           <p class="about-kv-label">Current</p>
-          <p class="about-kv-value">AssetPlus<br/>2022 — Now</p>
+          <p class="about-kv-value">Alphabridge<br/>2025 — Now</p>
         </div>
         <div>
           <p class="about-kv-label">Domain</p>
@@ -322,11 +298,11 @@ import V2Layout from '../../layouts/V2Layout.astro';
     </div>
     <div class="contact-item">
       <span class="section-label">LinkedIn</span>
-      <a href="#" data-cursor="Visit">hyebin-woo <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right></a>
+      <a href="https://www.linkedin.com/in/hyebin-woo" target="_blank" rel="noopener" data-cursor="Visit">hyebin-woo <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right></a>
     </div>
     <div class="contact-item">
       <span class="section-label">GitHub</span>
-      <a href="#" data-cursor="Visit">Elliebinn <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right></a>
+      <a href="https://github.com/Elliebinn" target="_blank" rel="noopener" data-cursor="Visit">Elliebinn <ph-arrow-up-right weight="regular" size="14"></ph-arrow-up-right></a>
     </div>
   </div>
   <footer class="footer">
@@ -336,17 +312,24 @@ import V2Layout from '../../layouts/V2Layout.astro';
 </section>
 
 <script>
-  // Preloader
-  window.addEventListener('load', () => {
-    setTimeout(() => document.getElementById('preloader').classList.add('done'), 1400);
-  });
+  // Preloader — show only once per session
+  const preloader = document.getElementById('preloader');
+  if (sessionStorage.getItem('preloaded')) {
+    preloader.classList.add('done');
+  } else {
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        preloader.classList.add('done');
+        sessionStorage.setItem('preloaded', '1');
+      }, 1400);
+    });
+  }
 
-  // Nav scroll
+  // Nav scroll — brand slides from left, links from right, merge into pill
   const nav = document.getElementById('nav');
-  let lastY = 0;
   window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (y > 60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    if (window.scrollY > 60) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
     lastY = y;
   });
 

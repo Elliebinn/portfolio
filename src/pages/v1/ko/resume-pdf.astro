@@ -118,7 +118,7 @@ import { resume, boldToHtml } from '../../../data/resume';
   .contact a { color: var(--muted); text-decoration: none; }
 
   /* ===== Section ===== */
-  section { margin-bottom: 14pt; page-break-inside: avoid; }
+  section { margin-bottom: 14pt; }
   .section-header {
     display: flex;
     align-items: baseline;
@@ -191,7 +191,7 @@ import { resume, boldToHtml } from '../../../data/resume';
     margin-bottom: 4pt;
   }
 
-  .project { margin-top: 6pt; }
+  .project { margin-top: 6pt; page-break-inside: avoid; }
   .project-title {
     font-family: 'Manrope', 'Noto Sans KR', sans-serif;
     font-weight: 800;
@@ -316,8 +316,8 @@ import { resume, boldToHtml } from '../../../data/resume';
       padding: 0;
       margin: 0;
     }
-    section { page-break-inside: avoid; }
     .job { page-break-inside: avoid; }
+    .project { page-break-inside: avoid; }
   }
 
   /* ===== Screen preview ===== */
