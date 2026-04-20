@@ -48,6 +48,9 @@ html[data-theme="light"] {
   --border: rgba(0,0,0,0.08);
 }
 
+/* --- Selection --- */
+::selection { background: rgba(134,136,225,0.35); color: var(--fg); }
+
 /* --- Reset --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }

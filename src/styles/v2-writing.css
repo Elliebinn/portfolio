@@ -210,6 +210,8 @@
 .reader-divider { width: 40px; height: 2px; background: var(--faint); margin-bottom: 40px; }
 .reader-text { font-size: 15px; line-height: 1.8; color: var(--muted); }
 .reader-text p { margin-bottom: 1.25rem; }
+.reader-text a { color: var(--accent-soft); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(160,160,160,0.3); transition: color 0.2s var(--ease), text-decoration-color 0.2s var(--ease); }
+.reader-text a:hover { color: var(--fg); text-decoration-color: var(--fg); }
 .reader-text strong { color: var(--fg); font-weight: 600; }
 .reader-text em { color: var(--accent-soft); font-style: normal; }
 .reader-text blockquote {
