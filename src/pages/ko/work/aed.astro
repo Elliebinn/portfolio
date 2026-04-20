@@ -95,6 +95,7 @@ import '../../../styles/v2-casestudy.css';
 <!-- Crosshair cursor -->
 <div class="cursor" id="cursor">
   <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
   <div class="cursor-label" id="cursorLabel"></div>
 </div>
 
@@ -324,22 +325,9 @@ import '../../../styles/v2-casestudy.css';
             </div>
           </div>
           <div>
-            <div class="bg-[#1e1e1e] rounded-[16px] p-6">
-              <p class="text-[11px] font-bold tracking-wider uppercase text-txt-muted mb-4">날짜 네비게이션 UI</p>
-              <div class="flex items-center justify-center gap-2 py-4">
-                <div class="px-2 py-1 rounded bg-aed-slate/8 text-aed-slate text-[11px] font-bold">&#9664;R</div>
-                <div class="px-2 py-1 rounded bg-[#1a1a1a] text-txt-muted text-[11px]">&#8249;</div>
-                <div class="px-4 py-2 rounded-lg text-sm font-mono font-medium">2025-03-15</div>
-                <div class="px-2 py-1 rounded bg-[#1a1a1a] text-txt-muted text-[11px]">&#8250;</div>
-                <div class="px-2 py-1 rounded bg-aed-slate/8 text-aed-slate text-[11px] font-bold">R&#9654;</div>
-                <div class="px-3 py-1 rounded bg-[#1a1a1a] text-txt-muted text-[11px]">최신→</div>
-              </div>
-              <div class="mt-4 pt-4 border-t border-[rgba(226,226,226,0.08)]">
-                <div class="ph" style="aspect-ratio:16/6; border-radius:8px; font-size:12px;">
-                  비중 차트 ← 클릭 → Holdings 테이블 연동
-                </div>
-              </div>
-              <p class="text-[11px] text-txt-muted text-center mt-3">리밸런싱 일자 점프 + 차트↔테이블 양방향 동기화</p>
+            <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:#1a1a1a;">
+              <img src="/images/aed/screenshots/screenshot-perf-weight-holdings.png" alt="포트폴리오 비중 차트 + Holdings 테이블 + 리밸런싱 날짜 네비게이션" style="width:100%; display:block;" loading="lazy" />
+              <p class="text-[11px] text-txt-muted text-center py-3">리밸런싱 일자 점프 + 차트↔테이블 양방향 동기화</p>
             </div>
           </div>
         </div>
@@ -438,7 +426,7 @@ import '../../../styles/v2-casestudy.css';
       </div>
 
       <!-- Sticky tab buttons -->
-      <div class="sticky top-0 z-30 py-4 flex justify-center rv" style="background:transparent;">
+      <div class="sticky top-[72px] z-20 py-4 flex justify-center rv" style="background:linear-gradient(to bottom, #13131a 60%, transparent);">
         <div style="display:inline-flex; align-items:center; gap:4px; padding:6px 8px; border-radius:100px; background:rgba(30,30,30,0.85); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.06);">
           <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:rgba(255,255,255,0.1); color:#f2f2f0; border:none; cursor:pointer;" data-tab="mockup">목업 시안 비교</button>
           <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:transparent; color:#888; border:none; cursor:pointer;" data-tab="feedback">실제 피드백</button>
@@ -1097,7 +1085,7 @@ import '../../../styles/v2-casestudy.css';
       </div>
 
       <!-- 매매탐색 -->
-      <div class="grid lg:grid-cols-[1.4fr_0.6fr] gap-12 items-center">
+      <div class="mb-16 grid lg:grid-cols-[1.4fr_0.6fr] gap-12 items-center">
         <div class="rv">
           <div class="device-mockup device-mockup--tilt-left">
             <div class="device-mockup__inner">
@@ -1118,15 +1106,24 @@ import '../../../styles/v2-casestudy.css';
             <span class="text-[10px] font-bold tracking-wider uppercase text-aed-slate">Phase 03 + 04</span>
             <p class="mt-1 text-[13px] text-txt-secondary">원인 종목 식별 → 매매 논리 검증</p>
           </div>
-          <!-- 드릴다운 레이어 -->
-          <div class="bg-[#1a1a1a] rounded-[12px] p-4">
-            <p class="text-[11px] font-bold tracking-wider uppercase text-txt-muted mb-3">드릴다운 레이어</p>
-            <div class="space-y-2">
-              <div class="bg-[#1e1e1e] rounded-lg p-3 text-[12px] font-bold">기여수익률 테이블</div>
-              <div class="bg-[#1e1e1e] rounded-lg p-3 ml-3 text-[12px] font-bold">종목 드릴다운</div>
-              <div class="bg-aed-violet/5 rounded-lg p-3 ml-6 text-[12px] font-bold text-aed-violet border border-aed-violet/20">사이클 상세</div>
-            </div>
+        </div>
+      </div>
+
+      <!-- 드릴다운 상세: 종목 드릴다운 + 사이클 모달 -->
+      <div class="grid lg:grid-cols-2 gap-6 rv">
+        <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:#1a1a1a;">
+          <div class="px-5 py-3 border-b border-[rgba(226,226,226,0.06)]">
+            <p class="text-[11px] font-bold tracking-wider uppercase text-aed-violet">종목 드릴다운</p>
+            <p class="text-[12px] text-txt-muted mt-1">전체 거래 내역 + 기여수익률 추이 + 매매 사이클</p>
           </div>
+          <img src="/images/aed/screenshots/screenshot-trade-stock-drilldown-full.png" alt="종목 드릴다운 — 전체 거래 내역과 기여수익률" style="width:100%; display:block;" loading="lazy" />
+        </div>
+        <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:#1a1a1a;">
+          <div class="px-5 py-3 border-b border-[rgba(226,226,226,0.06)]">
+            <p class="text-[11px] font-bold tracking-wider uppercase text-aed-violet">사이클 확대</p>
+            <p class="text-[12px] text-txt-muted mt-1">개별 매매 사이클의 캔들차트 + 원본/조정 기준 비교</p>
+          </div>
+          <img src="/images/aed/screenshots/screenshot-trade-cycle-modal.png" alt="사이클 확대 — 캔들차트와 매수/매도 기준" style="width:100%; display:block;" loading="lazy" />
         </div>
       </div>
     </div>
