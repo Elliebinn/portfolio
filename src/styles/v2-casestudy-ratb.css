@@ -3,6 +3,14 @@
    RATB Case Study — Custom styles
    =========================================== */
 
+/* ── RATB Palette ── */
+:root {
+  --ratb-orange: #F67D0A;
+  --ratb-charcoal: #474943;
+  --ratb-grey: #D3DADA;
+  --ratb-silver: #C4C2C3;
+}
+
 /* ── Nav ── */
 .cs-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
@@ -37,6 +45,16 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+}
+.browser-frame--white {
+  background: #fff;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
+}
+.browser-frame--white .browser-bar {
+  background: #fafafa;
+}
+.browser-frame--white .browser-url {
+  background: #f0f0f0;
 }
 .browser-bar {
   display: flex; align-items: center;
@@ -81,7 +99,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 11px; font-weight: 600;
   letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--accent, #008585); margin-bottom: 16px;
+  color: var(--ratb-orange); margin-bottom: 16px;
 }
 .ratb-title {
   font-family: 'Space Grotesk', sans-serif;
@@ -104,7 +122,7 @@
 .ratb-stat-value {
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(36px, 5vw, 56px); font-weight: 700;
-  letter-spacing: -0.04em; line-height: 1; color: var(--accent, #008585);
+  letter-spacing: -0.04em; line-height: 1; color: var(--ratb-orange);
 }
 .ratb-stat-value em { font-style: normal; }
 .ratb-stat-label {
@@ -149,7 +167,7 @@
   letter-spacing: -0.02em; line-height: 1.4;
   max-width: 22ch; margin: 0 auto;
 }
-.ratb-pullquote blockquote em { font-style: normal; color: var(--accent, #008585); }
+.ratb-pullquote blockquote em { font-style: normal; color: var(--ratb-orange); }
 
 /* ── Scale timeline ── */
 .ratb-scale-row {
@@ -158,14 +176,14 @@
 }
 .ratb-scale-num {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 40px; font-weight: 700; color: var(--accent, #008585); line-height: 1;
+  font-size: 40px; font-weight: 700; color: var(--ratb-orange); line-height: 1;
 }
 .ratb-scale-row h4 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
 .ratb-scale-row p { font-size: 14px; color: #a0a0a0; line-height: 1.7; }
 
 /* ── Episode ── */
 .ratb-episode {
-  background: #1a1a1a; border-left: 3px solid var(--accent, #008585);
+  background: #1a1a1a; border-left: 3px solid var(--ratb-orange);
   border-radius: 0 12px 12px 0; padding: 28px 32px;
   margin: 32px 0;
 }
@@ -181,7 +199,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px; font-weight: 600;
   letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--accent, #008585); margin-bottom: 24px;
+  color: var(--ratb-orange); margin-bottom: 24px;
 }
 .ratb-framework-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .ratb-framework-grid h5 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
@@ -194,18 +212,18 @@
   border-radius: 12px; padding: 32px;
   transition: border-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.ratb-habit:hover { border-color: var(--accent, #008585); }
+.ratb-habit:hover { border-color: var(--ratb-orange); }
 .ratb-habit-num {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 32px; font-weight: 700;
-  color: rgba(0,133,133,0.25); line-height: 1; margin-bottom: 16px;
+  color: rgba(246,125,10,0.25); line-height: 1; margin-bottom: 16px;
 }
 .ratb-habit h4 { font-size: 16px; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
 .ratb-habit p { font-size: 13px; color: #a0a0a0; line-height: 1.7; }
 .ratb-habit .applied {
   margin-top: 14px; padding-top: 14px;
   border-top: 1px solid rgba(226,226,226,0.12);
-  font-size: 12px; color: #66b2b2;
+  font-size: 12px; color: #F6A04A;
 }
 
 /* ── CTA ── */
@@ -218,14 +236,14 @@
   font-size: clamp(32px, 5vw, 56px); font-weight: 700;
   letter-spacing: -0.03em; margin-bottom: 24px;
 }
-.ratb-cta h2 em { font-style: normal; color: var(--accent, #008585); }
+.ratb-cta h2 em { font-style: normal; color: var(--ratb-orange); }
 .ratb-cta-links { display: flex; gap: 24px; justify-content: center; margin-top: 32px; }
 .ratb-cta-links a {
   font-size: 13px; color: #a0a0a0; text-decoration: none;
   padding: 10px 24px; border: 1px solid rgba(226,226,226,0.12);
   border-radius: 100px; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.ratb-cta-links a:hover { border-color: var(--accent, #008585); color: var(--accent, #008585); }
+.ratb-cta-links a:hover { border-color: var(--ratb-orange); color: var(--ratb-orange); }
 
 /* ── Excel zoom ── */
 .ratb-excel-zoom {
