@@ -57,7 +57,7 @@ const renderBold = (text: string) => boldToHtml(text, '');
   </header>
 
   <!-- 2-column layout: 8/4 -->
-  <div style="display:grid; grid-template-columns:1fr 320px; gap:60px; align-items:start;">
+  <div class="resume-split">
 
     <!-- LEFT: 경력 -->
     <div>
@@ -157,7 +157,7 @@ const renderBold = (text: string) => boldToHtml(text, '');
       <!-- 도구 -->
       <section>
         <h2 style="font-family:'Syne','Paperlogy',sans-serif; font-size:18px; font-weight:700; color:var(--ink); padding-bottom:10px; border-bottom:2px solid var(--rule); margin-bottom:16px;">도구</h2>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div class="resume-tools-grid">
           <div style="display:flex; align-items:center; gap:10px; padding:10px; background:var(--surface); border-radius:10px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
             <ph-stack weight="regular" size="16" style="color:var(--accent);"></ph-stack>
             <span style="font-size:13px; font-weight:600; color:var(--ink);">Claude Code</span>

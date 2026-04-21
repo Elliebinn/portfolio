@@ -77,6 +77,37 @@ h1, h2, h3, h4 { font-family: 'Syne', 'Paperlogy', 'Pretendard', sans-serif; let
 }
 .btn-pdf:hover { background: var(--accent); }
 
+/* Resume 2-column split */
+.resume-split {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 60px;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .resume-split { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* Tools grid */
+.resume-tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* Mobile overrides */
+@media (max-width: 768px) {
+  .doc { padding: 72px 20px 80px; }
+  .cs-nav.scrolled { left: 4%; right: 4%; }
+}
+@media (max-width: 480px) {
+  .cs-nav { padding: 14px 16px; }
+  .cs-nav.scrolled { left: 3%; right: 3%; padding: 10px 14px; }
+  .cs-nav-brand { font-size: 16px; }
+  .cs-back-link { font-size: 10px; }
+  .btn-pdf { font-size: 11px; padding: 6px 12px; }
+}
+
 /* Document body — single column, restrained */
 .doc {
   max-width: 1260px;
