@@ -656,6 +656,9 @@ body::after {
   display: flex;
   flex-direction: column;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 .doc-card:hover {
   transform: translateY(-3px);
@@ -681,7 +684,8 @@ body::after {
   margin-top: 14px;
   flex: 1;
   min-height: 280px;
-  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
   overflow-x: auto;
 }
 .doc-preview .c-h1 { color: #E8EAF0; font-weight: 700; }
