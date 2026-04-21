@@ -504,5 +504,11 @@ import { resume, boldToHtml } from '../../../data/resume';
     </section>
 
   </div>
+<script>
+  // URL에 ?print 파라미터가 있으면 자동으로 인쇄 대화상자 열기
+  if (window.location.search.includes('print')) {
+    window.addEventListener('load', () => { setTimeout(() => window.print(), 300); });
+  }
+</script>
 </body>
 </html>
