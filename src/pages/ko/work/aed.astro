@@ -123,6 +123,8 @@ import '../../../styles/v2-casestudy.css';
     .cs-back-link { font-size: 10px; }
     .cs-theme-btn { font-size: 10px; padding: 6px 12px; }
     .cs-nav-right { gap: 12px; }
+    .comm-tab-bar { flex-wrap: wrap; border-radius: 12px; gap: 2px; }
+    .comm-tab { font-size: 11px !important; padding: 6px 10px !important; }
   }
 </style>
 
@@ -468,12 +470,12 @@ import '../../../styles/v2-casestudy.css';
       </div>
 
       <!-- Sticky tab buttons -->
-      <div class="sticky top-[72px] z-20 py-4 flex justify-center rv" style="background:linear-gradient(to bottom, var(--s-page) 60%, transparent);">
-        <div style="display:inline-flex; align-items:center; gap:4px; padding:6px 8px; border-radius:100px; background:var(--tab-pill-bg, rgba(30,30,30,0.85)); backdrop-filter:blur(12px); border:1px solid var(--b-subtle);">
-          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:var(--tab-active-bg, rgba(255,255,255,0.1)); color:var(--t-primary); border:none; cursor:pointer;" data-tab="mockup">목업 시안 비교</button>
-          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:transparent; color:var(--t-muted); border:none; cursor:pointer;" data-tab="feedback">실제 피드백</button>
-          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:transparent; color:var(--t-muted); border:none; cursor:pointer;" data-tab="checkpoint">Before → After</button>
-          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:transparent; color:var(--t-muted); border:none; cursor:pointer;" data-tab="prd">기획 문서</button>
+      <div class="comm-tab-sticky sticky top-[72px] z-20 py-4 flex justify-center rv" style="background:linear-gradient(to bottom, var(--s-page) 60%, transparent);">
+        <div class="comm-tab-bar" style="display:inline-flex; align-items:center; gap:4px; padding:6px 8px; border-radius:12px; background:var(--tab-pill-bg, rgba(30,30,30,0.85)); backdrop-filter:blur(12px); border:1px solid var(--b-subtle);">
+          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 16px; border-radius:8px; background:var(--tab-active-bg, rgba(255,255,255,0.1)); color:var(--t-primary); border:none; cursor:pointer;" data-tab="mockup">목업 시안 비교</button>
+          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 16px; border-radius:8px; background:transparent; color:var(--t-muted); border:none; cursor:pointer;" data-tab="feedback">실제 피드백</button>
+          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 16px; border-radius:8px; background:transparent; color:var(--t-muted); border:none; cursor:pointer;" data-tab="checkpoint">Before → After</button>
+          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 16px; border-radius:8px; background:transparent; color:var(--t-muted); border:none; cursor:pointer;" data-tab="prd">기획 문서</button>
         </div>
       </div>
 
