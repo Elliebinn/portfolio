@@ -213,4 +213,17 @@ const renderBold = (text: string) => boldToHtml(text, '');
 
 </main>
 
+<script is:inline>
+  // Page transition — enter animation (curtain open)
+  const pt = document.getElementById('pageTransition');
+  if (pt) {
+    pt.classList.add('enter');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        pt.classList.add('done');
+        setTimeout(() => { pt.classList.remove('enter', 'done'); }, 600);
+      });
+    });
+  }
+</script>
 </V2Layout>

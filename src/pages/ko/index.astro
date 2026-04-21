@@ -434,12 +434,12 @@ function estimateReadTime(body: string) {
     });
   }
 
-  // Page transition — split-panel wipe on work card click
+  // Page transition — split-panel wipe on internal link click
   const pt = document.getElementById('pageTransition');
-  document.querySelectorAll('.work-card[href^="/"]').forEach(card => {
-    card.addEventListener('click', (e) => {
+  document.querySelectorAll('.work-card[href^="/"], .nav-link[href^="/ko/resume"], .nav-link[href^="/ko/writing"], .view-cv[href^="/"]').forEach(link => {
+    link.addEventListener('click', (e) => {
       e.preventDefault();
-      const href = card.getAttribute('href');
+      const href = link.getAttribute('href');
       pt.classList.add('exit');
       setTimeout(() => { window.location.href = href; }, 500);
     });
