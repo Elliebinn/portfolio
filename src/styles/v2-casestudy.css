@@ -339,6 +339,8 @@ body::after {
   flex-direction: column;
   overflow: hidden;
   color: #1D1C1D;
+  max-width: 100%;
+  min-width: 0;
 }
 .slack-header {
   background: #F8F8F8;
@@ -366,6 +368,7 @@ body::after {
   gap: 8px;
   position: relative;
   transition: background 0.1s;
+  min-width: 0;
 }
 .slack-msg:hover { background: #F8F8F8; }
 .slack-avatar {
@@ -406,7 +409,9 @@ body::after {
   line-height: 1.46668;
   color: #1D1C1D;
   word-break: keep-all;
+  overflow-wrap: break-word;
   font-weight: 400;
+  min-width: 0;
 }
 .slack-text strong { font-weight: 700; }
 .slack-text ul {
