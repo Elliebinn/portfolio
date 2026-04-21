@@ -123,7 +123,23 @@ function main() {
   mkdirSync(dirname(OUTPUT_PATH), { recursive: true });
 
   // Prepend auto-gen banner so the user knows it's regenerated
-  const banner = `<!--\n  ⚠️  AUTO-GENERATED — DO NOT EDIT DIRECTLY\n  Source: portfolio/src/data/resume.ts\n  Regenerate: cd portfolio && npm run sync:resume\n  Generated: ${new Date().toISOString()}\n-->\n\n`;
+  const banner = `<!--
+  ⚠️  AUTO-GENERATED — DO NOT EDIT DIRECTLY
+
+  이 파일은 자동 생성됩니다. 직접 수정하지 마세요!
+
+  📝 수정 방법:
+    1. portfolio/src/data/resume.ts 파일을 수정하세요
+    2. cd portfolio && npm run sync:resume 실행
+    3. 이 파일이 자동으로 업데이트됩니다
+
+  Source: portfolio/src/data/resume.ts
+  Generated: ${new Date().toISOString()}
+
+  ⚠️  이 파일을 직접 수정하면 다음 sync:resume 실행 시 변경사항이 손실됩니다!
+-->
+
+`;
 
   writeFileSync(OUTPUT_PATH, banner + output, 'utf-8');
   console.log(`✓ resume-common.md generated → ${OUTPUT_PATH}`);
