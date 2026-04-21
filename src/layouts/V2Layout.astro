@@ -25,5 +25,13 @@ const { title = "Hyebin Woo", lang = "ko" } = Astro.props;
     <div class="pt-bot"></div>
   </div>
   <slot />
+  <script is:inline>
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        const pt = document.getElementById('pageTransition');
+        if (pt) pt.classList.remove('exit', 'enter', 'done');
+      }
+    });
+  </script>
 </body>
 </html>

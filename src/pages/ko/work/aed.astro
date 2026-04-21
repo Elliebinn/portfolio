@@ -33,7 +33,7 @@ import '../../../styles/v2-casestudy.css';
 <style>
   .cs-nav {
     position: fixed; top: 0; left: 0; right: 0;
-    z-index: 200;
+    z-index: 9990;
     padding: 22px 44px;
     display: flex; justify-content: space-between; align-items: center;
     transition: padding .45s var(--ease, cubic-bezier(0.25,0.46,0.45,0.94)),
@@ -75,7 +75,7 @@ import '../../../styles/v2-casestudy.css';
     background: transparent; color: #e2e2e2;
     font-size: 12px; font-weight: 500;
     letter-spacing: 0.08em; text-transform: uppercase;
-    cursor: none; transition: border-color 0.3s;
+    cursor: pointer; transition: border-color 0.3s;
   }
   .cs-theme-btn:hover { border-color: #e2e2e2; }
   @media (max-width: 900px) {
@@ -84,7 +84,7 @@ import '../../../styles/v2-casestudy.css';
   }
 </style>
 
-<nav class="cs-nav" id="csNav">
+<nav class="cs-nav" id="csNav" style="z-index:9990;">
   <a href="/ko/" class="cs-nav-brand">Hyebin.</a>
   <div class="cs-nav-right">
     <a href="/ko/" class="cs-back-link">Back Home</a>
@@ -1116,14 +1116,14 @@ import '../../../styles/v2-casestudy.css';
             <p class="text-[11px] font-bold tracking-wider uppercase text-aed-violet">종목 드릴다운</p>
             <p class="text-[12px] text-txt-muted mt-1">전체 거래 내역 + 기여수익률 추이 + 매매 사이클</p>
           </div>
-          <img src="/images/aed/screenshots/screenshot-trade-stock-drilldown-full.png" alt="종목 드릴다운 — 전체 거래 내역과 기여수익률" style="width:100%; display:block;" loading="lazy" />
+          <img src="/images/aed/screenshots/screenshot-trade-cycle-modal.png" alt="종목 드릴다운 — 사이클 확대 모달 포함" style="width:100%; display:block;" loading="lazy" />
         </div>
         <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:#1a1a1a;">
           <div class="px-5 py-3 border-b border-[rgba(226,226,226,0.06)]">
             <p class="text-[11px] font-bold tracking-wider uppercase text-aed-violet">사이클 확대</p>
             <p class="text-[12px] text-txt-muted mt-1">개별 매매 사이클의 캔들차트 + 원본/조정 기준 비교</p>
           </div>
-          <img src="/images/aed/screenshots/screenshot-trade-cycle-modal.png" alt="사이클 확대 — 캔들차트와 매수/매도 기준" style="width:100%; display:block;" loading="lazy" />
+          <img src="/images/aed/screenshots/screenshot-trade-stock-drilldown-full.png" alt="사이클 확대 — 종목 전체 뷰" style="width:100%; display:block;" loading="lazy" />
         </div>
       </div>
     </div>
@@ -1198,7 +1198,7 @@ import '../../../styles/v2-casestudy.css';
             <tr>
               <td class="py-4 pr-8 font-medium text-txt-primary">매매 논리 검증</td>
               <td class="py-4 pr-8 text-txt-secondary">성과 숫자만 보고 알고리즘 판단을 믿음. "왜 이 종목을 이 타이밍에 샀는지" 확인 불가.</td>
-              <td class="py-4 text-txt-primary font-medium">종목 드릴다운 · 매매 사이클마다 이격도·캔들스틱 검증</td>
+              <td class="py-4 text-txt-primary font-medium">종목 드릴다운 · 매매 사이클마다 캔들스틱 검증</td>
             </tr>
             <tr>
               <td class="py-4 pr-8 font-medium text-txt-primary">기획 → 구현</td>
@@ -1496,6 +1496,17 @@ import '../../../styles/v2-casestudy.css';
         if (section) section.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
     });
+
+    // Theme toggle
+    const themeBtn = document.getElementById('csThemeBtn');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const html = document.documentElement;
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        themeBtn.textContent = isDark ? '◐ Light' : '◐ Dark';
+      });
+    }
 
     // Crosshair cursor
     const cursor = document.getElementById('cursor');
