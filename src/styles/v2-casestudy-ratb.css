@@ -354,4 +354,15 @@ html[data-theme="light"] .cs-theme-btn:hover { border-color: #161513; }
   .ratb-habits { grid-template-columns: 1fr; }
   .ratb-framework-grid { grid-template-columns: 1fr; }
   .cs-nav.scrolled { left: 5%; right: 5%; }
+  .ratb-section { padding: 80px 20px; }
+  .ratb-title { font-size: clamp(24px, 6vw, 36px); }
+}
+@media (max-width: 480px) {
+  .cs-nav { padding: 16px 16px; }
+  .cs-nav.scrolled { left: 3%; right: 3%; padding: 10px 16px; }
+  .cs-nav-brand { font-size: 16px; }
+  .cs-back-link { font-size: 10px; }
+  .cs-theme-btn { font-size: 10px; padding: 6px 12px; }
+  .ratb-pullquote blockquote { font-size: clamp(18px, 5vw, 28px); }
+  .ratb-stat-value { font-size: clamp(28px, 8vw, 48px); }
 }

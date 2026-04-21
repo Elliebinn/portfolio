@@ -602,6 +602,21 @@ html[data-theme="light"] .nav.scrolled {
 .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+/* --- Mobile nav --- */
+@media (max-width: 768px) {
+  .nav { padding: 16px 20px; }
+  .nav-links { gap: 16px; }
+  .nav-link { font-size: 11px; }
+  .nav.scrolled { left: 4%; right: 4%; padding: 10px 16px; }
+  .nav.scrolled .nav-links { gap: 12px; }
+  .theme-toggle { display: none; }
+}
+@media (max-width: 480px) {
+  .nav-links { gap: 10px; }
+  .nav-link { font-size: 10px; }
+  .nav-link[href="/en/"] { display: none; }
+}
+
 /* --- Reduced motion --- */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition-duration: 0s !important; }
