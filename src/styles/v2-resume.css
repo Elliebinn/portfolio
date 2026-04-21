@@ -1,4 +1,6 @@
 /* v2-resume.css — Resume page styles (light theme override) */
+body { cursor: default !important; }
+.cursor { display: none !important; }
 
 /* Paperlogy — Korean display */
 @font-face { font-family: 'Paperlogy'; src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-fall@1.1/Paperlogy-4Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
