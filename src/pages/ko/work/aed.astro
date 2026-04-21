@@ -11,10 +11,29 @@ import '../../../styles/v2-casestudy.css';
       theme: {
         extend: {
           colors: {
-            surface: { page:'#131313', card:'#1e1e1e', subtle:'#1a1a1a', elevated:'#2a2a2a', dark:'#0e0e0e', darker:'#0a0a0a', dcard:'#1e1e1e', delevated:'#333333' },
+            surface: {
+              page: 'var(--s-page)',
+              card: 'var(--s-card)',
+              subtle: 'var(--s-subtle)',
+              elevated: 'var(--s-elevated)',
+              dark: 'var(--s-dark)',
+              darker: 'var(--s-darker)',
+              dcard: 'var(--s-dcard)',
+              delevated: 'var(--s-delevated)',
+            },
             aed: { slate:'#4B6878', 'slate-soft':'#8BA4B4', emerald:'#1E6A4F', 'emerald-deep':'#0C513A', red:'#D04040', amber:'#D4A05A', violet:'#8688e1', orange:'#D4A05A' },
-            txt: { primary:'#f2f2f0', secondary:'#a0a0a0', muted:'#666666', faint:'#444444', inverse:'#131313' },
-            bdr: { card:'rgba(226,226,226,0.15)', hover:'rgba(226,226,226,0.25)', subtle:'rgba(226,226,226,0.08)' },
+            txt: {
+              primary: 'var(--t-primary)',
+              secondary: 'var(--t-secondary)',
+              muted: 'var(--t-muted)',
+              faint: 'var(--t-faint)',
+              inverse: 'var(--t-inverse)',
+            },
+            bdr: {
+              card: 'var(--b-card)',
+              hover: 'var(--b-hover)',
+              subtle: 'var(--b-subtle)',
+            },
           },
           fontFamily: {
             sans: ['Pretendard', '-apple-system', 'system-ui', 'sans-serif'],
@@ -26,7 +45,19 @@ import '../../../styles/v2-casestudy.css';
   </script>
 
   <style is:inline>
-    body { -webkit-font-smoothing: antialiased; word-break: keep-all; background: #131313; color: #f2f2f0; overflow-x: hidden; cursor: none; }
+    :root, html[data-theme="dark"] {
+      --s-page:#131313; --s-card:#1e1e1e; --s-subtle:#1a1a1a; --s-elevated:#2a2a2a;
+      --s-dark:#0e0e0e; --s-darker:#0a0a0a; --s-dcard:#1e1e1e; --s-delevated:#333333;
+      --t-primary:#f2f2f0; --t-secondary:#a0a0a0; --t-muted:#666666; --t-faint:#444444; --t-inverse:#131313;
+      --b-card:rgba(226,226,226,0.15); --b-hover:rgba(226,226,226,0.25); --b-subtle:rgba(226,226,226,0.08);
+    }
+    html[data-theme="light"] {
+      --s-page:#F0EDE5; --s-card:#ffffff; --s-subtle:#E8E4DA; --s-elevated:#f5f3ef;
+      --s-dark:#E8E4DA; --s-darker:#DDD9CF; --s-dcard:#ffffff; --s-delevated:#f0ece4;
+      --t-primary:#161513; --t-secondary:#5a5754; --t-muted:#8a8784; --t-faint:#bbb8b4; --t-inverse:#f2f2f0;
+      --b-card:rgba(0,0,0,0.08); --b-hover:rgba(0,0,0,0.12); --b-subtle:rgba(0,0,0,0.04);
+    }
+    body { -webkit-font-smoothing: antialiased; word-break: keep-all; background: var(--s-page); color: var(--t-primary); overflow-x: hidden; cursor: none; transition: background 0.3s, color 0.3s; }
   </style>
 
 <!-- Case study nav -->
@@ -100,7 +131,7 @@ import '../../../styles/v2-casestudy.css';
 </div>
 
   <!-- ============ 01. HERO ============ -->
-  <section class="case-hero" id="hero" style="background: #000;">
+  <section class="case-hero" id="hero" style="background: var(--s-darker, #000);">
     <!-- Background image (full bleed) -->
     <div style="position:absolute; inset:0; z-index:0;">
       <img src="/images/aed/aed-main-thumnail.png" alt="" style="width:100%; height:100%; object-fit:cover; opacity:0.7;" />
@@ -191,7 +222,7 @@ import '../../../styles/v2-casestudy.css';
 
 
   <!-- ============ 03. KEY DECISIONS ============ -->
-  <section class="py-32 bg-[#1a1a1a]">
+  <section class="py-32 bg-surface-subtle">
     <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
 
       <div class="max-w-3xl mb-20 rv">
@@ -232,12 +263,12 @@ import '../../../styles/v2-casestudy.css';
             </div>
           </div>
           <div class="space-y-4">
-            <div class="bg-[#1e1e1e] rounded-[16px] p-6">
+            <div class="bg-surface-card rounded-[16px] p-6">
               <p class="text-[11px] font-bold tracking-wider uppercase text-txt-muted mb-4">Tooltip 구조</p>
-              <div class="bg-[#1a1a1a] rounded-[12px] p-5">
+              <div class="bg-surface-subtle rounded-[12px] p-5">
                 <p class="font-bold text-sm mb-1">샤프지수</p>
                 <p class="text-[13px] text-txt-secondary mb-3">위험 대비 초과수익을 측정하는 지표. 1 이상이면 양호.</p>
-                <div class="bg-[#1e1e1e] rounded-lg p-3">
+                <div class="bg-surface-card rounded-lg p-3">
                   <p class="text-[11px] text-txt-muted mb-1 font-mono">formula</p>
                   <p class="text-sm font-mono text-aed-slate">sqrt(252) x mean(r - rf) / std(r)</p>
                 </div>
@@ -265,16 +296,16 @@ import '../../../styles/v2-casestudy.css';
           </div>
           <div class="lg:order-1">
             <div class="grid grid-cols-2 gap-4">
-              <div class="bg-[#1e1e1e] rounded-[16px] p-5">
+              <div class="bg-surface-card rounded-[16px] p-5">
                 <p class="text-[10px] font-bold tracking-wider uppercase text-txt-muted mb-3">BEFORE</p>
                 <div class="space-y-2">
-                  <div class="bg-[#1a1a1a] rounded-lg px-3 py-2 text-[13px]">성과</div>
-                  <div class="bg-[#1a1a1a] rounded-lg px-3 py-2 text-[13px]">포트폴리오</div>
-                  <div class="bg-[#1a1a1a] rounded-lg px-3 py-2 text-[13px]">분석</div>
+                  <div class="bg-surface-subtle rounded-lg px-3 py-2 text-[13px]">성과</div>
+                  <div class="bg-surface-subtle rounded-lg px-3 py-2 text-[13px]">포트폴리오</div>
+                  <div class="bg-surface-subtle rounded-lg px-3 py-2 text-[13px]">분석</div>
                 </div>
                 <p class="text-[11px] text-txt-muted mt-3">맥락 전환 3회</p>
               </div>
-              <div class="bg-[#1e1e1e] rounded-[16px] border border-aed-emerald/30 p-5">
+              <div class="bg-surface-card rounded-[16px] border border-aed-emerald/30 p-5">
                 <p class="text-[10px] font-bold tracking-wider uppercase text-aed-emerald mb-3">AFTER</p>
                 <div class="space-y-2">
                   <div class="bg-aed-emerald/5 rounded-lg px-3 py-2 text-[13px] font-medium border border-aed-emerald/15">성과요약 <span class="text-[11px] text-txt-muted font-normal">원스크롤</span></div>
@@ -325,7 +356,7 @@ import '../../../styles/v2-casestudy.css';
             </div>
           </div>
           <div>
-            <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:#1a1a1a;">
+            <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:var(--s-subtle);">
               <img src="/images/aed/screenshots/screenshot-perf-weight-holdings.png" alt="포트폴리오 비중 차트 + Holdings 테이블 + 리밸런싱 날짜 네비게이션" style="width:100%; display:block;" loading="lazy" />
               <p class="text-[11px] text-txt-muted text-center py-3">리밸런싱 일자 점프 + 차트↔테이블 양방향 동기화</p>
             </div>
@@ -390,7 +421,7 @@ import '../../../styles/v2-casestudy.css';
 
 
   <!-- ============ 05. APPROACH ============ -->
-  <section class="py-28 bg-[#1a1a1a]">
+  <section class="py-28 bg-surface-subtle">
     <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
 
       <div class="text-center mb-20 rv">
@@ -403,22 +434,22 @@ import '../../../styles/v2-casestudy.css';
 
       <!-- Numbered flow -->
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-        <div class="rv bg-[#1e1e1e] rounded-[20px] p-6" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(45,74,90,0.04);">
+        <div class="rv bg-surface-card rounded-[20px] p-6" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(45,74,90,0.04);">
           <div class="w-10 h-10 rounded-full bg-aed-slate/10 flex items-center justify-center text-aed-slate font-display font-bold mb-5">1</div>
           <h4 class="font-bold text-base mb-2">관찰 먼저</h4>
           <p class="text-[13px] text-txt-secondary leading-relaxed">리서처 옆에서 실제 분석 워크플로우를 관찰. 어디서 멈추는지를 파악했습니다.</p>
         </div>
-        <div class="rv rv-d1 bg-[#1e1e1e] rounded-[20px] p-6" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(45,74,90,0.04);">
+        <div class="rv rv-d1 bg-surface-card rounded-[20px] p-6" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(45,74,90,0.04);">
           <div class="w-10 h-10 rounded-full bg-aed-slate/10 flex items-center justify-center text-aed-slate font-display font-bold mb-5">2</div>
           <h4 class="font-bold text-base mb-2">목업으로 제안</h4>
           <p class="text-[13px] text-txt-secondary leading-relaxed">32개 HTML 목업을 만들어 바로 공유. A~D 시안 비교 후 리서처가 직접 선택했습니다.</p>
         </div>
-        <div class="rv rv-d2 bg-[#1e1e1e] rounded-[20px] p-6" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(45,74,90,0.04);">
+        <div class="rv rv-d2 bg-surface-card rounded-[20px] p-6" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(45,74,90,0.04);">
           <div class="w-10 h-10 rounded-full bg-aed-slate/10 flex items-center justify-center text-aed-slate font-display font-bold mb-5">3</div>
           <h4 class="font-bold text-base mb-2">피드백 → 다음 버전</h4>
           <p class="text-[13px] text-txt-secondary leading-relaxed">슬랙 피드백이 1~2일 안에 반영. 목업을 공유하면 피드백이 왔고, 피드백은 다음 목업이 됐습니다.</p>
         </div>
-        <div class="rv rv-d3 bg-[#1e1e1e] rounded-[20px] p-6" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(43,105,81,0.06);">
+        <div class="rv rv-d3 bg-surface-card rounded-[20px] p-6" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(43,105,81,0.06);">
           <div class="w-10 h-10 rounded-full bg-aed-emerald/10 flex items-center justify-center text-aed-emerald font-display font-bold mb-5">4</div>
           <h4 class="font-bold text-base mb-2">목업이 곧 코드</h4>
           <p class="text-[13px] text-txt-secondary leading-relaxed">기획 의도가 그대로 화면에 반영. "이거 이 뜻이 아닌데요" 회의가 구조적으로 없어졌습니다.</p>
@@ -441,7 +472,7 @@ import '../../../styles/v2-casestudy.css';
       <div class="comm-section py-20 rv" data-tab-name="mockup" id="panel-mockup">
         <div class="grid lg:grid-cols-2 gap-8 items-stretch">
           <!-- 시안 A: 기존 AED 화면 -->
-          <div class="bg-[#1e1e1e] rounded-[20px] p-6 flex flex-col" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(45,74,90,0.04);">
+          <div class="bg-surface-card rounded-[20px] p-6 flex flex-col" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(45,74,90,0.04);">
             <div class="flex items-center justify-between mb-4">
               <p class="text-[11px] font-bold tracking-wider uppercase text-txt-muted">시안 A · 기존 화면</p>
               <span class="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded" style="background:rgba(208,64,64,0.12); color:#D04040;">Before</span>
@@ -455,7 +486,7 @@ import '../../../styles/v2-casestudy.css';
           </div>
 
           <!-- 시안 B: 내가 만든 HTML 목업 (채택) -->
-          <div class="bg-[#1e1e1e] rounded-[20px] p-6 flex flex-col" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 16px 48px rgba(43,105,81,0.10);">
+          <div class="bg-surface-card rounded-[20px] p-6 flex flex-col" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 16px 48px rgba(43,105,81,0.10);">
             <div class="flex items-center justify-between mb-4">
               <p class="text-[11px] font-bold tracking-wider uppercase text-aed-emerald">시안 B · 내가 제안한 목업</p>
               <span class="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded" style="background:rgba(30,106,79,0.15); color:#8BA4B4;">채택 · Proposal</span>
@@ -732,7 +763,7 @@ import '../../../styles/v2-casestudy.css';
 
         <!-- Before / After hero pair -->
         <div class="grid lg:grid-cols-2 gap-8 mb-10">
-          <div class="bg-[#1e1e1e] rounded-[16px] p-6">
+          <div class="bg-surface-card rounded-[16px] p-6">
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center gap-2">
                 <div class="w-2 h-2 rounded-full bg-txt-muted"></div>
@@ -745,7 +776,7 @@ import '../../../styles/v2-casestudy.css';
             </div>
             <p class="mt-4 text-[13px] text-txt-secondary leading-relaxed">"개요" 페이지 — 차트 3개 나열, 정보 위계 없음</p>
           </div>
-          <div class="bg-[#1e1e1e] rounded-[16px] border p-6" style="border-color:#1E6A4F;">
+          <div class="bg-surface-card rounded-[16px] border p-6" style="border-color:#1E6A4F;">
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center gap-2">
                 <div class="w-2 h-2 rounded-full bg-aed-emerald"></div>
@@ -780,7 +811,7 @@ import '../../../styles/v2-casestudy.css';
         <div class="grid md:grid-cols-3 gap-4">
 
           <!-- Card 1: HIGH bug caught -->
-          <div class="bg-[#1e1e1e] rounded-[16px] p-6 flex flex-col">
+          <div class="bg-surface-card rounded-[16px] p-6 flex flex-col">
             <div class="flex items-center gap-2 mb-4">
               <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase" style="background:rgba(208,64,64,0.1); color:#D04040;">HIGH</span>
               <span class="text-[11px] text-txt-muted font-mono">2026-03-26</span>
@@ -797,7 +828,7 @@ import '../../../styles/v2-casestudy.css';
           </div>
 
           <!-- Card 2: Measured improvement -->
-          <div class="bg-[#1e1e1e] rounded-[16px] p-6 flex flex-col">
+          <div class="bg-surface-card rounded-[16px] p-6 flex flex-col">
             <div class="flex items-center gap-2 mb-4">
               <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase" style="background:rgba(30,106,79,0.15); color:#8BA4B4;">IMPROVED · +4</span>
               <span class="text-[11px] text-txt-muted font-mono">2026-03-26</span>
@@ -814,7 +845,7 @@ import '../../../styles/v2-casestudy.css';
           </div>
 
           <!-- Card 3: Visual regression tracked -->
-          <div class="bg-[#1e1e1e] rounded-[16px] p-6 flex flex-col">
+          <div class="bg-surface-card rounded-[16px] p-6 flex flex-col">
             <div class="flex items-center gap-2 mb-4">
               <span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase" style="background:rgba(75,104,120,0.08); color:#4B6878;">시각 회귀</span>
               <span class="text-[11px] text-txt-muted font-mono">2026-03-27</span>
@@ -1111,14 +1142,14 @@ import '../../../styles/v2-casestudy.css';
 
       <!-- 드릴다운 상세: 종목 드릴다운 + 사이클 모달 -->
       <div class="grid lg:grid-cols-2 gap-6 rv">
-        <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:#1a1a1a;">
+        <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:var(--s-subtle);">
           <div class="px-5 py-3 border-b border-[rgba(226,226,226,0.06)]">
             <p class="text-[11px] font-bold tracking-wider uppercase text-aed-violet">종목 드릴다운</p>
             <p class="text-[12px] text-txt-muted mt-1">전체 거래 내역 + 기여수익률 추이 + 매매 사이클</p>
           </div>
           <img src="/images/aed/screenshots/screenshot-trade-cycle-modal.png" alt="종목 드릴다운 — 사이클 확대 모달 포함" style="width:100%; display:block;" loading="lazy" />
         </div>
-        <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:#1a1a1a;">
+        <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:var(--s-subtle);">
           <div class="px-5 py-3 border-b border-[rgba(226,226,226,0.06)]">
             <p class="text-[11px] font-bold tracking-wider uppercase text-aed-violet">사이클 확대</p>
             <p class="text-[12px] text-txt-muted mt-1">개별 매매 사이클의 캔들차트 + 원본/조정 기준 비교</p>
@@ -1146,7 +1177,7 @@ import '../../../styles/v2-casestudy.css';
           </div>
         </div>
         <div class="rv rv-d2">
-          <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)] transition-all duration-500 hover:border-[rgba(226,226,226,0.15)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]" style="background:#1a1a1a;">
+          <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)] transition-all duration-500 hover:border-[rgba(226,226,226,0.15)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]" style="background:var(--s-subtle);">
             <div class="px-5 py-3 border-b border-[rgba(226,226,226,0.06)]">
               <p class="text-[11px] font-bold tracking-wider uppercase text-aed-violet">유니버스 시각화</p>
               <p class="text-[12px] text-txt-muted mt-1">scatter plot 2축 시각화 + 포트폴리오 상태 색상 구분 + 데이터 테이블</p>
@@ -1160,7 +1191,7 @@ import '../../../styles/v2-casestudy.css';
 
 
   <!-- ============ 07. IMPACT ============ -->
-  <section class="py-32 bg-[#1a1a1a]">
+  <section class="py-32 bg-surface-subtle">
     <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
       <div class="mb-12 rv">
         <p class="label mb-4">임팩트</p>
@@ -1171,7 +1202,7 @@ import '../../../styles/v2-casestudy.css';
       </div>
 
       <!-- Cycle time visualization -->
-      <div class="rv mb-16 bg-[#1e1e1e] rounded-[16px] p-8">
+      <div class="rv mb-16 bg-surface-card rounded-[16px] p-8">
         <div class="flex items-center justify-between mb-6">
           <p class="text-[11px] font-bold tracking-wider uppercase text-txt-muted">기획 → 구현 사이클 시간</p>
           <p class="text-[11px] text-txt-muted">PRD 작성부터 리서처가 화면을 쓰기까지</p>
@@ -1182,7 +1213,7 @@ import '../../../styles/v2-casestudy.css';
               <span class="text-[13px] font-semibold text-txt-muted">Before</span>
               <span class="text-[13px] text-txt-muted">수주 ~ 수개월 · 기획서 반 이상이 반영 없이 드랍</span>
             </div>
-            <div class="h-3 bg-[#1a1a1a] rounded-full overflow-hidden">
+            <div class="h-3 bg-surface-subtle rounded-full overflow-hidden">
               <div class="h-full bg-txt-muted/30" style="width:92%;"></div>
             </div>
           </div>
@@ -1191,7 +1222,7 @@ import '../../../styles/v2-casestudy.css';
               <span class="text-[13px] font-semibold text-aed-emerald">After</span>
               <span class="text-[13px] text-aed-emerald font-semibold">1~2일 · 목업 공유 → 슬랙 피드백 → 다음 버전</span>
             </div>
-            <div class="h-3 bg-[#1a1a1a] rounded-full overflow-hidden">
+            <div class="h-3 bg-surface-subtle rounded-full overflow-hidden">
               <div class="h-full bg-aed-emerald" style="width:5%;"></div>
             </div>
           </div>
@@ -1276,7 +1307,7 @@ import '../../../styles/v2-casestudy.css';
       <div class="grid md:grid-cols-2 gap-8">
 
         <!-- Card 1: 프레임워크 전환 -->
-        <div class="rv bg-[#1e1e1e] rounded-[20px] p-8">
+        <div class="rv bg-surface-card rounded-[20px] p-8">
           <div class="flex items-center gap-3 mb-5">
             <div class="w-8 h-8 rounded-full bg-aed-slate/10 flex items-center justify-center text-aed-slate font-display font-bold text-xs">01</div>
             <span class="font-display font-bold text-lg">프레임워크 전환</span>
@@ -1287,10 +1318,10 @@ import '../../../styles/v2-casestudy.css';
             Next.js로 전환했으나 내부 도구에 SSR은 불필요하고 번들이 과잉. Vite + React로 재전환했습니다.<br/>
             HMR 속도가 곧 개발 속도입니다. "틀린 선택을 빠르게 인정하고, 더 맞는 도구로 옮기는 것"이 1인 개발에서 가능한 판단.
           </p>
-          <div class="bg-[#1a1a1a] rounded-[12px] p-5">
+          <div class="bg-surface-subtle rounded-[12px] p-5">
             <div class="space-y-4">
               <div class="flex items-center gap-4">
-                <div class="w-8 h-8 rounded-full bg-[#1e1e1e] flex-shrink-0 flex items-center justify-center text-txt-muted font-display font-bold text-xs">1</div>
+                <div class="w-8 h-8 rounded-full bg-surface-card flex-shrink-0 flex items-center justify-center text-txt-muted font-display font-bold text-xs">1</div>
                 <div class="flex-1">
                   <p class="font-bold text-sm text-txt-muted line-through">NiceGUI (Python)</p>
                   <p class="text-[12px] text-txt-muted">빠른 프로토타이핑, 차트 인터랙션 한계</p>
@@ -1298,7 +1329,7 @@ import '../../../styles/v2-casestudy.css';
               </div>
               <div class="ml-4 border-l-2 border-bdr-subtle h-3"></div>
               <div class="flex items-center gap-4">
-                <div class="w-8 h-8 rounded-full bg-[#1e1e1e] flex-shrink-0 flex items-center justify-center text-txt-muted font-display font-bold text-xs">2</div>
+                <div class="w-8 h-8 rounded-full bg-surface-card flex-shrink-0 flex items-center justify-center text-txt-muted font-display font-bold text-xs">2</div>
                 <div class="flex-1">
                   <p class="font-bold text-sm text-txt-muted line-through">Next.js</p>
                   <p class="text-[12px] text-txt-muted">SSR 불필요, 번들 과잉</p>
@@ -1317,7 +1348,7 @@ import '../../../styles/v2-casestudy.css';
         </div>
 
         <!-- Card 2: 디자이너 평가 2.5점 -->
-        <div class="rv rv-d1 bg-[#1e1e1e] rounded-[20px] p-8">
+        <div class="rv rv-d1 bg-surface-card rounded-[20px] p-8">
           <div class="flex items-center gap-3 mb-5">
             <div class="w-8 h-8 rounded-full bg-aed-slate/10 flex items-center justify-center text-aed-slate font-display font-bold text-xs">02</div>
             <span class="font-display font-bold text-lg">디자이너 평가 2.5점</span>
@@ -1326,7 +1357,7 @@ import '../../../styles/v2-casestudy.css';
           <p class="text-txt-secondary text-[15px] leading-relaxed">
             같은 회사 UX/UI 디자이너 2명에게 종합 평가 요청. 7개 REQ로 분해하고 14개 레퍼런스 조사 후 전면 리디자인.
           </p>
-          <div class="mt-6 p-5 rounded-[12px] bg-[#1a1a1a]">
+          <div class="mt-6 p-5 rounded-[12px] bg-surface-subtle">
             <p class="text-[11px] font-bold tracking-wider uppercase text-txt-muted mb-3">리디자인 프로세스</p>
             <div class="space-y-2 text-[13px] text-txt-secondary">
               <div class="flex items-start gap-2"><span class="text-aed-emerald font-bold mt-0.5">1</span><span>디자이너 2명에게 5점 척도 평가 요청 → 평균 2.5점</span></div>
@@ -1381,21 +1412,21 @@ import '../../../styles/v2-casestudy.css';
         <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tight">기획자가 직접 만들면<br/>달라지는 것들</h2>
       </div>
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="learning-card rv bg-[#1e1e1e] rounded-[16px] p-8 transition-all duration-700 hover:shadow-[0_12px_40px_rgba(27,28,28,0.08)] hover:-translate-y-2">
+        <div class="learning-card rv bg-surface-card rounded-[16px] p-8 transition-all duration-700 hover:shadow-[0_12px_40px_rgba(27,28,28,0.08)] hover:-translate-y-2">
           <div class="w-14 h-14 rounded-[14px] bg-aed-slate/8 flex items-center justify-center mb-6">
             <ph-code size="28" weight="duotone" color="#4B6878"></ph-code>
           </div>
           <h4 class="font-display font-bold text-xl mb-3">목업이 곧 제품이 되는 파이프라인</h4>
           <p class="text-txt-secondary text-[15px] leading-relaxed">HTML 목업 32개를 직접 만들고 바로 코드로 전환했습니다.<br/>기획 의도가 그대로 화면에 반영되니<br/>결과물이 달라서 수정하는 과정이 사라졌습니다.<br/>프론트엔드 개발자에게 설명하고 기다리고<br/>다시 확인하는 사이클이 필요 없었습니다.<br/>목업에서 보이는 것이 그대로 제품이 됩니다.<br/>"이거 이 뜻이 아닌데요" 회의가 구조적으로 없어졌습니다.</p>
         </div>
-        <div class="learning-card rv rv-d1 bg-[#1e1e1e] rounded-[16px] p-8 transition-all duration-700 hover:shadow-[0_12px_40px_rgba(27,28,28,0.08)] hover:-translate-y-2">
+        <div class="learning-card rv rv-d1 bg-surface-card rounded-[16px] p-8 transition-all duration-700 hover:shadow-[0_12px_40px_rgba(27,28,28,0.08)] hover:-translate-y-2">
           <div class="w-14 h-14 rounded-[14px] bg-aed-emerald/8 flex items-center justify-center mb-6">
             <ph-magnifying-glass size="28" weight="duotone" color="#8BA4B4"></ph-magnifying-glass>
           </div>
           <h4 class="font-display font-bold text-xl mb-3">"달력 바꿔주세요" 뒤의 진짜 질문</h4>
           <p class="text-txt-secondary text-[15px] leading-relaxed">리서처가 "날짜 선택이 불편하다"고 말했을 때<br/>보이는 문제는 달력 위젯이었습니다.<br/>하지만 직접 펀드를 운용해본 경험에서<br/>진짜 필요한 건 "다음 리밸런싱 날짜로 점프"라는 걸 알 수 있었습니다.<br/>포트폴리오 비중 차트를 클릭하면<br/>그 날짜의 보유 종목으로 동기화되는 기능도 같은 맥락입니다.<br/>요청에 없었지만 운용자라면 당연히 필요한 것입니다.</p>
         </div>
-        <div class="learning-card rv rv-d2 bg-[#1e1e1e] rounded-[16px] p-8 transition-all duration-700 hover:shadow-[0_12px_40px_rgba(27,28,28,0.08)] hover:-translate-y-2">
+        <div class="learning-card rv rv-d2 bg-surface-card rounded-[16px] p-8 transition-all duration-700 hover:shadow-[0_12px_40px_rgba(27,28,28,0.08)] hover:-translate-y-2">
           <div class="w-14 h-14 rounded-[14px] bg-aed-red/8 flex items-center justify-center mb-6">
             <ph-chart-line-up size="28" weight="duotone" color="#D04040"></ph-chart-line-up>
           </div>

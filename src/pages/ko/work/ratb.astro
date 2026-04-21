@@ -104,7 +104,10 @@ import '../../../styles/v2-casestudy-ratb.css';
 <!-- Case study nav -->
 <nav class="cs-nav" id="csNav">
   <a href="/ko/" class="cs-nav-brand">Hyebin.</a>
-  <a href="/ko/" class="cs-back-link">Back Home</a>
+  <div style="display:flex; align-items:center; gap:24px;">
+    <a href="/ko/" class="cs-back-link">Back Home</a>
+    <button class="cs-theme-btn" id="csThemeBtn" style="display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:100px; border:1px solid rgba(226,226,226,0.15); background:transparent; color:#e2e2e2; font-size:12px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:border-color 0.3s;">◐ Dark</button>
+  </div>
 </nav>
 
 <!-- ━━━ 01. HERO ━━━ -->
@@ -552,6 +555,17 @@ import '../../../styles/v2-casestudy-ratb.css';
   // Nav scroll
   const nav = document.getElementById('csNav');
   window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); });
+
+  // Theme toggle
+  const themeBtn = document.getElementById('csThemeBtn');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      themeBtn.textContent = isDark ? '◐ Light' : '◐ Dark';
+    });
+  }
 
   // Reveal on scroll
   const io = new IntersectionObserver(entries => {
