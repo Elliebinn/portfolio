@@ -9,13 +9,10 @@ const renderBold = (text: string) => boldToHtml(text, '');
 <V2Layout title="우혜빈 이력서 — AI Product Manager" lang="ko">
 
 <!-- Top nav -->
-<nav class="doc-nav">
-  <a href="/ko/" class="doc-nav-back">
-    <ph-arrow-left weight="regular" size="14"></ph-arrow-left>
-    Portfolio
-  </a>
-  <div class="doc-nav-actions">
-    <span class="doc-nav-meta">Resume · 2026</span>
+<nav class="cs-nav" id="csNav">
+  <a href="/ko/" class="cs-nav-brand">Hyebin.</a>
+  <div style="display:flex; align-items:center; gap:24px;">
+    <a href="/ko/" class="cs-back-link">Back Home</a>
     <a class="btn-pdf" href="/v1/ko/resume-pdf/?print" target="_blank">
       <ph-download-simple weight="regular" size="14"></ph-download-simple>
       Download PDF
@@ -214,6 +211,14 @@ const renderBold = (text: string) => boldToHtml(text, '');
 </main>
 
 <script is:inline>
+  // Nav scroll — pill effect
+  const csNav = document.getElementById('csNav');
+  if (csNav) {
+    window.addEventListener('scroll', () => {
+      csNav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  }
+
   // Page transition — enter animation (curtain open)
   const pt = document.getElementById('pageTransition');
   if (pt) {

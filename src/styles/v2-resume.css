@@ -38,28 +38,33 @@ body {
 h1, h2, h3, h4 { font-family: 'Syne', 'Paperlogy', 'Pretendard', sans-serif; letter-spacing: -0.03em; }
 .mono { font-family: 'JetBrains Mono', monospace; }
 
-/* Top nav — thin, print-hidden */
-.doc-nav {
-  position: sticky; top: 0; z-index: 10;
-  background: rgba(250,251,252,0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--rule-soft);
-  padding: 16px 40px;
+/* Top nav — floating pill (matches case study pages) */
+.cs-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9990;
+  padding: 22px 44px;
   display: flex; justify-content: space-between; align-items: center;
+  transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.doc-nav-back {
-  color: var(--ink-2); text-decoration: none;
-  font-size: 13px; font-weight: 500;
-  display: inline-flex; align-items: center; gap: 8px;
-  transition: color 0.3s var(--ease);
+.cs-nav.scrolled {
+  top: 16px; left: 22%; right: 22%;
+  padding: 14px 36px; border-radius: 100px;
+  background: rgba(250,251,252,0.85);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
-.doc-nav-back:hover { color: var(--accent); }
-.doc-nav-actions { display: flex; align-items: center; gap: 12px; }
-.doc-nav-meta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--faint);
+.cs-nav-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 18px;
+  color: var(--ink); text-decoration: none;
+}
+.cs-back-link {
+  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; transition: color 0.3s;
+}
+.cs-back-link:hover { color: var(--ink); }
+@media (max-width: 900px) {
+  .cs-nav { padding: 16px 20px; }
+  .cs-nav.scrolled { left: 5%; right: 5%; }
 }
 .btn-pdf {
   display: inline-flex; align-items: center; gap: 8px;
