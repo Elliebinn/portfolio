@@ -6,7 +6,7 @@ import '../../../styles/v2-casestudy-ratb.css';
 <V2Layout title="RATB · 로보어드바이저 운용심사" lang="ko">
 
 <style is:inline>
-  body { background: #131313; color: #f2f2f0; overflow-x: hidden; }
+  body { background: var(--bg); color: var(--fg); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 
   /* Certificate Fan */
   .ratb-cert-fan {
@@ -111,11 +111,11 @@ import '../../../styles/v2-casestudy-ratb.css';
 </nav>
 
 <!-- ━━━ 01. HERO ━━━ -->
-<section class="case-hero" id="hero" style="background: #131313;">
+<section class="case-hero" id="hero" style="background: var(--bg);">
   <!-- Background image -->
   <div style="position:absolute; inset:0; z-index:0;">
     <img src="/images/ratb/ratb-thumbnail.jpg" alt="" style="width:100%; height:100%; object-fit:cover; opacity:0.7;" />
-    <div style="position:absolute; inset:0; background:linear-gradient(to top, #131313 0%, transparent 50%);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(to top, var(--bg) 0%, transparent 50%);"></div>
   </div>
   <!-- "03" watermark -->
   <div style="position:absolute; right:40px; top:50%; transform:translateY(-50%); font-family:'Space Grotesk',sans-serif; font-size:clamp(120px,20vw,280px); font-weight:700; letter-spacing:-0.05em; color:rgba(226,226,226,0.03); z-index:0; line-height:1;">03</div>

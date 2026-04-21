@@ -50,12 +50,16 @@ import '../../../styles/v2-casestudy.css';
       --s-dark:#0e0e0e; --s-darker:#0a0a0a; --s-dcard:#1e1e1e; --s-delevated:#333333;
       --t-primary:#f2f2f0; --t-secondary:#a0a0a0; --t-muted:#666666; --t-faint:#444444; --t-inverse:#131313;
       --b-card:rgba(226,226,226,0.15); --b-hover:rgba(226,226,226,0.25); --b-subtle:rgba(226,226,226,0.08);
+      --tab-pill-bg:rgba(30,30,30,0.85); --tab-active-bg:rgba(255,255,255,0.1);
+      --nav-pill-bg:rgba(12,12,11,0.80); --glass-bg:rgba(255,255,255,0.06); --glass-border:rgba(255,255,255,0.1);
     }
     html[data-theme="light"] {
       --s-page:#F0EDE5; --s-card:#ffffff; --s-subtle:#E8E4DA; --s-elevated:#f5f3ef;
       --s-dark:#E8E4DA; --s-darker:#DDD9CF; --s-dcard:#ffffff; --s-delevated:#f0ece4;
       --t-primary:#161513; --t-secondary:#5a5754; --t-muted:#8a8784; --t-faint:#bbb8b4; --t-inverse:#f2f2f0;
       --b-card:rgba(0,0,0,0.08); --b-hover:rgba(0,0,0,0.12); --b-subtle:rgba(0,0,0,0.04);
+      --tab-pill-bg:rgba(255,255,255,0.85); --tab-active-bg:rgba(0,0,0,0.08);
+      --nav-pill-bg:rgba(240,237,229,0.80); --glass-bg:rgba(0,0,0,0.03); --glass-border:rgba(0,0,0,0.08);
     }
     body { -webkit-font-smoothing: antialiased; word-break: keep-all; background: var(--s-page); color: var(--t-primary); overflow-x: hidden; cursor: none; transition: background 0.3s, color 0.3s; }
   </style>
@@ -76,7 +80,7 @@ import '../../../styles/v2-casestudy.css';
     top: 16px; left: 22%; right: 22%;
     padding: 14px 36px;
     border-radius: 100px;
-    background: rgba(12,12,11,0.80);
+    background: var(--nav-pill-bg, rgba(12,12,11,0.80));
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 4px 24px rgba(0,0,0,0.25);
   }
@@ -395,22 +399,22 @@ import '../../../styles/v2-casestudy.css';
 
       <!-- Glass problem cards -->
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="rv rounded-[16px] p-6 transition-all duration-500 hover:-translate-y-1" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+        <div class="rv rounded-[16px] p-6 transition-all duration-500 hover:-translate-y-1" style="background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
           <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-4" style="background:rgba(255,255,255,0.12); color:#e2e2e2;">01</div>
           <h4 class="font-bold mb-2" style="color:#e2e2e2;">공유 가능한 분석 화면 부재</h4>
           <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.55);">리서처마다 로컬 Python 환경에서 따로 확인. 같은 전략의 샤프지수를 서로 다른 기준으로 보고 있어도 알 수 없었습니다.</p>
         </div>
-        <div class="rv rv-d1 rounded-[16px] p-6 transition-all duration-500 hover:-translate-y-1" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+        <div class="rv rv-d1 rounded-[16px] p-6 transition-all duration-500 hover:-translate-y-1" style="background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
           <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-4" style="background:rgba(255,255,255,0.12); color:#e2e2e2;">02</div>
           <h4 class="font-bold mb-2" style="color:#e2e2e2;">외부에 보여줄 수 없는 화면</h4>
           <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.55);">차트 10개가 세로로 나열된 화면. 외부 미팅에서 "이 전략의 강점은..."을 설명할 근거 화면이 없었습니다.</p>
         </div>
-        <div class="rv rv-d2 rounded-[16px] p-6 transition-all duration-500 hover:-translate-y-1" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+        <div class="rv rv-d2 rounded-[16px] p-6 transition-all duration-500 hover:-translate-y-1" style="background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
           <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-4" style="background:rgba(255,255,255,0.12); color:#e2e2e2;">03</div>
           <h4 class="font-bold mb-2" style="color:#e2e2e2;">아이디어가 화면이 될 수 없었습니다</h4>
           <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.55);">디자이너·프론트엔드 개발자가 없는 팀이었습니다. 아이디어가 있어도 시각화할 리소스가 없어, 기획서 문서에서 멈추는 상황이었습니다.</p>
         </div>
-        <div class="rv rv-d3 rounded-[16px] p-6 transition-all duration-500 hover:-translate-y-1" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+        <div class="rv rv-d3 rounded-[16px] p-6 transition-all duration-500 hover:-translate-y-1" style="background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
           <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-4" style="background:rgba(255,255,255,0.12); color:#e2e2e2;">04</div>
           <h4 class="font-bold mb-2" style="color:#e2e2e2;">매매 논리를 검증할 수 없었습니다</h4>
           <p class="text-sm leading-relaxed" style="color:rgba(255,255,255,0.55);">"왜 이 종목을 이 타이밍에 샀는지" 확인할 방법이 없었습니다. 성과 숫자만 보고 알고리즘의 판단을 믿어야 하는 상황이었습니다.</p>
@@ -457,12 +461,12 @@ import '../../../styles/v2-casestudy.css';
       </div>
 
       <!-- Sticky tab buttons -->
-      <div class="sticky top-[72px] z-20 py-4 flex justify-center rv" style="background:linear-gradient(to bottom, #13131a 60%, transparent);">
-        <div style="display:inline-flex; align-items:center; gap:4px; padding:6px 8px; border-radius:100px; background:rgba(30,30,30,0.85); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.06);">
-          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:rgba(255,255,255,0.1); color:#f2f2f0; border:none; cursor:pointer;" data-tab="mockup">목업 시안 비교</button>
-          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:transparent; color:#888; border:none; cursor:pointer;" data-tab="feedback">실제 피드백</button>
-          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:transparent; color:#888; border:none; cursor:pointer;" data-tab="checkpoint">Before → After</button>
-          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:transparent; color:#888; border:none; cursor:pointer;" data-tab="prd">기획 문서</button>
+      <div class="sticky top-[72px] z-20 py-4 flex justify-center rv" style="background:linear-gradient(to bottom, var(--s-page) 60%, transparent);">
+        <div style="display:inline-flex; align-items:center; gap:4px; padding:6px 8px; border-radius:100px; background:var(--tab-pill-bg, rgba(30,30,30,0.85)); backdrop-filter:blur(12px); border:1px solid var(--b-subtle);">
+          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:var(--tab-active-bg, rgba(255,255,255,0.1)); color:var(--t-primary); border:none; cursor:pointer;" data-tab="mockup">목업 시안 비교</button>
+          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:transparent; color:var(--t-muted); border:none; cursor:pointer;" data-tab="feedback">실제 피드백</button>
+          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:transparent; color:var(--t-muted); border:none; cursor:pointer;" data-tab="checkpoint">Before → After</button>
+          <button class="comm-tab text-sm font-medium transition-all duration-300" style="padding:8px 20px; border-radius:100px; background:transparent; color:var(--t-muted); border:none; cursor:pointer;" data-tab="prd">기획 문서</button>
         </div>
       </div>
 
@@ -1439,7 +1443,7 @@ import '../../../styles/v2-casestudy.css';
 
 
   <!-- ============ 11. FOOTER ============ -->
-  <section class="py-32 bg-surface-dark">
+  <section class="py-32" style="background:#0e0e0e;">
     <div class="max-w-[1400px] mx-auto px-6 lg:px-12 text-center rv">
       <p class="text-[#8A8B8E] text-sm tracking-widest uppercase font-semibold mb-8">Get in Touch</p>
       <p class="font-display text-3xl md:text-4xl font-bold text-white mb-12 leading-relaxed">이 프로젝트에 대해<br/>더 이야기하고 싶다면</p>
@@ -1532,11 +1536,11 @@ import '../../../styles/v2-casestudy.css';
     function activateTab(name) {
       document.querySelectorAll('.comm-tab').forEach(t => {
         if (t.dataset.tab === name) {
-          t.style.background = 'rgba(255,255,255,0.1)';
-          t.style.color = '#f2f2f0';
+          t.style.background = getComputedStyle(document.documentElement).getPropertyValue('--tab-active-bg').trim();
+          t.style.color = getComputedStyle(document.documentElement).getPropertyValue('--t-primary').trim();
         } else {
           t.style.background = 'transparent';
-          t.style.color = '#888';
+          t.style.color = getComputedStyle(document.documentElement).getPropertyValue('--t-muted').trim();
         }
       });
     }
