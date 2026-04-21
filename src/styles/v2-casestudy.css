@@ -721,3 +721,17 @@ body::after {
   margin-top: 4px;
   font-weight: 600;
 }
+
+/* ---- Mobile: Slack + Doc cards ---- */
+@media (max-width: 768px) {
+  .slack-card { font-size: 13px; }
+  .slack-channel-name { font-size: 13px; }
+  .slack-text { font-size: 13px; }
+  .slack-name { font-size: 13px; }
+  .slack-msg { padding: 8px 12px; }
+  .slack-header { padding: 8px 12px; }
+  .slack-avatar { width: 28px; height: 28px; font-size: 11px; }
+  .doc-card { padding: 16px; }
+  .doc-title { font-size: 15px; }
+  .doc-preview { font-size: 10px; min-height: 200px; padding: 10px 12px; }
+}
