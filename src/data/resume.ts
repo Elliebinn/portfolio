@@ -114,7 +114,7 @@ export const resume: ResumeData = {
     ko: '우혜빈',
     en: 'Hye Bin Woo',
   },
-  role: 'AI Product Planner · Finance Domain',
+  role: 'AI Product Manager · Finance Domain',
   headline: {
     lead: '금융 도메인을 알고,',
     accent: 'AI로 직접 만드는 서비스 기획자.',
