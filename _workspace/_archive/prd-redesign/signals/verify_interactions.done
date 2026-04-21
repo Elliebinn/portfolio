@@ -1,0 +1,31 @@
+TASK: 전체 인터랙션 동작 검증 (client: directive audit)
+WORKER: visual-qa
+STATUS: done
+TIMESTAMP: 2026-04-09T08:49:38+09:00
+COMMIT: 27afc6e (unstaged fix included)
+
+## 검증 결과
+
+### 버그 발견 + 수정 (1건)
+- **en/projects/jujutok.astro** L16: `<ProjectDetail />` → `<ProjectDetail client:load />` 추가
+  - ProjectDetail.tsx 내부에 ScrollReveal(6개), CountUp(1개) 포함
+  - client: 없이 정적 HTML만 렌더 → 모션 인터랙션 전부 미작동 상태였음
+  - 동일 컴포넌트의 en/quant-platform.astro는 이미 `client:load` 있었음 (일관성 누락)
+
+### 정상 확인 (모션 컴포넌트별)
+- CountUp: ko/index.astro(3곳) client:visible ✓, ko/projects/quant-platform.astro client:visible ✓
+- ScrollReveal: en/index.astro → About/Projects/Skills/Journey/Certifications/Contact 각각 client:visible ✓ (내부 ScrollReveal 포함)
+- SplitText/CursorSpotlight/MagneticButton/CountUp: en/index.astro → Hero client:load ✓ (내부 I2~I5 포함)
+- TiltCard: en/index.astro → Projects client:visible ✓ (내부 TiltCard 포함)
+- ScrollProgress: Layout.astro client:load ✓ (전역)
+
+### client: 불필요 확인
+- Footer: 순수 정적 (hooks/events/motion 0건) → client: 불필요 ✓
+- ColorPlaceholder: 정적 컴포넌트 → client: 불필요 ✓
+- Content: Astro 빌트인 MDX 렌더러 → 해당 없음 ✓
+
+### 빌드
+64 page(s) built in 4.48s ✓
+
+EVIDENCE: 1 bug fixed (en/projects/jujutok.astro client:load 누락), 나머지 전체 정상. build OK
+NEXT_HINT: jujutok.astro 수정 커밋 필요

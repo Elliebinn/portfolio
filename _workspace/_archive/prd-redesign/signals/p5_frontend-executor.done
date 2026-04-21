@@ -1,0 +1,19 @@
+TASK: Phase 5 블로그 페이지 리디자인
+WORKER: frontend-executor
+STATUS: done
+TIMESTAMP: 2026-04-08T15:45:20+09:00
+COMMIT: 4a78023a27551651445c5d12e28b25087df956d5
+ARTIFACTS:
+  - src/components/blog/StickyTOC.tsx (신규)
+  - src/pages/ko/blog/[slug].astro
+  - src/pages/en/blog/[slug].astro
+  - src/pages/blog/[slug].astro
+EVIDENCE: build OK 64p 5.04s, 텍스트 100% 보존, MDX 본문 미변경, 이력서 미변경
+CHANGES:
+  P5.1 MDX heading 샘플링: 8~18개 확인 → StickyTOC 구현 결정
+  P5.2 블로그 목록: 기존 매거진 인덱스 유지 (ko 이미 충실)
+  P5.3 블로그 상세: 본문 폭 66ch, en/root를 2-column 레이아웃으로 전환
+  P5.4 StickyTOC: IO 기반 현재 섹션 하이라이트, h2/h3 자동 추출, <2 자동 숨김
+  P5.5 ScrollProgress: Layout.astro에 이미 적용 확인 (추가 작업 불필요)
+  P5.6 ko/en/root 3개 경로 모두 적용 완료
+NEXT_HINT: Phase 3~5 frontend 작업 완료. visual-qa 검증 또는 Phase 6~7 진행 가능

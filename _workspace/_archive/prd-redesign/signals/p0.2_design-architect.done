@@ -1,0 +1,11 @@
+TASK: P0.2 DESIGN.md 한/영 (awesome-design-md 11섹션)
+WORKER: design-architect
+STATUS: done
+TIMESTAMP: 2026-04-08T11:15+09:00
+COMMIT: aff4b8d
+ARTIFACTS:
+  - DESIGN.md (42 KB, 720 lines)
+  - _workspace/rhythm_map.md (5.5 KB)
+EVIDENCE: 11 sections × bilingual ko/en, awesome-design-md format, refs studied = [linear, notion, framer, vercel], rhythm 인접 검증 9/9 PASS, §11 이력서 exempt 명문화
+NEXT_HINT: GATE 0-A 사용자 승인 필요
+NOTE: backfilled

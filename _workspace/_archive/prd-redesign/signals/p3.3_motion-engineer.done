@@ -1,0 +1,16 @@
+TASK: P3.3 Methodology 섹션 스티키 레이아웃 변경
+WORKER: motion-engineer
+STATUS: done
+TIMESTAMP: 2026-04-08T15:24:10+09:00
+COMMIT: pending (uncommitted, pm-orchestrator 커밋 판단)
+ARTIFACTS:
+  - src/pages/ko/index.astro (Methodology 섹션 line 92~132)
+CHANGES:
+  - 2칼럼 그리드 → 12칼럼 그리드 (5:7)
+  - 좌측: 섹션 타이틀 + ColorPlaceholder → lg:sticky lg:top-24 lg:self-start
+  - 우측: 4개 스텝 세로 나열, py-12 간격, border-b 구분선
+  - 모바일(< lg): sticky 해제, 일반 스택
+  - 텍스트 100% 보존 (01~04 스텝 제목/설명 변경 없음)
+  - hover:scale 제거 (PRD dense·sticky 리듬 준수)
+EVIDENCE: build OK 64p 5.19s
+NEXT_HINT: en/index.astro 동일 변경 필요 시 별도 지시

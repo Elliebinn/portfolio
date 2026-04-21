@@ -1,0 +1,9 @@
+TASK: p2.4 IMAGES-WISHLIST.md 작성
+WORKER: frontend-executor
+STATUS: done
+TIMESTAMP: 2026-04-08T12:32:00+09:00
+COMMIT: n/a (uncommitted)
+ARTIFACTS:
+  - IMAGES-WISHLIST.md
+EVIDENCE: 11 image slots documented with resolution/format/tone/alt-text specs
+NEXT_HINT: Phase 2 완료, visual-qa 검증 또는 Phase 3 진입

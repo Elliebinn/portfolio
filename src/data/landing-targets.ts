@@ -106,6 +106,214 @@ export interface LandingTarget {
 }
 
 export const landingTargets: Record<string, LandingTarget> = {
+  channeltalk: {
+    company: '채널톡 (Channel Corp)',
+    role: 'Product Manager (PM)',
+    jobUrl: 'https://channel.io/ko/careers/6d95cc84-7664-438d-a841-4dc10ca79d26',
+    jobUrlLabel: '채널톡 PM 채용 공고 ↗',
+
+    headline: 'B2B SaaS 제품을 AI로 직접 만들고, 빠르게 개선하는 PM입니다.',
+    subheadline:
+      '알파브릿지에서 퀀트 리서치팀의 전략 대시보드를 IA 재설계부터 React 마이그레이션까지 End-to-End로 리딩했습니다. 3주 견적 작업을 5일에 완료하며 AI 코딩 도구로 빠른 실행력을 증명했고, 사이드로는 6개 에이전트가 토론하는 멀티에이전트 주식 분석 플랫폼(주주톡)을 1인으로 기획·개발했습니다.',
+
+    brand: {
+      primary: '#FF6060',
+      tint: 'rgba(255, 96, 96, 0.06)',
+      label: 'Channel Talk Red',
+    },
+
+    proofPoints: [
+      {
+        label: '마이그레이션 속도',
+        value: '70%',
+        detail: '3주 견적 → 5일 완료 · NiceGUI → React(Vite) 20+ 페이지',
+      },
+      {
+        label: 'AI 멀티에이전트',
+        value: '6+4',
+        detail: '6개 분석 에이전트 + 4명 투자 페르소나 토론 구조 설계',
+      },
+      {
+        label: '업무 자동화',
+        value: '83%',
+        detail: '매매·운용시간 단축 · AI 운용지원 시스템 기획',
+      },
+    ],
+
+    whyCompany:
+      '채널톡은 ALF v2로 80%+ 자동화율을 달성하며 AI 에이전트를 실제 고객사에 배포하는 몇 안 되는 B2B SaaS입니다. 제가 주주톡에서 설계한 멀티에이전트 구조와 알파브릿지에서 검증한 "빠른 실행 → 사용자 피드백 → 즉시 개선" 사이클이 채널톡의 "Ship fast, learn fast, iterate" 문화와 정확히 일치합니다. 고객 VOC를 제품에 반영하는 경험을 채널톡의 15만+ 브랜드 스케일에서 다시 검증하고 싶습니다.',
+
+    highlightSkills: [
+      { name: 'B2B SaaS 제품 기획', evidence: '알파브릿지 퀀트 대시보드 · 200+ 전략 관리' },
+      { name: 'AI 에이전트 설계', evidence: '주주톡 6 에이전트 + 4 페르소나 토론 구조' },
+      { name: '빠른 실행력', evidence: '3주→5일 마이그레이션 · AI 코딩 도구 활용' },
+      { name: 'SQL · 데이터 분석', evidence: 'SQL 개발자 자격증 · 퍼널 관리 경험' },
+      { name: '고객 중심 기획', evidence: '운용역 워크플로우 관찰 → 요건정의서 작성' },
+      { name: '크로스펑셔널 협업', evidence: '퀀트 리서치팀 · 외부 UX 디자이너 협업' },
+      { name: '풀스택 빌더', evidence: 'Python · FastAPI · React · TypeScript · Claude API' },
+      { name: '성과 측정', evidence: '83% 시간 단축 · 70% 개발 기간 단축' },
+    ],
+
+    projectMatches: [
+      {
+        slug: 'quant-platform',
+        title: '퀀트 리서치 플랫폼',
+        whyMatch:
+          'B2B SaaS 내부 도구를 IA 재설계부터 React 마이그레이션까지 End-to-End로 리딩. 200+ 전략 탐색 구조를 태그 기반으로 재편하고, 3주 견적을 5일에 완료한 빠른 실행력 증명. 채널톡의 "Ship fast, learn fast" 문화와 정합.',
+      },
+      {
+        slug: 'jujutok',
+        title: '주주톡',
+        whyMatch:
+          '6개 AI 에이전트 + 4명 페르소나가 토론하는 멀티에이전트 구조를 1인으로 기획·설계·구현. ALF v2와 유사한 AI 자동화 시스템을 End-to-End로 경험. 채널톡의 AI-first CX 플랫폼 비전과 직접 연결.',
+      },
+    ],
+
+    ctaMessage: '채널톡 Product Manager (PM) 포지션에 지원합니다.',
+
+    tailoredResume: {
+      summary:
+        '**B2B SaaS 제품을 AI로 직접 만들고, 빠르게 개선하는 Product Manager.** 알파브릿지에서 퀀트 리서치팀의 전략 대시보드를 IA 재설계부터 React 마이그레이션까지 End-to-End로 리딩했습니다. **3주 견적 작업을 5일에 완료**하며 AI 코딩 도구로 빠른 실행력을 증명했고, 사이드 프로젝트로 **6개 에이전트가 토론하는 멀티에이전트 주식 분석 플랫폼(주주톡)**을 1인으로 기획·개발했습니다. 에셋플러스에서는 AI 공모펀드 운용지원 시스템을 기획해 **매매·운용시간을 83% 단축**시켰고, 38개 AI 투자 알고리즘의 로보어드바이저 심사를 PM으로 주도해 전원 통과시켰습니다.',
+
+      competencies: [
+        {
+          label: 'B2B SaaS · 제품 기획',
+          items:
+            '내부 사용자 대시보드 기획 · 정보구조(IA) 재설계 · 요건정의서 작성 · 디자인 시스템 구축',
+        },
+        {
+          label: 'AI · 에이전트',
+          items:
+            'AI 에이전트 설계 · 멀티에이전트 구조 · Claude API · 프롬프트 엔지니어링 · AI 코딩 도구 (Claude Code)',
+        },
+        {
+          label: '빠른 실행 · 개발',
+          items:
+            'Python · FastAPI · React · TypeScript · Vite · NiceGUI · 프레임워크 마이그레이션',
+        },
+        {
+          label: '데이터 · 분석',
+          items: 'SQL (SQLD 자격증) · ClickHouse · MySQL · Pandas · 퍼널 관리 · 성과 측정',
+        },
+        {
+          label: '고객 중심 · 협업',
+          items:
+            'VOC 기반 기획 · 사용자 워크플로우 관찰 · 크로스펑셔널 협업 (퀀트 리서치팀, UX 디자이너)',
+        },
+        {
+          label: '금융 도메인',
+          items: '투자자산운용사 · AFPK · 증권/파생/펀드투자권유자문인력 (총 6개 자격증)',
+        },
+      ],
+
+      experiences: [
+        {
+          company: '알파브릿지',
+          team: 'AI서비스기획본부',
+          period: '2025.03 – 현재',
+          employment: '에셋플러스자산운용 자회사 · 정규직',
+          subtitle: '퀀트 리서치팀 전략 모니터링·성과 분석 대시보드 기획 (B2B SaaS 내부 도구)',
+          sections: [
+            {
+              heading: 'B2B SaaS 제품 기획 · IA 재설계 · 고객 중심 접근',
+              bullets: [
+                '펀드 운용 경험을 바탕으로 **사용자 요청 뒤 진짜 니즈를 파악**하여 리밸런싱 포인트 네비게이션, 태그 기반 전략 분류 등 **요청에 없던 기능 선제 설계**',
+                '**200개+ 전략 탐색 구조를 태그 기반 분류 체계로 재편**하고, 사이드바 13개 메뉴를 워크플로우 기반으로 재구조화',
+                '외부 UX/UI 디자이너 2인 피드백(2.5/5, 3.9/5)을 **7개 요구사항으로 분해**한 뒤, Bloomberg·Morningstar 등 14개 레퍼런스를 참조해 개선',
+              ],
+            },
+            {
+              heading: '빠른 실행력 · 프레임워크 마이그레이션 (NiceGUI → React Vite)',
+              bullets: [
+                '내부 사용자 확장으로 NiceGUI 서버 부하 한계에 도달하자 **20+ 페이지 전체를 React(Vite)로 재구축. 3주 견적 작업을 5일에 완료 (약 70% 단축)**',
+                '이주 전 선제적으로 구축한 Living PRD, 자체 개발 Claude Code 스킬 **mockup-apply**, 의미 기반 CSS 변수 토큰을 재활용하여 반복 작업 제거',
+                '빌드 시간 8s → **741ms**, HMR 즉시. URL·디자인 토큰 100% 유지로 사용자 공지 없이 무중단 배포',
+              ],
+            },
+            {
+              heading: 'AI 구현 품질 관리 워크플로우 구축',
+              bullets: [
+                '**mockup-apply**: HTML 목업을 코드에 적용할 때 ADD/CHANGE/KEEP 판단 프레임워크로 변경 범위 체계화, 기존 기능 100% 보존',
+                '**frontend-checkpoint**: git stash 기반 변경 전·후 스크린샷 자동 비교 + 11개 체크포인트로 UI 변경 정량 추적',
+                '두 프로세스를 Claude Code 스킬로 체계화하여 **반복 실행 가능한 워크플로우**로 구축',
+              ],
+            },
+          ],
+        },
+        {
+          company: '에셋플러스자산운용',
+          team: 'AI자산운용팀',
+          period: '2023.09 – 2025.03',
+          employment: '정규직 (2024.12 - 2025.03 알파브릿지 파견 겸직)',
+          subtitle: 'AI 공모펀드 기획·출시 · 로보어드바이저 운용심사 PM',
+          sections: [
+            {
+              heading: 'AI 운용지원 시스템 기획 (업무 자동화 83% 단축)',
+              bullets: [
+                'AI 공모펀드 4개의 일일 매매·운용·성과분석 업무를 위한 내부 시스템 기획. **운용역 실제 워크플로우를 관찰**해 자동화 가능한 단계와 사람 판단이 필요한 단계를 분리하고 요건정의서 작성',
+                '매매·운용시간 평균 **1시간+ → 10분** 내외로 단축 (**83% 감소**)',
+              ],
+            },
+            {
+              heading: '로보어드바이저 AI 알고리즘 기획 및 운용심사 (RATB 22~24차)',
+              bullets: [
+                'KOSCOM 로보어드바이저 테스트베드에서 AI 투자 알고리즘의 운용 능력을 심사받는 과정. 참여 신청부터 사전심사·본심사·재운용심사까지 전 과정을 **PM으로 주도**',
+                '**38개 AI 투자 알고리즘**의 사전심사~본심사~재운용심사 전 과정 관리 및 심사 발표 직접 수행',
+                'AI 전략 검증 과정에서 반복되는 작업의 병목을 파악하고 자동화 가능 영역을 식별하여 검증 프로세스 효율화에 기여',
+                '22~24차 운용심사 및 재운용심사 **전 알고리즘 통과** · 최고 수익률 **1년 19.5%** (2024.12 기준)',
+              ],
+            },
+            {
+              heading: 'AI 기반 금융 투자 상품 기획 (공모펀드 · 외부 컨설팅)',
+              bullets: [
+                '**S&P500 AI 공모펀드 출시**: 같은 유니버스에서 투자 목적에 따라 AI 종목 선정 기준을 다르게 적용해 성장주·배당주 포커스를 분리한 구조 설계. **현재 실제 고객 자금 운용 중**',
+                '외부 자산운용사·증권사 대상 AI 포트폴리오 컨설팅. 비정형 데이터(뉴스)를 LLM으로 분석하여 투자 유니버스를 구성하고 AI 모델로 종목 선별. LLM 기반 **XAI(종목 선정 근거 자연어 설명)** 포함 기획서 작성 → **다올자산운용 MOU 체결**',
+              ],
+            },
+          ],
+        },
+      ],
+
+      sideProject: {
+        title: '주주톡 — AI 멀티에이전트 주식 분석 플랫폼',
+        meta: '1인 기획 · 풀스택 개발',
+        subtitle: '"단일 AI의 편향을 시스템 구조로 해결할 수 있을까?"',
+        bullets: [
+          '**6개 AI 에이전트**(거시·기술·공시·뉴스·재무·온체인)로 분석 축을 분리하고, **4명 투자 페르소나**(가치·성장·거시·모멘텀)가 **3 라운드 토론**하는 구조 설계',
+          '서비스 컨셉·정보구조·UX 플로우 직접 설계 후 **FastAPI + React 19 + Claude API**로 풀스택 구현',
+          'SSE(Server-Sent Events)로 실시간 토론 스트리밍, 카카오톡 스타일 채팅 UI, 사용자 질문 기능 구현',
+        ],
+      },
+
+      education: [
+        {
+          school: 'Johns Hopkins University',
+          degree: 'B.A. Economics · Minor in Marketing',
+          period: '2017.08 – 2019.05',
+        },
+        {
+          school: 'Fullerton College',
+          degree: 'A.A. Economics',
+          period: '2016.01 – 2017.05',
+        },
+      ],
+
+      certifications: [
+        { name: 'SQL 개발자 (SQLD)', date: '2026.03' },
+        { name: '증권투자권유자문인력', date: '2024.05' },
+        { name: '파생상품투자권유자문인력', date: '2024.02' },
+        { name: '펀드투자권유자문인력', date: '2023.12' },
+        { name: 'AFPK', date: '2022.04' },
+        { name: '투자자산운용사', date: '2021.12' },
+      ],
+
+      languages: '한국어 (모국어) · 영어 (비즈니스 고급 · 미국 대학 졸업)',
+    },
+
+    noIndex: true,
+    updatedAt: '2026-04-21',
+  },
+
   tossbank: {
     company: '토스뱅크',
     role: 'Product Manager (LLM)',

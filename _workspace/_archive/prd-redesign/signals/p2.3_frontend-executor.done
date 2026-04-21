@@ -1,0 +1,13 @@
+TASK: p2.3 이미지→ColorPlaceholder 1차 교체
+WORKER: frontend-executor
+STATUS: done
+TIMESTAMP: 2026-04-08T12:30:00+09:00
+COMMIT: n/a (uncommitted)
+ARTIFACTS:
+  - src/components/About.tsx (profile → gradient)
+  - src/components/Projects.tsx (thumbnails → label)
+  - src/pages/ko/index.astro (methodology → geometric, projects → label)
+  - src/pages/ko/projects/quant-platform.astro (hero → gradient, before/after → minimal)
+  - src/pages/ko/projects/jujutok.astro (paradox → minimal)
+EVIDENCE: 5 files edited, 7 img tags replaced, npm run build 64 pages 0 errors
+NEXT_HINT: P2.4 IMAGES-WISHLIST.md 작성
