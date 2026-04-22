@@ -244,6 +244,86 @@ function estimateReadTime(body: string) {
       </div>
     </a>
 
+    <!-- Case 4 — Portfolio: WRAP -->
+    <a href="#" class="work-card portfolio-card portfolio-slide-up" data-cursor="View PDF" data-pdf="/portfolio/portfolio-wrap-proposal.pdf" data-portfolio-title="WRAP 금융 상품 기획안">
+      <div class="work-card-meta">
+        <div class="work-head">
+          <span class="work-num">04</span>
+          <span class="portfolio-badge">📄 Portfolio</span>
+        </div>
+        <div>
+          <p class="work-subtitle">Alphabridge / 2024</p>
+          <h3 class="work-title">AI 기반 WRAP<br/>금융 상품 기획</h3>
+          <div class="work-tags">
+            <span class="work-tag">Product Planning</span>
+            <span class="work-tag">AI Portfolio</span>
+          </div>
+        </div>
+        <div class="work-metrics" style="margin-top:auto;">
+          <div>
+            <div class="work-metric-value">AI</div>
+            <div class="work-metric-label">WRAP 상품</div>
+          </div>
+          <div>
+            <div class="work-metric-value">B2B</div>
+            <div class="work-metric-label">제안서</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-visual">
+        <div class="work-corner"><ph-file-pdf weight="regular" size="20"></ph-file-pdf></div>
+        <div class="work-mock">
+          <div class="mock-bar md" style="background: var(--accent);"></div>
+          <div class="mock-grid" style="grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="mock-cell" style="background: var(--bg-secondary);"></div>
+            <div class="mock-cell accent" style="background: var(--accent-soft);"></div>
+          </div>
+          <div class="mock-bar sm"></div>
+          <div class="mock-bar lg" style="background: var(--accent-soft);"></div>
+        </div>
+      </div>
+    </a>
+
+    <!-- Case 5 — Portfolio: AI Investment -->
+    <a href="#" class="work-card portfolio-card portfolio-fade-scale" data-cursor="View PDF" data-pdf="/portfolio/portfolio-ai-investment.pdf" data-portfolio-title="AI 포트폴리오 금융 상품 기획안">
+      <div class="work-card-meta">
+        <div class="work-head">
+          <span class="work-num">05</span>
+          <span class="portfolio-badge">📄 Portfolio</span>
+        </div>
+        <div>
+          <p class="work-subtitle">Alphabridge / 2024</p>
+          <h3 class="work-title">LLM 기반<br/>투자 상품 기획</h3>
+          <div class="work-tags">
+            <span class="work-tag">Product Planning</span>
+            <span class="work-tag">LLM Analytics</span>
+          </div>
+        </div>
+        <div class="work-metrics" style="margin-top:auto;">
+          <div>
+            <div class="work-metric-value">LLM</div>
+            <div class="work-metric-label">뉴스 분석</div>
+          </div>
+          <div>
+            <div class="work-metric-value">B2B</div>
+            <div class="work-metric-label">제안서</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-visual">
+        <div class="work-corner"><ph-file-pdf weight="regular" size="20"></ph-file-pdf></div>
+        <div class="work-mock">
+          <div class="mock-bar lg" style="background: var(--accent);"></div>
+          <div class="mock-grid" style="grid-template-columns: repeat(3, 1fr); gap: 8px;">
+            <div class="mock-cell accent" style="background: var(--accent-soft);"></div>
+            <div class="mock-cell" style="background: var(--bg-secondary);"></div>
+            <div class="mock-cell" style="background: var(--bg-secondary);"></div>
+          </div>
+          <div class="mock-bar sm"></div>
+        </div>
+      </div>
+    </a>
+
   </div>
 </section>
 
@@ -316,6 +396,20 @@ function estimateReadTime(body: string) {
     </div>
     <div class="reader-body" id="readerBody">
       <!-- Content injected dynamically -->
+    </div>
+  </div>
+</div>
+
+<!-- PDF Viewer Overlay -->
+<div class="pdf-overlay" id="pdfOverlay">
+  <div class="pdf-backdrop" id="pdfBackdrop"></div>
+  <div class="pdf-panel">
+    <div class="pdf-handle">
+      <h3 class="pdf-title" id="pdfTitle">Portfolio</h3>
+      <button class="pdf-close" id="pdfClose">&times; 닫기</button>
+    </div>
+    <div class="pdf-body" id="pdfBody">
+      <iframe id="pdfFrame" width="100%" height="100%" frameborder="0"></iframe>
     </div>
   </div>
 </div>
@@ -572,6 +666,42 @@ function estimateReadTime(body: string) {
     });
   });
 
+  // PDF viewer overlay
+  const pdfOverlay = document.getElementById('pdfOverlay');
+  const pdfBody = document.getElementById('pdfBody');
+  const pdfTitle = document.getElementById('pdfTitle');
+  const pdfFrame = document.getElementById('pdfFrame');
+
+  function openPDF(card) {
+    const pdfUrl = card.dataset.pdf;
+    const title = card.dataset.portfolioTitle;
+
+    pdfTitle.textContent = title;
+    // Add #toolbar=0&navpanes=0 to hide toolbar and navigation panes
+    pdfFrame.src = pdfUrl + '#toolbar=0&navpanes=0&scrollbar=0';
+    pdfOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePDF() {
+    pdfOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    pdfFrame.src = '';
+  }
+
+  document.getElementById('pdfClose').addEventListener('click', closePDF);
+  document.getElementById('pdfBackdrop').addEventListener('click', closePDF);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && pdfOverlay.classList.contains('active')) closePDF();
+  });
+
+  document.querySelectorAll('.portfolio-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      openPDF(card);
+    });
+  });
+
   // Reveal
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -579,6 +709,9 @@ function estimateReadTime(body: string) {
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Portfolio reveal animations
+  document.querySelectorAll('.portfolio-slide-up, .portfolio-fade-scale').forEach(el => io.observe(el));
 </script>
 
 </V2Layout>

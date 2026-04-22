@@ -2,9 +2,23 @@
 import V2Layout from '../../layouts/V2Layout.astro';
 import '../../styles/v2-resume.css';
 import { resume, boldToHtml } from '../../data/resume';
+import { landingTargets } from '../../data/landing-targets';
 
 // Helper to render bold markdown as HTML
 const renderBold = (text: string) => boldToHtml(text, '');
+
+// Check for company parameter in URL
+const url = new URL(Astro.request.url);
+const companyParam = url.searchParams.get('company');
+
+// If company parameter exists and we have tailored data, use it
+let useTailoredResume = false;
+let tailoredData: any = null;
+
+if (companyParam && landingTargets[companyParam]) {
+  useTailoredResume = true;
+  tailoredData = landingTargets[companyParam].tailoredResume;
+}
 ---
 <V2Layout title="우혜빈 이력서 — AI Product Manager" lang="ko">
 
@@ -34,10 +48,16 @@ const renderBold = (text: string) => boldToHtml(text, '');
         <h1 style="font-family:'Paperlogy','Syne',sans-serif; font-size:clamp(32px,5vw,48px); font-weight:800; letter-spacing:-0.03em; line-height:1.2; color:var(--ink); margin-bottom:20px;">
           {resume.headline.lead}<br/><span style="color:var(--accent);">{resume.headline.accent}</span>
         </h1>
-        <p style="font-size:15px; color:var(--ink-2); line-height:1.7; margin-bottom:8px;" set:html={renderBold(resume.summary.body.split('현재는')[0].trim())} />
-        <p style="font-size:15px; color:var(--ink-2); line-height:1.7;">
-          현재는 퀀트 리서치팀이 매일 사용하는 전략 모니터링·운용 관리 대시보드를 처음부터 다시 설계하고 있으며, 화면 설계부터 AI 코딩 도구를 활용한 구현까지 직접 수행합니다.
-        </p>
+        {useTailoredResume ? (
+          <p style="font-size:15px; color:var(--ink-2); line-height:1.7;" set:html={renderBold(tailoredData.summary)} />
+        ) : (
+          <>
+            <p style="font-size:15px; color:var(--ink-2); line-height:1.7; margin-bottom:8px;" set:html={renderBold(resume.summary.body.split('현재는')[0].trim())} />
+            <p style="font-size:15px; color:var(--ink-2); line-height:1.7;">
+              현재는 퀀트 리서치팀이 매일 사용하는 전략 모니터링·운용 관리 대시보드를 처음부터 다시 설계하고 있으며, 화면 설계부터 AI 코딩 도구를 활용한 구현까지 직접 수행합니다.
+            </p>
+          </>
+        )}
       </div>
       <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end; flex-shrink:0;">
         <a href={`mailto:${resume.contact.email}`} style="display:inline-flex; align-items:center; gap:8px; color:var(--muted); text-decoration:none; font-size:13px;">
@@ -63,51 +83,100 @@ const renderBold = (text: string) => boldToHtml(text, '');
     <div>
       <h2 style="font-family:'Syne','Paperlogy',sans-serif; font-size:22px; font-weight:700; letter-spacing:-0.02em; color:var(--ink); padding-bottom:12px; border-bottom:2px solid var(--rule); margin-bottom:28px;">경력</h2>
 
-      {resume.jobs.map((job, idx) => (
-        <div style={`margin-bottom:36px; padding-left:20px; border-left:2px solid ${idx === 0 ? 'var(--accent)' : 'var(--rule)'}; position:relative;`}>
-          <div style={`position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:${idx === 0 ? 'var(--accent)' : 'var(--faint)'};`}></div>
-          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-            <h3 style="font-family:'Syne','Paperlogy',sans-serif; font-size:17px; font-weight:700; color:var(--ink);">
-              {job.company} · {job.department}
-            </h3>
-            <span style={`font-size:12px; font-weight:600; color:${idx === 0 ? 'var(--accent)' : 'var(--muted)'}; background:${idx === 0 ? 'var(--accent-soft)' : 'var(--rule)'}; padding:3px 10px; border-radius:100px; flex-shrink:0;`}>
-              {job.period}
-            </span>
-          </div>
-          <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">{job.org}</p>
+      {useTailoredResume ? (
+        tailoredData.experiences.map((exp: any, idx: number) => (
+          <div style={`margin-bottom:36px; padding-left:20px; border-left:2px solid ${idx === 0 ? 'var(--accent)' : 'var(--rule)'}; position:relative;`}>
+            <div style={`position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:${idx === 0 ? 'var(--accent)' : 'var(--faint)'};`}></div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
+              <h3 style="font-family:'Syne','Paperlogy',sans-serif; font-size:17px; font-weight:700; color:var(--ink);">
+                {exp.company} {exp.team && `· ${exp.team}`}
+              </h3>
+              <span style={`font-size:12px; font-weight:600; color:${idx === 0 ? 'var(--accent)' : 'var(--muted)'}; background:${idx === 0 ? 'var(--accent-soft)' : 'var(--rule)'}; padding:3px 10px; border-radius:100px; flex-shrink:0;`}>
+                {exp.period}
+              </span>
+            </div>
+            {exp.employment && (
+              <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">{exp.employment}</p>
+            )}
+            <p style="font-size:14px; color:var(--ink); font-weight:500; margin-bottom:16px; font-style:italic;">{exp.subtitle}</p>
 
-          {job.projects.map((project) => (
-            <>
-              <p style="font-weight:600; color:var(--ink); margin-bottom:8px; font-size:14px;">{project.title}</p>
-              {project.description && (
-                <p style="font-size:13px; color:var(--muted); font-style:italic; margin-bottom:10px;">{project.description}</p>
-              )}
-              <ul class="exp-bullets" style="margin-bottom:20px;">
-                {project.bullets.map(bullet => (
-                  <li set:html={renderBold(bullet)} />
-                ))}
-              </ul>
-            </>
-          ))}
-        </div>
-      ))}
+            {exp.sections.map((section: any) => (
+              <>
+                <p style="font-weight:600; color:var(--ink); margin-bottom:8px; font-size:14px;">{section.heading}</p>
+                <ul class="exp-bullets" style="margin-bottom:20px;">
+                  {section.bullets.map((bullet: string) => (
+                    <li set:html={renderBold(bullet)} />
+                  ))}
+                </ul>
+              </>
+            ))}
+          </div>
+        ))
+      ) : (
+        resume.jobs.map((job, idx) => (
+          <div style={`margin-bottom:36px; padding-left:20px; border-left:2px solid ${idx === 0 ? 'var(--accent)' : 'var(--rule)'}; position:relative;`}>
+            <div style={`position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:${idx === 0 ? 'var(--accent)' : 'var(--faint)'};`}></div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
+              <h3 style="font-family:'Syne','Paperlogy',sans-serif; font-size:17px; font-weight:700; color:var(--ink);">
+                {job.company} · {job.department}
+              </h3>
+              <span style={`font-size:12px; font-weight:600; color:${idx === 0 ? 'var(--accent)' : 'var(--muted)'}; background:${idx === 0 ? 'var(--accent-soft)' : 'var(--rule)'}; padding:3px 10px; border-radius:100px; flex-shrink:0;`}>
+                {job.period}
+              </span>
+            </div>
+            <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">{job.org}</p>
+
+            {job.projects.map((project) => (
+              <>
+                <p style="font-weight:600; color:var(--ink); margin-bottom:8px; font-size:14px;">{project.title}</p>
+                {project.description && (
+                  <p style="font-size:13px; color:var(--muted); font-style:italic; margin-bottom:10px;">{project.description}</p>
+                )}
+                <ul class="exp-bullets" style="margin-bottom:20px;">
+                  {project.bullets.map(bullet => (
+                    <li set:html={renderBold(bullet)} />
+                  ))}
+                </ul>
+              </>
+            ))}
+          </div>
+        ))
+      )}
 
       <!-- 사이드 프로젝트 -->
-      <div style="padding-left:20px; border-left:2px solid var(--rule); position:relative;">
-        <div style="position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--faint);"></div>
-        <h3 style="font-family:'Syne','Paperlogy',sans-serif; font-size:17px; font-weight:700; color:var(--ink); margin-bottom:4px;">
-          {resume.sideProject.title} · {resume.sideProject.sub}
-        </h3>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">{resume.sideProject.role}</p>
-        <p style="font-style:italic; color:var(--muted); margin-bottom:12px; padding-left:14px; border-left:2px solid var(--accent); font-size:14px;">
-          "{resume.sideProject.quote}"
-        </p>
-        <ul class="exp-bullets">
-          {resume.sideProject.bullets.map(bullet => (
-            <li set:html={renderBold(bullet)} />
-          ))}
-        </ul>
-      </div>
+      {useTailoredResume && tailoredData.sideProject ? (
+        <div style="padding-left:20px; border-left:2px solid var(--rule); position:relative;">
+          <div style="position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--faint);"></div>
+          <h3 style="font-family:'Syne','Paperlogy',sans-serif; font-size:17px; font-weight:700; color:var(--ink); margin-bottom:4px;">
+            {tailoredData.sideProject.title}
+          </h3>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">{tailoredData.sideProject.meta}</p>
+          <p style="font-style:italic; color:var(--muted); margin-bottom:12px; padding-left:14px; border-left:2px solid var(--accent); font-size:14px;">
+            {tailoredData.sideProject.subtitle}
+          </p>
+          <ul class="exp-bullets">
+            {tailoredData.sideProject.bullets.map((bullet: string) => (
+              <li set:html={renderBold(bullet)} />
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <div style="padding-left:20px; border-left:2px solid var(--rule); position:relative;">
+          <div style="position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:var(--faint);"></div>
+          <h3 style="font-family:'Syne','Paperlogy',sans-serif; font-size:17px; font-weight:700; color:var(--ink); margin-bottom:4px;">
+            {resume.sideProject.title} · {resume.sideProject.sub}
+          </h3>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">{resume.sideProject.role}</p>
+          <p style="font-style:italic; color:var(--muted); margin-bottom:12px; padding-left:14px; border-left:2px solid var(--accent); font-size:14px;">
+            "{resume.sideProject.quote}"
+          </p>
+          <ul class="exp-bullets">
+            {resume.sideProject.bullets.map(bullet => (
+              <li set:html={renderBold(bullet)} />
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
 
     <!-- RIGHT: Sidebar -->
@@ -116,9 +185,9 @@ const renderBold = (text: string) => boldToHtml(text, '');
       <!-- 학력 -->
       <section>
         <h2 style="font-family:'Syne','Paperlogy',sans-serif; font-size:18px; font-weight:700; color:var(--ink); padding-bottom:10px; border-bottom:2px solid var(--rule); margin-bottom:16px;">학력</h2>
-        {resume.education.map(edu => (
+        {(useTailoredResume ? tailoredData.education : resume.education).map((edu: any) => (
           <div style="background:var(--surface); border-radius:12px; padding:16px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-            <h4 style="font-size:15px; font-weight:700; color:var(--ink); margin-bottom:2px;">{edu.name}</h4>
+            <h4 style="font-size:15px; font-weight:700; color:var(--ink); margin-bottom:2px;">{edu.school || edu.name}</h4>
             <p style="font-size:13px; color:var(--accent); font-weight:500; margin-bottom:4px;">{edu.degree}</p>
             <span style="font-size:11px; color:var(--faint); font-weight:600;">{edu.period}</span>
           </div>
@@ -128,30 +197,41 @@ const renderBold = (text: string) => boldToHtml(text, '');
       <!-- 역량 -->
       <section>
         <h2 style="font-family:'Syne','Paperlogy',sans-serif; font-size:18px; font-weight:700; color:var(--ink); padding-bottom:10px; border-bottom:2px solid var(--rule); margin-bottom:16px;">역량</h2>
-        <div style="margin-bottom:14px;">
-          <p style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--faint); margin-bottom:8px;">기획 · UX</p>
-          <div class="chip-row">
-            <span class="chip accent">서비스 기획</span>
-            <span class="chip accent">정보구조(IA) 설계</span>
-            <span class="chip accent">UX 재설계</span>
-          </div>
-        </div>
-        <div style="margin-bottom:14px;">
-          <p style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--faint); margin-bottom:8px;">AI · 개발</p>
-          <div class="chip-row">
-            <span class="chip">Claude Code</span>
-            <span class="chip">Claude API</span>
-            <span class="chip">AI 에이전트 설계</span>
-          </div>
-        </div>
-        <div>
-          <p style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--faint); margin-bottom:8px;">데이터 · 시각화</p>
-          <div class="chip-row">
-            <span class="chip">ClickHouse</span>
-            <span class="chip">MySQL</span>
-            <span class="chip">Pandas</span>
-          </div>
-        </div>
+        {useTailoredResume ? (
+          tailoredData.competencies.map((comp: any) => (
+            <div style="margin-bottom:14px;">
+              <p style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--faint); margin-bottom:8px;">{comp.label}</p>
+              <p style="font-size:13px; color:var(--ink); line-height:1.6;">{comp.items}</p>
+            </div>
+          ))
+        ) : (
+          <>
+            <div style="margin-bottom:14px;">
+              <p style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--faint); margin-bottom:8px;">기획 · UX</p>
+              <div class="chip-row">
+                <span class="chip accent">서비스 기획</span>
+                <span class="chip accent">정보구조(IA) 설계</span>
+                <span class="chip accent">UX 재설계</span>
+              </div>
+            </div>
+            <div style="margin-bottom:14px;">
+              <p style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--faint); margin-bottom:8px;">AI · 개발</p>
+              <div class="chip-row">
+                <span class="chip">Claude Code</span>
+                <span class="chip">Claude API</span>
+                <span class="chip">AI 에이전트 설계</span>
+              </div>
+            </div>
+            <div>
+              <p style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--faint); margin-bottom:8px;">데이터 · 시각화</p>
+              <div class="chip-row">
+                <span class="chip">ClickHouse</span>
+                <span class="chip">MySQL</span>
+                <span class="chip">Pandas</span>
+              </div>
+            </div>
+          </>
+        )}
       </section>
 
       <!-- 도구 -->
@@ -181,7 +261,7 @@ const renderBold = (text: string) => boldToHtml(text, '');
       <section>
         <h2 style="font-family:'Syne','Paperlogy',sans-serif; font-size:18px; font-weight:700; color:var(--ink); padding-bottom:10px; border-bottom:2px solid var(--rule); margin-bottom:16px;">자격증</h2>
         <div style="display:flex; flex-direction:column; gap:8px; font-size:13px;">
-          {resume.certifications.map(cert => (
+          {(useTailoredResume ? tailoredData.certifications : resume.certifications).map((cert: any) => (
             <div style="display:flex; justify-content:space-between;">
               <span style="font-weight:600; color:var(--ink);">{cert.name}</span>
               <span style="color:var(--faint);">{cert.date}</span>
@@ -193,9 +273,15 @@ const renderBold = (text: string) => boldToHtml(text, '');
       <!-- 언어 -->
       <section>
         <h2 style="font-family:'Syne','Paperlogy',sans-serif; font-size:18px; font-weight:700; color:var(--ink); padding-bottom:10px; border-bottom:2px solid var(--rule); margin-bottom:16px;">언어</h2>
-        <p style="font-size:14px; font-weight:600; color:var(--ink);">{resume.language.primary}</p>
-        {resume.language.note && (
-          <p style="font-size:13px; color:var(--faint); margin-top:4px;">{resume.language.note}</p>
+        {useTailoredResume ? (
+          <p style="font-size:14px; font-weight:600; color:var(--ink);">{tailoredData.languages}</p>
+        ) : (
+          <>
+            <p style="font-size:14px; font-weight:600; color:var(--ink);">{resume.language.primary}</p>
+            {resume.language.note && (
+              <p style="font-size:13px; color:var(--faint); margin-top:4px;">{resume.language.note}</p>
+            )}
+          </>
         )}
       </section>
 
