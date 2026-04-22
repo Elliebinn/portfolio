@@ -110,7 +110,7 @@ h1, h2, h3, h4 { font-family: 'Syne', 'Paperlogy', 'Pretendard', sans-serif; let
 
 /* Document body — single column, restrained */
 .doc {
-  max-width: 1260px;
+  max-width: 1060px;
   margin: 0 auto;
   padding: 80px 40px 120px;
 }
@@ -118,7 +118,7 @@ h1, h2, h3, h4 { font-family: 'Syne', 'Paperlogy', 'Pretendard', sans-serif; let
 /* Masthead */
 .masthead {
   padding-bottom: 48px;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: none;
   margin-bottom: 60px;
 }
 .masthead-label {

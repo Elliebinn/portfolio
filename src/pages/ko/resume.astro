@@ -8,8 +8,7 @@ import { landingTargets } from '../../data/landing-targets';
 const renderBold = (text: string) => boldToHtml(text, '');
 
 // Check for company parameter in URL
-const url = new URL(Astro.request.url);
-const companyParam = url.searchParams.get('company');
+const companyParam = Astro.url.searchParams.get('company');
 
 // If company parameter exists and we have tailored data, use it
 let useTailoredResume = false;
@@ -128,7 +127,12 @@ if (companyParam && landingTargets[companyParam]) {
 
             {job.projects.map((project) => (
               <>
-                <p style="font-weight:600; color:var(--ink); margin-bottom:8px; font-size:14px;">{project.title}</p>
+                <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;">
+                  <p style="font-weight:600; color:var(--ink); font-size:14px;">{project.title}</p>
+                  {project.period && (
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--faint); flex-shrink:0; margin-left:12px;">{project.period}</span>
+                  )}
+                </div>
                 {project.description && (
                   <p style="font-size:13px; color:var(--muted); font-style:italic; margin-bottom:10px;">{project.description}</p>
                 )}
@@ -167,9 +171,11 @@ if (companyParam && landingTargets[companyParam]) {
             {resume.sideProject.title} · {resume.sideProject.sub}
           </h3>
           <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">{resume.sideProject.role}</p>
-          <p style="font-style:italic; color:var(--muted); margin-bottom:12px; padding-left:14px; border-left:2px solid var(--accent); font-size:14px;">
-            "{resume.sideProject.quote}"
-          </p>
+          {resume.sideProject.quote && (
+            <p style="font-style:italic; color:var(--muted); margin-bottom:12px; padding-left:14px; border-left:2px solid var(--accent); font-size:14px;">
+              "{resume.sideProject.quote}"
+            </p>
+          )}
           <ul class="exp-bullets">
             {resume.sideProject.bullets.map(bullet => (
               <li set:html={renderBold(bullet)} />
