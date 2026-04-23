@@ -50,12 +50,16 @@ if (companyParam && landingTargets[companyParam]) {
         {useTailoredResume ? (
           <p style="font-size:15px; color:var(--ink-2); line-height:1.7;" set:html={renderBold(tailoredData.summary)} />
         ) : (
-          <>
-            <p style="font-size:15px; color:var(--ink-2); line-height:1.7; margin-bottom:8px;" set:html={renderBold(resume.summary.body.split('현재는')[0].trim())} />
-            <p style="font-size:15px; color:var(--ink-2); line-height:1.7;">
-              현재는 퀀트 리서치팀이 매일 사용하는 전략 모니터링·운용 관리 대시보드를 처음부터 다시 설계하고 있으며, 화면 설계부터 AI 코딩 도구를 활용한 구현까지 직접 수행합니다.
-            </p>
-          </>
+          <div style="font-size:15px; color:var(--ink-2); line-height:1.7;">
+            {resume.summary.body.split('현재는').length > 1 ? (
+              <>
+                <p style="margin-bottom:8px;" set:html={renderBold(resume.summary.body.split('현재는')[0].trim())} />
+                <p set:html={renderBold('현재는' + resume.summary.body.split('현재는').slice(1).join('현재는'))} />
+              </>
+            ) : (
+              <p set:html={renderBold(resume.summary.body)} />
+            )}
+          </div>
         )}
       </div>
       <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end; flex-shrink:0;">
