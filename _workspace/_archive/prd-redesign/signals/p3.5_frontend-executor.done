@@ -1,9 +1,0 @@
-TASK: P3.5 Projects 풀블리드 배너 + TiltCard(I8)
-WORKER: frontend-executor
-STATUS: done
-TIMESTAMP: 2026-04-08T15:25:55+09:00
-COMMIT: 9b3516a29395b2339de78aadfd6346b524c70430
-ARTIFACTS:
-  - src/components/Projects.tsx
-EVIDENCE: build OK 64p 3.36s, TiltCard(I8) 통합, 풀블리드 배너 + 오버레이드 타이포 + 태그 rail, 텍스트 100% 보존
-NEXT_HINT: P3.6 이후 섹션 재구현 진행 가능

@@ -366,3 +366,40 @@ html[data-theme="light"] .cs-theme-btn:hover { border-color: #161513; }
   .ratb-pullquote blockquote { font-size: clamp(18px, 5vw, 28px); }
   .ratb-stat-value { font-size: clamp(28px, 8vw, 48px); }
 }
+
+/* ── Mobile: browser/ppt/excel zoom-out ── */
+@media (max-width: 640px) {
+  .ratb-excel-zoom { height: 280px; }
+  .ratb-excel-zoom iframe {
+    width: 250%;
+    height: 250%;
+    transform: scale(0.4);
+    transform-origin: top left;
+  }
+  .ppt-card-inner { max-width: 88%; }
+  .ratb-portal-fade { max-height: 300px; }
+  .ratb-cert-fan { padding: 48px 20px; }
+}
+
+/* ── Mobile typography scale-down ── */
+@media (max-width: 640px) {
+  .case-hero-title { font-size: clamp(36px, 9vw, 56px) !important; }
+  .case-hero-inner { padding-left: 20px !important; }
+  .ratb-title { font-size: clamp(20px, 5.5vw, 28px); }
+  .ratb-body { font-size: 14px; }
+  .ratb-section { padding: 60px 20px; }
+  .ratb-scale-num { font-size: 28px; }
+  .ratb-scale-row h4 { font-size: 15px; }
+  .ratb-scale-row { grid-template-columns: 56px 1fr; gap: 20px; }
+  .ratb-episode { padding: 20px 24px; }
+  .ratb-episode-quote { font-size: 15px; }
+  .ratb-habit { padding: 24px; }
+  .ratb-habit-num { font-size: 24px; }
+  .ratb-habit h4 { font-size: 14px; }
+  .ratb-framework { padding: 28px; }
+  .ratb-cta h2 { font-size: clamp(24px, 6vw, 36px); }
+  .ratb-cta { padding: 80px 20px; }
+  .ratb-cta-links { flex-wrap: wrap; gap: 12px; }
+  .ratb-stat { padding: 32px clamp(16px, 3vw, 40px); }
+  .ratb-label { font-size: 10px; }
+}

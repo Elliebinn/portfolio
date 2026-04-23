@@ -242,6 +242,14 @@ body::after {
   .case-hero-meta { gap: 24px; }
   .case-hero-meta-item { min-width: 45%; }
 }
+@media (max-width: 640px) {
+  .case-hero { min-height: 80svh; padding-bottom: 36px; }
+  .case-hero-title { font-size: clamp(36px, 9vw, 56px); }
+  .case-hero-inner { padding-left: 20px; }
+  .case-hero-meta { gap: 16px; }
+  .case-hero-meta-item { min-width: 42%; }
+  .case-hero-meta dd { font-size: 14px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .case-hero-title .line span { transform: none; opacity: 1; animation: none; }
   .case-hero-sub, .case-hero-meta, .case-hero-scroll { opacity: 1; animation: none; }
@@ -685,8 +693,9 @@ body::after {
   flex: 1;
   min-height: 280px;
   white-space: pre-wrap;
-  word-break: break-all;
-  overflow-x: auto;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
 }
 .doc-preview .c-h1 { color: #E8EAF0; font-weight: 700; }
 .doc-preview .c-h2 { color: #7FD1C4; font-weight: 700; }

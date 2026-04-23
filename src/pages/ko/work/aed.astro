@@ -127,6 +127,27 @@ import '../../../styles/v2-casestudy.css';
     .comm-tab-bar { flex-wrap: wrap; border-radius: 12px; gap: 2px; }
     .comm-tab { font-size: 11px !important; padding: 6px 10px !important; }
   }
+
+  /* ---- Mobile typography scale-down ---- */
+  @media (max-width: 640px) {
+    /* Section headings: 4xl→2xl, 5xl→3xl */
+    .font-display.text-4xl { font-size: 1.5rem !important; }
+    /* Sub-headings: 3xl→xl, 2xl→lg */
+    h3.font-display.text-3xl { font-size: 1.25rem !important; }
+    h3.font-display.text-2xl { font-size: 1.125rem !important; }
+    /* Body description */
+    .case-hero-inner { padding-left: 20px !important; }
+    /* Hero title */
+    .case-hero-title { font-size: clamp(36px, 9vw, 56px) !important; }
+    /* Giant impact numbers */
+    .giant.text-6xl { font-size: 2.5rem !important; }
+    /* Label text */
+    .label { font-size: 10px !important; }
+    /* Section body text */
+    .text-\[16px\] { font-size: 14px !important; }
+    /* Footer heading */
+    .font-display.text-3xl { font-size: 1.375rem !important; }
+  }
 </style>
 
 <nav class="cs-nav" id="csNav" style="z-index:9990;">
@@ -251,7 +272,7 @@ import '../../../styles/v2-casestudy.css';
 
       <!-- Decision 1 -->
       <div class="mb-28 rv">
-        <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div>
             <div class="flex items-center gap-3 mb-5">
               <div class="w-8 h-8 rounded-full bg-aed-slate/10 flex items-center justify-center text-aed-slate font-display font-bold text-xs">01</div>
@@ -295,7 +316,7 @@ import '../../../styles/v2-casestudy.css';
 
       <!-- Decision 2 -->
       <div class="mb-28 rv">
-        <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div class="lg:order-2">
             <div class="flex items-center gap-3 mb-5">
               <div class="w-8 h-8 rounded-full bg-aed-slate/10 flex items-center justify-center text-aed-slate font-display font-bold text-xs">02</div>
@@ -334,7 +355,7 @@ import '../../../styles/v2-casestudy.css';
 
       <!-- Decision 3 -->
       <div class="rv">
-        <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           <div>
             <div class="flex items-center gap-3 mb-5">
               <div class="w-8 h-8 rounded-full bg-aed-slate/10 flex items-center justify-center text-aed-slate font-display font-bold text-xs">03</div>
@@ -484,7 +505,7 @@ import '../../../styles/v2-casestudy.css';
 
       <!-- 1. 목업 시안 비교 -->
       <div class="comm-section py-20 rv" data-tab-name="mockup" id="panel-mockup">
-        <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           <!-- 시안 A: 기존 AED 화면 -->
           <div class="bg-surface-card rounded-[20px] p-6 flex flex-col" style="box-shadow: 0 1px 2px rgba(27,28,28,0.03), 0 12px 40px rgba(45,74,90,0.04);">
             <div class="flex items-center justify-between mb-4">
@@ -522,7 +543,7 @@ import '../../../styles/v2-casestudy.css';
 
       <!-- 2. 실제 피드백 — Slack-style mockups -->
       <div class="comm-section py-20 rv" data-tab-name="feedback" id="panel-feedback">
-        <div class="grid md:grid-cols-3 gap-5 max-w-[1280px] mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[1280px] mx-auto px-6">
 
           <!-- Card 1: 선택형 피드백 -->
           <div class="flex flex-col">
@@ -776,7 +797,7 @@ import '../../../styles/v2-casestudy.css';
         </div>
 
         <!-- Before / After hero pair -->
-        <div class="grid lg:grid-cols-2 gap-8 mb-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
           <div class="bg-surface-card rounded-[16px] p-6">
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center gap-2">
@@ -822,7 +843,7 @@ import '../../../styles/v2-casestudy.css';
           <p class="text-[11px] font-bold tracking-wider uppercase text-txt-muted">체크포인트가 잡아낸 것</p>
           <p class="text-[11px] text-txt-muted">파이프라인이 없었으면 놓쳤을 이슈들</p>
         </div>
-        <div class="grid md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
           <!-- Card 1: HIGH bug caught -->
           <div class="bg-surface-card rounded-[16px] p-6 flex flex-col">
@@ -881,7 +902,7 @@ import '../../../styles/v2-casestudy.css';
 
       <!-- 4. 기획 문서 -->
       <div class="comm-section py-20 rv" data-tab-name="prd" id="panel-prd">
-        <div class="grid lg:grid-cols-3 gap-5 max-w-[1280px] mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 max-w-[1280px] mx-auto px-6">
 
           <!-- Card 1: PRD -->
           <div class="doc-card">
@@ -1155,7 +1176,7 @@ import '../../../styles/v2-casestudy.css';
       </div>
 
       <!-- 드릴다운 상세: 종목 드릴다운 + 사이클 모달 -->
-      <div class="grid lg:grid-cols-2 gap-6 rv">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 rv">
         <div class="rounded-[16px] overflow-hidden border border-[rgba(226,226,226,0.08)]" style="background:var(--s-subtle);">
           <div class="px-5 py-3 border-b border-[rgba(226,226,226,0.06)]">
             <p class="text-[11px] font-bold tracking-wider uppercase text-aed-violet">종목 드릴다운</p>
@@ -1243,8 +1264,8 @@ import '../../../styles/v2-casestudy.css';
         </div>
       </div>
 
-      <!-- Comparison table -->
-      <div class="rv mb-20 overflow-x-auto">
+      <!-- Comparison table: desktop -->
+      <div class="rv mb-20 hidden md:block">
         <table class="w-full text-[14px]">
           <thead>
             <tr class="border-b border-[rgba(226,226,226,0.08)]">
@@ -1283,6 +1304,47 @@ import '../../../styles/v2-casestudy.css';
         </table>
       </div>
 
+      <!-- Comparison cards: mobile -->
+      <div class="rv mb-20 md:hidden space-y-4">
+        <div class="space-y-4">
+          <div class="rounded-2xl bg-surface-card p-5 space-y-3">
+            <p class="text-[13px] font-semibold text-txt-primary">전략 성과 확인</p>
+            <div class="flex gap-3 text-[13px] leading-relaxed">
+              <div class="flex-1 text-txt-muted"><span class="text-[10px] font-bold uppercase tracking-wider text-txt-faint block mb-1">Before</span>리서처마다 Jupyter에서 10+ 지표를 수동 계산. 같은 전략을 서로 다른 숫자로 보고 있어도 모름.</div>
+              <div class="flex-1 text-txt-primary font-medium"><span class="text-[10px] font-bold uppercase tracking-wider text-aed-emerald block mb-1">After</span>모두가 같은 대시보드·같은 기준으로 즉시 확인</div>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-surface-card p-5 space-y-3">
+            <p class="text-[13px] font-semibold text-txt-primary">외부 미팅 근거</p>
+            <div class="flex gap-3 text-[13px] leading-relaxed">
+              <div class="flex-1 text-txt-muted"><span class="text-[10px] font-bold uppercase tracking-wider text-txt-faint block mb-1">Before</span>차트 10개가 세로로 나열된 화면을 스크롤로 넘기며 전략 강점을 설명.</div>
+              <div class="flex-1 text-txt-primary font-medium"><span class="text-[10px] font-bold uppercase tracking-wider text-aed-emerald block mb-1">After</span>KPI 한 화면 + 드릴다운으로 근거 제시</div>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-surface-card p-5 space-y-3">
+            <p class="text-[13px] font-semibold text-txt-primary">지표 기준</p>
+            <div class="flex gap-3 text-[13px] leading-relaxed">
+              <div class="flex-1 text-txt-muted"><span class="text-[10px] font-bold uppercase tracking-wider text-txt-faint block mb-1">Before</span>같은 샤프지수를 사람마다 다른 계산식으로 봄. "좋다"의 근거가 달라짐.</div>
+              <div class="flex-1 text-txt-primary font-medium"><span class="text-[10px] font-bold uppercase tracking-wider text-aed-emerald block mb-1">After</span>10개 지표 표준화 + glossary로 단일 진실</div>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-surface-card p-5 space-y-3">
+            <p class="text-[13px] font-semibold text-txt-primary">매매 논리 검증</p>
+            <div class="flex gap-3 text-[13px] leading-relaxed">
+              <div class="flex-1 text-txt-muted"><span class="text-[10px] font-bold uppercase tracking-wider text-txt-faint block mb-1">Before</span>성과 숫자만 보고 알고리즘 판단을 믿음. "왜 이 종목을 이 타이밍에 샀는지" 확인 불가.</div>
+              <div class="flex-1 text-txt-primary font-medium"><span class="text-[10px] font-bold uppercase tracking-wider text-aed-emerald block mb-1">After</span>종목 드릴다운 · 매매 사이클마다 캔들스틱 검증</div>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-surface-card p-5 space-y-3">
+            <p class="text-[13px] font-semibold text-txt-primary">기획 → 구현</p>
+            <div class="flex gap-3 text-[13px] leading-relaxed">
+              <div class="flex-1 text-txt-muted"><span class="text-[10px] font-bold uppercase tracking-wider text-txt-faint block mb-1">Before</span>PRD → 수주 대기 → 반 이상 드랍. 문서가 곧 묘지.</div>
+              <div class="flex-1 text-txt-primary font-medium"><span class="text-[10px] font-bold uppercase tracking-wider text-aed-emerald block mb-1">After</span>목업이 곧 제품 · 1~2일 내 반영</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Giant numbers -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-8">
         <div class="rv text-center lg:text-left">
@@ -1318,7 +1380,7 @@ import '../../../styles/v2-casestudy.css';
         <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">틀렸을 때 빠르게 바꿨습니다</h2>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
         <!-- Card 1: 프레임워크 전환 -->
         <div class="rv bg-surface-card rounded-[20px] p-8">
@@ -1388,7 +1450,7 @@ import '../../../styles/v2-casestudy.css';
 
 
   <!-- ============ 14. TECH MARQUEE ============ -->
-  <section class="py-12 border-t border-b border-[rgba(226,226,226,0.08)] overflow-hidden">
+  <section class="py-12 border-t border-b border-[rgba(226,226,226,0.08)] overflow-hidden" style="max-width:100vw;">
     <div class="flex marquee-track" style="width:max-content;">
       <div class="flex items-center gap-10 px-6">
         <span class="text-sm font-semibold text-txt-muted whitespace-nowrap">React</span><span class="text-bdr-card">·</span>
@@ -1425,7 +1487,7 @@ import '../../../styles/v2-casestudy.css';
         <p class="label mb-4">배운 것</p>
         <h2 class="font-display text-4xl md:text-6xl font-bold tracking-tight">기획자가 직접 만들면<br/>달라지는 것들</h2>
       </div>
-      <div class="grid md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="learning-card rv bg-surface-card rounded-[16px] p-8 transition-all duration-700 hover:shadow-[0_12px_40px_rgba(27,28,28,0.08)] hover:-translate-y-2">
           <div class="w-14 h-14 rounded-[14px] bg-aed-slate/8 flex items-center justify-center mb-6">
             <ph-code size="28" weight="duotone" color="#4B6878"></ph-code>
@@ -1457,11 +1519,11 @@ import '../../../styles/v2-casestudy.css';
     <div class="max-w-[1400px] mx-auto px-6 lg:px-12 text-center rv">
       <p class="text-[#8A8B8E] text-sm tracking-widest uppercase font-semibold mb-8">Get in Touch</p>
       <p class="font-display text-3xl md:text-4xl font-bold text-white mb-12 leading-relaxed">이 프로젝트에 대해<br/>더 이야기하고 싶다면</p>
-      <div class="flex items-center justify-center gap-6 mb-16">
+      <div class="flex items-center justify-center gap-6 mb-16 flex-wrap">
         <a href="mailto:elliebinn@gmail.com" class="text-white/60 hover:text-white transition-colors text-sm font-medium">elliebinn@gmail.com</a>
-        <span class="text-white/20">|</span>
+        <span class="text-white/20 hidden md:inline">|</span>
         <a href="https://github.com/Elliebinn" class="text-white/60 hover:text-white transition-colors text-sm font-medium">GitHub</a>
-        <span class="text-white/20">|</span>
+        <span class="text-white/20 hidden md:inline">|</span>
         <a href="https://elliebinn.github.io" class="text-white/60 hover:text-white transition-colors text-sm font-medium">Portfolio</a>
       </div>
       <div class="border-t border-white/10 pt-10">

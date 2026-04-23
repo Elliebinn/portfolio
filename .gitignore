@@ -28,6 +28,12 @@ pnpm-debug.log*
 
 # dev screenshots (not committed)
 .screenshots/
+*.png
+!public/**/*.png
+!src/**/*.png
+
+# workspace (research, archive, mockups)
+_workspace/
 
 # Cloned external reference repos (do not vendor)
 _workspace/refs/

@@ -15,7 +15,7 @@ import { dirname } from 'node:path';
 import { resume, keepBold } from '../src/data/resume.ts';
 
 const OUTPUT_PATH =
-  '/Users/ellie/Desktop/obsidian/hyebin-vault/3-career/resume/resume-common.md';
+  '/Users/ellie/Documents/career-planner/cv.md';
 
 function renderMarkdown(): string {
   const parts: string[] = [];

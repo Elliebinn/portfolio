@@ -12,7 +12,8 @@
     "astro": "astro",
     "sync:resume": "node --experimental-strip-types scripts/gen-resume-md.ts && node --experimental-strip-types scripts/gen-linkedin-about.ts",
     "resume:audit": "bash scripts/resume-audit.sh",
-    "resume:sync-and-audit": "npm run sync:resume && npm run resume:audit"
+    "resume:sync-and-audit": "npm run sync:resume && npm run resume:audit",
+    "gen:pdf": "node --experimental-strip-types scripts/gen-resume-pdf.ts"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.1",
