@@ -124,7 +124,7 @@ const boldToHtml = (text: string): string => {
   .contact a { color: var(--muted); text-decoration: none; }
 
   /* ===== Section ===== */
-  section { margin-bottom: 14pt; }
+  section { margin-bottom: 8pt; }
   .section-header {
     display: flex;
     align-items: baseline;
@@ -156,7 +156,7 @@ const boldToHtml = (text: string): string => {
   .summary-body strong { color: var(--text); font-weight: 700; }
 
   /* ===== Experience (STAR 구조) ===== */
-  .job { margin-bottom: 14pt; page-break-inside: avoid; }
+  .job { margin-bottom: 4pt; page-break-inside: avoid; }
   .job:last-child { margin-bottom: 0; }
   .job-header {
     display: flex;
@@ -186,11 +186,12 @@ const boldToHtml = (text: string): string => {
   .job-role {
     font-size: 8pt;
     color: var(--muted);
-    margin-bottom: 8pt;
+    margin-bottom: 4pt;
   }
 
   .project {
-    margin-top: 8pt;
+    margin-top: 6pt;
+    margin-bottom: 4pt;
     page-break-inside: avoid;
     padding-left: 8pt;
     border-left: 1.5pt solid var(--faint);
@@ -217,7 +218,16 @@ const boldToHtml = (text: string): string => {
   }
 
   .star-section {
-    margin-bottom: 6pt;
+    margin-bottom: 4pt;
+  }
+  .star-section.result {
+    background: #f5f6f8;
+    border-radius: 4pt;
+    padding: 6pt 8pt;
+    margin-top: 4pt;
+  }
+  .star-section.result .star-label {
+    color: var(--accent);
   }
   .star-label {
     font-size: 6.5pt;
@@ -401,7 +411,7 @@ const boldToHtml = (text: string): string => {
                 </ul>
               </div>
 
-              <div class="star-section">
+              <div class="star-section result">
                 <p class="star-label">성과 (Result)</p>
                 <ul class="bullets">
                   {project.results.map((result) => (
