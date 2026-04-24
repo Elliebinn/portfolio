@@ -63,16 +63,7 @@ if (companyParam && landingTargets[companyParam]) {
         {useTailoredResume ? (
           <p style="font-size:15px; color:var(--ink-2); line-height:1.7;" set:html={renderBold(tailoredData.summary)} />
         ) : (
-          <div style="font-size:15px; color:var(--ink-2); line-height:1.7;">
-            {resume.summary.body.split('현재는').length > 1 ? (
-              <>
-                <p style="margin-bottom:8px;" set:html={renderBold(resume.summary.body.split('현재는')[0].trim())} />
-                <p set:html={renderBold('현재는' + resume.summary.body.split('현재는').slice(1).join('현재는'))} />
-              </>
-            ) : (
-              <p set:html={renderBold(resume.summary.body)} />
-            )}
-          </div>
+          <p style="font-size:15px; color:var(--ink-2); line-height:1.7;" set:html={renderBold(resume.summary.body).replace(/\n/g, '<br/>')} />
         )}
       </div>
       <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end; flex-shrink:0;">
