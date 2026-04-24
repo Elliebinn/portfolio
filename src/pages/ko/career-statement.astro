@@ -1,0 +1,154 @@
+---
+import V2Layout from '../../layouts/V2Layout.astro';
+import '../../styles/v2-resume.css';
+import { resume, boldToHtml } from '../../data/resume';
+import { careerStatement } from '../../data/career-statement';
+
+// Helper to render bold markdown as HTML
+const renderBold = (text: string) => boldToHtml(text, '');
+---
+<V2Layout title="우혜빈 경력기술서 — AI Product Manager" lang="ko">
+
+<!-- Top nav -->
+<nav class="cs-nav" id="csNav">
+  <a href="/ko/" class="cs-nav-brand">Hyebin.</a>
+  <div style="display:flex; align-items:center; gap:24px;">
+    <a href="/ko/" class="cs-back-link">Back Home</a>
+    <a class="btn-pdf" href="/v1/ko/career-statement-pdf/?print" target="_blank">
+      <ph-download-simple weight="regular" size="14"></ph-download-simple>
+      Download PDF
+    </a>
+  </div>
+</nav>
+
+<main class="doc">
+
+  <!-- Tab Navigation -->
+  <div class="tab-nav" id="tabNav">
+    <a href="/ko/resume" class="tab-btn">
+      <ph-file-text weight="regular" size="16"></ph-file-text>
+      <span>이력서</span>
+    </a>
+    <a href="/ko/career-statement" class="tab-btn active">
+      <ph-notebook weight="regular" size="16"></ph-notebook>
+      <span>경력기술서</span>
+    </a>
+  </div>
+
+  <!-- Header: name + role + headline + contact -->
+  <header class="masthead">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap;">
+      <div style="max-width:680px;">
+        <div style="display:flex; align-items:baseline; gap:12px; margin-bottom:6px;">
+          <span style="font-family:'Paperlogy','Syne',sans-serif; font-size:28px; font-weight:800; color:var(--ink);">{resume.name.ko}</span>
+          <span style="font-size:16px; color:var(--faint); font-weight:500;">{resume.name.en}</span>
+        </div>
+        <p style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:16px;">경력기술서 · Career Statement</p>
+        <h1 style="font-family:'Paperlogy','Syne',sans-serif; font-size:clamp(32px,5vw,48px); font-weight:800; letter-spacing:-0.03em; line-height:1.2; color:var(--ink); margin-bottom:20px;">
+          성과로 증명하는<br/><span style="color:var(--accent);">AI Product 경력</span>
+        </h1>
+        <p style="font-size:15px; color:var(--ink-2); line-height:1.7;">{careerStatement.summary}</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end; flex-shrink:0;">
+        <a href={`mailto:${resume.contact.email}`} style="display:inline-flex; align-items:center; gap:8px; color:var(--muted); text-decoration:none; font-size:13px;">
+          <ph-envelope weight="regular" size="14"></ph-envelope> {resume.contact.email}
+        </a>
+        <a href={resume.contact.linkedinUrl} style="display:inline-flex; align-items:center; gap:8px; color:var(--muted); text-decoration:none; font-size:13px;">
+          <ph-link weight="regular" size="14"></ph-link> LinkedIn
+        </a>
+        <a href={resume.contact.githubUrl} style="display:inline-flex; align-items:center; gap:8px; color:var(--muted); text-decoration:none; font-size:13px;">
+          <ph-github-logo weight="regular" size="14"></ph-github-logo> GitHub
+        </a>
+        <span style="display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:13px;">
+          <ph-map-pin weight="regular" size="14"></ph-map-pin> {resume.contact.location}
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Career Statement Content -->
+  <div style="max-width:950px; margin:0 auto;">
+    {careerStatement.experiences.map((exp, idx) => (
+      <div style={`margin-bottom:48px; padding-left:20px; border-left:2px solid ${idx === 0 ? 'var(--accent)' : 'var(--rule)'}; position:relative;`}>
+        <div style={`position:absolute; left:-7px; top:4px; width:12px; height:12px; border-radius:50%; background:${idx === 0 ? 'var(--accent)' : 'var(--faint)'};`}></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
+          <h3 style="font-family:'Syne','Paperlogy',sans-serif; font-size:17px; font-weight:700; color:var(--ink);">
+            {exp.company} {exp.department && `· ${exp.department}`}
+          </h3>
+          <span style={`font-size:12px; font-weight:600; color:${idx === 0 ? 'var(--accent)' : 'var(--muted)'}; background:${idx === 0 ? 'var(--accent-soft)' : 'var(--rule)'}; padding:3px 10px; border-radius:100px; flex-shrink:0;`}>
+            {exp.period}
+          </span>
+        </div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:20px;">{exp.role}</p>
+
+        {exp.projects.map((project) => (
+          <div style="margin-bottom:32px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;">
+              <h4 style="font-weight:600; color:var(--ink); font-size:15px;">{project.title}</h4>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--faint); flex-shrink:0; margin-left:12px;">{project.period}</span>
+            </div>
+
+            <div style="margin-bottom:16px;">
+              <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">배경 (Situation)</p>
+              <p style="font-size:14px; color:var(--ink-2); line-height:1.6; font-style:italic;">{project.situation}</p>
+            </div>
+
+            <div style="margin-bottom:16px;">
+              <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">역할 (Task)</p>
+              <p style="font-size:14px; color:var(--ink); line-height:1.6; font-weight:500;">{project.task}</p>
+            </div>
+
+            <div style="margin-bottom:16px;">
+              <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">실행 (Action)</p>
+              <ul class="exp-bullets">
+                {project.actions.map(action => (
+                  <li set:html={renderBold(action)} />
+                ))}
+              </ul>
+            </div>
+
+            <div style="margin-bottom:16px;">
+              <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">성과 (Result)</p>
+              <ul class="exp-bullets">
+                {project.results.map(result => (
+                  <li set:html={renderBold(result)} />
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+
+  <!-- Footer -->
+  <footer class="doc-footer">
+    <span>&copy; 2026 Hyebin Woo</span>
+    <span>Last updated · 2026.04.24</span>
+  </footer>
+
+</main>
+
+<script is:inline>
+  // Nav scroll — pill effect
+  const csNav = document.getElementById('csNav');
+  if (csNav) {
+    window.addEventListener('scroll', () => {
+      csNav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  }
+
+  // Page transition — enter animation (curtain open)
+  const pt = document.getElementById('pageTransition');
+  if (pt) {
+    pt.classList.add('enter');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        pt.classList.add('done');
+        setTimeout(() => { pt.classList.remove('enter', 'done'); }, 600);
+      });
+    });
+  }
+</script>
+</V2Layout>

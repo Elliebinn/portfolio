@@ -3,9 +3,10 @@ body { cursor: default !important; }
 .cursor { display: none !important; }
 
 /* Paperlogy — Korean display */
-@font-face { font-family: 'Paperlogy'; src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-fall@1.1/Paperlogy-4Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Paperlogy'; src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-fall@1.1/Paperlogy-6SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
-@font-face { font-family: 'Paperlogy'; src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-fall@1.1/Paperlogy-8ExtraBold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+@font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-4Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-6SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-7Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-8ExtraBold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
 
 :root {
   /* Light — clean resume with AED accent (overrides v2.css dark variables) */
@@ -76,6 +77,59 @@ h1, h2, h3, h4 { font-family: 'Syne', 'Paperlogy', 'Pretendard', sans-serif; let
   font-family: inherit;
 }
 .btn-pdf:hover { background: var(--accent); }
+
+/* Tab Navigation */
+.tab-nav {
+  display: flex;
+  gap: 8px;
+  margin: 0 auto 32px;
+  max-width: 480px;
+  padding: 6px;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  text-decoration: none;
+}
+
+.tab-btn:hover {
+  background: var(--rule-soft);
+  color: var(--ink-2);
+}
+
+.tab-btn.active {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,55,55,0.2);
+}
+
+.tab-btn ph-file-text,
+.tab-btn ph-notebook {
+  transition: transform 0.3s var(--ease);
+}
+
+.tab-btn.active ph-file-text,
+.tab-btn.active ph-notebook {
+  transform: scale(1.1);
+}
+
 
 /* Resume 2-column split */
 .resume-split {

@@ -363,7 +363,7 @@ function estimateReadTime(body: string) {
         >
           <div class="writing-card-top">
             <span class="writing-cat">{catLabel}</span>
-            <span class="writing-date">{formatDate(post.data.date)}</span>
+            <span class="writing-date"><span class="writing-date-year">{post.data.date.getFullYear()}.</span>{String(post.data.date.getMonth()+1).padStart(2,'0')}.{String(post.data.date.getDate()).padStart(2,'0')}</span>
             {seriesNum && <span class="writing-series">{seriesNum}</span>}
           </div>
           <h3 class="writing-title">{post.data.title}</h3>

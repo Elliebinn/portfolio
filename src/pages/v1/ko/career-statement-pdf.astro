@@ -1,0 +1,426 @@
+---
+// PDF 출력 전용 경력기술서 — /ko/career-statement-pdf/
+// 브라우저에서 열어 Cmd+P → "PDF로 저장" → A4 · 여백 없음 · 배경 그래픽 체크
+//
+// 내용은 src/data/career-statement.ts에서 import됩니다.
+import { resume } from '../../../data/resume';
+import { careerStatement } from '../../../data/career-statement';
+
+// Helper to render bold markdown as HTML
+const boldToHtml = (text: string): string => {
+  return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+};
+---
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>우혜빈 · 경력기술서 (Hye Bin Woo Career Statement)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --accent: #456272;
+    --text: #1a1f24;
+    --muted: #555e66;
+    --faint: #8a949d;
+    --rule: #1a1f24;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    font-family: 'Noto Sans KR', 'Manrope', -apple-system, sans-serif;
+    color: var(--text);
+    background: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ===== A4 페이지 설정 ===== */
+  @page {
+    size: A4;
+    margin: 12mm 14mm 12mm 14mm;
+  }
+
+  .page {
+    width: 182mm;
+    min-height: 273mm;
+    margin: 0 auto;
+    padding: 0;
+    background: #ffffff;
+    font-size: 9.5pt;
+    line-height: 1.55;
+  }
+
+  /* ===== Typography ===== */
+  .display { font-family: 'Manrope', 'Noto Sans KR', sans-serif; font-weight: 800; letter-spacing: -0.01em; }
+  .mono { font-variant-numeric: tabular-nums; }
+
+  /* ===== Masthead ===== */
+  .masthead {
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 6pt;
+    margin-bottom: 14pt;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .masthead .label {
+    font-size: 7pt;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .masthead .meta {
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16pt;
+    gap: 20pt;
+  }
+  .header h1 {
+    font-family: 'Manrope', 'Noto Sans KR', sans-serif;
+    font-weight: 900;
+    font-size: 28pt;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 3pt;
+  }
+  .header h1 .en {
+    color: var(--faint);
+    font-weight: 500;
+    font-size: 20pt;
+    margin-left: 4pt;
+  }
+  .header .role {
+    font-size: 8pt;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .contact {
+    display: flex;
+    flex-direction: column;
+    gap: 2pt;
+    font-size: 8pt;
+    color: var(--muted);
+    text-align: right;
+  }
+  .contact a { color: var(--muted); text-decoration: none; }
+
+  /* ===== Section ===== */
+  section { margin-bottom: 14pt; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 8pt;
+    margin-bottom: 7pt;
+  }
+  .section-header h2 {
+    font-size: 7pt;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .section-header .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    opacity: 0.3;
+  }
+
+  /* ===== Summary ===== */
+  .summary-body {
+    font-size: 9pt;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 170mm;
+  }
+  .summary-body strong { color: var(--text); font-weight: 700; }
+
+  /* ===== Experience (STAR 구조) ===== */
+  .job { margin-bottom: 14pt; page-break-inside: avoid; }
+  .job:last-child { margin-bottom: 0; }
+  .job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 3pt;
+  }
+  .job-title {
+    font-family: 'Manrope', 'Noto Sans KR', sans-serif;
+    font-weight: 800;
+    font-size: 11pt;
+    color: var(--text);
+  }
+  .job-title .sub {
+    font-weight: 700;
+    font-size: 9pt;
+    color: var(--muted);
+  }
+  .job-period {
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .job-role {
+    font-size: 8pt;
+    color: var(--muted);
+    margin-bottom: 8pt;
+  }
+
+  .project {
+    margin-top: 8pt;
+    page-break-inside: avoid;
+    padding-left: 8pt;
+    border-left: 1.5pt solid var(--faint);
+  }
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6pt;
+  }
+  .project-title {
+    font-family: 'Manrope', 'Noto Sans KR', sans-serif;
+    font-weight: 800;
+    font-size: 9.5pt;
+    color: var(--text);
+  }
+  .project-period {
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+
+  .star-section {
+    margin-bottom: 6pt;
+  }
+  .star-label {
+    font-size: 6.5pt;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2pt;
+  }
+  .star-text {
+    font-size: 8.5pt;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .star-text.situation {
+    font-style: italic;
+  }
+  .star-text.task {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  ul.bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  ul.bullets li {
+    font-size: 8.5pt;
+    line-height: 1.55;
+    color: var(--muted);
+    padding-left: 9pt;
+    position: relative;
+    margin-bottom: 2pt;
+  }
+  ul.bullets li:before {
+    content: '●';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-size: 4.5pt;
+    line-height: 14pt;
+  }
+  ul.bullets li strong { color: var(--text); font-weight: 700; }
+
+  /* ===== Print ===== */
+  @media print {
+    html, body { background: white; }
+    .page {
+      width: 100%;
+      min-height: auto;
+      padding: 0;
+      margin: 0;
+    }
+    .job { page-break-inside: avoid; }
+    .project { page-break-inside: avoid; }
+  }
+
+  /* ===== Screen preview ===== */
+  @media screen {
+    body {
+      background: #f2f3f5;
+      padding: 20pt 0;
+    }
+    .page {
+      background: white;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 14mm;
+      width: 210mm;
+      min-height: 297mm;
+    }
+    .pdf-button {
+      position: fixed;
+      top: 16pt;
+      right: 16pt;
+      background: var(--accent);
+      color: white;
+      padding: 10pt 18pt;
+      border-radius: 999pt;
+      font-size: 10pt;
+      font-weight: 700;
+      font-family: 'Manrope', sans-serif;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      z-index: 1000;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6pt;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .pdf-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.22);
+    }
+    .pdf-button:active {
+      transform: translateY(0);
+    }
+  }
+  @media print {
+    .pdf-button { display: none !important; }
+  }
+</style>
+</head>
+<body>
+  <button class="pdf-button" onclick="window.print()" aria-label="PDF 저장">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+    PDF로 저장
+  </button>
+
+  <div class="page">
+
+    <!-- Masthead -->
+    <div class="masthead">
+      <span class="label">우혜빈 · 경력기술서</span>
+      <span class="meta">2026 · Career Statement</span>
+    </div>
+
+    <div class="header">
+      <div>
+        <h1 class="display">{resume.name.ko}<span class="en">{resume.name.en}</span></h1>
+        <p class="role">AI Product Manager</p>
+      </div>
+      <div class="contact">
+        <a href={`mailto:${resume.contact.email}`}>{resume.contact.email}</a>
+        <a href={resume.contact.githubUrl}>{resume.contact.github}</a>
+        <a href={resume.contact.portfolioUrl}>{resume.contact.portfolio}</a>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <section>
+      <div class="section-header">
+        <h2>Summary</h2>
+        <span class="rule"></span>
+      </div>
+      <p class="summary-body">{careerStatement.summary}</p>
+    </section>
+
+    <!-- Career Experiences (STAR 구조) -->
+    <section>
+      <div class="section-header">
+        <h2>Career Experiences</h2>
+        <span class="rule"></span>
+      </div>
+
+      {careerStatement.experiences.map((exp) => (
+        <div class="job">
+          <div class="job-header">
+            <div class="job-title">
+              {exp.company}{exp.department && <span class="sub"> · {exp.department}</span>}
+            </div>
+            <div class="job-period mono">{exp.period}</div>
+          </div>
+          <div class="job-role">{exp.role}</div>
+
+          {exp.projects.map((project) => (
+            <div class="project">
+              <div class="project-header">
+                <p class="project-title">{project.title}</p>
+                <span class="project-period mono">{project.period}</span>
+              </div>
+
+              <div class="star-section">
+                <p class="star-label">배경 (Situation)</p>
+                <p class="star-text situation">{project.situation}</p>
+              </div>
+
+              <div class="star-section">
+                <p class="star-label">역할 (Task)</p>
+                <p class="star-text task">{project.task}</p>
+              </div>
+
+              <div class="star-section">
+                <p class="star-label">실행 (Action)</p>
+                <ul class="bullets">
+                  {project.actions.map((action) => (
+                    <li set:html={boldToHtml(action)} />
+                  ))}
+                </ul>
+              </div>
+
+              <div class="star-section">
+                <p class="star-label">성과 (Result)</p>
+                <ul class="bullets">
+                  {project.results.map((result) => (
+                    <li set:html={boldToHtml(result)} />
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </section>
+
+  </div>
+<script>
+  // URL에 ?print 파라미터가 있으면 자동으로 인쇄 대화상자 열기
+  if (window.location.search.includes('print')) {
+    window.addEventListener('load', () => { setTimeout(() => window.print(), 300); });
+  }
+</script>
+</body>
+</html>

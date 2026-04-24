@@ -2,6 +2,7 @@
 import V2Layout from '../../layouts/V2Layout.astro';
 import '../../styles/v2-resume.css';
 import { resume, boldToHtml } from '../../data/resume';
+import { careerStatement } from '../../data/career-statement';
 import { landingTargets } from '../../data/landing-targets';
 
 // Helper to render bold markdown as HTML
@@ -34,6 +35,18 @@ if (companyParam && landingTargets[companyParam]) {
 </nav>
 
 <main class="doc">
+
+  <!-- Tab Navigation -->
+  <div class="tab-nav" id="tabNav">
+    <a href="/ko/resume" class="tab-btn active">
+      <ph-file-text weight="regular" size="16"></ph-file-text>
+      <span>이력서</span>
+    </a>
+    <a href="/ko/career-statement" class="tab-btn">
+      <ph-notebook weight="regular" size="16"></ph-notebook>
+      <span>경력기술서</span>
+    </a>
+  </div>
 
   <!-- Header: name + role + headline + contact -->
   <header class="masthead">
@@ -303,6 +316,7 @@ if (companyParam && landingTargets[companyParam]) {
     <span>&copy; 2026 Hyebin Woo</span>
     <span>Last updated · 2026.04.21</span>
   </footer>
+
 
 </main>
 
