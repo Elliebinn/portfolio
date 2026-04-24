@@ -44,9 +44,6 @@ const renderBold = (text: string) => boldToHtml(text, '');
           <span style="font-size:16px; color:var(--faint); font-weight:500;">{resume.name.en}</span>
         </div>
         <p style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); font-weight:600; margin-bottom:16px;">경력기술서 · Career Statement</p>
-        <h1 style="font-family:'Paperlogy','Syne',sans-serif; font-size:clamp(32px,5vw,48px); font-weight:800; letter-spacing:-0.03em; line-height:1.2; color:var(--ink); margin-bottom:20px;">
-          성과로 증명하는<br/><span style="color:var(--accent);">AI Product 경력</span>
-        </h1>
         <p style="font-size:15px; color:var(--ink-2); line-height:1.7;">{careerStatement.summary}</p>
       </div>
       <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end; flex-shrink:0;">
@@ -109,8 +106,8 @@ const renderBold = (text: string) => boldToHtml(text, '');
                 </ul>
               </div>
 
-              <div style="margin-bottom:16px;">
-                <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">성과 (Result)</p>
+              <div style="margin-bottom:16px; background:var(--rule-soft, rgba(0,0,0,0.03)); border-radius:10px; padding:16px 20px;">
+                <p style="font-size:12px; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">성과 (Result)</p>
                 <ul class="exp-bullets">
                   {project.results.map(result => (
                     <li set:html={renderBold(result)} />
