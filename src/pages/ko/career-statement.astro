@@ -89,32 +89,34 @@ const renderBold = (text: string) => boldToHtml(text, '');
               <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--faint); flex-shrink:0; margin-left:12px;">{project.period}</span>
             </div>
 
-            <div style="margin-bottom:16px;">
-              <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">배경 (Situation)</p>
-              <p style="font-size:14px; color:var(--ink-2); line-height:1.6; font-style:italic;">{project.situation}</p>
-            </div>
+            <div style="max-width:720px;">
+              <div style="margin-bottom:16px;">
+                <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">배경 (Situation)</p>
+                <p style="font-size:14px; color:var(--ink-2); line-height:1.6; font-style:italic;">{project.situation}</p>
+              </div>
 
-            <div style="margin-bottom:16px;">
-              <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">역할 (Task)</p>
-              <p style="font-size:14px; color:var(--ink); line-height:1.6; font-weight:500;">{project.task}</p>
-            </div>
+              <div style="margin-bottom:16px;">
+                <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px;">역할 (Task)</p>
+                <p style="font-size:14px; color:var(--ink); line-height:1.6; font-weight:500;">{project.task}</p>
+              </div>
 
-            <div style="margin-bottom:16px;">
-              <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">실행 (Action)</p>
-              <ul class="exp-bullets">
-                {project.actions.map(action => (
-                  <li set:html={renderBold(action)} />
-                ))}
-              </ul>
-            </div>
+              <div style="margin-bottom:16px;">
+                <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">실행 (Action)</p>
+                <ul class="exp-bullets">
+                  {project.actions.map(action => (
+                    <li set:html={renderBold(action)} />
+                  ))}
+                </ul>
+              </div>
 
-            <div style="margin-bottom:16px;">
-              <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">성과 (Result)</p>
-              <ul class="exp-bullets">
-                {project.results.map(result => (
-                  <li set:html={renderBold(result)} />
-                ))}
-              </ul>
+              <div style="margin-bottom:16px;">
+                <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">성과 (Result)</p>
+                <ul class="exp-bullets">
+                  {project.results.map(result => (
+                    <li set:html={renderBold(result)} />
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         ))}
