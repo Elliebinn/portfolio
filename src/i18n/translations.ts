@@ -69,7 +69,7 @@ const translations = {
           title: 'AI Service Planner — Alphabridge',
           org: 'Subsidiary of AssetPlus Asset Management',
           description:
-            'Leading service planning & UX for internal quant platform. Planning Voyager AI Research product. Launched RATB 22nd\u201125th robo-advisor algorithms (38 total). Built n8n + Slack news monitoring automation.',
+            'Leading service planning & UX for internal quant platform. Planning Voyager AI Research product. Launched RATB 22nd\u201125th robo-advisor algorithms (38 total). Built Slack news monitoring automation.',
         },
         {
           period: '2023.09 — 2025.03',

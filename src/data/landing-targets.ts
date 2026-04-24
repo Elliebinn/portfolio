@@ -400,7 +400,7 @@ export const landingTargets: Record<string, LandingTarget> = {
         },
         {
           label: '개발 · 데이터',
-          items: 'Python · FastAPI · React · TypeScript · SQL · ClickHouse · MySQL · Pandas · n8n',
+          items: 'Python · FastAPI · React · TypeScript · SQL · ClickHouse · MySQL · Pandas',
         },
         {
           label: '협업',
