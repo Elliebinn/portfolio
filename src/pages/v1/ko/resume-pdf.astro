@@ -158,7 +158,7 @@ import { resume, boldToHtml } from '../../../data/resume';
   .summary-body strong { color: var(--text); font-weight: 700; }
 
   /* ===== Experience ===== */
-  .job { margin-bottom: 12pt; }
+  .job { margin-bottom: 6pt; }
   .job:last-child { margin-bottom: 0; }
   .job-header {
     display: flex;
@@ -316,7 +316,6 @@ import { resume, boldToHtml } from '../../../data/resume';
       padding: 0;
       margin: 0;
     }
-    .job { page-break-inside: avoid; }
     .project { page-break-inside: avoid; }
   }
 
@@ -445,7 +444,7 @@ import { resume, boldToHtml } from '../../../data/resume';
         <div class="job-title">{resume.sideProject.title} <span class="sub">· {resume.sideProject.sub}</span></div>
         <div class="job-period">{resume.sideProject.role}</div>
       </div>
-      <p class="side-quote">"{resume.sideProject.quote}"</p>
+      {resume.sideProject.quote && <p class="side-quote">"{resume.sideProject.quote}"</p>}
       <ul class="bullets">
         {resume.sideProject.bullets.map((bullet) => (
           <li set:html={boldToHtml(bullet)} />

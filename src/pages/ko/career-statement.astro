@@ -99,11 +99,23 @@ const renderBold = (text: string) => boldToHtml(text, '');
 
               <div style="margin-bottom:16px;">
                 <p style="font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">실행 (Action)</p>
-                <ul class="exp-bullets">
-                  {project.actions.map(action => (
-                    <li set:html={renderBold(action)} />
-                  ))}
-                </ul>
+                {project.actions.map(actionGroup => (
+                  <div style="margin-bottom:12px;">
+                    {actionGroup.label && (
+                      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;">
+                        <p style="font-size:13px; font-weight:600; color:var(--ink);">{actionGroup.label}</p>
+                        {actionGroup.period && (
+                          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--faint); margin-left:12px;">{actionGroup.period}</span>
+                        )}
+                      </div>
+                    )}
+                    <ul class="exp-bullets">
+                      {actionGroup.items.map(item => (
+                        <li set:html={renderBold(item)} />
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
 
               <div style="margin-bottom:16px; background:var(--rule-soft, rgba(0,0,0,0.03)); border-radius:10px; padding:16px 20px;">

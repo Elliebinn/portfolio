@@ -55,7 +55,10 @@ function renderMarkdown(): string {
     parts.push('');
 
     for (const project of job.projects) {
-      parts.push(`**${project.title}**`);
+      const titleLine = project.period
+        ? `**${project.title}** · *${project.period}*`
+        : `**${project.title}**`;
+      parts.push(titleLine);
       parts.push('');
       if (project.description) {
         parts.push(`> ${project.description}`);
