@@ -465,6 +465,23 @@ html[data-theme="light"] .nav.scrolled {
   .work-card-meta { padding: 28px 24px; }
   .work-visual { height: 220px; order: -1; }
 }
+@media (max-width: 640px) {
+  .work-grid { gap: 12px; }
+  .work-card { border-radius: 14px; }
+  .work-visual { height: 140px; }
+  .work-corner { top: 12px; right: 12px; width: 32px; height: 32px; }
+  .work-card-meta { padding: 18px 20px; min-height: auto; }
+  .work-head { margin-bottom: 12px; }
+  .work-num { font-size: 11px; }
+  .work-subtitle { font-size: 12px; margin-bottom: 4px; }
+  .work-title { font-size: 17px; margin-bottom: 10px; line-height: 1.35; }
+  .work-tags { margin-bottom: 14px; gap: 6px; }
+  .work-tag { font-size: 10px; padding: 3px 10px; }
+  .work-metrics { gap: 16px; }
+  .work-metric-value { font-size: 26px; }
+  .work-metric-label { font-size: 9px; margin-top: 3px; }
+  .wip-badge { font-size: 9px !important; padding: 3px 10px !important; }
+}
 
 /* --- About --- */
 .about-grid {
