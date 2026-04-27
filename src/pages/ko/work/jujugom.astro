@@ -5,6 +5,7 @@ import '../../../styles/v2-casestudy.css';
 <V2Layout title="주주곰 — AI Multi-Agent Stock Analysis" lang="ko">
 
 <script is:inline src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
 <script is:inline>
 tailwind.config = {
   theme: { extend: {
@@ -68,6 +69,18 @@ tailwind.config = {
 
   .tag { font-size: 10px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: var(--s-elevated); color: var(--t-muted); }
 
+  .cs-nav { position:fixed; top:0; left:0; right:0; z-index:9990; padding:22px 44px; display:flex; justify-content:space-between; align-items:center; transition: all .45s cubic-bezier(.25,.46,.45,.94); }
+  .cs-nav.scrolled { top:16px; left:22%; right:22%; padding:14px 36px; border-radius:100px; background:var(--nav-pill-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); box-shadow:0 4px 24px rgba(0,0,0,0.25); }
+  .cs-nav-brand { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; color:#e2e2e2; text-decoration:none; }
+  .cs-nav-right { display: flex; align-items: center; gap: 24px; }
+  .cs-back-link { font-size:12px; font-weight:400; letter-spacing:0.1em; text-transform:uppercase; color:#888; text-decoration:none; position:relative; transition:color .3s; }
+  .cs-back-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1px; background:#e2e2e2; transition:width .3s; }
+  .cs-back-link:hover { color:#e2e2e2; }
+  .cs-back-link:hover::after { width:100%; }
+  .cs-theme-btn { display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:100px; border:1px solid rgba(226,226,226,0.15); background:transparent; color:#e2e2e2; font-size:12px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; transition:border-color .3s; }
+  .cs-theme-btn:hover { border-color:#e2e2e2; }
+  @media (max-width:900px) { .cs-nav.scrolled { left:5%; right:5%; } .cs-nav { padding:16px 20px; } }
+  @media (max-width:480px) { .cs-nav.scrolled { left:3%; right:3%; padding:10px 16px; } .cs-nav-brand { font-size:16px; } .cs-back-link { font-size:10px; } .cs-theme-btn { font-size:10px; padding:6px 12px; } .cs-nav-right { gap:12px; } }
   .case-hero-title .hl { color:#60A5FA; }
 
   @media (max-width:640px) {
@@ -78,15 +91,20 @@ tailwind.config = {
   }
 </style>
 
-<!-- NAV -->
-<nav class="cs-nav" id="csNav">
+<nav class="cs-nav" id="csNav" style="z-index:9990;">
   <a href="/ko/" class="cs-nav-brand">Hyebin.</a>
-  <div style="display:flex; align-items:center; gap:24px;">
+  <div class="cs-nav-right">
     <a href="/ko/" class="cs-back-link">Back Home</a>
     <button class="cs-theme-btn" id="csThemeBtn">◐ Dark</button>
   </div>
 </nav>
 
+<!-- Crosshair cursor -->
+<div class="cursor" id="cursor">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="cursor-label" id="cursorLabel"></div>
+</div>
 
 <!-- ═══════ 01. HERO ═══════ -->
 <section class="case-hero" id="hero">
@@ -1200,6 +1218,30 @@ tailwind.config = {
     new IntersectionObserver(([e]) => { if (e.isIntersecting) e.target.classList.add('vis'); },
     { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }).observe(el);
   });
+
+  // Crosshair cursor
+  const cursor = document.getElementById('cursor');
+  const cursorLabel = document.getElementById('cursorLabel');
+  if (cursor) {
+    let mx = 0, my = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+    function cursorLoop() {
+      cx += (mx - cx) * 0.15; cy += (my - cy) * 0.15;
+      cursor.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
+      requestAnimationFrame(cursorLoop);
+    }
+    cursorLoop();
+    document.querySelectorAll('a, button, [data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('active');
+        if (cursorLabel && el.dataset.cursor) cursorLabel.textContent = el.dataset.cursor;
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('active');
+        if (cursorLabel) cursorLabel.textContent = '';
+      });
+    });
+  }
 </script>
 
 </V2Layout>
