@@ -44,6 +44,12 @@ tailwind.config = {
   .giant { font-family:'Space Grotesk',sans-serif; font-weight:800; line-height:1; letter-spacing:-0.04em; color:#f2f2f0; }
   .agent-node { background:var(--s-card); border:1px solid var(--b-card); border-radius:16px; padding:20px; transition:all .3s cubic-bezier(0.16,1,0.3,1); }
   .agent-node:hover { transform:translateY(-2px); border-color:var(--b-hover); }
+  .debate-step { opacity:0; transform:translateY(16px) scale(0.95); transition:all .5s cubic-bezier(0.16,1,0.3,1); transition-delay:calc(var(--step) * 120ms); }
+  .debate-flow-card.animate .debate-step { opacity:1; transform:translateY(0) scale(1); }
+  .agent-expandable { cursor:pointer; position:relative; }
+  .agent-expandable.active { border-color:#3B82F6; background:rgba(59,130,246,0.06); grid-column:1/-1; text-align:left; padding:12px 16px; }
+  .agent-detail { max-height:0; overflow:hidden; transition:max-height .3s ease, opacity .3s ease, margin .3s ease; opacity:0; margin-top:0; font-size:11px; color:var(--t-secondary); line-height:1.6; }
+  .agent-expandable.active .agent-detail { max-height:80px; opacity:1; margin-top:8px; }
 
   .screenshot-placeholder {
     background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(139,92,246,0.05));
@@ -249,6 +255,34 @@ tailwind.config = {
       </div>
     </div>
 
+    <!-- Before → After Slider -->
+    <div class="mt-16 rv">
+      <p class="text-center text-[11px] font-bold tracking-wider uppercase text-jj-blue mb-4">Before → After</p>
+      <div class="ba-slider" id="baSlider" style="position:relative; max-width:800px; margin:0 auto; border-radius:16px; overflow:hidden; border:1px solid var(--b-card); cursor:col-resize; user-select:none; aspect-ratio:16/9;">
+        <!-- After (app) — full background -->
+        <div style="position:absolute; inset:0; background:var(--s-card); display:flex; align-items:center; justify-content:center;">
+          <div class="screenshot-placeholder" style="border:none; min-height:auto; width:100%; height:100%;">
+            <i class="ph ph-device-mobile" style="font-size:32px; margin-bottom:8px; opacity:0.5;"></i>
+            주주곰 앱 포트폴리오 화면
+            <div class="ph-label">screenshot placeholder — 스크린샷 추가 후 교체</div>
+          </div>
+        </div>
+        <!-- Before (excel) — clipped by slider -->
+        <div id="baBeforeWrap" style="position:absolute; inset:0; width:50%; overflow:hidden;">
+          <img src="/images/zuzugom/excel-portfolio.png" alt="엑셀 포트폴리오" style="width:800px; max-width:none; height:100%; object-fit:cover; display:block;" />
+        </div>
+        <!-- Slider handle -->
+        <div id="baHandle" style="position:absolute; top:0; bottom:0; left:50%; width:3px; background:#3B82F6; transform:translateX(-50%); z-index:2;">
+          <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:36px; height:36px; background:#3B82F6; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 12px rgba(59,130,246,0.4);">
+            <span style="color:#fff; font-size:14px; font-weight:700;">⇔</span>
+          </div>
+        </div>
+        <!-- Labels -->
+        <div style="position:absolute; top:12px; left:12px; z-index:3; font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#fff; background:rgba(0,0,0,0.5); padding:3px 8px; border-radius:6px;">Before · 엑셀</div>
+        <div style="position:absolute; top:12px; right:12px; z-index:3; font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#3B82F6; background:rgba(0,0,0,0.5); padding:3px 8px; border-radius:6px;">After · 주주곰</div>
+      </div>
+    </div>
+
     <!-- Pain Points -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-16 rv">
       <div class="bg-surface-card rounded-[16px] p-5 border border-bdr-card">
@@ -451,30 +485,36 @@ tailwind.config = {
             <!-- After -->
             <div>
               <p class="text-[10px] font-bold tracking-wider uppercase text-jj-blue mb-2">After · 6 전문 에이전트</p>
-              <div class="grid grid-cols-3 gap-2 mb-3">
-                <div class="agent-node text-center py-3 px-2">
+              <div class="grid grid-cols-3 gap-2 mb-3" id="agentGrid">
+                <div class="agent-node agent-expandable text-center py-3 px-2" data-detail="RSI, MACD, 볼린저밴드 등 기술적 지표를 분석하고 차트 패턴에서 매매 시그널을 도출합니다.">
                   <p class="text-[10px] font-bold">Technical</p>
                   <p class="text-[9px] text-txt-muted">차트·지표</p>
+                  <div class="agent-detail"></div>
                 </div>
-                <div class="agent-node text-center py-3 px-2">
+                <div class="agent-node agent-expandable text-center py-3 px-2" data-detail="PER, PBR, ROE 등 재무제표 기반 밸류에이션을 수행하고 적정 주가를 산출합니다.">
                   <p class="text-[10px] font-bold">Fundamental</p>
                   <p class="text-[9px] text-txt-muted">재무·밸류</p>
+                  <div class="agent-detail"></div>
                 </div>
-                <div class="agent-node text-center py-3 px-2">
+                <div class="agent-node agent-expandable text-center py-3 px-2" data-detail="금리, 환율, GDP 등 거시경제 지표가 해당 종목에 미치는 영향을 분석합니다.">
                   <p class="text-[10px] font-bold">Macro</p>
                   <p class="text-[9px] text-txt-muted">금리·환율</p>
+                  <div class="agent-detail"></div>
                 </div>
-                <div class="agent-node text-center py-3 px-2">
+                <div class="agent-node agent-expandable text-center py-3 px-2" data-detail="최신 뉴스와 시장 센티먼트를 분석하여 긍정/부정 이슈를 정리합니다.">
                   <p class="text-[10px] font-bold">News</p>
                   <p class="text-[9px] text-txt-muted">센티먼트</p>
+                  <div class="agent-detail"></div>
                 </div>
-                <div class="agent-node text-center py-3 px-2">
+                <div class="agent-node agent-expandable text-center py-3 px-2" data-detail="원유, 금, 구리 등 원자재 가격 변동이 해당 종목의 비용/매출에 미치는 영향을 분석합니다.">
                   <p class="text-[10px] font-bold">Commodity</p>
                   <p class="text-[9px] text-txt-muted">원자재</p>
+                  <div class="agent-detail"></div>
                 </div>
-                <div class="agent-node text-center py-3 px-2">
+                <div class="agent-node agent-expandable text-center py-3 px-2" data-detail="동일 섹터 내 경쟁사와 공급망 종목을 분석하여 상대적 위치를 파악합니다.">
                   <p class="text-[10px] font-bold">Related</p>
                   <p class="text-[9px] text-txt-muted">연관종목</p>
+                  <div class="agent-detail"></div>
                 </div>
               </div>
               <div class="w-px h-4 bg-bdr-card mx-auto"></div>
@@ -522,25 +562,25 @@ tailwind.config = {
         </div>
         <div>
           <!-- Debate Flow + Screenshot -->
-          <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card mb-4">
+          <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card mb-4 debate-flow-card">
             <p class="text-[11px] font-bold tracking-wider uppercase text-txt-muted mb-4">Debate Flow · 9 LLM calls</p>
             <div class="space-y-3">
               <div class="grid grid-cols-4 gap-2">
-                <div class="agent-node text-center py-2.5 px-2">
+                <div class="agent-node debate-step text-center py-2.5 px-2" style="--step:0;">
                   <p class="text-[9px] font-bold text-txt-primary"><i class="ph ph-chart-line-up"></i> 트레이더</p>
                 </div>
-                <div class="agent-node text-center py-2.5 px-2">
+                <div class="agent-node debate-step text-center py-2.5 px-2" style="--step:1;">
                   <p class="text-[9px] font-bold text-txt-primary"><i class="ph ph-scales"></i> 가치</p>
                 </div>
-                <div class="agent-node text-center py-2.5 px-2">
+                <div class="agent-node debate-step text-center py-2.5 px-2" style="--step:2;">
                   <p class="text-[9px] font-bold text-txt-primary"><i class="ph ph-rocket-launch"></i> 성장</p>
                 </div>
-                <div class="agent-node text-center py-2.5 px-2">
+                <div class="agent-node debate-step text-center py-2.5 px-2" style="--step:3;">
                   <p class="text-[9px] font-bold text-txt-primary"><i class="ph ph-shield-warning"></i> 리스크</p>
                 </div>
               </div>
-              <div class="text-center text-txt-muted text-[10px]">↓ 의견(4) → 교차 반박(4) → 종합(1)</div>
-              <div class="agent-node text-center py-3 bg-surface-elevated">
+              <div class="debate-step text-center text-txt-muted text-[10px]" style="--step:4;">↓ 의견(4) → 교차 반박(4) → 종합(1)</div>
+              <div class="agent-node debate-step text-center py-3 bg-surface-elevated" style="--step:5;">
                 <p class="text-[11px] font-bold text-txt-primary">Synthesis + Q&A</p>
                 <p class="text-[10px] text-txt-muted mt-1">종합 견해 + 사용자가 이어서 질문</p>
               </div>
@@ -1215,6 +1255,46 @@ tailwind.config = {
   document.querySelectorAll('.rv').forEach(el => {
     new IntersectionObserver(([e]) => { if (e.isIntersecting) e.target.classList.add('vis'); },
     { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }).observe(el);
+  });
+
+  // Before/After slider
+  const slider = document.getElementById('baSlider');
+  const beforeWrap = document.getElementById('baBeforeWrap');
+  const handle = document.getElementById('baHandle');
+  if (slider && beforeWrap && handle) {
+    let dragging = false;
+    const update = (x) => {
+      const rect = slider.getBoundingClientRect();
+      let pct = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
+      beforeWrap.style.width = (pct * 100) + '%';
+      handle.style.left = (pct * 100) + '%';
+    };
+    slider.addEventListener('pointerdown', (e) => { dragging = true; slider.setPointerCapture(e.pointerId); update(e.clientX); });
+    slider.addEventListener('pointermove', (e) => { if (dragging) update(e.clientX); });
+    slider.addEventListener('pointerup', () => { dragging = false; });
+  }
+
+  // Debate flow stagger animation
+  const debateCard = document.querySelector('.debate-flow-card');
+  if (debateCard) {
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) debateCard.classList.add('animate');
+    }, { threshold: 0.3 }).observe(debateCard);
+  }
+
+  // Agent card expand
+  document.querySelectorAll('.agent-expandable').forEach(node => {
+    node.addEventListener('click', () => {
+      const wasActive = node.classList.contains('active');
+      document.querySelectorAll('.agent-expandable').forEach(n => {
+        n.classList.remove('active');
+        n.querySelector('.agent-detail').textContent = '';
+      });
+      if (!wasActive) {
+        node.classList.add('active');
+        node.querySelector('.agent-detail').textContent = node.dataset.detail;
+      }
+    });
   });
 
   // Crosshair cursor
