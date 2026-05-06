@@ -100,7 +100,7 @@ tailwind.config = {
 
   .persona-item { padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--b-subtle); }
   .persona-item:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
-  .persona-dot { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; background: var(--s-elevated); color: var(--t-muted); }
+  .persona-dot { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; background: var(--s-elevated); color: var(--t-muted); }
 
   .tag { font-size: 10px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: var(--s-elevated); color: var(--t-muted); }
 
@@ -117,6 +117,10 @@ tailwind.config = {
   @media (max-width:900px) { .cs-nav.scrolled { left:5%; right:5%; } .cs-nav { padding:16px 20px; } }
   @media (max-width:480px) { .cs-nav.scrolled { left:3%; right:3%; padding:10px 16px; } .cs-nav-brand { font-size:16px; } .cs-back-link { font-size:10px; } .cs-theme-btn { font-size:10px; padding:6px 12px; } .cs-nav-right { gap:12px; } }
   .case-hero-title .hl { color:#60A5FA; }
+
+  .iteration-details summary { list-style: none; }
+  .iteration-details summary::-webkit-details-marker { display: none; }
+  .iteration-details[open] .detail-arrow { transform: rotate(180deg); }
 
   @media (max-width:640px) {
     .font-display.text-4xl { font-size:1.5rem !important; }
@@ -158,7 +162,7 @@ tailwind.config = {
       <div class="case-hero-meta-item"><dt>Project</dt><dd>주주곰</dd></div>
       <div class="case-hero-meta-item"><dt>Year</dt><dd>2026 — Now</dd></div>
       <div class="case-hero-meta-item"><dt>Type</dt><dd>FinTech · AI Agent</dd></div>
-      <div class="case-hero-meta-item"><dt>Role</dt><dd>PM · 1인 기획/개발</dd></div>
+      <div class="case-hero-meta-item"><dt>Role</dt><dd>PM · AI Build</dd></div>
     </dl>
   </div>
 </section>
@@ -185,7 +189,7 @@ tailwind.config = {
         <div class="mt-8 pt-6 border-t border-[rgba(226,226,226,0.08)] space-y-2 text-[14px]">
           <div class="flex items-start gap-3">
             <span class="text-txt-muted font-medium w-14 flex-shrink-0">역할</span>
-            <span class="text-txt-secondary">기획 · 에이전트 설계 · 프롬프트 · 풀스택 구현</span>
+            <span class="text-txt-secondary">서비스 기획 · 에이전트 설계 · 프롬프트 엔지니어링 · AI Build</span>
           </div>
           <div class="flex items-start gap-3">
             <span class="text-txt-muted font-medium w-14 flex-shrink-0">기간</span>
@@ -204,7 +208,7 @@ tailwind.config = {
 
           <!-- 페르소나 1: 재현 -->
           <div class="persona-item">
-            <div class="flex items-center gap-3 mb-2.5">
+            <div class="flex items-center gap-4 mb-2.5">
               <div class="persona-dot"><i class="ph ph-briefcase"></i></div>
               <div>
                 <p class="font-display font-bold text-[15px]">재현, 36</p>
@@ -217,7 +221,7 @@ tailwind.config = {
 
           <!-- 페르소나 2: 부모님 -->
           <div class="persona-item">
-            <div class="flex items-center gap-3 mb-2.5">
+            <div class="flex items-center gap-4 mb-2.5">
               <div class="persona-dot"><i class="ph ph-users-three"></i></div>
               <div>
                 <p class="font-display font-bold text-[15px]">영호 & 미영, 50대</p>
@@ -230,7 +234,7 @@ tailwind.config = {
 
           <!-- 페르소나 3: 수민 -->
           <div class="persona-item">
-            <div class="flex items-center gap-3 mb-2.5">
+            <div class="flex items-center gap-4 mb-2.5">
               <div class="persona-dot"><i class="ph ph-graduation-cap"></i></div>
               <div>
                 <p class="font-display font-bold text-[15px]">수민, 28</p>
@@ -345,38 +349,66 @@ tailwind.config = {
 </section>
 
 
-<!-- ═══════ 03. CORE CONSTRAINT ═══════ -->
-<section class="py-20" style="background:var(--s-darker);">
+<!-- ═══════ 03. CONTEXT SHIFT — AED → 주주곰 ═══════ -->
+<section class="py-32" style="background:var(--s-darker);">
   <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-    <div class="max-w-3xl mx-auto text-center rv">
-      <p class="label mb-6">핵심 제약</p>
-      <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-6">
-        토스처럼 계좌 연동을 할 수 없는 상태에서,<br/>
-        어떻게 개인 포트폴리오 서비스를 만들 수 있을까?
+    <div class="max-w-3xl mb-16 rv">
+      <p class="label mb-4">Context Shift</p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+        사용자가 바뀌면<br/>같은 데이터도 달라진다
       </h2>
-      <p class="text-txt-secondary text-[16px] leading-relaxed max-w-2xl mx-auto">
-        증권사 API 연동은 개인이 할 수 없는 구조. 외부 데이터 API는 무료 티어 한계.
-        두 제약이 프로젝트의 모든 설계 판단을 결정했습니다.
+      <p class="mt-6 text-txt-secondary text-[16px] leading-relaxed">
+        <a href="/ko/work/aed/" class="text-jj-blue hover:underline">AED</a>에서 500개 AI 전략의 성과 대시보드를 설계한 경험이,
+        "같은 주식 데이터를 일반 투자자에게는 어떻게 보여줘야 하는가"라는 질문으로 이어졌습니다.
       </p>
+      <div class="callout mt-6">
+        <p class="callout-title">Hardest Decision</p>
+        <p class="callout-body">
+          AED에서는 데이터를 최대한 많이 보여주는 것이 가치였습니다. 리서처는 스스로 해석할 능력이 있으니까요.
+          주주곰에서는 반대로 — <strong class="text-txt-primary">정보를 얼마나 줄이고, 어떤 순서로 보여줄지</strong>가 핵심이었습니다.
+          "더 보여주자"는 유혹을 계속 참아야 했습니다.
+        </p>
+      </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 rv">
-      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
-        <p class="font-mono text-[11px] text-txt-muted tracking-wider mb-3">01</p>
-        <p class="font-display font-bold text-lg mb-2">계좌 연동 불가</p>
-        <p class="text-txt-secondary text-sm">증권사 API는 사업자 등록 필요. 개인이 접근 불가</p>
-        <p class="text-txt-primary text-[13px] font-medium mt-3">→ 증권앱 스크린샷 OCR로 우회</p>
-      </div>
-      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
-        <p class="font-mono text-[11px] text-txt-muted tracking-wider mb-3">02</p>
-        <p class="font-display font-bold text-lg mb-2">API 무료 티어 한계</p>
-        <p class="text-txt-secondary text-sm">Finnhub 분당 60회, BeatTheCap 로딩 60초</p>
-        <p class="text-txt-primary text-[13px] font-medium mt-3">→ 3단 폴백 체인 설계</p>
-      </div>
-      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
-        <p class="font-mono text-[11px] text-txt-muted tracking-wider mb-3">03</p>
-        <p class="font-display font-bold text-lg mb-2">LLM API 비용</p>
-        <p class="text-txt-secondary text-sm">분석 6개 + 토론 9개 = 매 요청 15번 호출</p>
-        <p class="text-txt-primary text-[13px] font-medium mt-3">→ Claude Max 구독 활용</p>
+
+    <div class="rv">
+      <div class="bg-surface-card rounded-[20px] border border-bdr-card overflow-hidden">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-bdr-subtle">
+              <th class="text-left px-6 py-4 text-txt-muted font-mono text-[11px] tracking-wider uppercase w-1/4"></th>
+              <th class="text-left px-6 py-4 text-txt-muted font-mono text-[11px] tracking-wider uppercase w-[37.5%]">AED · 퀀트 리서처</th>
+              <th class="text-left px-6 py-4 text-jj-blue font-mono text-[11px] tracking-wider uppercase w-[37.5%]">주주곰 · 개인투자자</th>
+            </tr>
+          </thead>
+          <tbody class="text-txt-secondary">
+            <tr class="border-b border-bdr-subtle">
+              <td class="px-6 py-4 font-medium text-txt-primary">정보 구조</td>
+              <td class="px-6 py-4">467개 전략 × 10개 지표 테이블</td>
+              <td class="px-6 py-4 text-txt-primary">점수 하나 + "왜?"를 토론으로 설명</td>
+            </tr>
+            <tr class="border-b border-bdr-subtle">
+              <td class="px-6 py-4 font-medium text-txt-primary">언어</td>
+              <td class="px-6 py-4">Sharpe 1.2, MDD -15%, CAGR 18%</td>
+              <td class="px-6 py-4 text-txt-primary">"저평가이지만 부채 높아서 주의"</td>
+            </tr>
+            <tr class="border-b border-bdr-subtle">
+              <td class="px-6 py-4 font-medium text-txt-primary">신뢰 설계</td>
+              <td class="px-6 py-4">리서처가 직접 수치 검증</td>
+              <td class="px-6 py-4 text-txt-primary">4명이 반박 → 사용자가 다각도 판단</td>
+            </tr>
+            <tr class="border-b border-bdr-subtle">
+              <td class="px-6 py-4 font-medium text-txt-primary">데이터 입력</td>
+              <td class="px-6 py-4">DB에서 자동 로드</td>
+              <td class="px-6 py-4 text-txt-primary">OCR 스크린샷 or 수동 입력</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-medium text-txt-primary">플랫폼</td>
+              <td class="px-6 py-4">데스크톱 웹 (사내)</td>
+              <td class="px-6 py-4 text-txt-primary">모바일 PWA (홈 화면 추가)</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -393,7 +425,7 @@ tailwind.config = {
         제약이<br/>설계를 만든다
       </h2>
       <p class="mt-6 text-txt-secondary text-lg leading-relaxed">
-        이 프로젝트의 방향을 결정한 네 가지 판단.
+        계좌 연동 불가, API 무료 티어 한계, LLM 비용 — 세 가지 제약이 이 프로젝트의 모든 판단을 결정했습니다.
       </p>
     </div>
 
@@ -406,11 +438,13 @@ tailwind.config = {
             <span class="font-display font-bold text-lg">데이터 입력</span>
           </div>
           <h3 class="font-display text-2xl md:text-3xl font-bold tracking-tight mb-4">계좌 연동 없이 포트폴리오 읽기</h3>
-          <p class="text-txt-secondary text-[15px] leading-relaxed mb-6">
+          <p class="text-txt-secondary text-[15px] leading-relaxed mb-4">
             토스나 증권사처럼 계좌를 직접 연동하는 건 개인 프로젝트로는 불가능했습니다.
             API가 없으면, 카메라가 있습니다. 사용자의 증권앱 화면에는 종목명, 수량, 평균 매수가, 수익률 — 모든 정보가 이미 있습니다.
-            스크린샷 한 장이면 포트폴리오 전체를 읽을 수 있다고 판단했습니다.
           </p>
+          <div class="rounded-xl p-3 bg-surface-elevated border border-bdr-card text-[13px] text-txt-secondary mb-6">
+            <span class="text-txt-muted font-mono text-[10px]">A</span> 수동 입력 (진입장벽 3분) vs <span class="text-jj-blue font-mono text-[10px]">B</span> <strong class="text-txt-primary">OCR 스크린샷 (진입장벽 5초)</strong> → B 선택
+          </div>
           <div class="space-y-3">
             <div class="flex items-start gap-3">
               <span class="text-txt-muted text-sm mt-0.5">!</span>
@@ -446,12 +480,14 @@ tailwind.config = {
             <span class="font-display font-bold text-lg">분석 구조</span>
           </div>
           <h3 class="font-display text-2xl md:text-3xl font-bold tracking-tight mb-4">에이전트 1개에서 6개로</h3>
-          <p class="text-txt-secondary text-[15px] leading-relaxed mb-6">
+          <p class="text-txt-secondary text-[15px] leading-relaxed mb-4">
             처음에는 하나의 AI에게 종합 분석을 시켰습니다.
             기술적 분석은 깊은데 매크로 환경은 한 줄로 끝나거나,
             뉴스는 자세하지만 재무제표는 빠지는 문제가 반복됐습니다.
-            "분석해줘" 한 마디로는 판단이 안 됐습니다.
           </p>
+          <div class="rounded-xl p-3 bg-surface-elevated border border-bdr-card text-[13px] text-txt-secondary mb-6">
+            <span class="text-txt-muted font-mono text-[10px]">A</span> 하나의 프롬프트에 전부 (두루뭉술) vs <span class="text-jj-blue font-mono text-[10px]">B</span> <strong class="text-txt-primary">관점별 전문 에이전트 6개 (깊이)</strong> → B 선택
+          </div>
           <div class="callout">
             <p class="callout-title">Iteration — 1개 → 3개 → 6개</p>
             <p class="callout-body">하나의 프롬프트에 "기술·펀더멘털·매크로·뉴스 전부 분석해줘"라고 넣으면, AI는 앞부분에 집중하고 뒷부분은 대충 넘어갔습니다. 3개로 나눠봤지만 여전히 뉴스와 원자재가 빠졌고, 결국 섹터별로 필요한 관점이 다르다는 걸 깨닫고 6개로 확장했습니다.</p>
@@ -538,11 +574,13 @@ tailwind.config = {
             <span class="font-display font-bold text-lg">신뢰 설계</span>
           </div>
           <h3 class="font-display text-2xl md:text-3xl font-bold tracking-tight mb-4">분석 결과로는 판단이 안 됐다</h3>
-          <p class="text-txt-secondary text-[15px] leading-relaxed mb-6">
+          <p class="text-txt-secondary text-[15px] leading-relaxed mb-4">
             6개 에이전트가 분석한 결과가 나왔습니다. 점수도 나오고, 시그널도 나옵니다.
-            그런데 투자자마다 관점이 다릅니다 — 차트를 보는 단기 트레이더, 가치를 따지는 장기 투자자, 리스크를 먼저 보는 사람.
-            같은 분석 데이터를 놓고도 결론이 달라야 자연스럽습니다. 그래서 토론을 붙였습니다.
+            그런데 투자자마다 관점이 다릅니다 — 같은 분석 데이터를 놓고도 결론이 달라야 자연스럽습니다.
           </p>
+          <div class="rounded-xl p-3 bg-surface-elevated border border-bdr-card text-[13px] text-txt-secondary mb-6">
+            <span class="text-txt-muted font-mono text-[10px]">A</span> AI가 "매수" 한마디 (맹목적 추종) vs <span class="text-jj-blue font-mono text-[10px]">B</span> <strong class="text-txt-primary">4인 토론으로 관점 제시 (사용자가 판단)</strong> → B 선택
+          </div>
           <div class="callout">
             <p class="callout-title">Iteration — 프롬프트 3회 수정</p>
             <p class="callout-body">첫 버전에서 4명의 페르소나가 비슷한 말만 반복했습니다. "리스크 관리자"도 결국 "조심하세요"로 끝났고, "성장 투자자"와 "가치 투자자"의 차이가 불분명했습니다. 각 페르소나에게 구체적 분석 프레임워크(DCF, 차트 패턴, 섹터 상관관계 등)를 지정하고, 반박 단계에서 "상대방의 어떤 근거가 약한지" 명시하도록 프롬프트를 수정했습니다.</p>
@@ -563,32 +601,7 @@ tailwind.config = {
           </div>
         </div>
         <div>
-          <!-- Debate Flow + Screenshot -->
-          <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card mb-4 debate-flow-card">
-            <p class="text-[11px] font-bold tracking-wider uppercase text-txt-muted mb-4">Debate Flow · 9 LLM calls</p>
-            <div class="space-y-3">
-              <div class="grid grid-cols-4 gap-2">
-                <div class="agent-node debate-step text-center py-2.5 px-2" style="--step:0;">
-                  <p class="text-[9px] font-bold text-txt-primary"><i class="ph ph-chart-line-up"></i> 트레이더</p>
-                </div>
-                <div class="agent-node debate-step text-center py-2.5 px-2" style="--step:1;">
-                  <p class="text-[9px] font-bold text-txt-primary"><i class="ph ph-scales"></i> 가치</p>
-                </div>
-                <div class="agent-node debate-step text-center py-2.5 px-2" style="--step:2;">
-                  <p class="text-[9px] font-bold text-txt-primary"><i class="ph ph-rocket-launch"></i> 성장</p>
-                </div>
-                <div class="agent-node debate-step text-center py-2.5 px-2" style="--step:3;">
-                  <p class="text-[9px] font-bold text-txt-primary"><i class="ph ph-shield-warning"></i> 리스크</p>
-                </div>
-              </div>
-              <div class="debate-step text-center text-txt-muted text-[10px]" style="--step:4;">↓ 의견(4) → 교차 반박(4) → 종합(1)</div>
-              <div class="agent-node debate-step text-center py-3 bg-surface-elevated" style="--step:5;">
-                <p class="text-[11px] font-bold text-txt-primary">Synthesis + Q&A</p>
-                <p class="text-[10px] text-txt-muted mt-1">종합 견해 + 사용자가 이어서 질문</p>
-              </div>
-            </div>
-          </div>
-          <div class="phone-mockup phone-mockup--sm" style="margin:0 auto;">
+          <div class="phone-mockup phone-mockup--md" style="margin:0 auto;">
             <img src="/assets/projects/zuzugom-debate.png" alt="주주곰 토론 — 4인 페르소나 의견" width="393" height="852" loading="lazy" />
           </div>
         </div>
@@ -604,14 +617,16 @@ tailwind.config = {
             <span class="font-display font-bold text-lg">스코프 판단</span>
           </div>
           <h3 class="font-display text-2xl md:text-3xl font-bold tracking-tight mb-4">뭘 안 만들지 결정하기</h3>
-          <p class="text-txt-secondary text-[15px] leading-relaxed mb-6">
+          <p class="text-txt-secondary text-[15px] leading-relaxed mb-4">
             만들 수 있는 기능은 무한하지만, 1인 프로젝트에서 모든 걸 만들 수는 없습니다.
             "재현이 출퇴근길 5분 안에 쓸 수 있는가?"를 기준으로 기능을 쳐냈습니다.
-            자동 매매는 제외했습니다. 분석 도구와 실행 도구는 다르고, 재현은 "판단의 근거"를 원하지 대신 매매해주는 걸 원하지 않았습니다.
-            실시간 알림도 뺐습니다. 장중 알림은 직장인에게 노이즈이고, 장 마감 후 요약이 더 가치 있다고 판단했습니다.
-            소셜 기능(커뮤니티·랭킹)은 핵심 가치인 분석 깊이와 충돌해 MVP에서 제외했습니다.
-            대신 토론 후 "그래서 내 상황에선?"을 물어볼 수 있는 Q&A 기능은 추가했습니다. 토론의 가치를 개인 맥락으로 연결하기 위해서입니다.
           </p>
+          <div class="space-y-2 text-[14px] text-txt-secondary mb-6">
+            <p><strong class="text-txt-primary">자동 매매 제외</strong> — 분석 도구와 실행 도구는 다릅니다. 재현은 "판단의 근거"를 원하지, 대신 매매해주는 걸 원하지 않았습니다.</p>
+            <p><strong class="text-txt-primary">실시간 알림 제외</strong> — 장중 알림은 직장인에게 노이즈. 장 마감 후 요약이 더 가치 있다고 판단했습니다.</p>
+            <p><strong class="text-txt-primary">소셜 기능 제외</strong> — 커뮤니티·랭킹은 핵심 가치인 분석 깊이와 충돌해 MVP에서 뺐습니다.</p>
+            <p><strong class="text-txt-primary">Q&A 추가</strong> — 토론 후 "그래서 내 상황에선?"을 물어볼 수 있게. 토론의 가치를 개인 맥락으로 연결합니다.</p>
+          </div>
         </div>
         <div class="lg:order-1">
           <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
@@ -791,67 +806,77 @@ tailwind.config = {
         </div>
       </div>
 
-      <!-- 사례 3: 분석 속도 -->
-      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 rounded-xl bg-jj-blue/8 flex items-center justify-center flex-shrink-0">
-            <span class="text-jj-blue text-lg">3</span>
-          </div>
-          <div class="flex-1">
-            <p class="font-display font-bold text-[15px] mb-2">"분석이 5분째 안 끝나요"</p>
-            <p class="text-txt-secondary text-[13px] leading-relaxed mb-3">
-              한국 종목 분석 시 모든 에이전트가 50점(기본값)으로 나왔습니다.
-              근본 원인을 추적해보니 "비용 절감을 위한 설계"가 "한국 종목에서의 성능 저하"로 이어진 구조적 문제였습니다.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[12px]">
-              <div class="rounded-lg p-3 bg-surface-elevated">
-                <p class="font-bold mb-1">구조</p>
-                <p class="text-txt-secondary">Claude CLI subprocess × 6 에이전트. 프로세스 시작에만 15초 오버헤드</p>
+      <!-- 사례 3-4: 접기 -->
+      <details class="iteration-details">
+        <summary class="flex items-center gap-3 px-6 py-4 bg-surface-card rounded-[16px] border border-bdr-card cursor-pointer hover:border-bdr-hover transition-colors text-sm font-medium text-txt-secondary">
+          <span class="text-txt-muted font-mono text-[11px]">+2</span>
+          더 많은 피드백 사례 보기 — 분석 속도 5분 문제, 한국 ETF 티커 인식 오류
+          <span class="ml-auto text-txt-muted transition-transform detail-arrow">▼</span>
+        </summary>
+        <div class="space-y-6 mt-6">
+          <!-- 사례 3: 분석 속도 -->
+          <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-jj-blue/8 flex items-center justify-center flex-shrink-0">
+                <span class="text-jj-blue text-lg">3</span>
               </div>
-              <div class="rounded-lg p-3 bg-surface-elevated">
-                <p class="font-bold mb-1">한국 종목 악화</p>
-                <p class="text-txt-secondary">Finnhub 데이터 없음 → data_quality 0.0 → LLM 자기검증 발동 → Claude 3번 호출</p>
-              </div>
-              <div class="rounded-lg p-3 bg-jj-emerald/5 border border-jj-emerald/10">
-                <p class="font-bold text-jj-emerald mb-1">개선</p>
-                <p class="text-txt-secondary">에이전트 data_assembly에 yfinance 폴백 + Sonnet 모델 + 타임아웃 조정</p>
+              <div class="flex-1">
+                <p class="font-display font-bold text-[15px] mb-2">"분석이 5분째 안 끝나요"</p>
+                <p class="text-txt-secondary text-[13px] leading-relaxed mb-3">
+                  한국 종목 분석 시 모든 에이전트가 50점(기본값)으로 나왔습니다.
+                  근본 원인을 추적해보니 "비용 절감을 위한 설계"가 "한국 종목에서의 성능 저하"로 이어진 구조적 문제였습니다.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[12px]">
+                  <div class="rounded-lg p-3 bg-surface-elevated">
+                    <p class="font-bold mb-1">구조</p>
+                    <p class="text-txt-secondary">Claude CLI subprocess × 6 에이전트. 프로세스 시작에만 15초 오버헤드</p>
+                  </div>
+                  <div class="rounded-lg p-3 bg-surface-elevated">
+                    <p class="font-bold mb-1">한국 종목 악화</p>
+                    <p class="text-txt-secondary">Finnhub 데이터 없음 → data_quality 0.0 → LLM 자기검증 발동 → Claude 3번 호출</p>
+                  </div>
+                  <div class="rounded-lg p-3 bg-jj-emerald/5 border border-jj-emerald/10">
+                    <p class="font-bold text-jj-emerald mb-1">개선</p>
+                    <p class="text-txt-secondary">에이전트 data_assembly에 yfinance 폴백 + Sonnet 모델 + 타임아웃 조정</p>
+                  </div>
+                </div>
+                <p class="text-txt-muted text-[11px] mt-3">→ "무료로 만들자"는 판단이 어떤 트레이드오프를 만드는지 체감한 사례. API 전환 시기를 판단하는 근거가 됨</p>
               </div>
             </div>
-            <p class="text-txt-muted text-[11px] mt-3">→ "무료로 만들자"는 판단이 어떤 트레이드오프를 만드는지 체감한 사례. API 전환 시기를 판단하는 근거가 됨</p>
           </div>
-        </div>
-      </div>
 
-      <!-- 사례 4: OCR 한국 ETF 티커 인식 -->
-      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 rounded-xl bg-jj-red/8 flex items-center justify-center flex-shrink-0">
-            <span class="text-jj-red text-lg">4</span>
-          </div>
-          <div class="flex-1">
-            <p class="font-display font-bold text-[15px] mb-2">"한국 ETF 가격이 0원이에요"</p>
-            <p class="text-txt-secondary text-[13px] leading-relaxed mb-3">
-              <code class="text-xs bg-surface-elevated px-1.5 py-0.5 rounded">0040X0</code>(SOL 팔란티어미국채커버드콜혼합)처럼 알파벳이 포함된 한국 종목 코드를
-              미국 종목으로 인식 → 가격 0, 수익률 없음, 통화 USD로 표시되는 문제.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[12px]">
-              <div class="rounded-lg p-3 bg-jj-red/5 border border-jj-red/10">
-                <p class="font-bold text-jj-red mb-1">원인</p>
-                <p class="text-txt-secondary"><code class="text-[11px]">isKoreanTicker</code> 정규식이 <code class="text-[11px]">^\d{6}$</code> — 숫자 6자리만 허용하여 알파벳 포함 코드 누락</p>
+          <!-- 사례 4: OCR 한국 ETF 티커 인식 -->
+          <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-jj-red/8 flex items-center justify-center flex-shrink-0">
+                <span class="text-jj-red text-lg">4</span>
               </div>
-              <div class="rounded-lg p-3 bg-jj-emerald/5 border border-jj-emerald/10">
-                <p class="font-bold text-jj-emerald mb-1">수정</p>
-                <p class="text-txt-secondary"><code class="text-[11px]">^\d[\dA-Z]{5}$</code>로 변경 — 숫자로 시작 + 숫자/대문자 5자리</p>
-              </div>
-              <div class="rounded-lg p-3 bg-surface-elevated">
-                <p class="font-bold mb-1">영향 범위</p>
-                <p class="text-txt-secondary">백엔드 3개 + 프론트 2개, 총 5개 파일 수정. 가격 조회·통화 표시·UI 전체에 영향</p>
+              <div class="flex-1">
+                <p class="font-display font-bold text-[15px] mb-2">"한국 ETF 가격이 0원이에요"</p>
+                <p class="text-txt-secondary text-[13px] leading-relaxed mb-3">
+                  <code class="text-xs bg-surface-elevated px-1.5 py-0.5 rounded">0040X0</code>(SOL 팔란티어미국채커버드콜혼합)처럼 알파벳이 포함된 한국 종목 코드를
+                  미국 종목으로 인식 → 가격 0, 수익률 없음, 통화 USD로 표시되는 문제.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[12px]">
+                  <div class="rounded-lg p-3 bg-jj-red/5 border border-jj-red/10">
+                    <p class="font-bold text-jj-red mb-1">원인</p>
+                    <p class="text-txt-secondary"><code class="text-[11px]">isKoreanTicker</code> 정규식이 <code class="text-[11px]">^\d{6}$</code> — 숫자 6자리만 허용하여 알파벳 포함 코드 누락</p>
+                  </div>
+                  <div class="rounded-lg p-3 bg-jj-emerald/5 border border-jj-emerald/10">
+                    <p class="font-bold text-jj-emerald mb-1">수정</p>
+                    <p class="text-txt-secondary"><code class="text-[11px]">^\d[\dA-Z]{5}$</code>로 변경 — 숫자로 시작 + 숫자/대문자 5자리</p>
+                  </div>
+                  <div class="rounded-lg p-3 bg-surface-elevated">
+                    <p class="font-bold mb-1">영향 범위</p>
+                    <p class="text-txt-secondary">백엔드 3개 + 프론트 2개, 총 5개 파일 수정. 가격 조회·통화 표시·UI 전체에 영향</p>
+                  </div>
+                </div>
+                <p class="text-txt-muted text-[11px] mt-3">→ 정규식 한 줄이 서비스 전체 5개 레이어에 퍼져있던 사례. 한국 종목 코드 체계를 제대로 이해하지 못한 초기 설계의 부채</p>
               </div>
             </div>
-            <p class="text-txt-muted text-[11px] mt-3">→ 정규식 한 줄이 서비스 전체 5개 레이어에 퍼져있던 사례. 한국 종목 코드 체계를 제대로 이해하지 못한 초기 설계의 부채</p>
           </div>
         </div>
-      </div>
+      </details>
 
     </div>
 
@@ -860,134 +885,19 @@ tailwind.config = {
       <div class="bg-surface-card rounded-[20px] p-8 border border-bdr-card text-center">
         <p class="text-[11px] font-bold tracking-wider uppercase text-jj-blue mb-4">Feedback Cycle — 하루 단위</p>
         <div class="flex items-center justify-center gap-4 flex-wrap text-sm">
-          <div class="rounded-xl px-4 py-2 bg-surface-elevated">📱 모바일 사용</div>
+          <div class="rounded-xl px-4 py-2 bg-surface-elevated">모바일 사용</div>
           <span class="text-txt-muted">→</span>
-          <div class="rounded-xl px-4 py-2 bg-surface-elevated">🐛 문제 발견</div>
+          <div class="rounded-xl px-4 py-2 bg-surface-elevated">문제 발견</div>
           <span class="text-txt-muted">→</span>
-          <div class="rounded-xl px-4 py-2 bg-surface-elevated">🔍 원인 추적</div>
+          <div class="rounded-xl px-4 py-2 bg-surface-elevated">원인 추적</div>
           <span class="text-txt-muted">→</span>
-          <div class="rounded-xl px-4 py-2 bg-surface-elevated">🛠 코드 수정</div>
+          <div class="rounded-xl px-4 py-2 bg-surface-elevated">코드 수정</div>
           <span class="text-txt-muted">→</span>
-          <div class="rounded-xl px-4 py-2 bg-surface-elevated">🚀 배포</div>
+          <div class="rounded-xl px-4 py-2 bg-surface-elevated">배포</div>
           <span class="text-txt-muted">→</span>
-          <div class="rounded-xl px-4 py-2 bg-jj-blue/8 border border-jj-blue/15 text-jj-blue font-medium">📱 재검증</div>
+          <div class="rounded-xl px-4 py-2 bg-jj-blue/8 border border-jj-blue/15 text-jj-blue font-medium">재검증</div>
         </div>
         <p class="text-txt-muted text-[13px] mt-4">PM이 직접 사용자이기 때문에, 발견→수정→검증이 같은 날 안에 완료</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════ 06. AED → 주주곰 CONTEXT SHIFT ═══════ -->
-<section class="py-32 bg-surface-subtle">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-    <div class="max-w-3xl mb-16 rv">
-      <p class="label mb-4">Context Shift</p>
-      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-        사용자가 바뀌면<br/>같은 데이터도 달라진다
-      </h2>
-      <p class="mt-6 text-txt-secondary text-[16px] leading-relaxed">
-        <a href="/ko/work/aed/" class="text-jj-blue hover:underline">AED</a>는 퀀트 리서처를 위한 사내 도구였습니다.
-        주주곰은 재현, 부모님 같은 일반 투자자를 위한 서비스입니다.
-        같은 "주식 분석"이지만, 설계 판단이 완전히 달라집니다.
-      </p>
-      <div class="callout mt-6">
-        <p class="callout-title">Hardest Decision</p>
-        <p class="callout-body">
-          AED에서는 데이터를 최대한 많이 보여주는 것이 가치였습니다. 리서처는 스스로 해석할 능력이 있으니까요.
-          주주곰에서는 반대로 — <strong class="text-txt-primary">정보를 얼마나 줄이고, 어떤 순서로 보여줄지</strong>가 핵심이었습니다.
-          "더 보여주자"는 유혹을 계속 참아야 했습니다.
-        </p>
-      </div>
-    </div>
-
-    <div class="rv">
-      <div class="bg-surface-card rounded-[20px] border border-bdr-card overflow-hidden">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-bdr-subtle">
-              <th class="text-left px-6 py-4 text-txt-muted font-mono text-[11px] tracking-wider uppercase w-1/4"></th>
-              <th class="text-left px-6 py-4 text-txt-muted font-mono text-[11px] tracking-wider uppercase w-[37.5%]">AED · 퀀트 리서처</th>
-              <th class="text-left px-6 py-4 text-jj-blue font-mono text-[11px] tracking-wider uppercase w-[37.5%]">주주곰 · 개인투자자</th>
-            </tr>
-          </thead>
-          <tbody class="text-txt-secondary">
-            <tr class="border-b border-bdr-subtle">
-              <td class="px-6 py-4 font-medium text-txt-primary">정보 구조</td>
-              <td class="px-6 py-4">467개 전략 × 10개 지표 테이블</td>
-              <td class="px-6 py-4 text-txt-primary">점수 하나 + "왜?"를 토론으로 설명</td>
-            </tr>
-            <tr class="border-b border-bdr-subtle">
-              <td class="px-6 py-4 font-medium text-txt-primary">언어</td>
-              <td class="px-6 py-4">Sharpe 1.2, MDD -15%, CAGR 18%</td>
-              <td class="px-6 py-4 text-txt-primary">"저평가이지만 부채 높아서 주의"</td>
-            </tr>
-            <tr class="border-b border-bdr-subtle">
-              <td class="px-6 py-4 font-medium text-txt-primary">신뢰 설계</td>
-              <td class="px-6 py-4">리서처가 직접 수치 검증</td>
-              <td class="px-6 py-4 text-txt-primary">4명이 반박 → 사용자가 다각도 판단</td>
-            </tr>
-            <tr class="border-b border-bdr-subtle">
-              <td class="px-6 py-4 font-medium text-txt-primary">데이터 입력</td>
-              <td class="px-6 py-4">DB에서 자동 로드</td>
-              <td class="px-6 py-4 text-txt-primary">OCR 스크린샷 or 수동 입력</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4 font-medium text-txt-primary">플랫폼</td>
-              <td class="px-6 py-4">데스크톱 웹 (사내)</td>
-              <td class="px-6 py-4 text-txt-primary">모바일 PWA (홈 화면 추가)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════ 09. KEY LEARNINGS ═══════ -->
-<section class="py-32">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-    <div class="max-w-3xl mb-16 rv">
-      <p class="label mb-4">Key Learnings</p>
-      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-        이 프로젝트에서 배운 것
-      </h2>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 rv">
-      <div>
-        <p class="font-display font-bold text-xl mb-3">1. 제약이 가장 좋은<br/>기획서다</p>
-        <p class="text-txt-secondary text-[15px] leading-relaxed">
-          계좌 연동이 안 되니까 OCR이 나왔고,
-          API 비용을 쓸 수 없으니까 CLI 활용과 폴백 체인이 나왔습니다.
-          "할 수 없는 것"을 정의하면 "해야 할 것"이 선명해집니다.
-        </p>
-      </div>
-      <div>
-        <p class="font-display font-bold text-xl mb-3">2. AI의 답이 아니라<br/>관점을 설계해야 한다</p>
-        <p class="text-txt-secondary text-[15px] leading-relaxed">
-          하나의 AI가 "매수"라고 하면 사용자는 그냥 따릅니다.
-          4명이 서로 다른 이유로 논쟁하면, 사용자가 스스로 판단합니다.
-          AI 서비스의 가치는 "답"이 아니라 "판단할 수 있는 구조"에 있었습니다.
-        </p>
-      </div>
-      <div>
-        <p class="font-display font-bold text-xl mb-3">3. 사용자가 바뀌면<br/>모든 설계가 바뀐다</p>
-        <p class="text-txt-secondary text-[15px] leading-relaxed">
-          AED에서 퀀트 리서처에게 "Sharpe 1.2"라고 보여주던 것을,
-          주주곰에서는 "위험 대비 수익이 괜찮다"로 번역해야 했습니다.
-          같은 데이터, 완전히 다른 기획. 직접 겪어봐야 알 수 있었습니다.
-        </p>
-      </div>
-      <div>
-        <p class="font-display font-bold text-xl mb-3">4. 다음에 다르게 할 것</p>
-        <p class="text-txt-secondary text-[15px] leading-relaxed">
-          사용자 검증을 더 일찍 했어야 합니다. 기능을 다 만든 뒤에 피드백을 받으니
-          방향 수정 비용이 컸습니다. 다음에는 핵심 흐름 하나(검색→분석→토론)를
-          먼저 만들고, 실사용자 반응을 본 뒤 확장하겠습니다.
-        </p>
       </div>
     </div>
   </div>
@@ -1248,6 +1158,54 @@ tailwind.config = {
             <p class="text-txt-secondary text-[12px]">동시 호출 제한 해소 + 응답 속도 개선. 사용자 늘어나면 전환 예정</p>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════ 09. KEY LEARNINGS ═══════ -->
+<section class="py-32">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="max-w-3xl mb-16 rv">
+      <p class="label mb-4">Key Learnings</p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+        이 프로젝트에서 배운 것
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 rv">
+      <div>
+        <p class="font-display font-bold text-xl mb-3">1. 제약이 가장 좋은<br/>기획서다</p>
+        <p class="text-txt-secondary text-[15px] leading-relaxed">
+          계좌 연동이 안 되니까 OCR이 나왔고,
+          API 비용을 쓸 수 없으니까 CLI 활용과 폴백 체인이 나왔습니다.
+          "할 수 없는 것"을 정의하면 "해야 할 것"이 선명해집니다.
+        </p>
+      </div>
+      <div>
+        <p class="font-display font-bold text-xl mb-3">2. AI의 답이 아니라<br/>관점을 설계해야 한다</p>
+        <p class="text-txt-secondary text-[15px] leading-relaxed">
+          하나의 AI가 "매수"라고 하면 사용자는 그냥 따릅니다.
+          4명이 서로 다른 이유로 논쟁하면, 사용자가 스스로 판단합니다.
+          AI 서비스의 가치는 "답"이 아니라 "판단할 수 있는 구조"에 있었습니다.
+        </p>
+      </div>
+      <div>
+        <p class="font-display font-bold text-xl mb-3">3. 사용자가 바뀌면<br/>모든 설계가 바뀐다</p>
+        <p class="text-txt-secondary text-[15px] leading-relaxed">
+          AED에서 퀀트 리서처에게 "Sharpe 1.2"라고 보여주던 것을,
+          주주곰에서는 "위험 대비 수익이 괜찮다"로 번역해야 했습니다.
+          같은 데이터, 완전히 다른 기획. 직접 겪어봐야 알 수 있었습니다.
+        </p>
+      </div>
+      <div>
+        <p class="font-display font-bold text-xl mb-3">4. 다음에 다르게 할 것</p>
+        <p class="text-txt-secondary text-[15px] leading-relaxed">
+          사용자 검증을 더 일찍 했어야 합니다. 기능을 다 만든 뒤에 피드백을 받으니
+          방향 수정 비용이 컸습니다. 다음에는 핵심 흐름 하나(검색→분석→토론)를
+          먼저 만들고, 실사용자 반응을 본 뒤 확장하겠습니다.
+        </p>
       </div>
     </div>
   </div>
