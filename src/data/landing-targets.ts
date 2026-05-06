@@ -209,7 +209,7 @@ export const landingTargets: Record<string, LandingTarget> = {
       experiences: [
         {
           company: '알파브릿지',
-          team: 'AI서비스기획본부',
+          team: '포트폴리오본부',
           period: '2025.03 – 현재',
           employment: '에셋플러스자산운용 자회사 · 정규직',
           subtitle: '퀀트 리서치팀 전략 모니터링·성과 분석 대시보드 기획 (B2B SaaS 내부 도구)',
@@ -448,7 +448,7 @@ export const landingTargets: Record<string, LandingTarget> = {
         },
         {
           company: '알파브릿지',
-          team: 'AI서비스기획본부',
+          team: '포트폴리오본부',
           period: '2025.03 – 현재',
           employment: '에셋플러스자산운용 자회사',
           subtitle: '퀀트 리서치팀 전략 모니터링·성과 분석 대시보드 기획',
