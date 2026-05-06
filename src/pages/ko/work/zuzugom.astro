@@ -65,6 +65,35 @@ tailwind.config = {
   .screenshot-placeholder .ph-icon { font-size: 32px; margin-bottom: 12px; opacity: 0.5; }
   .screenshot-placeholder .ph-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; margin-top: 8px; color: var(--t-faint); }
 
+  .phone-mockup {
+    position: relative;
+    display: inline-block;
+    padding: 12px;
+    background: #1a1a1a;
+    border-radius: 40px;
+    box-shadow: 0 0 0 2px #333, 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .phone-mockup::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 22px;
+    background: #1a1a1a;
+    border-radius: 0 0 14px 14px;
+    z-index: 2;
+  }
+  .phone-mockup img {
+    display: block;
+    width: 100%;
+    border-radius: 28px;
+  }
+  .phone-mockup--sm { max-width: 220px; }
+  .phone-mockup--md { max-width: 280px; }
+  .phone-mockup--lg { max-width: 320px; }
+
   .callout { background: var(--s-subtle); border: 1px solid var(--b-card); border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; }
   .callout-title { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--t-muted); margin-bottom: 8px; }
   .callout-body { font-size: 13px; line-height: 1.7; color: var(--t-secondary); }
@@ -255,33 +284,6 @@ tailwind.config = {
       </div>
     </div>
 
-    <!-- Before → After Slider -->
-    <div class="mt-16 rv">
-      <p class="text-center text-[11px] font-bold tracking-wider uppercase text-jj-blue mb-4">Before → After</p>
-      <div class="ba-slider" id="baSlider" style="position:relative; max-width:800px; margin:0 auto; border-radius:16px; overflow:hidden; border:1px solid var(--b-card); cursor:col-resize; user-select:none; aspect-ratio:16/9;">
-        <!-- After (app) — full background -->
-        <div style="position:absolute; inset:0; background:var(--s-card); display:flex; align-items:center; justify-content:center;">
-          <div class="screenshot-placeholder" style="border:none; min-height:auto; width:100%; height:100%;">
-            <i class="ph ph-device-mobile" style="font-size:32px; margin-bottom:8px; opacity:0.5;"></i>
-            주주곰 앱 포트폴리오 화면
-            <div class="ph-label">screenshot placeholder — 스크린샷 추가 후 교체</div>
-          </div>
-        </div>
-        <!-- Before (excel) — clipped by slider -->
-        <div id="baBeforeWrap" style="position:absolute; inset:0; width:50%; overflow:hidden;">
-          <img src="/images/zuzugom/excel-portfolio.png" alt="엑셀 포트폴리오" style="width:800px; max-width:none; height:100%; object-fit:cover; display:block;" />
-        </div>
-        <!-- Slider handle -->
-        <div id="baHandle" style="position:absolute; top:0; bottom:0; left:50%; width:3px; background:#3B82F6; transform:translateX(-50%); z-index:2;">
-          <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:36px; height:36px; background:#3B82F6; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 12px rgba(59,130,246,0.4);">
-            <span style="color:#fff; font-size:14px; font-weight:700;">⇔</span>
-          </div>
-        </div>
-        <!-- Labels -->
-        <div style="position:absolute; top:12px; left:12px; z-index:3; font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#fff; background:rgba(0,0,0,0.5); padding:3px 8px; border-radius:6px;">Before · 엑셀</div>
-        <div style="position:absolute; top:12px; right:12px; z-index:3; font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#3B82F6; background:rgba(0,0,0,0.5); padding:3px 8px; border-radius:6px;">After · 주주곰</div>
-      </div>
-    </div>
 
     <!-- Pain Points -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-16 rv">
@@ -374,7 +376,7 @@ tailwind.config = {
         <p class="font-mono text-[11px] text-txt-muted tracking-wider mb-3">03</p>
         <p class="font-display font-bold text-lg mb-2">LLM API 비용</p>
         <p class="text-txt-secondary text-sm">분석 6개 + 토론 9개 = 매 요청 15번 호출</p>
-        <p class="text-txt-primary text-[13px] font-medium mt-3">→ 구독 중인 Claude CLI 활용</p>
+        <p class="text-txt-primary text-[13px] font-medium mt-3">→ Claude Max 구독 활용</p>
       </div>
     </div>
   </div>
@@ -426,10 +428,8 @@ tailwind.config = {
         </div>
         <div>
           <!-- OCR Flow Screenshot -->
-          <div class="screenshot-placeholder" style="min-height:360px;">
-            <div class="ph-icon"><i class="ph ph-camera" style="font-size:28px;"></i> <span style="font-size:16px; margin:0 8px;">→</span> <i class="ph ph-list-checks" style="font-size:28px;"></i></div>
-            OCR 포트폴리오 가져오기 화면
-            <div class="ph-label">screenshot placeholder</div>
+          <div class="phone-mockup phone-mockup--sm" style="margin:0 auto;">
+            <img src="/assets/projects/zuzugom-home.png" alt="주주곰 홈 — AI 모닝 브리핑" />
           </div>
         </div>
       </div>
@@ -586,10 +586,8 @@ tailwind.config = {
               </div>
             </div>
           </div>
-          <div class="screenshot-placeholder" style="min-height:200px;">
-            <i class="ph ph-chats-circle" style="font-size:32px; margin-bottom:12px; opacity:0.5;"></i>
-            토론 화면 스크린샷
-            <div class="ph-label">screenshot placeholder</div>
+          <div class="phone-mockup phone-mockup--sm" style="margin:0 auto;">
+            <img src="/assets/projects/zuzugom-debate.png" alt="주주곰 토론 — 4인 페르소나 의견" />
           </div>
         </div>
       </div>
@@ -651,306 +649,61 @@ tailwind.config = {
     <div class="max-w-3xl mb-16 rv">
       <p class="label mb-4">Product</p>
       <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-        웹에서 시작해서<br/>앱이 됐다
+        주주곰이 하는 일
       </h2>
       <p class="mt-6 text-txt-secondary text-[16px] leading-relaxed">
-        처음에는 웹으로 만들었지만, 투자 정보는 이동 중에 확인해야 합니다.
-        여러 번 수정을 거쳐 모바일 PWA까지 발전시켰습니다.
+        종목 검색부터 AI 분석, 4인 토론, 포트폴리오 진단까지 — 모바일에서 5분 안에.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 rv">
-      <div>
-        <div class="screenshot-placeholder" style="min-height:480px;">
-          <i class="ph ph-house" style="font-size:32px; margin-bottom:12px; opacity:0.5;"></i>
-          홈 — 아침 대시보드
-          <div class="ph-label">보유 종목 변동 + AI 요약</div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 rv justify-items-center">
+      <div class="flex flex-col items-center gap-4">
+        <div class="phone-mockup phone-mockup--md">
+          <img src="/assets/projects/zuzugom-home.png" alt="주주곰 홈 — 아침 대시보드" />
         </div>
-        <p class="text-sm text-txt-muted mt-3 text-center">아침에 장 열리기 전 — "내 종목들 오늘 어떨까"</p>
-      </div>
-      <div>
-        <div class="screenshot-placeholder" style="min-height:480px;">
-          <i class="ph ph-chart-bar" style="font-size:32px; margin-bottom:12px; opacity:0.5;"></i>
-          종목 상세 — AI 종합 판단
-          <div class="ph-label">6개 에이전트 분석 결과</div>
-        </div>
-        <p class="text-sm text-txt-muted mt-3 text-center">종목 검색 → 종합 판단 + 핵심 요인 3개</p>
-      </div>
-      <div>
-        <div class="screenshot-placeholder" style="min-height:480px;">
-          <i class="ph ph-chats-teardrop" style="font-size:32px; margin-bottom:12px; opacity:0.5;"></i>
-          토론 — 4인 페르소나 + Q&A
-          <div class="ph-label">의견·반박·종합 → 이어서 질문</div>
-        </div>
-        <p class="text-sm text-txt-muted mt-3 text-center">"가치투자 관점에서 저평가, 하지만 리스크 주의"</p>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 rv">
-      <div>
-        <div class="screenshot-placeholder" style="min-height:320px;">
-          <i class="ph ph-briefcase" style="font-size:32px; margin-bottom:12px; opacity:0.5;"></i>
-          포트폴리오 — 진단 + 리밸런싱
-          <div class="ph-label">섹터 비중 · 상관관계 · AI 진단</div>
+        <div class="text-center">
+          <p class="text-sm font-medium text-txt-primary">홈 — 아침 대시보드</p>
+          <p class="text-xs text-txt-muted mt-1">아침에 장 열리기 전 — "내 종목들 오늘 어떨까"</p>
         </div>
       </div>
-      <div>
-        <div class="screenshot-placeholder" style="min-height:320px;">
-          <i class="ph ph-camera" style="font-size:32px; margin-bottom:12px; opacity:0.5;"></i>
-          OCR 가져오기 — 스크린샷 한 장
-          <div class="ph-label">증권앱 캡처 → 자동 종목 등록</div>
+      <div class="flex flex-col items-center gap-4">
+        <div class="phone-mockup phone-mockup--md">
+          <img src="/assets/projects/zuzugom-ai-analysis.png" alt="주주곰 종목 상세 — AI 종합 판단" />
+        </div>
+        <div class="text-center">
+          <p class="text-sm font-medium text-txt-primary">종목 상세 — AI 종합 판단</p>
+          <p class="text-xs text-txt-muted mt-1">종목 검색 → 종합 판단 + 핵심 요인 3개</p>
+        </div>
+      </div>
+      <div class="flex flex-col items-center gap-4">
+        <div class="phone-mockup phone-mockup--md">
+          <img src="/assets/projects/zuzugom-debate.png" alt="주주곰 토론 — 4인 페르소나 + Q&A" />
+        </div>
+        <div class="text-center">
+          <p class="text-sm font-medium text-txt-primary">토론 — 4인 페르소나 + Q&A</p>
+          <p class="text-xs text-txt-muted mt-1">"가치투자 관점에서 저평가, 하지만 리스크 주의"</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-
-<!-- ═══════ 06. AED → 주주곰 CONTEXT SHIFT ═══════ -->
-<section class="py-32 bg-surface-subtle">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-    <div class="max-w-3xl mb-16 rv">
-      <p class="label mb-4">Context Shift</p>
-      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-        사용자가 바뀌면<br/>같은 데이터도 달라진다
-      </h2>
-      <p class="mt-6 text-txt-secondary text-[16px] leading-relaxed">
-        AED는 퀀트 리서처를 위한 사내 도구였습니다.
-        주주곰은 재현, 부모님 같은 일반 투자자를 위한 서비스입니다.
-        같은 "주식 분석"이지만, 설계 판단이 완전히 달라집니다.
-      </p>
-      <div class="callout mt-6">
-        <p class="callout-title">Hardest Decision</p>
-        <p class="callout-body">
-          AED에서는 데이터를 최대한 많이 보여주는 것이 가치였습니다. 리서처는 스스로 해석할 능력이 있으니까요.
-          주주곰에서는 반대로 — <strong class="text-txt-primary">정보를 얼마나 줄이고, 어떤 순서로 보여줄지</strong>가 핵심이었습니다.
-          "더 보여주자"는 유혹을 계속 참아야 했습니다.
-        </p>
-      </div>
-    </div>
-
-    <div class="rv">
-      <div class="bg-surface-card rounded-[20px] border border-bdr-card overflow-hidden">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-bdr-subtle">
-              <th class="text-left px-6 py-4 text-txt-muted font-mono text-[11px] tracking-wider uppercase w-1/4"></th>
-              <th class="text-left px-6 py-4 text-txt-muted font-mono text-[11px] tracking-wider uppercase w-[37.5%]">AED · 퀀트 리서처</th>
-              <th class="text-left px-6 py-4 text-jj-blue font-mono text-[11px] tracking-wider uppercase w-[37.5%]">주주곰 · 개인투자자</th>
-            </tr>
-          </thead>
-          <tbody class="text-txt-secondary">
-            <tr class="border-b border-bdr-subtle">
-              <td class="px-6 py-4 font-medium text-txt-primary">정보 구조</td>
-              <td class="px-6 py-4">467개 전략 × 10개 지표 테이블</td>
-              <td class="px-6 py-4 text-txt-primary">점수 하나 + "왜?"를 토론으로 설명</td>
-            </tr>
-            <tr class="border-b border-bdr-subtle">
-              <td class="px-6 py-4 font-medium text-txt-primary">언어</td>
-              <td class="px-6 py-4">Sharpe 1.2, MDD -15%, CAGR 18%</td>
-              <td class="px-6 py-4 text-txt-primary">"저평가이지만 부채 높아서 주의"</td>
-            </tr>
-            <tr class="border-b border-bdr-subtle">
-              <td class="px-6 py-4 font-medium text-txt-primary">신뢰 설계</td>
-              <td class="px-6 py-4">리서처가 직접 수치 검증</td>
-              <td class="px-6 py-4 text-txt-primary">4명이 반박 → 사용자가 다각도 판단</td>
-            </tr>
-            <tr class="border-b border-bdr-subtle">
-              <td class="px-6 py-4 font-medium text-txt-primary">데이터 입력</td>
-              <td class="px-6 py-4">DB에서 자동 로드</td>
-              <td class="px-6 py-4 text-txt-primary">OCR 스크린샷 or 수동 입력</td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4 font-medium text-txt-primary">플랫폼</td>
-              <td class="px-6 py-4">데스크톱 웹 (사내)</td>
-              <td class="px-6 py-4 text-txt-primary">모바일 PWA (홈 화면 추가)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════ 07. TECH TRADEOFFS ═══════ -->
-<section class="py-32">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-    <div class="max-w-3xl mb-16 rv">
-      <p class="label mb-4">기술 선택</p>
-      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-        왜 이 조합인가
-      </h2>
-      <p class="mt-6 text-txt-secondary text-[16px] leading-relaxed">
-        모든 기술 선택에는 "왜?"가 있습니다.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 rv">
-      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
-        <p class="font-display font-bold text-lg mb-2">Claude CLI (구독 활용)</p>
-        <p class="text-txt-secondary text-sm leading-relaxed mb-4">
-          Claude를 이미 구독하고 있었습니다. API는 건당 과금이지만, CLI는 구독 안에서 사용 가능합니다.
-          사이드 프로젝트에서 LLM 비용을 0원으로 유지하면서도 품질을 포기하지 않는 판단이었습니다.
-        </p>
-        <div class="text-[13px] space-y-1">
-          <div class="flex items-start gap-2"><span class="text-txt-muted font-mono">+</span><span class="text-txt-secondary">LLM 비용 0원 (구독 활용)</span></div>
-          <div class="flex items-start gap-2"><span class="text-txt-faint font-mono">−</span><span class="text-txt-secondary">프로세스 오버헤드, 동시 호출 제한</span></div>
-          <div class="flex items-start gap-2"><span class="text-txt-muted text-[11px]">→</span><span class="text-txt-muted text-[12px]">잘 되면 API로 업그레이드 예정</span></div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12 rv justify-items-center">
+      <div class="flex flex-col items-center gap-4">
+        <div class="phone-mockup phone-mockup--md">
+          <img src="/assets/projects/zuzugom-portfolio.png" alt="주주곰 포트폴리오 — 진단 + 리밸런싱" />
+        </div>
+        <div class="text-center">
+          <p class="text-sm font-medium text-txt-primary">포트폴리오 — 보유 종목 관리</p>
+          <p class="text-xs text-txt-muted mt-1">계좌별 종목 · 수익률 · 평가금액 한눈에</p>
         </div>
       </div>
-      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
-        <p class="font-display font-bold text-lg mb-2">SSE (Server-Sent Events)</p>
-        <p class="text-txt-secondary text-sm leading-relaxed mb-4">
-          분석 6개 + 토론 9개 = 15번의 LLM 호출. 전부 끝날 때까지 기다리면 사용자는 떠납니다.
-          에이전트가 하나씩 완료될 때마다 실시간으로 화면에 나타나게 했습니다.
-        </p>
-        <div class="text-[13px] space-y-1">
-          <div class="flex items-start gap-2"><span class="text-txt-muted font-mono">+</span><span class="text-txt-secondary">단방향 스트리밍에 최적, 재연결 자동</span></div>
-          <div class="flex items-start gap-2"><span class="text-txt-faint font-mono">−</span><span class="text-txt-secondary">양방향 불가 (필요 없었음)</span></div>
+      <div class="flex flex-col items-center gap-4">
+        <div class="phone-mockup phone-mockup--md">
+          <img src="/assets/projects/zuzugom-research.png" alt="주주곰 리서치 — 분석 이력" />
         </div>
-      </div>
-      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
-        <p class="font-display font-bold text-lg mb-2">Google Vision → Claude CLI 파싱</p>
-        <p class="text-txt-secondary text-sm leading-relaxed mb-4">
-          OCR은 Google Vision 무료 1,000회/월로 충분합니다.
-          텍스트 추출 후 Claude CLI가 종목명·수량·가격을 JSON으로 파싱합니다.
-        </p>
-        <div class="text-[13px] space-y-1">
-          <div class="flex items-start gap-2"><span class="text-txt-muted font-mono">+</span><span class="text-txt-secondary">OCR 비용 0원, 다양한 증권앱 대응</span></div>
-          <div class="flex items-start gap-2"><span class="text-txt-faint font-mono">−</span><span class="text-txt-secondary">이미지 품질에 의존</span></div>
+        <div class="text-center">
+          <p class="text-sm font-medium text-txt-primary">My Research — 분석 이력</p>
+          <p class="text-xs text-txt-muted mt-1">리서치한 종목의 시그널 변화 추적</p>
         </div>
-      </div>
-      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
-        <p class="font-display font-bold text-lg mb-2">PWA (모바일 홈 화면)</p>
-        <p class="text-txt-secondary text-sm leading-relaxed mb-4">
-          투자 정보는 이동 중에 확인합니다. React Native는 오버킬이었고,
-          PWA면 홈 화면에 추가해서 앱처럼 쓸 수 있습니다.
-        </p>
-        <div class="text-[13px] space-y-1">
-          <div class="flex items-start gap-2"><span class="text-txt-muted font-mono">+</span><span class="text-txt-secondary">별도 앱스토어 배포 불필요</span></div>
-          <div class="flex items-start gap-2"><span class="text-txt-muted font-mono">+</span><span class="text-txt-secondary">Service Worker 자동 갱신</span></div>
-        </div>
-      </div>
-      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card md:col-span-2">
-        <p class="font-display font-bold text-lg mb-2">3단 폴백 체인 (모든 데이터 경로)</p>
-        <p class="text-txt-secondary text-sm leading-relaxed mb-4">
-          무료 API는 언제든 끊깁니다. Finnhub은 분당 60회 제한, BeatTheCap은 첫 로딩에 60초.
-          "안 될 때"를 먼저 설계하고, 사용자에게는 "그냥 되네"로 보이게 만들었습니다.
-        </p>
-        <div class="flex flex-wrap gap-3 text-[13px]">
-          <div class="flex items-center gap-2 rounded-lg px-3 py-1.5 bg-surface-elevated border border-bdr-card">
-            <span class="font-mono text-[10px] text-txt-muted">1</span>
-            <span class="text-txt-secondary">Finnhub + BeatTheCap (API 키)</span>
-          </div>
-          <span class="text-txt-faint">→</span>
-          <div class="flex items-center gap-2 rounded-lg px-3 py-1.5 bg-surface-elevated border border-bdr-card">
-            <span class="font-mono text-[10px] text-txt-muted">2</span>
-            <span class="text-txt-secondary">yfinance (무료, 한국종목)</span>
-          </div>
-          <span class="text-txt-faint">→</span>
-          <div class="flex items-center gap-2 rounded-lg px-3 py-1.5 bg-surface-elevated border border-bdr-card">
-            <span class="font-mono text-[10px] text-txt-muted">3</span>
-            <span class="text-txt-secondary">Graceful Empty (에러 없는 빈 상태)</span>
-          </div>
-        </div>
-        <p class="text-[11px] text-txt-muted mt-3">적용: 시세 · 차트 · 재무 · 뉴스 · 검색 · 배치 시세 — 6개 전체 경로</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════ 08. CURRENT STATE ═══════ -->
-<section class="py-20" style="background:var(--s-darker);">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-    <div class="max-w-3xl mx-auto text-center rv">
-      <p class="label mb-6">현재 상태</p>
-      <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-8">
-        현재 상태와<br/>다음 단계
-      </h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div>
-          <p class="giant text-5xl mb-2">6</p>
-          <p class="text-txt-muted text-sm">전문 에이전트<br/><span class="text-[11px]">기술·펀더멘털·매크로·뉴스·원자재·연관종목</span></p>
-        </div>
-        <div>
-          <p class="giant text-5xl mb-2">~45s</p>
-          <p class="text-txt-muted text-sm">분석 1건 소요<br/><span class="text-[11px]">15 LLM call, SSE 실시간 표시</span></p>
-        </div>
-        <div>
-          <p class="giant text-5xl mb-2">3단</p>
-          <p class="text-txt-muted text-sm">데이터 폴백 체인<br/><span class="text-[11px]">Finnhub → yfinance → Graceful Empty</span></p>
-        </div>
-        <div>
-          <p class="giant text-5xl mb-2">KR+US</p>
-          <p class="text-txt-muted text-sm">한국·미국 종목<br/><span class="text-[11px]">KRX 전체 + NASDAQ/NYSE</span></p>
-        </div>
-      </div>
-      <div class="mt-10 pt-8 border-t border-bdr-subtle">
-        <p class="text-[11px] font-bold tracking-wider uppercase text-jj-blue mb-4">Next Steps</p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-          <div class="rounded-xl p-4 bg-surface-card border border-bdr-card">
-            <p class="text-sm font-bold mb-1">실사용자 검증</p>
-            <p class="text-[12px] text-txt-secondary">부모님 + 직장인 3~5명 대상 사용성 테스트. "토론 결과를 보고 실제로 판단에 도움이 됐는지" 측정</p>
-          </div>
-          <div class="rounded-xl p-4 bg-surface-card border border-bdr-card">
-            <p class="text-sm font-bold mb-1">Claude API 전환</p>
-            <p class="text-txt-secondary text-[12px]">CLI → API 마이그레이션으로 동시 호출 제한 해소. 응답 속도 개선 목표</p>
-          </div>
-          <div class="rounded-xl p-4 bg-surface-card border border-bdr-card">
-            <p class="text-sm font-bold mb-1">아침 브리핑</p>
-            <p class="text-[12px] text-txt-secondary">재현의 "출근길 5분" 시나리오. 보유 종목 변동 요약 + 오늘 주목할 이슈 자동 생성</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════ 09. KEY LEARNINGS ═══════ -->
-<section class="py-32 bg-surface-subtle">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-    <div class="max-w-3xl mb-16 rv">
-      <p class="label mb-4">Key Learnings</p>
-      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-        이 프로젝트에서 배운 것
-      </h2>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 rv">
-      <div>
-        <p class="font-display font-bold text-xl mb-3">1. 제약이 가장 좋은<br/>기획서다</p>
-        <p class="text-txt-secondary text-[15px] leading-relaxed">
-          계좌 연동이 안 되니까 OCR이 나왔고,
-          API 비용을 쓸 수 없으니까 CLI 활용과 폴백 체인이 나왔습니다.
-          "할 수 없는 것"을 정의하면 "해야 할 것"이 선명해집니다.
-        </p>
-      </div>
-      <div>
-        <p class="font-display font-bold text-xl mb-3">2. AI의 답이 아니라<br/>관점을 설계해야 한다</p>
-        <p class="text-txt-secondary text-[15px] leading-relaxed">
-          하나의 AI가 "매수"라고 하면 사용자는 그냥 따릅니다.
-          4명이 서로 다른 이유로 논쟁하면, 사용자가 스스로 판단합니다.
-          AI 서비스의 가치는 "답"이 아니라 "판단할 수 있는 구조"에 있었습니다.
-        </p>
-      </div>
-      <div>
-        <p class="font-display font-bold text-xl mb-3">3. 사용자가 바뀌면<br/>모든 설계가 바뀐다</p>
-        <p class="text-txt-secondary text-[15px] leading-relaxed">
-          AED에서 퀀트 리서처에게 "Sharpe 1.2"라고 보여주던 것을,
-          주주곰에서는 "위험 대비 수익이 괜찮다"로 번역해야 했습니다.
-          같은 데이터, 완전히 다른 기획. 직접 겪어봐야 알 수 있었습니다.
-        </p>
-      </div>
-      <div>
-        <p class="font-display font-bold text-xl mb-3">4. 다음에 다르게 할 것</p>
-        <p class="text-txt-secondary text-[15px] leading-relaxed">
-          사용자 검증을 더 일찍 했어야 합니다. 기능을 다 만든 뒤에 피드백을 받으니
-          방향 수정 비용이 컸습니다. 다음에는 핵심 흐름 하나(검색→분석→토론)를
-          먼저 만들고, 실사용자 반응을 본 뒤 확장하겠습니다.
-        </p>
       </div>
     </div>
   </div>
@@ -958,7 +711,7 @@ tailwind.config = {
 
 
 <!-- ═══════ 09-B. LIVE FEEDBACK LOOP ═══════ -->
-<section class="py-32">
+<section class="pt-32 pb-20">
   <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
     <div class="max-w-3xl mb-16 rv">
       <p class="label mb-4">Iteration</p>
@@ -1067,6 +820,37 @@ tailwind.config = {
         </div>
       </div>
 
+      <!-- 사례 4: OCR 한국 ETF 티커 인식 -->
+      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-jj-red/8 flex items-center justify-center flex-shrink-0">
+            <span class="text-jj-red text-lg">4</span>
+          </div>
+          <div class="flex-1">
+            <p class="font-display font-bold text-[15px] mb-2">"한국 ETF 가격이 0원이에요"</p>
+            <p class="text-txt-secondary text-[13px] leading-relaxed mb-3">
+              <code class="text-xs bg-surface-elevated px-1.5 py-0.5 rounded">0040X0</code>(SOL 팔란티어미국채커버드콜혼합)처럼 알파벳이 포함된 한국 종목 코드를
+              미국 종목으로 인식 → 가격 0, 수익률 없음, 통화 USD로 표시되는 문제.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[12px]">
+              <div class="rounded-lg p-3 bg-jj-red/5 border border-jj-red/10">
+                <p class="font-bold text-jj-red mb-1">원인</p>
+                <p class="text-txt-secondary"><code class="text-[11px]">isKoreanTicker</code> 정규식이 <code class="text-[11px]">^\d{6}$</code> — 숫자 6자리만 허용하여 알파벳 포함 코드 누락</p>
+              </div>
+              <div class="rounded-lg p-3 bg-jj-emerald/5 border border-jj-emerald/10">
+                <p class="font-bold text-jj-emerald mb-1">수정</p>
+                <p class="text-txt-secondary"><code class="text-[11px]">^\d[\dA-Z]{5}$</code>로 변경 — 숫자로 시작 + 숫자/대문자 5자리</p>
+              </div>
+              <div class="rounded-lg p-3 bg-surface-elevated">
+                <p class="font-bold mb-1">영향 범위</p>
+                <p class="text-txt-secondary">백엔드 3개 + 프론트 2개, 총 5개 파일 수정. 가격 조회·통화 표시·UI 전체에 영향</p>
+              </div>
+            </div>
+            <p class="text-txt-muted text-[11px] mt-3">→ 정규식 한 줄이 서비스 전체 5개 레이어에 퍼져있던 사례. 한국 종목 코드 체계를 제대로 이해하지 못한 초기 설계의 부채</p>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- 피드백 사이클 요약 -->
@@ -1093,6 +877,209 @@ tailwind.config = {
 </section>
 
 
+<!-- ═══════ 09. KEY LEARNINGS ═══════ -->
+<section class="py-32 bg-surface-subtle">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="max-w-3xl mb-16 rv">
+      <p class="label mb-4">Key Learnings</p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+        이 프로젝트에서 배운 것
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 rv">
+      <div>
+        <p class="font-display font-bold text-xl mb-3">1. 제약이 가장 좋은<br/>기획서다</p>
+        <p class="text-txt-secondary text-[15px] leading-relaxed">
+          계좌 연동이 안 되니까 OCR이 나왔고,
+          API 비용을 쓸 수 없으니까 CLI 활용과 폴백 체인이 나왔습니다.
+          "할 수 없는 것"을 정의하면 "해야 할 것"이 선명해집니다.
+        </p>
+      </div>
+      <div>
+        <p class="font-display font-bold text-xl mb-3">2. AI의 답이 아니라<br/>관점을 설계해야 한다</p>
+        <p class="text-txt-secondary text-[15px] leading-relaxed">
+          하나의 AI가 "매수"라고 하면 사용자는 그냥 따릅니다.
+          4명이 서로 다른 이유로 논쟁하면, 사용자가 스스로 판단합니다.
+          AI 서비스의 가치는 "답"이 아니라 "판단할 수 있는 구조"에 있었습니다.
+        </p>
+      </div>
+      <div>
+        <p class="font-display font-bold text-xl mb-3">3. 사용자가 바뀌면<br/>모든 설계가 바뀐다</p>
+        <p class="text-txt-secondary text-[15px] leading-relaxed">
+          AED에서 퀀트 리서처에게 "Sharpe 1.2"라고 보여주던 것을,
+          주주곰에서는 "위험 대비 수익이 괜찮다"로 번역해야 했습니다.
+          같은 데이터, 완전히 다른 기획. 직접 겪어봐야 알 수 있었습니다.
+        </p>
+      </div>
+      <div>
+        <p class="font-display font-bold text-xl mb-3">4. 다음에 다르게 할 것</p>
+        <p class="text-txt-secondary text-[15px] leading-relaxed">
+          사용자 검증을 더 일찍 했어야 합니다. 기능을 다 만든 뒤에 피드백을 받으니
+          방향 수정 비용이 컸습니다. 다음에는 핵심 흐름 하나(검색→분석→토론)를
+          먼저 만들고, 실사용자 반응을 본 뒤 확장하겠습니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════ 06. AED → 주주곰 CONTEXT SHIFT ═══════ -->
+<section class="py-32 bg-surface-subtle">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="max-w-3xl mb-16 rv">
+      <p class="label mb-4">Context Shift</p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+        사용자가 바뀌면<br/>같은 데이터도 달라진다
+      </h2>
+      <p class="mt-6 text-txt-secondary text-[16px] leading-relaxed">
+        <a href="/ko/work/aed/" class="text-jj-blue hover:underline">AED</a>는 퀀트 리서처를 위한 사내 도구였습니다.
+        주주곰은 재현, 부모님 같은 일반 투자자를 위한 서비스입니다.
+        같은 "주식 분석"이지만, 설계 판단이 완전히 달라집니다.
+      </p>
+      <div class="callout mt-6">
+        <p class="callout-title">Hardest Decision</p>
+        <p class="callout-body">
+          AED에서는 데이터를 최대한 많이 보여주는 것이 가치였습니다. 리서처는 스스로 해석할 능력이 있으니까요.
+          주주곰에서는 반대로 — <strong class="text-txt-primary">정보를 얼마나 줄이고, 어떤 순서로 보여줄지</strong>가 핵심이었습니다.
+          "더 보여주자"는 유혹을 계속 참아야 했습니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="rv">
+      <div class="bg-surface-card rounded-[20px] border border-bdr-card overflow-hidden">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-bdr-subtle">
+              <th class="text-left px-6 py-4 text-txt-muted font-mono text-[11px] tracking-wider uppercase w-1/4"></th>
+              <th class="text-left px-6 py-4 text-txt-muted font-mono text-[11px] tracking-wider uppercase w-[37.5%]">AED · 퀀트 리서처</th>
+              <th class="text-left px-6 py-4 text-jj-blue font-mono text-[11px] tracking-wider uppercase w-[37.5%]">주주곰 · 개인투자자</th>
+            </tr>
+          </thead>
+          <tbody class="text-txt-secondary">
+            <tr class="border-b border-bdr-subtle">
+              <td class="px-6 py-4 font-medium text-txt-primary">정보 구조</td>
+              <td class="px-6 py-4">467개 전략 × 10개 지표 테이블</td>
+              <td class="px-6 py-4 text-txt-primary">점수 하나 + "왜?"를 토론으로 설명</td>
+            </tr>
+            <tr class="border-b border-bdr-subtle">
+              <td class="px-6 py-4 font-medium text-txt-primary">언어</td>
+              <td class="px-6 py-4">Sharpe 1.2, MDD -15%, CAGR 18%</td>
+              <td class="px-6 py-4 text-txt-primary">"저평가이지만 부채 높아서 주의"</td>
+            </tr>
+            <tr class="border-b border-bdr-subtle">
+              <td class="px-6 py-4 font-medium text-txt-primary">신뢰 설계</td>
+              <td class="px-6 py-4">리서처가 직접 수치 검증</td>
+              <td class="px-6 py-4 text-txt-primary">4명이 반박 → 사용자가 다각도 판단</td>
+            </tr>
+            <tr class="border-b border-bdr-subtle">
+              <td class="px-6 py-4 font-medium text-txt-primary">데이터 입력</td>
+              <td class="px-6 py-4">DB에서 자동 로드</td>
+              <td class="px-6 py-4 text-txt-primary">OCR 스크린샷 or 수동 입력</td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-medium text-txt-primary">플랫폼</td>
+              <td class="px-6 py-4">데스크톱 웹 (사내)</td>
+              <td class="px-6 py-4 text-txt-primary">모바일 PWA (홈 화면 추가)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════ 07. TECH TRADEOFFS ═══════ -->
+<section class="py-32">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="max-w-3xl mb-16 rv">
+      <p class="label mb-4">기술 선택</p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+        왜 이 조합인가
+      </h2>
+      <p class="mt-6 text-txt-secondary text-[16px] leading-relaxed">
+        모든 기술 선택에는 "왜?"가 있습니다.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 rv">
+      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
+        <p class="font-display font-bold text-lg mb-2">Claude Code (Max 구독)</p>
+        <p class="text-txt-secondary text-sm leading-relaxed mb-4">
+          Claude Max를 구독하고 있었습니다. API는 건당 과금이지만, Claude Code는 구독 안에서 사용 가능합니다.
+          사이드 프로젝트에서 LLM 추가 비용 없이 품질을 유지하는 판단이었습니다.
+        </p>
+        <div class="text-[13px] space-y-1">
+          <div class="flex items-start gap-2"><span class="text-txt-muted font-mono">+</span><span class="text-txt-secondary">LLM 추가 비용 없음 (Max 구독 활용)</span></div>
+          <div class="flex items-start gap-2"><span class="text-txt-faint font-mono">−</span><span class="text-txt-secondary">프로세스 오버헤드, 동시 호출 제한</span></div>
+          <div class="flex items-start gap-2"><span class="text-txt-muted text-[11px]">→</span><span class="text-txt-muted text-[12px]">잘 되면 API로 업그레이드 예정</span></div>
+        </div>
+      </div>
+      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
+        <p class="font-display font-bold text-lg mb-2">SSE (Server-Sent Events)</p>
+        <p class="text-txt-secondary text-sm leading-relaxed mb-4">
+          분석 6개 + 토론 9개 = 15번의 LLM 호출. 전부 끝날 때까지 기다리면 사용자는 떠납니다.
+          에이전트가 하나씩 완료될 때마다 실시간으로 화면에 나타나게 했습니다.
+        </p>
+        <div class="text-[13px] space-y-1">
+          <div class="flex items-start gap-2"><span class="text-txt-muted font-mono">+</span><span class="text-txt-secondary">단방향 스트리밍에 최적, 재연결 자동</span></div>
+          <div class="flex items-start gap-2"><span class="text-txt-faint font-mono">−</span><span class="text-txt-secondary">양방향 불가 (필요 없었음)</span></div>
+        </div>
+      </div>
+      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
+        <p class="font-display font-bold text-lg mb-2">Google Vision → Claude CLI 파싱</p>
+        <p class="text-txt-secondary text-sm leading-relaxed mb-4">
+          OCR은 Google Vision 무료 1,000회/월로 충분합니다.
+          텍스트 추출 후 Claude CLI가 종목명·수량·가격을 JSON으로 파싱합니다.
+        </p>
+        <div class="text-[13px] space-y-1">
+          <div class="flex items-start gap-2"><span class="text-txt-muted font-mono">+</span><span class="text-txt-secondary">OCR 비용 0원, 다양한 증권앱 대응</span></div>
+          <div class="flex items-start gap-2"><span class="text-txt-faint font-mono">−</span><span class="text-txt-secondary">이미지 품질에 의존</span></div>
+        </div>
+      </div>
+      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card">
+        <p class="font-display font-bold text-lg mb-2">PWA (모바일 홈 화면)</p>
+        <p class="text-txt-secondary text-sm leading-relaxed mb-4">
+          투자 정보는 이동 중에 확인합니다. React Native는 오버킬이었고,
+          PWA면 홈 화면에 추가해서 앱처럼 쓸 수 있습니다.
+        </p>
+        <div class="text-[13px] space-y-1">
+          <div class="flex items-start gap-2"><span class="text-txt-muted font-mono">+</span><span class="text-txt-secondary">별도 앱스토어 배포 불필요</span></div>
+          <div class="flex items-start gap-2"><span class="text-txt-muted font-mono">+</span><span class="text-txt-secondary">Service Worker 자동 갱신</span></div>
+        </div>
+      </div>
+      <div class="bg-surface-card rounded-[16px] p-6 border border-bdr-card md:col-span-2">
+        <p class="font-display font-bold text-lg mb-2">3단 폴백 체인 (모든 데이터 경로)</p>
+        <p class="text-txt-secondary text-sm leading-relaxed mb-4">
+          무료 API는 언제든 끊깁니다. Finnhub은 분당 60회 제한, BeatTheCap은 첫 로딩에 60초.
+          "안 될 때"를 먼저 설계하고, 사용자에게는 "그냥 되네"로 보이게 만들었습니다.
+        </p>
+        <div class="flex flex-wrap gap-3 text-[13px]">
+          <div class="flex items-center gap-2 rounded-lg px-3 py-1.5 bg-surface-elevated border border-bdr-card">
+            <span class="font-mono text-[10px] text-txt-muted">1</span>
+            <span class="text-txt-secondary">Finnhub + BeatTheCap (API 키)</span>
+          </div>
+          <span class="text-txt-faint">→</span>
+          <div class="flex items-center gap-2 rounded-lg px-3 py-1.5 bg-surface-elevated border border-bdr-card">
+            <span class="font-mono text-[10px] text-txt-muted">2</span>
+            <span class="text-txt-secondary">yfinance (무료, 한국종목)</span>
+          </div>
+          <span class="text-txt-faint">→</span>
+          <div class="flex items-center gap-2 rounded-lg px-3 py-1.5 bg-surface-elevated border border-bdr-card">
+            <span class="font-mono text-[10px] text-txt-muted">3</span>
+            <span class="text-txt-secondary">Graceful Empty (에러 없는 빈 상태)</span>
+          </div>
+        </div>
+        <p class="text-[11px] text-txt-muted mt-3">적용: 시세 · 차트 · 재무 · 뉴스 · 검색 · 배치 시세 — 6개 전체 경로</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- ═══════ 09-C. COST & ARCHITECTURE ═══════ -->
 <section class="py-32 bg-surface-subtle">
   <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -1102,7 +1089,7 @@ tailwind.config = {
       <div>
         <p class="label mb-4">Cost Structure</p>
         <h3 class="font-display text-2xl md:text-3xl font-bold tracking-tight mb-6">
-          월 $20으로<br/>AI 서비스 운영하기
+          월 $100으로 AI 서비스 운영하기
         </h3>
         <div class="bg-surface-card rounded-[16px] border border-bdr-card overflow-hidden">
           <table class="w-full text-sm">
@@ -1116,7 +1103,7 @@ tailwind.config = {
             <tbody class="text-txt-secondary">
               <tr class="border-b border-bdr-subtle">
                 <td class="px-5 py-2.5 font-medium text-txt-primary">LLM</td>
-                <td class="px-5 py-2.5">Claude 구독 $20/월</td>
+                <td class="px-5 py-2.5">Claude Max $100/월</td>
                 <td class="px-5 py-2.5">API 전환 ~$0.02/분석</td>
               </tr>
               <tr class="border-b border-bdr-subtle">
@@ -1141,8 +1128,8 @@ tailwind.config = {
               </tr>
               <tr>
                 <td class="px-5 py-2.5 font-bold text-txt-primary">합계</td>
-                <td class="px-5 py-2.5 font-bold text-jj-blue">$20/월</td>
-                <td class="px-5 py-2.5 text-txt-muted">~$65/월 + 종량</td>
+                <td class="px-5 py-2.5 font-bold text-jj-blue">$100/월</td>
+                <td class="px-5 py-2.5 text-txt-muted">~$145/월 + 종량</td>
               </tr>
             </tbody>
           </table>
@@ -1217,6 +1204,54 @@ tailwind.config = {
 </section>
 
 
+<!-- ═══════ 08. CURRENT STATE ═══════ -->
+<section class="py-20" style="background:var(--s-darker);">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <div class="max-w-3xl mx-auto text-center rv">
+      <p class="label mb-6">현재 상태</p>
+      <h2 class="font-display text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-8">
+        현재 상태와<br/>다음 단계
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div>
+          <p class="giant text-5xl mb-2">6</p>
+          <p class="text-txt-muted text-sm">전문 에이전트<br/><span class="text-[11px]">기술·펀더멘털·매크로·뉴스·원자재·연관종목</span></p>
+        </div>
+        <div>
+          <p class="giant text-5xl mb-2">~45s</p>
+          <p class="text-txt-muted text-sm">분석 1건 소요<br/><span class="text-[11px]">15 LLM call, SSE 실시간 표시</span></p>
+        </div>
+        <div>
+          <p class="giant text-5xl mb-2">3단</p>
+          <p class="text-txt-muted text-sm">데이터 폴백 체인<br/><span class="text-[11px]">Finnhub → yfinance → Graceful Empty</span></p>
+        </div>
+        <div>
+          <p class="giant text-5xl mb-2">KR+US</p>
+          <p class="text-txt-muted text-sm">한국·미국 종목<br/><span class="text-[11px]">KRX 전체 + NASDAQ/NYSE</span></p>
+        </div>
+      </div>
+      <div class="mt-10 pt-8 border-t border-bdr-subtle">
+        <p class="text-[11px] font-bold tracking-wider uppercase text-jj-blue mb-4">Next Steps</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left max-w-2xl mx-auto">
+          <div class="rounded-xl p-5 bg-surface-card border border-jj-blue/20 md:col-span-2">
+            <p class="text-sm font-bold mb-1 text-jj-blue">실사용자 검증</p>
+            <p class="text-[12px] text-txt-secondary">부모님 + 직장인 3~5명 대상 사용성 테스트. "토론 결과를 보고 실제로 판단에 도움이 됐는지" 측정. 이 결과에 따라 다음 우선순위가 결정됨</p>
+          </div>
+          <div class="rounded-xl p-4 bg-surface-card border border-bdr-card">
+            <p class="text-sm font-bold mb-1">아침 브리핑</p>
+            <p class="text-[12px] text-txt-secondary">재현의 "출근길 5분" 시나리오. 보유 종목 변동 요약 + 오늘 주목할 이슈 자동 생성</p>
+          </div>
+          <div class="rounded-xl p-4 bg-surface-card border border-bdr-card">
+            <p class="text-sm font-bold mb-1">Claude API 전환</p>
+            <p class="text-txt-secondary text-[12px]">동시 호출 제한 해소 + 응답 속도 개선. 사용자 늘어나면 전환 예정</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- ═══════ 10. FOOTER ═══════ -->
 <section class="py-32">
   <div class="max-w-[1400px] mx-auto px-6 lg:px-12 text-center rv">
@@ -1257,22 +1292,6 @@ tailwind.config = {
     { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }).observe(el);
   });
 
-  // Before/After slider
-  const slider = document.getElementById('baSlider');
-  const beforeWrap = document.getElementById('baBeforeWrap');
-  const handle = document.getElementById('baHandle');
-  if (slider && beforeWrap && handle) {
-    let dragging = false;
-    const update = (x) => {
-      const rect = slider.getBoundingClientRect();
-      let pct = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
-      beforeWrap.style.width = (pct * 100) + '%';
-      handle.style.left = (pct * 100) + '%';
-    };
-    slider.addEventListener('pointerdown', (e) => { dragging = true; slider.setPointerCapture(e.pointerId); update(e.clientX); });
-    slider.addEventListener('pointermove', (e) => { if (dragging) update(e.clientX); });
-    slider.addEventListener('pointerup', () => { dragging = false; });
-  }
 
   // Debate flow stagger animation
   const debateCard = document.querySelector('.debate-flow-card');
